@@ -1,6 +1,6 @@
 <?php
 
-namespace Instaspots\Bundle\SpotsBundle\Tests\Controller;
+namespace Instaspots\SpotsBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

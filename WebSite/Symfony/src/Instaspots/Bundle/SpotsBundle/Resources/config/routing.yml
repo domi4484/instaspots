@@ -1,7 +1,0 @@
-instaspots_spots_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: InstaspotsSpotsBundle:Default:index }
-
-hello_the_world:
-    path:     /hello-world
-    defaults: { _controller: InstaspotsSpotsBundle:Advert:index }

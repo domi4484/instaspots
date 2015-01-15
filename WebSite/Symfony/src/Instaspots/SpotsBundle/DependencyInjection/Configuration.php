@@ -1,6 +1,6 @@
 <?php
 
-namespace Instaspots\Bundle\SpotsBundle\DependencyInjection;
+namespace Instaspots\SpotsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Instaspots\Bundle\SpotsBundle\DependencyInjection;
+namespace Instaspots\SpotsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

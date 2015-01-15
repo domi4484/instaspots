@@ -1,6 +1,6 @@
 <?php
 
-namespace Instaspots\Bundle\SpotsBundle;
+namespace Instaspots\SpotsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
