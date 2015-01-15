@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Panel_Login.qml</file>
+        <file>main.qml</file>
+        <file>Navigator.qml</file>
+        <file>Panel_Main.qml</file>
+        <file>Panel_Splash.qml</file>
+        <file>TabButton.qml</file>
+        <file>Panel_Home.qml</file>
+        <file>Panel_NearbySpots.qml</file>
+        <file>Panel_Upload.qml</file>
+        <file>Panel_User.qml</file>
+        <file>BasicPage.qml</file>
+        <file>SpotViewDelegate.qml</file>
+        <file>UserView.qml</file>
+        <file>declarative-camera/CameraListButton.qml</file>
+        <file>declarative-camera/CameraListPopup.qml</file>
+        <file>declarative-camera/CameraPropertyButton.qml</file>
+        <file>declarative-camera/CameraPropertyPopup.qml</file>
+        <file>declarative-camera/CameraUi.qml</file>
+        <file>declarative-camera/FocusButton.qml</file>
+        <file>declarative-camera/PhotoCaptureControls.qml</file>
+        <file>declarative-camera/PhotoPreview.qml</file>
+        <file>declarative-camera/Popup.qml</file>
+        <file>declarative-camera/VideoPreview.qml</file>
+        <file>TabWidget.qml</file>
+        <file>Page_Register.qml</file>
+        <file>views/ProfileView.qml</file>
+        <file>views/SpotOverviewDelegate.qml</file>
+        <file>pages-upload/CropPicture.qml</file>
+        <file>pages-upload/AddNewSpot.qml</file>
+        <file>pages-upload/LocationCheck.qml</file>
+        <file>pages-upload/NearbySpotSelection.qml</file>
+        <file>pages-upload/SourceSelection.qml</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>icon/find-location.png</file>
+        <file>icon/folder-home.png</file>
+        <file>icon/im-user-offline.png</file>
+        <file>icon/BackArrow.png</file>
+        <file>icon/camera-photo.png</file>
+    </qresource>
+</RCC>

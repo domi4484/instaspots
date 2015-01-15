@@ -1,0 +1,369 @@
+/********************************************************************
+ *                                                                 *
+ * InstaSpots                                                      *
+ *                                                                 *
+ * Author:       Damiano Lombardi                                  *
+ * Created:      19.05.2014                                        *
+ *                                                                 *
+ * Copiright (c) 2014 Damiano Lombardi                             *
+ *                                                                 *
+********************************************************************/
+
+// Files includes --------------------------
+#include "WebApi.h"
+
+// Project includes ------------------------
+#include "../HelperClasses/Logger.h"
+#include "WebApiCommand.h"
+#include "WebApiError.h"
+
+// Qt includes -----------------------------
+#include <QDebug>
+#include <QFile>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QScriptEngine>
+#include <QScriptValueList>
+#include <QUrlQuery>
+#include <QHttpMultiPart>
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+// Location of the web service (Altervista)
+//const QString WebApi::CONST::WEB_API_HOST("http://sk8mapp.altervista.org/");
+//const QString WebApi::CONST::WEB_API_PATH("api/instaspots/instaspots.php");
+
+// Location of the web service (Hostpoint)
+const QString WebApi::CONST::WEB_API_HOST("http://spots.lowerclassclothing.com/");
+const QString WebApi::CONST::WEB_API_PATH("index.php");
+
+const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");
+const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
+
+const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApi *WebApi::s_Instance(NULL);
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApi::WebApi() :
+  QObject(),
+  m_QNetworkAccessManager(),
+  m_CommandsIdCounter(0),
+  m_RunningCommands()
+{
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApi::~WebApi()
+{
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApi *WebApi::instance()
+{
+  if(s_Instance == NULL)
+    s_Instance = new WebApi();
+
+  return s_Instance;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::destroy()
+{
+  if(s_Instance == NULL)
+    return;
+
+  delete s_Instance;
+  s_Instance = NULL;
+}
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
+                                               qint64 total)
+{
+  // Retrieve command
+  QNetworkReply *reply = dynamic_cast<QNetworkReply *>(sender());
+  QNetworkReply::NetworkError replyNetworkError = reply->error();
+  unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
+  WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
+
+  // Command id not found
+  if(command == NULL)
+  {
+    Logger::error(tr("Command with id '%1' not found in command list.").arg(commandId));
+    return;
+  }
+
+  // Network error
+  if ( replyNetworkError != QNetworkReply::NoError )
+  {
+    Logger::error(QString("Network error"));
+    command->setResult(WebApiError(WebApiError::NETWORK),
+                       QScriptValue());
+    return;
+  }
+
+  if(   received != 0
+     && total    != 0)
+  {
+    Logger::debug(QString("%1/%2").arg(received)
+                  .arg(total));
+    command->setProgress(received,
+                         total);
+    return;
+  }
+
+  // Delete reply
+  reply->deleteLater();
+
+  // Received data
+  QString data = reply->readAll();
+  Logger::debug(QString("Received: %1").arg(data));
+
+  // Parse received JSON
+  QScriptEngine engine;
+  QScriptValue result = engine.evaluate(QString("(%1)").arg(data));
+  QScriptValue qScriptValue_Error = result.property(CONST::GENERAL_PARAMS::ERROR);
+
+  // Answer not valid. Probably a script syntax error
+  if(qScriptValue_Error.isValid() == false)
+  {
+    Logger::error("Script error");
+    command->setResult(WebApiError(WebApiError::SERVER),
+                       result);
+    return;
+  }
+
+  // Command error
+  QString errorText = qScriptValue_Error.toString();
+  if(errorText.isEmpty() == false)
+  {
+    Logger::error("Error: " + errorText);
+    command->setResult(WebApiError(WebApiError::COMMAND,
+                                   errorText),
+                       result);
+    return;
+  }
+
+  command->setResult(WebApiError(WebApiError::NONE),
+                     result);
+}
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::slot_QNetworkReply_downloadProgress(qint64 received,
+                                                 qint64 total)
+{
+  // Retrieve command
+  QNetworkReply *reply = dynamic_cast<QNetworkReply *>(sender());
+  QNetworkReply::NetworkError replyNetworkError = reply->error();
+  unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
+  WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
+
+  // Command id not found
+  if(command == NULL)
+  {
+    Logger::error(tr("Command with id '%1' not found in command list.").arg(commandId));
+    return;
+  }
+
+  // Network error
+  if ( replyNetworkError != QNetworkReply::NoError )
+  {
+    Logger::error(QString("Network error"));
+    command->setResult(WebApiError(WebApiError::NETWORK),
+                       QScriptValue());
+    return;
+  }
+
+  if(received != total)
+  {
+    Logger::debug(QString("%1/%2").arg(received)
+                  .arg(total));
+    command->setProgress(received,
+                         total);
+    return;
+  }
+
+  // Delete reply
+  reply->deleteLater();
+
+  // Received data
+  command->setRawResult(WebApiError(WebApiError::NONE),
+                        reply->readAll());
+}
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::slot_QNetworkReply_finished()
+{
+  // Retrieve command and data
+  QNetworkReply *reply = dynamic_cast<QNetworkReply *>(sender());
+  QNetworkReply::NetworkError replyNetworkError = reply->error();
+  unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
+  WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
+  reply->deleteLater();
+
+  // Command id not found
+  if(command == NULL)
+  {
+    Logger::error(tr("Command with id '%1' not found in command list.").arg(commandId));
+    return;
+  }
+
+  // Network error
+  if ( replyNetworkError != QNetworkReply::NoError )
+  {
+    Logger::error(QString("Network error"));
+    command->setResult(WebApiError(WebApiError::NETWORK),
+                       QScriptValue());
+    return;
+  }
+
+  // Received data
+  QString data = reply->readAll();
+  Logger::debug(QString("Received: %1").arg(data));
+
+  // Parse received JSON
+  QScriptEngine engine;
+  QScriptValue result = engine.evaluate(QString("(%1)").arg(data));
+  QScriptValue qScriptValue_Error = result.property(CONST::GENERAL_PARAMS::ERROR);
+
+  // Answer not valid. Probably a script syntax error
+  if(qScriptValue_Error.isValid() == false)
+  {
+    Logger::error("Script error");
+    command->setResult(WebApiError(WebApiError::SERVER),
+                       result);
+    return;
+  }
+
+  // Command error
+  QString errorText = qScriptValue_Error.toString();
+  if(errorText.isEmpty() == false)
+  {
+    Logger::error("Error: " + errorText);
+    command->setResult(WebApiError(WebApiError::COMMAND,
+                                   errorText),
+                       result);
+    return;
+  }
+
+  command->setResult(WebApiError(WebApiError::NONE),
+                     result);
+}
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::postRequest(WebApiCommand *abstractCommand,
+                         const QList<QueryItem> &qList_QueryItems)
+{
+  int commandId = m_CommandsIdCounter++;
+  m_RunningCommands.insert(commandId, abstractCommand);
+
+  QNetworkRequest request(QUrl(CONST::WEB_API_HOST + CONST::WEB_API_PATH));
+  request.setHeader(QNetworkRequest::ContentTypeHeader,
+                    "application/x-www-form-urlencoded");
+
+  QUrlQuery params;
+  params.addQueryItem(CONST::GENERAL_PARAMS::COMMAND,    abstractCommand->command());
+  foreach(QueryItem item, qList_QueryItems)
+  {
+    params.addQueryItem(item.first(), item.second());
+  }
+
+  QNetworkReply *reply = m_QNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
+  reply->setProperty(PROPERTY_COMMAND_ID, commandId);
+  connect(reply,
+          SIGNAL(finished()),
+          SLOT  (slot_QNetworkReply_finished()));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::multipartRequest(WebApiCommand *abstractCommand,
+                              const QList<QueryItem> &qList_QueryItems,
+                              QIODevice *device)
+{
+  int commandId = m_CommandsIdCounter++;
+  m_RunningCommands.insert(commandId, abstractCommand);
+
+  QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+
+  // Command
+  {
+    QHttpPart textPart;
+    textPart.setHeader(QNetworkRequest::ContentDispositionHeader,
+                       QVariant(QString("application/x-www-form-urlencoded; name=\"%1\";").arg(CONST::GENERAL_PARAMS::COMMAND)));
+    textPart.setBody(abstractCommand->command().toUtf8());
+
+    multiPart->append(textPart);
+  }
+
+  // Text part
+  foreach (QueryItem queryItem, qList_QueryItems)
+  {
+    QHttpPart textPart;
+    textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("application/x-www-form-urlencoded; name=\"%1\";").arg(queryItem.first())));
+    textPart.setBody(queryItem.second().toUtf8());
+
+    multiPart->append(textPart);
+  }
+
+  // Image part
+  QHttpPart imagePart;
+  imagePart.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QVariant("image/jpeg"));
+  imagePart.setHeader(QNetworkRequest::ContentDispositionHeader,
+                      QVariant(  "application/x-www-form-urlencoded; name=\"image\"; filename=\"ilmiobelfile.jpg\""));
+  device->open(QIODevice::ReadOnly);
+  imagePart.setBodyDevice(device);
+  device->setParent(multiPart); // we cannot delete the device now, so delete it with the multiPart
+
+  multiPart->append(imagePart);
+
+  QNetworkRequest request(QUrl(CONST::WEB_API_HOST + CONST::WEB_API_PATH));
+
+  QNetworkReply *reply = m_QNetworkAccessManager.post(request, multiPart);
+  reply->setProperty(PROPERTY_COMMAND_ID, commandId);
+
+  multiPart->setParent(reply); // delete the multiPart with the reply
+
+  connect(reply,
+          SIGNAL(uploadProgress(qint64, qint64)),
+          SLOT  (slot_QNetworkReply_uploadProgress(qint64, qint64)));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::downloadRequest(WebApiCommand *abstractCommand,
+                             const QString &url)
+{
+  int commandId = m_CommandsIdCounter++;
+  m_RunningCommands.insert(commandId, abstractCommand);
+
+  QNetworkRequest request(url);
+
+  QNetworkReply *reply = m_QNetworkAccessManager.get(request);
+  reply->setProperty(PROPERTY_COMMAND_ID, commandId);
+
+  connect(reply,
+          SIGNAL(downloadProgress(qint64, qint64)),
+          SLOT  (slot_QNetworkReply_downloadProgress(qint64, qint64)));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/tabButton">
+        <file>icon/camera-photo.png</file>
+        <file>icon/find-location.png</file>
+        <file>icon/folder-home.png</file>
+        <file>icon/im-user-offline.png</file>
+    </qresource>
+</RCC>
