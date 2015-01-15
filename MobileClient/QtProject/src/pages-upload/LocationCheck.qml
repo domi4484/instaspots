@@ -21,23 +21,12 @@ BasicPage{
     id: locationCheck
     visible: false
 
-    // Location ----------------------------
-    property PositionSource positionSource
-
     // BasiPage properties -----------------
     title: qsTr("Location")
     continueButtonVisible: false
 
     // Signals -----------------------------
     signal locationAccepted()
-
-    onVisibleChanged: {
-        if(visible == false)
-            return;
-
-        textField_Latitude.text = positionSource.position.coordinate.latitude;
-        textField_Longitude.text = positionSource.position.coordinate.longitude;
-    }
 
     // Gui ---------------------------------
     Item{
