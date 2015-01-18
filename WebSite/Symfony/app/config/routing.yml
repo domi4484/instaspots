@@ -1,6 +1,6 @@
 instaspots_spots:
     resource: "@InstaspotsSpotsBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /spots
 
 app:
     resource: @AppBundle/Controller/

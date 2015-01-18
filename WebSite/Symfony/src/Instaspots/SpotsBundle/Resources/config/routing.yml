@@ -1,12 +1,12 @@
 
 instaspots_spots_home:
-    path:     /spots
+    path:     /
     defaults: { _controller: InstaspotsSpotsBundle:Advert:index }
 
 instaspots_spots_view:
-    path:     /spots/advert/{id}
+    path:     /advert/{id}
     defaults: { _controller: InstaspotsSpotsBundle:Advert:view }
 
 instaspots_spots_add:
-    path:     /spots/add
+    path:     /add
     defaults: { _controller: InstaspotsSpotsBundle:Advert:add }
