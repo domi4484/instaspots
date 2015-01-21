@@ -48,6 +48,7 @@ void Command_Register::execute(const QString &username,
   qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, password));
   qList_QueryItems.append(QueryItem(R_PARAM_EMAIL,    eMail));
 
+  // TODO check post return type
   postRequest(qList_QueryItems);
 }
 

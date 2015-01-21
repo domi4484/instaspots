@@ -12,12 +12,12 @@
 // File includes ---------------------------
 #include "WebApiError.h"
 
+#include <QApplication>
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 WebApiError::WebApiError(ERROR error,
-                         QString details,
-                         QObject *parent) :
-  QObject(parent),
+                         QString details) :
   m_Error(error),
   m_Details(details)
 {
@@ -30,23 +30,23 @@ QString WebApiError::text() const
   switch (m_Error)
   {
   case NONE:
-    return tr("No error");
+    return "No error";
   break;
   case NETWORK:
-    return tr("Network error");
+    return "Network error";
   break;
   case SERVER:
-    return tr("Server error");
+    return "Server error";
   break;
   case COMMAND:
-    return tr("Command error");
+    return "Command error";
   break;
   case COMMAND_ALREADY_RUNNING:
-    return tr("Command already running");
+    return "Command already running";
   break;
   }
 
-  return tr("Unknown error");
+  return "Unknown error";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

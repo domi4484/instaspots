@@ -7,6 +7,8 @@
  *                                                                 *
  * Copiright (c) 2014 Damiano Lombardi                             *
  *                                                                 *
+ * TODO remove this class (include all this in user)               *
+ *                                                                 *
 ********************************************************************/
 
 #ifndef COMMAND_REGISTER_H

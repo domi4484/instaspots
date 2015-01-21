@@ -88,6 +88,7 @@ void NearbySpotsModel::setLocation(float latitude,
   qList_QueryItems.append(QueryItem(R_PARAM_LATITUDE,  QString::number(latitude)));
   qList_QueryItems.append(QueryItem(R_PARAM_LONGITUDE, QString::number(longitude)));
 
+  // TODO check post return type
   m_Command_GetNearbySpots.postRequest(qList_QueryItems);
 }
 

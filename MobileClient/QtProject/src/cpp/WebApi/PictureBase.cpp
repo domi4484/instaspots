@@ -110,6 +110,7 @@ void PictureBase::execute()
 {
   m_QMap_Pictures.clear();
 
+  // TODO check post return type
   WebApiCommand::setCommand(COMMAND);
   QList<QueryItem> qList_QueryItems;
   postRequest(qList_QueryItems);
@@ -133,6 +134,7 @@ QList<Picture *> PictureBase::getPictures()
 
 void PictureBase::getNews()
 {
+  // TODO check post return type (and if this function make still sense)
   QList<QueryItem> qList_QueryItems;
   m_Command_GetNews.postRequest(qList_QueryItems);
 }

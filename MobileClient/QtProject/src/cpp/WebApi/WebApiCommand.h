@@ -60,8 +60,8 @@ public:
 
   bool isRunning() { return m_Running; }
 
-  void postRequest(const QList<QueryItem> &queryItems,
-                   QIODevice *device = NULL);
+  WebApiError postRequest(const QList<QueryItem> &queryItems,
+                          QIODevice *device = NULL);
 
 signals:
 

@@ -40,23 +40,32 @@ public:
 public slots:
   QString lastErrorText() const { return m_LastErrorText; }
 
-  void login();
-  void login(const QString &username,
+  bool login();
+  bool login(const QString &username,
              const QString &password);
+
+  bool logout();
 
   QString username();
 
 signals:
 
   void signal_LoginSuccessfull(bool success);
+  void signal_Logout();
 
 private slots:
 
   void slot_CommandLogin_Finished(const WebApiError &error);
+  void slot_CommandLogout_Finished(const WebApiError &error);
+  void slot_CommandRegister_Finished(const WebApiError &error);
+  void slot_CommandCanRegister_Finished(const WebApiError &error);
 
 private:
 
-  static const QString COMMAND;
+  static const QString C_LOGIN;
+  static const QString C_LOGOUT;
+  static const QString C_REGISTER;
+  static const QString C_CANREGISTER;
   static const QString R_PARAM_USERNAME;
   static const QString R_PARAM_PASSWORD;
   static const QString A_PARAM_AUTHENTICATION;
@@ -67,6 +76,7 @@ private:
   QString m_LastErrorText;
 
   WebApiCommand m_WebApiCommand_Login;
+  WebApiCommand m_WebApiCommand_Logout;
   WebApiCommand m_WebApiCommand_Register;
   WebApiCommand m_WebApiCommand_CanRegister;
 

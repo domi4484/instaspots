@@ -114,9 +114,15 @@ Rectangle {
             return;
         }
 
+        if(wa_User.login(username,
+                         password) === false)
+        {
+            messageDialog.text = wa_User.lastErrorText();
+            messageDialog.visible = true;
+            return;
+        }
+
         button_Login.enabled = false;
-        wa_User.login(username,
-                      password)
     }
 
     Connections {

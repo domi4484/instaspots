@@ -245,9 +245,13 @@ bool PictureUploader::uploadNewSpot()
                 "JPG",
                 90); // writes pixmap into bytes in JPG format
 
-  m_WebApiCommand_UploadNewSpot.postRequest(qList_QueryItems,
-                                            buffer);
-
+  WebApiError error = m_WebApiCommand_UploadNewSpot.postRequest(qList_QueryItems,
+                                                                buffer);
+  if(error.type() != WebApiError::NONE)
+  {
+    m_LastErrorText = error.text();
+    return false;
+  }
   return true;
 }
 
@@ -287,9 +291,13 @@ bool PictureUploader::uploadPictureToSpot()
                 "JPG",
                 90); // writes pixmap into bytes in JPG format
 
-  m_WebApiCommand_UploadPictureToSpot.postRequest(qList_QueryItems,
-                                                  buffer);
-
+  WebApiError error = m_WebApiCommand_UploadPictureToSpot.postRequest(qList_QueryItems,
+                                                                      buffer);
+  if(error.type() != WebApiError::NONE)
+  {
+    m_LastErrorText = error.text();
+    return false;
+  }
   return true;
 }
 

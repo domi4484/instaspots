@@ -39,6 +39,7 @@ void Command_CanRegister::execute(const QString &username)
     QList<QueryItem> qList_QueryItems;
     qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
 
+    // TODO check post return type
     postRequest(qList_QueryItems);
 }
 

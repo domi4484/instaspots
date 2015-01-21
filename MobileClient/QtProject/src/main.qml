@@ -32,7 +32,14 @@ ApplicationWindow {
             applicationWindow.menuBar = menubar;
         }
 
-        pageLoader.source = "Panel_Splash.qml"
+        if(wa_User.login() === false)
+        {
+            pageLoader.source = "Panel_Login.qml";
+        }
+        else
+        {
+            pageLoader.source = "Panel_Splash.qml"
+        }
     }
 
     Loader {
@@ -42,9 +49,8 @@ ApplicationWindow {
 
     Connections {
         target: wa_User
-        onSignal_LoginSuccessfull: {
-
-
+        onSignal_LoginSuccessfull:
+        {
             // Login successfull
             if(success)
             {
@@ -56,6 +62,11 @@ ApplicationWindow {
             {
                 pageLoader.source = "Panel_Login.qml";
             }
+        }
+
+        onSignal_Logout:
+        {
+            pageLoader.source = "Panel_Login.qml";
         }
     }
 }

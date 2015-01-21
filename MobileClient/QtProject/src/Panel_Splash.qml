@@ -9,8 +9,4 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
     }
-
-    Component.onCompleted: {
-        wa_User.login();
-    }
 }

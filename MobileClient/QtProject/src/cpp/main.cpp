@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("hc_PlateformDetail", &plateformDetail);
+
+    // TODO cercare setContextSingleton o qualcosa di simile
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
 
     engine.rootContext()->setContextProperty("wa_User",            &user           );

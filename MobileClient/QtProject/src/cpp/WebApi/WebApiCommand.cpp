@@ -102,12 +102,12 @@ void WebApiCommand::setAnswerType(WebApiCommand::ANSWER_TYPE type)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void WebApiCommand::postRequest(const QList<QueryItem> &queryItems,
-                                  QIODevice *device)
+WebApiError WebApiCommand::postRequest(const QList<QueryItem> &queryItems,
+                                       QIODevice *device)
 {
   if(m_Running)
   {
-    emit signal_Finished(WebApiError(WebApiError::COMMAND_ALREADY_RUNNING));
+    return WebApiError(WebApiError::COMMAND_ALREADY_RUNNING);
   }
 
   m_Running = true;
@@ -123,6 +123,8 @@ void WebApiCommand::postRequest(const QList<QueryItem> &queryItems,
                                          queryItems,
                                          device);
   }
+
+  return WebApiError(WebApiError::NONE);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

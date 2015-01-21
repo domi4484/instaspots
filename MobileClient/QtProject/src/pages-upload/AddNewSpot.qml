@@ -42,7 +42,10 @@ BasicPage{
     // Connections -------------------------
     Connections{
         target: wa_PictureUploader
-        onSignal_UploadFinished:{
+        onSignal_UploadFinished:
+        {
+            button_UploadNewSpot.enabled = true;
+
             if(success == false)
             {
                 messageDialog_Error.text = wa_PictureUploader.lastErrorText();
@@ -102,7 +105,10 @@ BasicPage{
             {
                 messageDialog_Error.text = wa_PictureUploader.lastErrorText();
                 messageDialog_Error.visible = true;
+                return;
             }
+
+            enabled = false;
         }
     }
 }

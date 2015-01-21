@@ -13,11 +13,10 @@
 #define WEBAPIERROR_H
 
 // Qt includes -----------------------------
-#include <QObject>
+#include <QString>
 
-class WebApiError : public QObject
+class WebApiError
 {
-  Q_OBJECT
 
 public:
 
@@ -30,16 +29,11 @@ public:
     COMMAND_ALREADY_RUNNING
   };
 
-  explicit WebApiError(ERROR error,
-                       QString details = "",
-                       QObject *parent = 0);
+  WebApiError(ERROR error,
+              QString details = "");
 
   ERROR type() const { return m_Error; }
   QString text() const;
-
-signals:
-
-public slots:
 
 private:
 

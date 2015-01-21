@@ -307,15 +307,6 @@ bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-frauenfeld.html)]]></de
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-123</styleUrl>
-				<name>Laax - Freestyle academy</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.264913,46.818135,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-123</styleUrl>
 				<name>La Chaux de Fonds - Mini</name>
 				<ExtendedData>
 				</ExtendedData>
@@ -1085,17 +1076,6 @@ flat buono]]></description>
 				<description><![CDATA[Handrail su 8 gradini]]></description>
 				<Point>
 					<coordinates>7.2419210000000005,47.131327,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
-				<name>Bienne - Guterbanhof</name>
-				<ExtendedData>
-				</ExtendedData>
-				<description><![CDATA[Flat perfetto al coperto. La sera si possono accendere le luci
-Normalmente c'é un box nascosto sotto il marciapiede]]></description>
-				<Point>
-					<coordinates>7.257843,47.139432,0.0</coordinates>
 				</Point>
 			</Placemark>
 			<Placemark>
