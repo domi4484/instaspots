@@ -15,6 +15,7 @@ import QtQuick.Controls 1.2
 
 // Project imports -------------------------
 import "qrc:/"
+import "qrc:/views"
 
 BasicPage{
     id: nearbySpotSelection
@@ -29,9 +30,11 @@ BasicPage{
     // Gui ---------------------------------
     Button{
         id: button_AddNewSpot
+        z: 2
         width: parent.width / 1.1
         anchors.top: parent.top
         anchors.topMargin: 5
+        anchors.bottomMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: qsTr("Add new spot")
@@ -40,6 +43,15 @@ BasicPage{
             wa_PictureUploader.setNewSpot(true);
 
             addNewSpot();
+        }
+    }
+
+    ListView {
+        width: parent.width
+        anchors.top: button_AddNewSpot.bottom
+        anchors.bottom: parent.bottom
+        model: wa_NearbySpotModel
+        delegate: SpotOverviewDelegate{
         }
     }
 }

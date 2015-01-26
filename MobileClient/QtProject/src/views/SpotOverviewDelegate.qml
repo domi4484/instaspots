@@ -18,7 +18,6 @@ Rectangle {
     width: parent.width
     height:   rectangle_Top.height
             + image_Picture1.height
-            + text_SpotDescription.height
 
     Rectangle {
         id: rectangle_Top
@@ -57,13 +56,6 @@ Rectangle {
         width: parent.width/2
         height: parent.width/2
         source: role_SpotPictureUrl2
-    }
-    Text {
-        id: text_SpotDescription
-        anchors.top: image_Picture1.bottom
-        width: parent.width
-        height: 40
-        text: role_SpotDescription
     }
 }
 
