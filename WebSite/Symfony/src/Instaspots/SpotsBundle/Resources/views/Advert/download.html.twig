@@ -1,0 +1,23 @@
+{% extends "InstaspotsSpotsBundle::layout.html.twig" %}
+
+{% block title %}
+  Download - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+  <h2>Available platforms</h2>
+
+  <ul>
+    {% for platform in listPlatforms %}
+      <li>
+        <a href="{{ platform.link }}">
+          {{ platform.title }}
+        </a>
+      </li>
+    {% else %}
+      <li>Pas (encore !) d'annonces</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -15,29 +15,14 @@
 <body>
   <div class="container">
     <div id="header" class="jumbotron">
-      <h1>Ma plateforme d'annonces</h1>
+      <h1>Instaspots</h1>
       <p>
-        Ce projet est propulsé par Symfony2,
-        et construit grâce au MOOC OpenClassrooms et SensioLabs.
-      </p>
-      <p>
-        <a class="btn btn-primary btn-lg" href="http://fr.openclassrooms.com/informatique/cours/developpez-votre-site-web-avec-le-framework-symfony2">
-          Participer au MOOC »
-        </a>
+        <a class="btn btn-primary btn-lg" href="{{ path('instaspots_spots_home') }}">News</a>
+        <a class="btn btn-primary btn-lg" href="{{ path('instaspots_spots_download') }}">Download</a>
       </p>
     </div>
 
     <div class="row">
-      <div id="menu" class="col-md-3">
-        <h3>Les annonces</h3>
-        <ul class="nav nav-pills nav-stacked">
-          <li><a href="{{ path('instaspots_spots_home') }}">Accueil</a></li>
-          <li><a href="{{ path('instaspots_spots_home') }}">Ajouter une annonce</a></li>
-        </ul>
-
-        <h4>Dernières annonces</h4>
-        {{ render(controller("InstaspotsSpotsBundle:Advert:menu", {'limit': 3})) }}
-      </div>
       <div id="content" class="col-md-9">
         {% block body %}
         {% endblock %}
@@ -47,7 +32,7 @@
     <hr>
 
     <footer>
-      <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+      <p>The red coping company © {{ 'now'|date('Y') }}.</p>
     </footer>
   </div>
 

@@ -3,6 +3,10 @@ instaspots_spots_home:
     path:     /
     defaults: { _controller: InstaspotsSpotsBundle:Advert:index }
 
+instaspots_spots_download:
+    path:     /download
+    defaults: { _controller: InstaspotsSpotsBundle:Advert:download }
+    
 instaspots_spots_view:
     path:     /advert/{id}
     defaults: { _controller: InstaspotsSpotsBundle:Advert:view }

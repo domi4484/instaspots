@@ -11,7 +11,17 @@ class AdvertController extends Controller
   {
    return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig', 
                         array('listAdverts' => array()));
-  }  
+  }
+  
+  public function downloadAction()
+  {
+    $listPlatforms = array(
+      array('title' => 'Android', 'link' => 'link')
+    );
+    
+    return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig', 
+                         array('listPlatforms' => $listPlatforms));
+  }
   
   public function viewAction($id)
   {
