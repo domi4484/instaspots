@@ -32,6 +32,8 @@ ApplicationWindow {
             applicationWindow.menuBar = menubar;
         }
 
+        hc_LocationManager.requestLocation();
+
         if(wa_User.login() === false)
         {
             pageLoader.source = "Panel_Login.qml";

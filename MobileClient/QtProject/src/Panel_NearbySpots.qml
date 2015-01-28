@@ -12,27 +12,23 @@
 // Qt imports ------------------------------
 import QtQuick 2.0
 import QtQuick.Controls 1.1
-import QtPositioning 5.2
 
 // Project imports -------------------------
 import "qrc:/views"
 
 Item {
 
-    // Location ----------------------------
-    PositionSource {
-         id: positionSource
-    }
-
     // Slots -------------------------------
     onVisibleChanged: {
         if(visible == false)
+        {
             return;
+        }
 
         if(hc_PlateformDetail.isMobile())
         {
-            wa_NearbySpotModel.setLocation(positionSource.position.coordinate.latitude,
-                                           positionSource.position.coordinate.longitude);
+            wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
+                                           hc_LocationManager.longitude());
         }
         else
         {

@@ -2,6 +2,7 @@
 // Project includes ------------------------
 #include "HelperClasses/Logger.h"
 #include "HelperClasses/PlateformDetail.h"
+#include "HelperClasses/LocationManager.h"
 #include "WebApi/User.h"
 #include "WebApi/PictureBase.h"
 #include "WebApi/NewsModel.h"
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     Logger::instanziate(Logger::LOG_VERBOSE);
 
     PlateformDetail plateformDetail;
+    LocationManager locationManager;
 
     QSettings settings;
 
@@ -37,6 +39,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("hc_PlateformDetail", &plateformDetail);
+    engine.rootContext()->setContextProperty("hc_LocationManager", &locationManager);
 
     // TODO cercare setContextSingleton o qualcosa di simile
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());

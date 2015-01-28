@@ -28,6 +28,26 @@ BasicPage{
     // Signals -----------------------------
     signal locationAccepted()
 
+    onVisibleChanged: {
+        if(visible == false)
+            return;
+
+        textField_Latitude.text = hc_LocationManager.latitude();
+        textField_Longitude.text = hc_LocationManager.longitude();
+    }
+
+    Connections {
+        target: hc_LocationManager
+        onUpdate:
+        {
+            if(timeout)
+                return;
+
+            textField_Latitude.text = hc_LocationManager.latitude();
+            textField_Longitude.text = hc_LocationManager.longitude();
+        }
+    }
+
     // Gui ---------------------------------
     Item{
         id: item_Latitude
@@ -88,6 +108,9 @@ BasicPage{
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
 
+        onClicked: {
+            hc_LocationManager.requestLocation();
+        }
     }
 
     Button{
