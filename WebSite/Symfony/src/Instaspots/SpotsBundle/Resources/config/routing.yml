@@ -14,3 +14,7 @@ instaspots_spots_view:
 instaspots_spots_add:
     path:     /add
     defaults: { _controller: InstaspotsSpotsBundle:Advert:add }
+
+instaspots_spots_webservice:
+    path:     /webservice
+    defaults: { _controller: InstaspotsSpotsBundle:Webservice:webservice }
