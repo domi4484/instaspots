@@ -2,18 +2,97 @@
 
 namespace Instaspots\SpotsBundle\Controller;
 
+use Instaspots\SpotsBundle\Entity\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class WebserviceController extends Controller
 {
-  public function webserviceAction()
+  public function webserviceAction(Request $request)
   {
-   return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig', 
-                        array('listAdverts' => array()));
+    if ($request->isMethod('POST') == false)
+    {
+      return new JsonResponse(array('error' => 'Not a post request'));
+    }
+    
+    $command = $request->request->get('command');
+    $response = array ('error'      => "",
+                       'command'    => $command);
+                       
+    if (strlen($command) == 0)
+    {
+      $response['error'] = 'Empty command';
+      return new JsonResponse($response);
+    }
+    
+    switch ($command)
+    {
+      case "login": 
+        $this->login($response,
+                     $request->request->get('username'), 
+                     $request->request->get('password')); 
+      break;
+      
+      case "logout":
+	$this->logout();
+      break;
+
+      case "canregister":
+	$this->canregister($response,
+		    $_POST['username']); 
+      break;
+
+      case "register":
+	$this->register($response,
+		$_POST['username'],
+		$_POST['password'],
+		$_POST['email'   ]);
+      break;
+      
+      case "uploadPictureToSpot":
+	$this->uploadPictureToSpot($response,
+			    $_SESSION['id'       ],
+			    $_POST   ['id_spot'  ],
+			    $_POST   ['latitude' ],
+			    $_POST   ['longitude'],
+			    $_FILES  ['image'    ]);
+      break;
+      
+      case "uploadNewSpot":
+	$this->uploadNewSpot($response,
+		      $_SESSION['id'         ],
+		      $_POST   ['latitude'   ],
+		      $_POST   ['longitude'  ],
+		      $_POST   ['name'       ],
+		      $_POST   ['description'],
+		      $_FILES  ['image'      ]);
+      break;
+      
+      case "getPictures":
+	$this->getPictures($response);
+      break;
+
+      case "getNearbySpots":
+	$this->getNearbySpots($response,
+		      $_POST   ['latitude'   ],
+		      $_POST   ['longitude'  ]);
+      break;
+    
+      default:
+      {
+	$command = $response['command'];
+	$response['error'] = "Unknown command: $command";
+      }
+    }
+    
+    return new JsonResponse($response);
   }
   
-  
+//-----------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------
+
   private function canregister( &$response,
                        $username )
   {
@@ -40,48 +119,56 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function register( &$response,
-                    $username, 
-                    $password,
-                    $email )
-  {
+                              $username, 
+                              $password,
+                              $email )
+  { 
     // check if username exists
     // canregister($username);
 
-    //try to register the user
-    $result = query("INSERT INTO USERS(username, password, email) VALUES('%s','%s','%s')", 
-		    $username,
-		    $password,
-		    $email);
+    // Création de l'entité
+    $user = new User();
+    $user->setUsername($username);
+    $user->setPassword($password);
+    $user->setEmail($email);
 
-    if ($result['error'])
-    { 
-      $response['error'] = 'Registration failed';
-      return;
-    }
-
-    $response['registered'] = true;
+     // On récupère l'EntityManager
+     $em = $this->getDoctrine()->getManager();
+ 
+     // Étape 1 : On « persiste » l'entité
+     $em->persist($user);
+// 
+//     // Étape 2 : On « flush » tout ce qui a été persisté avant
+     $em->flush();
+// 
+//     
+     $response['registered'] = true;
+     return;
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function login( &$response, 
-                 $username, 
-                 $password )
+                           $username, 
+                           $password )
   {
-    $result = query("SELECT id, username FROM USERS WHERE username='%s' AND password='%s' limit 1",
-		    $username,
-		    $password);
+    $response['error'] = 'Not yet implemented';
+    return;
   
-    if (count($result['result']) <= 0)
-    {
+//    $result = query("SELECT id, username FROM USERS WHERE username='%s' AND password='%s' limit 1",
+//                    $username,
+//                    $password);
+  
+//     if (count($result['result']) <= 0)
+//     {
       //not authorized
-      $response['authentication'] = false;
-      return;
-    } 
-
-    //authorized
-    $_SESSION['id'] = $result['result'][0]['id'];
-    $response['authentication'] = true;
+//       $response['authentication'] = false;
+//       return;
+//     } 
+// 
+//     //authorized
+//     $_SESSION['id'] = $result['result'][0]['id'];
+//     $response['authentication'] = true;
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

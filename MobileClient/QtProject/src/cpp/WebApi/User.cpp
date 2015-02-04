@@ -32,7 +32,9 @@ const QString User::C_REGISTER             ("register");
 const QString User::C_CANREGISTER          ("canregister");
 const QString User::R_PARAM_USERNAME       ("username");
 const QString User::R_PARAM_PASSWORD       ("password");
+const QString User::R_PARAM_EMAIL          ("email");
 const QString User::A_PARAM_AUTHENTICATION ("authentication");
+const QString User::A_PARAM_REGISTERED     ("registered");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -149,6 +151,34 @@ bool User::logout()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+bool User::registration(const QString &username,
+                        const QString &e_mail,
+                        const QString &password)
+{
+  m_LastErrorText = "";
+
+  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_512).toHex();
+
+  m_Settings->setValue(SETTINGS_USERNAME, username);
+  m_Settings->setValue(SETTINGS_PASSWORD, hashedPassword);
+
+  QList<QueryItem> qList_QueryItems;
+  qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
+  qList_QueryItems.append(QueryItem(R_PARAM_EMAIL,    e_mail));
+  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, hashedPassword));
+
+  WebApiError error = m_WebApiCommand_Register.postRequest(qList_QueryItems);
+  if(error.type() != WebApiError::NONE)
+  {
+    m_LastErrorText = error.text();
+    return false;
+  }
+
+  return true;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QString User::username()
 {
   return m_Settings->value(SETTINGS_USERNAME, "").toString();
@@ -198,7 +228,27 @@ void User::slot_CommandLogout_Finished(const WebApiError &error)
 
 void User::slot_CommandRegister_Finished(const WebApiError &error)
 {
-  // TODO implement me
+  if(error.type() != WebApiError::NONE)
+  {
+    m_LastErrorText = error.text();
+    emit signal_RegistrationSuccessfull(false);
+    return;
+  }
+
+  if(   m_WebApiCommand_Register.resultParameter(A_PARAM_REGISTERED).toBool()
+     == false)
+  {
+    m_Settings->setValue(SETTINGS_USERNAME, QString());
+    m_Settings->setValue(SETTINGS_PASSWORD, QString());
+    m_Settings->sync();
+
+    m_LastErrorText = tr("Registration failed");
+    emit signal_RegistrationSuccessfull(false);
+    return;
+  }
+
+  m_Settings->sync();
+  emit signal_RegistrationSuccessfull(true);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

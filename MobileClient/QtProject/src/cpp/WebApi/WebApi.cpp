@@ -34,8 +34,12 @@
 //const QString WebApi::CONST::WEB_API_PATH("api/instaspots/instaspots.php");
 
 // Location of the web service (Hostpoint)
-const QString WebApi::CONST::WEB_API_HOST("http://spots.lowerclassclothing.com/");
-const QString WebApi::CONST::WEB_API_PATH("index.php");
+//const QString WebApi::CONST::WEB_API_HOST("http://spots.lowerclassclothing.com/");
+//const QString WebApi::CONST::WEB_API_PATH("index.php");
+
+// Location of the web service (Localhost)
+const QString WebApi::CONST::WEB_API_HOST("http://localhost/Symfony/web/app_dev.php/spots/");
+const QString WebApi::CONST::WEB_API_PATH("webservice");
 
 const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");
 const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
@@ -221,7 +225,7 @@ void WebApi::slot_QNetworkReply_finished()
   // Network error
   if ( replyNetworkError != QNetworkReply::NoError )
   {
-    Logger::error(QString("Network error"));
+    Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
                        QScriptValue());
     return;

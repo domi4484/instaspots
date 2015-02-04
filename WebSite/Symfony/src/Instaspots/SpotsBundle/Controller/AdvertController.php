@@ -2,6 +2,8 @@
 
 namespace Instaspots\SpotsBundle\Controller;
 
+use Instaspots\SpotsBundle\Entity\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,14 +27,17 @@ class AdvertController extends Controller
   
   public function viewAction($id)
   {
-    // $id vaut 5 si l'on a appelé l'URL /platform/advert/5
+    $repository = $this->getDoctrine()
+      ->getManager()
+      ->getRepository('InstaspotsSpotsBundle:User');
+    
+    $user = $repository->find($id);
+    
+    if (null === $user) {
+      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+    }
 
-    // Ici, on récupèrera depuis la base de données
-    // l'annonce correspondant à l'id $id.
-    // Puis on passera l'annonce à la vue pour
-    // qu'elle puisse l'afficher
-
-    return new Response("Affichage de l'annonce d'id : ".$id);
+    return new Response("Affichage de l'annonce d'id : ".$user->getUsername());
   }
   
   public function menuAction($limit)

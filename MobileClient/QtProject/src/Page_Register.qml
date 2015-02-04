@@ -1,10 +1,50 @@
+/********************************************************************
+ *                                                                 *
+ * InstaSpots                                                      *
+ *                                                                 *
+ * Author:       Damiano Lombardi                                  *
+ * Created:      30.12.2014                                        *
+ *                                                                 *
+ * Copiright (c) 2014 Damiano Lombardi                             *
+ *                                                                 *
+********************************************************************/
+
+// Qt imports ------------------------------
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import QtQuick.Dialogs 1.2
 
-Rectangle {
+// Project imports -------------------------
+import "qrc:/"
 
+BasicPage {
+
+    // BasicPage properties ----------------
     property string title: qsTr("Register")
 
+    MessageDialog{
+        id: messageDialog
+        title: qsTr('Registration error')
+    }
+
+    // Connections -------------------------
+    Connections {
+        target: wa_User
+        onSignal_RegistrationSuccessfull: {
+
+            button_Register.enabled = true;
+
+            // Register successfull
+            if(success == false)
+            {
+                messageDialog.text = qsTr("Registration failed.")
+                messageDialog.visible = true;
+                return;
+            }
+        }
+    }
+
+    // Gui ---------------------------------
     Column{
         anchors.fill: parent
         anchors.topMargin: 5
@@ -15,8 +55,6 @@ Rectangle {
             placeholderText: qsTr("Username")
             width: parent.width / 1.3
             anchors.horizontalCenter: parent.horizontalCenter
-
-            onTextChanged: checkUsername(text)
         }
         TextField {
             id: textField_EMail
@@ -38,21 +76,9 @@ Rectangle {
             text: qsTr("Register")
             anchors.horizontalCenter: parent.horizontalCenter
 
-            onClicked: wa_User.register(textField_Username.text,
-                                        textField_EMail.text,
-                                        textField_Password.text)
-        }
-    }
-
-    function checkUsername(username)
-    {
-        if(username.length > 0)
-        {
-            wa_User.checkUsername(username);
-        }
-        else
-        {
-            // todo nascondere il testo "Username non disponibile"
+            onClicked: wa_User.registration(textField_Username.text,
+                                            textField_EMail.text,
+                                            textField_Password.text)
         }
     }
 }

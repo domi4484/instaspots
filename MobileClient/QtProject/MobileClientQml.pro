@@ -70,4 +70,7 @@ HEADERS += \
 DISTFILES += \
     ../WebService/api.php \
     ../WebService/index.php \
-    ../WebService/lib.php
+    ../WebService/lib.php \
+    ../../WebService/api.php \
+    ../../WebService/index.php \
+    ../../WebService/lib.php
