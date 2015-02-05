@@ -3,6 +3,8 @@
 namespace Instaspots\SpotsBundle\Controller;
 
 use Instaspots\SpotsBundle\Entity\User;
+use Instaspots\SpotsBundle\Entity\Spot;
+use Instaspots\SpotsBundle\Entity\Picture;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,11 +55,11 @@ class WebserviceController extends Controller
       
       case "uploadPictureToSpot":
 	$this->uploadPictureToSpot($response,
-			    $_SESSION['id'       ],
-			    $_POST   ['id_spot'  ],
-			    $_POST   ['latitude' ],
-			    $_POST   ['longitude'],
-			    $_FILES  ['image'    ]);
+			           $_SESSION['id'       ],
+			           $_POST   ['id_spot'  ],
+			           $_POST   ['latitude' ],
+		                   $_POST   ['longitude'],
+			           $_FILES  ['image'    ]);
       break;
       
       case "uploadNewSpot":
@@ -154,7 +156,21 @@ class WebserviceController extends Controller
   {
     $response['error'] = 'Not yet implemented';
     return;
-  
+    
+//     $em = $this->getDoctrine()->getManager();
+//     $user = $em
+//       ->getRepository('InstaspotsSpotsBundle:User')
+//       ->find($id)
+//     ;
+// 
+//     if (null === $user) {
+//       $response['error'] = 'Authorization required';
+//       return;
+//     }
+//   
+
+
+
 //    $result = query("SELECT id, username FROM USERS WHERE username='%s' AND password='%s' limit 1",
 //                    $username,
 //                    $password);
@@ -269,99 +285,66 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function uploadNewSpot( &$response,
-                         $id,
-                         $latitude,
-                         $longitude,
-                         $name,
-                         $description,
-                         $photoData )
+                                   $id,
+                                   $latitude,
+                                   $longitude,
+                                   $name,
+                                   $description,
+                                   $photoData )
   {
-    //check if a user ID is passed
-    if (!$id)
-    {
+    $em = $this->getDoctrine()->getManager();
+
+    $user = $em
+      ->getRepository('InstaspotsSpotsBundle:User')
+      ->find($id)
+    ;
+
+    if (null === $user) {
       $response['error'] = 'Authorization required';
       return;
     }
   
-    //database link
-    global $link;
-    
-    // Open the transaction
-    $result = query("START TRANSACTION");
-    if ($result['error'])
-    {
-      $response['error'] = 'Error starting transaction';
-      return;
-    }
-    
-    // Insert spot in db
-    $result = query("INSERT INTO SPOTS(id_user, latitude, longitude, name, description) VALUES('%d', '%f', '%f', '%s', '%s')", 
-		    $id,
-		    $latitude,
-		    $longitude,
-		    $name,
-		    $description);
-    if ($result['error'])
-    {
-      // rollback transaction
-      mysqli_rollback($link);
-    
-      $response['error'] = 'Upload database problem. INSERT INTO SPOTS: '.$result['error'];
-      return;
-    } 
-      
-      
-    //get the last automatically generated ID
-    $spotId = mysqli_insert_id($link);
-    
-    
-    // Insert photo in db
-    $result = query("INSERT INTO PICTURES(id_user, id_spot, latitude, longitude) VALUES('%d', '%d', '%f', '%f')", 
-		    $id,
-		    $spotId,
-		    $latitude,
-		    $longitude);
-    if ($result['error'])
-    {
-      // rollback transaction
-      mysqli_rollback($link);
-    
-      $response['error'] = 'Upload database problem.'.$result['error'];
-      return;
-    }
-
-    //get the last automatically generated ID
-    $IdPhoto = mysqli_insert_id($link);
-      
+    // New spot
+    $spot = new Spot($name);
+    $spot->setUser($user);
+    $spot->setDescription($description);
+  
+    // New picture
+    $picture = new Picture();
+    $picture->setUser($user);
+    $picture->setSpot($spot);
+    $picture->setLatitude($latitude);
+    $picture->setLongitude($longitude);
+    $picture->setPublished(true);
+  
+  
     try 
     {
       checkPhotoData($photoData);
     }
     catch (RuntimeException $e) 
     {
-      // rollback transaction
-      mysqli_rollback($link);
-    
       $messaggio = $e->getMessage();
       $response['error'] = "Eccezione cacciata: $messaggio";
       return;
     }
+    
+    $em->persist($spot);
+    $em->persist($picture);
+    $em->flush();
   
     //move the temporarily stored file to a convenient location
-    if (!move_uploaded_file($photoData['tmp_name'], "upload/".$IdPhoto.".jpg"))
+    if (!move_uploaded_file($photoData['tmp_name'], "upload/".$picture->getId().".jpg"))
     {
-      // rollback transaction
-      mysqli_rollback($link);
-	
+      $em->remove($spot);
+      $em->remove($picture);
+      $em->flush();
       $response['error'] = 'Upload on server problem';
       return;
     }
     
     //file moved, all good, generate thumbnail
-    thumb("upload/".$IdPhoto.".jpg", 180);
-    
-    // Commit transaction
-    mysqli_commit($link);
+    thumb("upload/".$picture->getId().".jpg", 180);
     
     $response['successful'] = true;
   }

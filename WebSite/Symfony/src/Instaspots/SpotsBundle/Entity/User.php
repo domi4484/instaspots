@@ -61,7 +61,7 @@ class User
      *
      * @ORM\Column(name="reputation", type="integer")
      */
-    private $reputation;
+    private $reputation = 0;
 
     
    
@@ -73,8 +73,6 @@ class User
       $now = new \DateTime();
       $this->created = $now;
       $this->lastSeen = $now;
-      
-      $this->reputation = 0;
     }
     
     /**

@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Picture
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\Spot")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $spot;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -47,7 +59,7 @@ class Picture
      *
      * @ORM\Column(name="published", type="boolean")
      */
-    private $published = true;
+    private $published = false;
      
      
      
@@ -159,5 +171,51 @@ class Picture
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Instaspots\SpotsBundle\Entity\User $user
+     * @return Picture
+     */
+    public function setUser(\Instaspots\SpotsBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Instaspots\SpotsBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set spot
+     *
+     * @param \Instaspots\SpotsBundle\Entity\Spot $spot
+     * @return Picture
+     */
+    public function setSpot(\Instaspots\SpotsBundle\Entity\Spot $spot)
+    {
+        $this->spot = $spot;
+
+        return $this;
+    }
+
+    /**
+     * Get spot
+     *
+     * @return \Instaspots\SpotsBundle\Entity\Spot 
+     */
+    public function getSpot()
+    {
+        return $this->spot;
     }
 }
