@@ -96,7 +96,7 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function canregister( &$response,
-                       $username )
+                                 $username )
   {
     // check if username is not empty
     if (strlen($username) == 0)
@@ -104,16 +104,21 @@ class WebserviceController extends Controller
       $response['error'] = 'Empty username';
       return;
     }
+    
+    $repository = $this
+      ->getDoctrine()
+      ->getManager()
+      ->getRepository('InstaspotsSpotsBundle:User')
+    ;
+    
+    $listUsers = $repository->findBy(array('username' => $username));
 
-    // check if username exists
-    $login = query("SELECT username FROM USERS WHERE username='%s' limit 1",
-		  $username);
-
-    if (count($login['result']) > 0) 
+    if(empty($listUsers) == false)
     {
       $response['canregister'] = false;
       return;
     }
+
 
     $response['canregister'] = true;
   }
@@ -125,8 +130,14 @@ class WebserviceController extends Controller
                               $password,
                               $email )
   { 
-    // check if username exists
-    // canregister($username);
+    canregister($response,
+                $username);
+                
+    if($response['canregister'] == false)
+    {
+      $response['registered'] = false;
+      return;
+    }
 
     // Création de l'entité
     $user = new User();
