@@ -38,19 +38,19 @@ class WebserviceController extends Controller
       break;
       
       case "logout":
-	$this->logout();
+        $this->logout();
       break;
 
       case "canregister":
 	$this->canregister($response,
-		    $_POST['username']); 
+		           $_POST['username']); 
       break;
 
       case "register":
 	$this->register($response,
-		$_POST['username'],
-		$_POST['password'],
-		$_POST['email'   ]);
+		        $_POST['username'],
+		        $_POST['password'],
+		        $_POST['email'   ]);
       break;
       
       case "uploadPictureToSpot":
@@ -111,15 +111,14 @@ class WebserviceController extends Controller
       ->getRepository('InstaspotsSpotsBundle:User')
     ;
     
-    $listUsers = $repository->findBy(array('username' => $username));
+    $listUsers = $repository->findByUsername($username);
 
     if(empty($listUsers) == false)
     {
       $response['canregister'] = false;
       return;
     }
-
-
+    
     $response['canregister'] = true;
   }
 
@@ -130,8 +129,8 @@ class WebserviceController extends Controller
                               $password,
                               $email )
   { 
-    canregister($response,
-                $username);
+    $this->canregister($response,
+                       $username);
                 
     if($response['canregister'] == false)
     {
@@ -150,11 +149,10 @@ class WebserviceController extends Controller
  
      // Étape 1 : On « persiste » l'entité
      $em->persist($user);
-// 
-//     // Étape 2 : On « flush » tout ce qui a été persisté avant
+
+     // Étape 2 : On « flush » tout ce qui a été persisté avant
      $em->flush();
-// 
-//     
+
      $response['registered'] = true;
      return;
   }
@@ -164,46 +162,37 @@ class WebserviceController extends Controller
   private function login( &$response, 
                            $username, 
                            $password )
-  {
-    $response['error'] = 'Not yet implemented';
-    return;
-    
-//     $em = $this->getDoctrine()->getManager();
-//     $user = $em
-//       ->getRepository('InstaspotsSpotsBundle:User')
-//       ->find($id)
-//     ;
-// 
-//     if (null === $user) {
-//       $response['error'] = 'Authorization required';
-//       return;
-//     }
-//   
-
-
-
-//    $result = query("SELECT id, username FROM USERS WHERE username='%s' AND password='%s' limit 1",
-//                    $username,
-//                    $password);
+  {    
+    $repository = $this->getDoctrine()
+                       ->getManager()
+                       ->getRepository('InstaspotsSpotsBundle:User');
   
-//     if (count($result['result']) <= 0)
-//     {
-      //not authorized
-//       $response['authentication'] = false;
-//       return;
-//     } 
-// 
-//     //authorized
-//     $_SESSION['id'] = $result['result'][0]['id'];
-//     $response['authentication'] = true;
+    $listUsers = $repository->findBy(array('username' => $username,
+                                           'password' => $password));
+    
+    if(empty($listUsers))
+    {
+      $response['authentication'] = false;
+      return;
+    }
+    
+    $user = current($listUsers);
+    $user->setLastSeen(new \DateTime());
+    $this->getDoctrine()->getManager()->flush();
+ 
+    //authorized
+    // TODO
+    // $_SESSION['id'] = $result['result'][0]['id'];
+    $response['authentication'] = true;
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function logout()
   {
-    $_SESSION = array();
-    session_destroy();
+  // TODO
+    //$_SESSION = array();
+    //session_destroy();
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
