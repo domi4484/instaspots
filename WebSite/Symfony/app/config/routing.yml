@@ -6,3 +6,13 @@ instaspots_spots:
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+    
+login:
+    pattern:  /login
+    defaults: { _controller: InstaspotsUserBundle:Security:login }
+    
+login_check:
+    pattern: /login_check
+    
+logout:
+    pattern: /logout
