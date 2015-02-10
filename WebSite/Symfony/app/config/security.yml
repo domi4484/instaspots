@@ -4,6 +4,7 @@ security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+        Instaspots\UserBundle\Entity\User: plaintext
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -12,11 +13,8 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        mainProvider:
+            entity: { class: Instaspots\UserBundle\Entity\User, property: username }
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -29,10 +27,11 @@ security:
         main:
             pattern: ^/
             anonymous: true
-            provider: in_memory
+            provider: mainProvider
             form_login:
                 login_path: login
                 check_path: login_check
+                default_target_path: /spots
             logout:
                 path:   logout
                 target: /spots

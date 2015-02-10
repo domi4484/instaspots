@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Spot
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Instaspots\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -200,5 +200,28 @@ class Spot
     public function getScore()
     {
         return $this->score;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Instaspots\UserBundle\Entity\User $user
+     * @return Spot
+     */
+    public function setUser(\Instaspots\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Instaspots\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

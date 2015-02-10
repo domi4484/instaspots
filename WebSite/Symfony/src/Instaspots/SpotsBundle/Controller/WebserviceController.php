@@ -2,7 +2,7 @@
 
 namespace Instaspots\SpotsBundle\Controller;
 
-use Instaspots\SpotsBundle\Entity\User;
+use Instaspots\UserBundle\Entity\User;
 use Instaspots\SpotsBundle\Entity\Spot;
 use Instaspots\SpotsBundle\Entity\Picture;
 

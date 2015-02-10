@@ -1,6 +1,6 @@
 <?php
 
-namespace Instaspots\SpotsBundle\Entity;
+namespace Instaspots\UserBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

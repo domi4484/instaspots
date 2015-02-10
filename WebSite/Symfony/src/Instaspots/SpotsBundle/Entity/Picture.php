@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Picture
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Instaspots\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -176,10 +176,10 @@ class Picture
     /**
      * Set user
      *
-     * @param \Instaspots\SpotsBundle\Entity\User $user
+     * @param \Instaspots\UserBundle\Entity\User $user
      * @return Picture
      */
-    public function setUser(\Instaspots\SpotsBundle\Entity\User $user)
+    public function setUser(\Instaspots\UserBundle\Entity\User $user)
     {
         $this->user = $user;
 
@@ -189,7 +189,7 @@ class Picture
     /**
      * Get user
      *
-     * @return \Instaspots\SpotsBundle\Entity\User 
+     * @return \Instaspots\UserBundle\Entity\User 
      */
     public function getUser()
     {

@@ -1,16 +1,18 @@
 <?php
 
-namespace Instaspots\SpotsBundle\Entity;
+namespace Instaspots\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="Instaspots\SpotsBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="Instaspots\UserBundle\Entity\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -38,7 +40,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=45)
+     * @ORM\Column(name="username", type="string", length=45, unique=true)
      */
     private $username;
 
@@ -49,6 +51,13 @@ class User
      */
     private $password;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
+    
     /**
      * @var string
      *
@@ -73,6 +82,10 @@ class User
       $now = new \DateTime();
       $this->created = $now;
       $this->lastSeen = $now;
+    }
+    
+    public function eraseCredentials()
+    {
     }
     
     /**
@@ -221,5 +234,51 @@ class User
     public function getReputation()
     {
         return $this->reputation;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array 
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
     }
 }

@@ -5,11 +5,11 @@ if [ $UID -ne 0 ]; then # Run as root, of course.
   exit -1
 fi
 
-echo 'Remove cache...'
-rm -rf /var/www/html/Symfony/app/cache/*
-
 echo 'Copy files...'
 cp -r Symfony/* /var/www/html/Symfony/
+
+echo 'Remove cache...'
+rm -rf /var/www/html/Symfony/app/cache/*
 
 echo 'Change permissions...'
 chmod -R 777 /var/www/html/Symfony/app/cache/
