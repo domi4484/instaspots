@@ -32,6 +32,11 @@
     <hr>
 
     <footer>
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+      {% else %}
+        <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+      {% endif %}
       <p>The red coping company © {{ 'now'|date('Y') }}.</p>
     </footer>
   </div>

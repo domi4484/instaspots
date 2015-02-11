@@ -3,16 +3,14 @@
 namespace Instaspots\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
  *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="Instaspots\UserBundle\Entity\UserRepository")
+ * @ORM\Entity
  */
-class User implements UserInterface
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -21,7 +19,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
@@ -31,63 +29,22 @@ class User implements UserInterface
     private $created;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="lastSeen", type="datetime")
-     */
-    private $lastSeen;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=45, unique=true)
-     */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=150)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    private $salt;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=50)
-     */
-    private $email;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="reputation", type="integer")
      */
     private $reputation = 0;
 
-    
-   
+
     /**
      * Constructor
      */
     public function __construct()
     {
-      $now = new \DateTime();
-      $this->created = $now;
-      $this->lastSeen = $now;
+        $this->created = new \DateTime();
     }
-    
-    public function eraseCredentials()
-    {
-    }
-    
+
+
     /**
      * Get id
      *
@@ -122,98 +79,6 @@ class User implements UserInterface
     }
 
     /**
-     * Set lastSeen
-     *
-     * @param \DateTime $lastSeen
-     * @return User
-     */
-    public function setLastSeen($lastSeen)
-    {
-        $this->lastSeen = $lastSeen;
-
-        return $this;
-    }
-
-    /**
-     * Get lastSeen
-     *
-     * @return \DateTime 
-     */
-    public function getLastSeen()
-    {
-        return $this->lastSeen;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string 
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
      * Set reputation
      *
      * @param integer $reputation
@@ -234,51 +99,5 @@ class User implements UserInterface
     public function getReputation()
     {
         return $this->reputation;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     * @return User
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * Set roles
-     *
-     * @param array $roles
-     * @return User
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Get roles
-     *
-     * @return array 
-     */
-    public function getRoles()
-    {
-        return array('ROLE_USER');
     }
 }
