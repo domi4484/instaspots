@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Picture
  *
- * @ORM\Table(name="picture")
+ * @ORM\Table(name="Picture")
  * @ORM\Entity(repositoryClass="Instaspots\SpotsBundle\Entity\PictureRepository")
  */
 class Picture

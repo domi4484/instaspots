@@ -103,7 +103,7 @@ bool User::login(const QString &username,
 {
   m_LastErrorText = "";
 
-  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_512).toHex();
+  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
   m_Settings->setValue(SETTINGS_USERNAME, username);
   m_Settings->setValue(SETTINGS_PASSWORD, hashedPassword);
