@@ -1,5 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <kml xmlns='http://www.opengis.net/kml/2.2'>
+
+Coira Montalin
+Coira Dietro il selig
+Coira due scalini cerati
+Coira stagno
+Coira theaterplatz
+Sils snakerun
+Herzblut tour Italia
+Spot vicino a Baden
+Götzis
+Francoforte piazza con i mini manual pad e quarterini in dadi
+Francoforte gradinata portici railslide
+
 	<Document>
 		<name>My Skate Map</name>
 		<description><![CDATA[Rosso: Skateparks
@@ -1229,29 +1242,11 @@ flat buono]]></description>
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-22</styleUrl>
-				<name>Coira - RadioRumantch</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.534408000000003,46.851921,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
 				<name>Coira - Scuola olimpica</name>
 				<ExtendedData>
 				</ExtendedData>
 				<Point>
 					<coordinates>9.524572,46.855719,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
-				<name>Chur - Theaterpatz</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.533483,46.851446,0.0</coordinates>
 				</Point>
 			</Placemark>
 			<Placemark>
