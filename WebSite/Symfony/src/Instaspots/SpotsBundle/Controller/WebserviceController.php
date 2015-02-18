@@ -18,7 +18,7 @@ class WebserviceController extends Controller
     {
       return new JsonResponse(array('error' => 'Not a post request'));
     }
-    
+
     $command = $request->request->get('command');
     $response = array ('error'      => "",
                        'command'    => $command);
@@ -42,8 +42,8 @@ class WebserviceController extends Controller
       break;
 
       case "canregister":
-	$this->canregister($response,
-		           $_POST['username']); 
+	    $this->canregister($response,
+		                 $_POST['username']);
       break;
 
       case "register":
@@ -162,28 +162,26 @@ class WebserviceController extends Controller
   private function login( &$response, 
                            $username, 
                            $password )
-  {    
+  {
     $repository = $this->getDoctrine()
-                       ->getManager()
-                       ->getRepository('InstaspotsSpotsBundle:User');
-  
-    $listUsers = $repository->findBy(array('username' => $username,
-                                           'password' => $password));
-    
+                         ->getManager()
+                         ->getRepository('InstaspotsUserBundle:User');
+
+    $listUsers = $repository->findBy(array('username' => $username));
+
     if(empty($listUsers))
     {
       $response['authentication'] = false;
       return;
     }
-    
     $user = current($listUsers);
-    $user->setLastSeen(new \DateTime());
-    $this->getDoctrine()->getManager()->flush();
- 
-    //authorized
-    // TODO
-    // $_SESSION['id'] = $result['result'][0]['id'];
-    $response['authentication'] = true;
+
+    $factory = $this->get('security.encoder_factory');
+    $encoder = $factory->getEncoder($user);
+
+    $response['authentication'] = ($encoder->isPasswordValid($user->getPassword(),
+                                                             $password,
+                                                             $user->getSalt())) ? "true" : "false";
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

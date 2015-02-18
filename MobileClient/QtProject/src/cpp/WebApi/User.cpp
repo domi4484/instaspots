@@ -103,14 +103,14 @@ bool User::login(const QString &username,
 {
   m_LastErrorText = "";
 
-  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
+//  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
   m_Settings->setValue(SETTINGS_USERNAME, username);
-  m_Settings->setValue(SETTINGS_PASSWORD, hashedPassword);
+  m_Settings->setValue(SETTINGS_PASSWORD, password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
-  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, hashedPassword));
+  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, password));
 
   WebApiError error = m_WebApiCommand_Login.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
@@ -157,15 +157,15 @@ bool User::registration(const QString &username,
 {
   m_LastErrorText = "";
 
-  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha3_512).toHex();
+//  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
   m_Settings->setValue(SETTINGS_USERNAME, username);
-  m_Settings->setValue(SETTINGS_PASSWORD, hashedPassword);
+  m_Settings->setValue(SETTINGS_PASSWORD, password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
   qList_QueryItems.append(QueryItem(R_PARAM_EMAIL,    e_mail));
-  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, hashedPassword));
+  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, password));
 
   WebApiError error = m_WebApiCommand_Register.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
