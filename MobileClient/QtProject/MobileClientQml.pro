@@ -77,4 +77,8 @@ DISTFILES += \
     ../../WebSite/Symfony/app/config/config_dev.yml \
     ../../WebSite/Symfony/app/config/parameters.yml \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/WebserviceController.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/AdvertController.php
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/AdvertController.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/PictureRepository.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/Picture.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/Spot.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/SpotRepository.php

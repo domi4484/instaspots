@@ -80,8 +80,8 @@ class WebserviceController extends Controller
 
       case "getNearbySpots":
 	$this->getNearbySpots($response,
-		      $_POST   ['latitude'   ],
-		      $_POST   ['longitude'  ]);
+                              $request->request->get('latitude' ),
+                              $request->request->get('longitude'));
       break;
     
       default:
@@ -149,22 +149,6 @@ class WebserviceController extends Controller
                          $superadmin);
 
     $response['registered'] = true;
-
-//    // Création de l'entité
-//    $user = new User();
-//    $user->setUsername($username);
-//    $user->setPassword($password);
-//    $user->setEmail($email);
-//
-//     // On récupère l'EntityManager
-//     $em = $this->getDoctrine()->getManager();
-//
-//     // Étape 1 : On « persiste » l'entité
-//     $em->persist($user);
-//
-//     // Étape 2 : On « flush » tout ce qui a été persisté avant
-//     $em->flush();
-
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -361,33 +345,29 @@ class WebserviceController extends Controller
 
   private function getPictures( &$response )
   {
-    $result = query("SELECT id, id_spot, id_user, created FROM PICTURES ORDER BY created DESC");
 
-    if ($result['error'])
-    { 
-      $response['error'] = 'Select query failed';
-      return;
-    }
+    $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsSpotsBundle:Picture');
   
-    $pictures = $result['result'];
-    foreach($pictures as &$picture)
+
+    $jPictures = array();
+    foreach($repository->getNews() as &$picture)
     {
-      $query_spot = query("SELECT name, description, score, latitude, longitude, diameter_m FROM SPOTS WHERE id='%d'",
-                          $picture['id_spot']);
-      $spot = $query_spot['result'][0];
-      $picture['name'       ] = $spot['name'       ];
-      $picture['description'] = $spot['description'];
-      $picture['score'      ] = $spot['score'      ];
-      $picture['latitude'   ] = $spot['latitude'   ];
-      $picture['longitude'  ] = $spot['longitude'  ];
-      $picture['diameter_m' ] = $spot['diameter_m' ];
-    
-      $query_user = query("SELECT username FROM USERS WHERE id='%d'",
-                          $picture['id_user']);
-      $picture['username'] = $query_user['result'][0]['username'];
+      $jPicture = array();
+      $jPicture['latitude']    = $picture->getLatitude();
+      $jPicture['longitude'  ] = $picture->getLongitude();
+
+      $jPicture['name'       ] = $picture->getSpot()->getName();
+      $jPicture['description'] = $picture->getSpot()->getDescription();
+      $jPicture['score'      ] = $picture->getSpot()->getScore();
+
+      $jPicture['username'] = $picture->getUser()->getUsername();
+
+      $jPictures[] = $jPicture;
     }
 
-    $response['pictures'] = $pictures;
+    $response['pictures'] = $jPictures;
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

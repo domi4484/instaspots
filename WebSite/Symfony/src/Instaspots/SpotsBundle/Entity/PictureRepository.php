@@ -12,4 +12,19 @@ use Doctrine\ORM\EntityRepository;
  */
 class PictureRepository extends EntityRepository
 {
+
+  public function getNews()
+  {
+    $qb = $this->createQueryBuilder('p');
+
+    $qb->orderBy('p.created', 'DESC');
+
+    $qb->setMaxResults(20);
+
+    return $qb->getQuery()
+                ->getResult();
+  }
+
 }
+
+
