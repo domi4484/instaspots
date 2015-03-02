@@ -12,8 +12,6 @@ class AdvertController extends Controller
   public function indexAction()
   {
     $em = $this->getDoctrine()->getManager();
-    
-    
   
     return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig', 
                          array('listAdverts' => array()));

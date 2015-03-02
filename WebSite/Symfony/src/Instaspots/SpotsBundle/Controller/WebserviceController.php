@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use FOS\UserBundle\Util\UserManipulator;
+
 class WebserviceController extends Controller
 {
   public function webserviceAction(Request $request)
@@ -43,14 +45,14 @@ class WebserviceController extends Controller
 
       case "canregister":
 	    $this->canregister($response,
-		                 $_POST['username']);
+                               $request->request->get('username'));
       break;
 
       case "register":
 	$this->register($response,
-		        $_POST['username'],
-		        $_POST['password'],
-		        $_POST['email'   ]);
+                        $request->request->get('username'),
+                        $request->request->get('password'),
+                        $request->request->get('email'   ));
       break;
       
       case "uploadPictureToSpot":
@@ -105,11 +107,9 @@ class WebserviceController extends Controller
       return;
     }
     
-    $repository = $this
-      ->getDoctrine()
-      ->getManager()
-      ->getRepository('InstaspotsSpotsBundle:User')
-    ;
+    $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsUserBundle:User');
     
     $listUsers = $repository->findByUsername($username);
 
@@ -138,23 +138,33 @@ class WebserviceController extends Controller
       return;
     }
 
-    // Création de l'entité
-    $user = new User();
-    $user->setUsername($username);
-    $user->setPassword($password);
-    $user->setEmail($email);
+    $manipulator = $this->container->get('fos_user.util.user_manipulator');
 
-     // On récupère l'EntityManager
-     $em = $this->getDoctrine()->getManager();
- 
-     // Étape 1 : On « persiste » l'entité
-     $em->persist($user);
+    $active = true;
+    $superadmin = false;
+    $manipulator->create($username,
+                         $password,
+                         $email,
+                         $active,
+                         $superadmin);
 
-     // Étape 2 : On « flush » tout ce qui a été persisté avant
-     $em->flush();
+    $response['registered'] = true;
 
-     $response['registered'] = true;
-     return;
+//    // Création de l'entité
+//    $user = new User();
+//    $user->setUsername($username);
+//    $user->setPassword($password);
+//    $user->setEmail($email);
+//
+//     // On récupère l'EntityManager
+//     $em = $this->getDoctrine()->getManager();
+//
+//     // Étape 1 : On « persiste » l'entité
+//     $em->persist($user);
+//
+//     // Étape 2 : On « flush » tout ce qui a été persisté avant
+//     $em->flush();
+
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
