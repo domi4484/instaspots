@@ -1,7 +1,7 @@
 {% extends "InstaspotsSpotsBundle::layout.html.twig" %}
 
 {% block title %}
-  Accueil - {{ parent() }}
+  Home - {{ parent() }}
 {% endblock %}
 
 {% block ocplatform_body %}
@@ -9,13 +9,13 @@
   <h2>Latest spots</h2>
 
   <ul>
-    {% for advert in listAdverts %}
+    {% for picture in listPictures %}
       <li>
-        <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
-          {{ advert.title }}
+        <a href="{{ path('instaspots_spots_view', {'id': picture.id}) }}">
+          {{ picture.spot.name }}
         </a>
-        par {{ advert.author }},
-        le {{ advert.date|date('d/m/Y') }}
+        par {{ picture.user.username }},
+        le {{ picture.created|date('d/m/Y') }}
       </li>
     {% else %}
       <li>No spots found</li>

@@ -218,4 +218,11 @@ class Picture
     {
         return $this->spot;
     }
+
+    public function getUrl()
+    {
+        return "http://localhost/Symfony/web/pictures/".$this->id.".jpg";
+    }
 }
+
+

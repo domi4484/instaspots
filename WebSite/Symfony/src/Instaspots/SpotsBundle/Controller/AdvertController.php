@@ -11,10 +11,14 @@ class AdvertController extends Controller
 {
   public function indexAction()
   {
-    $em = $this->getDoctrine()->getManager();
-  
+    $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsSpotsBundle:Picture');
+
+    $pictures = $repository->getNews();
+
     return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig', 
-                         array('listAdverts' => array()));
+                         array('listPictures' => $pictures));
   }
   
   public function downloadAction()

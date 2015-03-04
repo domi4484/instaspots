@@ -345,18 +345,18 @@ class WebserviceController extends Controller
 
   private function getPictures( &$response )
   {
-
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Picture');
-  
 
     $jPictures = array();
     foreach($repository->getNews() as &$picture)
     {
       $jPicture = array();
+      $jPicture['id']          = $picture->getId();
       $jPicture['latitude']    = $picture->getLatitude();
       $jPicture['longitude'  ] = $picture->getLongitude();
+      $jPicture['url']         = $picture->getUrl();
 
       $jPicture['name'       ] = $picture->getSpot()->getName();
       $jPicture['description'] = $picture->getSpot()->getDescription();
@@ -373,10 +373,14 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function getNearbySpots( &$response,
-                          $latitude,
-                          $longitude)
+                                    $latitude,
+                                    $longitude )
   {
-    $result = query("SELECT id, name, description, picture_url1, picture_url2, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
+    $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsSpotsBundle:Spot');
+
+    $result = query("SELECT id, name, description, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
                     $latitude,
                     $longitude);
 
@@ -388,8 +392,7 @@ class WebserviceController extends Controller
 
     $response['spots'] = $result['result'];
 
-    //picture_url_1
-    //picture_url_2
+
   } 
 }
 

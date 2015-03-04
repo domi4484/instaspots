@@ -26,6 +26,7 @@ const QString PictureBase::A_ARRAY_PICTURES ("pictures");
 const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_ID          ("id");
 const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_ID_USER     ("id_user");
 const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_ID_SPOT     ("id_spot");
+const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_URL         ("url");
 const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_USERNAME    ("username");
 const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_NAME        ("name");
 const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION ("description");
@@ -87,6 +88,7 @@ void PictureBase::setResult(const WebApiError &error,
       Picture *picture = new Picture(id,
                                      qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_ID_USER).toInteger(),
                                      qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInteger(),
+                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_URL).toString(),
                                      qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_USERNAME).toString(),
                                      qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_NAME).toString(),
                                      qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString(),

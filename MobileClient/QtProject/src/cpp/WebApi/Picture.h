@@ -44,7 +44,7 @@ public:
   explicit Picture(const Picture &other);
   explicit Picture(int id,
                    int idUser,
-                   int idSpot, QString username,
+                   int idSpot, QString url, QString username,
                    QString name,
                    QString description, QDateTime created,
                    QObject *parent = 0);
@@ -68,24 +68,17 @@ signals:
   void signal_DownloadThumbFinished();
   void signal_DownloadFinished();
 
-private slots:
-
-  void slot_DownloadThumbFinished(const WebApiError &);
-  void slot_DownloadFinished();
-
 private:
 
   int m_Id;
   int m_IdUser;
   int m_IdSpot;
+  QString m_Url;
   QString m_Username;
   QString m_SpotName;
   QString m_SpotDescription;
 
   QDateTime m_Created;
-
-  QPixmap m_Thumb;
-  QPixmap m_Pixmap;
 
   WebApiCommand *m_WebApiCommand;
 

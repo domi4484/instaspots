@@ -68,9 +68,6 @@ HEADERS += \
     src/cpp/HelperClasses/LocationManager.h
 
 DISTFILES += \
-    ../WebService/api.php \
-    ../WebService/index.php \
-    ../WebService/lib.php \
     ../../WebService/api.php \
     ../../WebService/index.php \
     ../../WebService/lib.php \
@@ -81,4 +78,9 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/PictureRepository.php \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/Picture.php \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/Spot.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/SpotRepository.php
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/SpotRepository.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/download.html.twig \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/index.html.twig \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/menu.html.twig \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/routing.yml \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml

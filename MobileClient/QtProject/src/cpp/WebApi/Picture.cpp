@@ -21,12 +21,11 @@ Picture::Picture(QObject *parent) :
   m_Id         (-1),
   m_IdUser     (-1),
   m_IdSpot     (-1),
+  m_Url            (""),
   m_Username       (""),
   m_SpotName       (""),
   m_SpotDescription(""),
   m_Created        (),
-  m_Thumb          (QPixmap()),
-  m_Pixmap         (QPixmap()),
   m_WebApiCommand  (NULL)
 {
 }
@@ -36,12 +35,11 @@ Picture::Picture(const Picture &other) :
   m_Id         (other.m_Id),
   m_IdUser     (other.m_IdUser),
   m_IdSpot     (other.m_IdSpot),
+  m_Url            (other.m_Url),
   m_Username       (other.m_Username),
   m_SpotName       (other.m_SpotName),
   m_SpotDescription(other.m_SpotDescription),
   m_Created        (other.m_Created),
-  m_Thumb          (other.m_Thumb),
-  m_Pixmap         (other.m_Pixmap),
   m_WebApiCommand  (NULL)
 {
 
@@ -50,6 +48,7 @@ Picture::Picture(const Picture &other) :
 Picture::Picture(int id,
                  int idUser,
                  int idSpot,
+                 QString url,
                  QString username,
                  QString name,
                  QString description,
@@ -59,12 +58,11 @@ Picture::Picture(int id,
   m_Id         (id),
   m_IdUser     (idUser),
   m_IdSpot     (idSpot),
+  m_Url            (url),
   m_Username       (username),
   m_SpotName       (name),
   m_SpotDescription(description),
   m_Created        (created),
-  m_Thumb          (QPixmap()),
-  m_Pixmap         (QPixmap()),
   m_WebApiCommand  (NULL)
 {
 }
@@ -87,12 +85,11 @@ Picture &Picture::operator=(const Picture &other)
   m_Id              = other.m_Id;
   m_IdUser          = other.m_IdUser;
   m_IdSpot          = other.m_IdSpot;
+  m_Url             = other.m_Url;
   m_Username        = other.m_Username;
   m_SpotName        = other.m_SpotName;
   m_SpotDescription = other.m_SpotDescription;
   m_Created         = other.m_Created;
-  m_Thumb           = other.m_Thumb;
-  m_Pixmap          = other.m_Pixmap;
   return *this;
 }
 
@@ -124,10 +121,7 @@ QVariant Picture::pictureRole(PictureRoles role) const
   return m_Created;
   break;
   case RoleUrl:
-  return WebApi::CONST::WEB_API_HOST
-         + "upload/"
-         + QString::number(m_Id)
-         + ".jpg";
+  return m_Url;
   break;
   }
   return "";
@@ -150,24 +144,4 @@ QHash<int, QByteArray> Picture::roleNames()
   return roles;
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Picture::slot_DownloadThumbFinished(const WebApiError &)
-{
-  QByteArray byteArray = m_WebApiCommand->rawResult();
-
-  m_Thumb.loadFromData(byteArray,
-                       "JPG");
-
-  emit signal_DownloadThumbFinished();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Picture::slot_DownloadFinished()
-{
-
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
 

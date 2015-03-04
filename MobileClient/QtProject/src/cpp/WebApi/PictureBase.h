@@ -63,6 +63,7 @@ signals:
     static const QString A_ARRAY_PICTURES_ELEMENT_ID;
     static const QString A_ARRAY_PICTURES_ELEMENT_ID_USER;
     static const QString A_ARRAY_PICTURES_ELEMENT_ID_SPOT;
+    static const QString A_ARRAY_PICTURES_ELEMENT_URL;
     static const QString A_ARRAY_PICTURES_ELEMENT_USERNAME;
     static const QString A_ARRAY_PICTURES_ELEMENT_NAME;
     static const QString A_ARRAY_PICTURES_ELEMENT_DESCRIPTION;
