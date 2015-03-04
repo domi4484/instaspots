@@ -108,7 +108,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   // Network error
   if ( replyNetworkError != QNetworkReply::NoError )
   {
-    Logger::error(QString("Network error"));
+    Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
                        QScriptValue());
     return;
@@ -181,7 +181,7 @@ void WebApi::slot_QNetworkReply_downloadProgress(qint64 received,
   // Network error
   if ( replyNetworkError != QNetworkReply::NoError )
   {
-    Logger::error(QString("Network error"));
+    Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
                        QScriptValue());
     return;

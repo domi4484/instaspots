@@ -221,7 +221,9 @@ class Picture
 
     public function getUrl()
     {
-        return "http://localhost/Symfony/web/pictures/".$this->id.".jpg";
+      return sprintf('http://localhost/Symfony/web/pictures/%s/%s.jpg',
+                     $this->created->format('Y/m/d'),
+                     $this->id);
     }
 }
 

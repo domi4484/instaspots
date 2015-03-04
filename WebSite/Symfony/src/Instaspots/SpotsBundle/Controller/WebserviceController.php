@@ -66,12 +66,11 @@ class WebserviceController extends Controller
       
       case "uploadNewSpot":
 	$this->uploadNewSpot($response,
-		      $_SESSION['id'         ],
-		      $_POST   ['latitude'   ],
-		      $_POST   ['longitude'  ],
-		      $_POST   ['name'       ],
-		      $_POST   ['description'],
-		      $_FILES  ['image'      ]);
+                         $request->request->get('latitude'   ),
+		                 $request->request->get('longitude'  ),
+		                 $request->request->get('name'       ),
+	       	             $request->request->get('description'),
+		                 $_FILES  ['image'      ]);
       break;
       
       case "getPictures":
@@ -277,22 +276,26 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function uploadNewSpot( &$response,
-                                   $id,
                                    $latitude,
                                    $longitude,
                                    $name,
                                    $description,
                                    $photoData )
   {
-    $em = $this->getDoctrine()->getManager();
+      if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+      {
+         $response['error'] = 'Authentication required';
+          return;
+      }
 
-    $user = $em
-      ->getRepository('InstaspotsSpotsBundle:User')
-      ->find($id)
-    ;
+      $user = $this->getUser();
+
+
+      $response['useratore'] = $user->getId();
+      return;
 
     if (null === $user) {
-      $response['error'] = 'Authorization required';
+      $response['error'] = 'Authentication required';
       return;
     }
   
