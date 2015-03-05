@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 use FOS\UserBundle\Util\UserManipulator;
 
 class WebserviceController extends Controller
@@ -171,6 +174,15 @@ class WebserviceController extends Controller
 
     $factory = $this->get('security.encoder_factory');
     $encoder = $factory->getEncoder($user);
+    
+    // Creo il token
+    $token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
+    $this->get("security.context")->setToken($token); //now the user is logged in
+     
+    //now dispatch the login event
+    $request = $this->get("request");
+    $event = new InteractiveLoginEvent($request, $token);
+    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
     $response['authentication'] = ($encoder->isPasswordValid($user->getPassword(),
                                                              $password,
