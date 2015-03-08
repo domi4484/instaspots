@@ -294,22 +294,13 @@ class WebserviceController extends Controller
                                    $description,
                                    $photoData )
   {
-      if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-      {
-         $response['error'] = 'Authentication required';
-          return;
-      }
-
-      $user = $this->getUser();
-
-
-      $response['useratore'] = $user->getId();
-      return;
-
-    if (null === $user) {
-      $response['error'] = 'Authentication required';
-      return;
+    // Get current user
+    if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+    {
+       $response['error'] = 'Authentication required';
+       return;
     }
+    $user = $this->getUser();
   
     // New spot
     $spot = new Spot($name);
@@ -324,8 +315,9 @@ class WebserviceController extends Controller
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
   
-  
-    try 
+    return;
+
+    try
     {
       checkPhotoData($photoData);
     }
@@ -338,17 +330,15 @@ class WebserviceController extends Controller
     
     $em->persist($spot);
     $em->persist($picture);
-    $em->flush();
   
     //move the temporarily stored file to a convenient location
     if (!move_uploaded_file($photoData['tmp_name'], "upload/".$picture->getId().".jpg"))
     {
-      $em->remove($spot);
-      $em->remove($picture);
-      $em->flush();
       $response['error'] = 'Upload on server problem';
       return;
     }
+
+    $em->flush();
     
     //file moved, all good, generate thumbnail
     thumb("upload/".$picture->getId().".jpg", 180);
@@ -408,6 +398,69 @@ class WebserviceController extends Controller
     $response['spots'] = $result['result'];
 
 
-  } 
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  //loads up the source image, resizes it and saves with -thumb in the file name
+  private function thumb($srcFile, $sideInPx)
+  {
+    $image = imagecreatefromjpeg($srcFile);
+    $width = imagesx($image);
+    $height = imagesy($image);
+
+    $thumb = imagecreatetruecolor($sideInPx, $sideInPx);
+
+    imagecopyresized($thumb,$image,0,0,0,0,$sideInPx,$sideInPx,$width,$height);
+
+    imagejpeg($thumb, str_replace(".jpg","-thumb.jpg",$srcFile), 85);
+
+    imagedestroy($thumb);
+    imagedestroy($image);
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  private function checkPhotoData($photoData)
+  {
+    // Undefined | Multiple Files | $_FILES Corruption Attack
+    // If this request falls under any of them, treat it invalid.
+    if (!isset($photoData['error']))
+      throw new RuntimeException('Invalid parameters 1.');
+
+    if (is_array($photoData['error']))
+      throw new RuntimeException('Invalid parameters 2.');
+
+    // Check $_FILES['upfile']['error'] value.
+    switch ($photoData['error'])
+    {
+      case UPLOAD_ERR_OK:
+        break;
+      case UPLOAD_ERR_NO_FILE:
+        throw new RuntimeException('No file sent.');
+      case UPLOAD_ERR_INI_SIZE:
+      case UPLOAD_ERR_FORM_SIZE:
+        throw new RuntimeException('Exceeded filesize limit.');
+      default:
+        throw new RuntimeException('Unknown errors.');
+    }
+
+    // You should also check filesize here.
+    if ($photoData['size'] > 10000000)
+      throw new RuntimeException('Exceeded filesize limit.');
+
+    // DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
+    // Check MIME Type by yourself.
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    if (false === $ext = array_search($finfo->file($photoData['tmp_name']),
+                                      array('jpg' => 'image/jpeg',
+                                            'png' => 'image/png',
+                                            'gif' => 'image/gif'),
+                                      true))
+    {
+      throw new RuntimeException('Invalid file format.');
+    }
+  }
 }
 
