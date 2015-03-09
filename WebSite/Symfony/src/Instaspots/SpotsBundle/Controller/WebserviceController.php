@@ -9,6 +9,8 @@ use Instaspots\SpotsBundle\Entity\Picture;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\FileBag;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -24,7 +26,7 @@ class WebserviceController extends Controller
       return new JsonResponse(array('error' => 'Not a post request'));
     }
 
-    $command = $request->request->get('command');
+    $command = $request->get('command');
     $response = array ('error'      => "",
                        'command'    => $command);
                        
@@ -38,8 +40,8 @@ class WebserviceController extends Controller
     {
       case "login": 
         $this->login($response,
-                     $request->request->get('username'), 
-                     $request->request->get('password')); 
+                     $request->get('username'), 
+                     $request->get('password')); 
       break;
       
       case "logout":
@@ -48,14 +50,14 @@ class WebserviceController extends Controller
 
       case "canregister":
 	    $this->canregister($response,
-                               $request->request->get('username'));
+                               $request->get('username'));
       break;
 
       case "register":
 	$this->register($response,
-                        $request->request->get('username'),
-                        $request->request->get('password'),
-                        $request->request->get('email'   ));
+                        $request->get('username'),
+                        $request->get('password'),
+                        $request->get('email'   ));
       break;
       
       case "uploadPictureToSpot":
@@ -69,11 +71,12 @@ class WebserviceController extends Controller
       
       case "uploadNewSpot":
 	$this->uploadNewSpot($response,
-                         $request->request->get('latitude'   ),
-		                 $request->request->get('longitude'  ),
-		                 $request->request->get('name'       ),
-	       	             $request->request->get('description'),
-		                 $_FILES  ['image'      ]);
+                             $request->get('latitude'   ),
+		             $request->get('longitude'  ),
+		             $request->get('name'       ),
+	       	             $request->get('description'),
+	                     $request->files->get('image'));
+                             //$_FILES  ['image'      ]);
       break;
       
       case "getPictures":
@@ -82,8 +85,8 @@ class WebserviceController extends Controller
 
       case "getNearbySpots":
 	$this->getNearbySpots($response,
-                              $request->request->get('latitude' ),
-                              $request->request->get('longitude'));
+                              $request->get('latitude' ),
+                              $request->get('longitude'));
       break;
     
       default:
@@ -292,8 +295,15 @@ class WebserviceController extends Controller
                                    $longitude,
                                    $name,
                                    $description,
-                                   $photoData )
+                                   UploadedFile $uploadedFile )
   {
+    if(   $uploadedFile->isValid() == false
+       || $uploadedFile->getMimeType() != 'image/jpeg')
+    {
+      $response['error'] = 'Invalid file received';
+      return;
+    }
+  
     // Get current user
     if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
     {
@@ -314,20 +324,8 @@ class WebserviceController extends Controller
     $picture->setLatitude($latitude);
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
-  
-    return;
-
-    try
-    {
-      checkPhotoData($photoData);
-    }
-    catch (RuntimeException $e) 
-    {
-      $messaggio = $e->getMessage();
-      $response['error'] = "Eccezione cacciata: $messaggio";
-      return;
-    }
     
+    // Persist entities
     $em->persist($spot);
     $em->persist($picture);
   
@@ -449,10 +447,12 @@ class WebserviceController extends Controller
     // You should also check filesize here.
     if ($photoData['size'] > 10000000)
       throw new RuntimeException('Exceeded filesize limit.');
+      
 
     // DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
     // Check MIME Type by yourself.
     $finfo = new finfo(FILEINFO_MIME_TYPE);
+    return;
     if (false === $ext = array_search($finfo->file($photoData['tmp_name']),
                                       array('jpg' => 'image/jpeg',
                                             'png' => 'image/png',
