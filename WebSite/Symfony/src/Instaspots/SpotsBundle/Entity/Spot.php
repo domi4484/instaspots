@@ -66,13 +66,12 @@ class Spot
     /**
      * Constructor
      */
-    public function __construct($name)
+    public function __construct()
     {
       $now = new \DateTime();
       $this->created = $now;
       $this->modified = $now;
       
-      $this->name = $name;
       $this->score = 0;
     }
     

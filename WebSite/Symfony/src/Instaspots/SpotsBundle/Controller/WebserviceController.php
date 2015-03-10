@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -61,22 +64,20 @@ class WebserviceController extends Controller
       break;
       
       case "uploadPictureToSpot":
-	$this->uploadPictureToSpot($response,
-			           $_SESSION['id'       ],
-			           $_POST   ['id_spot'  ],
-			           $_POST   ['latitude' ],
-		                   $_POST   ['longitude'],
-			           $_FILES  ['image'    ]);
+        $this->uploadPictureToSpot($response,
+                                   $request->get('id_spot'  ),
+                                   $request->get('latitude' ),
+                                   $request->get('longitude'),
+                                   $request->files->get('image'));
       break;
       
       case "uploadNewSpot":
-	$this->uploadNewSpot($response,
+        $this->uploadNewSpot($response,
                              $request->get('latitude'   ),
-		             $request->get('longitude'  ),
-		             $request->get('name'       ),
-	       	             $request->get('description'),
-	                     $request->files->get('image'));
-                             //$_FILES  ['image'      ]);
+                             $request->get('longitude'  ),
+                             $request->get('name'       ),
+                             $request->get('description'),
+                             $request->files->get('image'));
       break;
       
       case "getPictures":
@@ -204,86 +205,64 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function uploadPictureToSpot( &$response,
-                                     $id,
-                                     $spotId,
-                                     $latitude,
-                                     $longitude,
-                                     $photoData )
+                                         $spotId,
+                                         $latitude,
+                                         $longitude,
+                                         $photoData )
   {
-    //check if a user ID is passed
-    if (!$id)
+    // Check for valid picture
+    if(   $uploadedFile->isValid() == false
+       || $uploadedFile->getMimeType() != 'image/jpeg')
     {
-      $response['error'] = 'Authorization required';
-      return;
-    }
-    
-    //database link
-    global $link;
-    
-    // Open the transaction
-    $result = query("START TRANSACTION");
-    if ($result['error'])
-    {
-      $response['error'] = 'Error starting transaction';
-      return;
-    }
-    
-    // Spot in database?
-    $spot = query("SELECT id FROM SPOTS WHERE spot='%d' limit 1",
-		  $spotId);
-    if (count($spot['result']) == 0) 
-    {
-      $response['error'] = "Spot id not found: $spotId";
-      return;
-    }
-    
-    // Insert photo in db
-    $result = query("INSERT INTO PICTURES(id_user, id_spot, latitude, longitude) VALUES('%d', '%d', '%f', '%f')", 
-		    $id,
-		    $spotId,
-		    $latitude,
-		    $longitude);
-    if ($result['error'])
-    {
-      // rollback transaction
-      mysqli_rollback($link);
-    
-      $response['error'] = 'Upload database problem.'.$result['error'];
-      return;
-    }
-
-    //get the last automatically generated ID
-    $IdPhoto = mysqli_insert_id($link);
-      
-    try 
-    {
-      checkPhotoData($photoData);
-    }
-    catch (RuntimeException $e) 
-    {
-      // rollback transaction
-      mysqli_rollback($link);
-    
-      $messaggio = $e->getMessage();
-      $response['error'] = "Eccezione cacciata: $messaggio";
+      $response['error'] = 'Invalid file received';
       return;
     }
   
-    //move the temporarily stored file to a convenient location
-    if (!move_uploaded_file($photoData['tmp_name'], "upload/".$IdPhoto.".jpg"))
+    // Get current user
+    $user = $this->getUser();
+    if($user == null)
     {
-      // rollback transaction
-      mysqli_rollback($link);
-      
-      $response['error'] = 'Upload on server problem';
+      $response['error'] = 'Authentication required';
       return;
     }
     
-    //file moved, all good, generate thumbnail
-    thumb("upload/".$IdPhoto.".jpg", 180);
+    // Get spot
+    $em = $this->getDoctrine()->getManager();
+    $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
     
-    // Commit transaction
-    mysqli_commit($link);
+    $spot = $spotRepository->findOneById($id);
+  
+    // New picture
+    $picture = new Picture();
+    $picture->setUser($user);
+    $picture->setSpot($spot);
+    $picture->setLatitude($latitude);
+    $picture->setLongitude($longitude);
+    $picture->setPublished(true);
+    $em->persist($picture);
+    
+ 
+    // Create the directory for the new pictures
+    $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
+    $fs = new Filesystem();
+    try
+    {
+      $fs->mkdir($destinationDirectory);
+    }
+    catch (IOExceptionInterface $e) 
+    {
+      $response['error'] = "An error occurred while creating your directory at ".$e->getPath();
+      return;
+    }
+  
+    // Flush
+    $em->flush();
+
+    // Move the temporarily stored file to a convenient location
+    $movedFile = $uploadedFile->move($destinationDirectory, $picture->getId().'.jpg');
+    
+    // Generate thumbnail
+    $this->thumb($movedFile->getPathname(), 180);
     
     $response['successful'] = true;
   }
@@ -297,6 +276,7 @@ class WebserviceController extends Controller
                                    $description,
                                    UploadedFile $uploadedFile )
   {
+    // Check for valid picture
     if(   $uploadedFile->isValid() == false
        || $uploadedFile->getMimeType() != 'image/jpeg')
     {
@@ -305,15 +285,16 @@ class WebserviceController extends Controller
     }
   
     // Get current user
-    if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
-    {
-       $response['error'] = 'Authentication required';
-       return;
-    }
     $user = $this->getUser();
+    if($user == null)
+    {
+      $response['error'] = 'Authentication required';
+      return;
+    }
   
     // New spot
-    $spot = new Spot($name);
+    $spot = new Spot();
+    $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
   
@@ -325,21 +306,34 @@ class WebserviceController extends Controller
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
     
+    
     // Persist entities
+    $em = $this->getDoctrine()->getManager();
     $em->persist($spot);
     $em->persist($picture);
-  
-    //move the temporarily stored file to a convenient location
-    if (!move_uploaded_file($photoData['tmp_name'], "upload/".$picture->getId().".jpg"))
+ 
+ 
+    // Create the directory for the new pictures
+    $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
+    $fs = new Filesystem();
+    try
     {
-      $response['error'] = 'Upload on server problem';
+      $fs->mkdir($destinationDirectory);
+    }
+    catch (IOExceptionInterface $e) 
+    {
+      $response['error'] = "An error occurred while creating your directory at ".$e->getPath();
       return;
     }
-
+  
+    // Flush
     $em->flush();
+
+    // Move the temporarily stored file to a convenient location
+    $movedFile = $uploadedFile->move($destinationDirectory, $picture->getId().'.jpg');
     
-    //file moved, all good, generate thumbnail
-    thumb("upload/".$picture->getId().".jpg", 180);
+    // Generate thumbnail
+    $this->thumb($movedFile->getPathname(), 180);
     
     $response['successful'] = true;
   }
@@ -416,51 +410,6 @@ class WebserviceController extends Controller
 
     imagedestroy($thumb);
     imagedestroy($image);
-  }
-
-  //-----------------------------------------------------------------------------------------------------------------------------
-
-  private function checkPhotoData($photoData)
-  {
-    // Undefined | Multiple Files | $_FILES Corruption Attack
-    // If this request falls under any of them, treat it invalid.
-    if (!isset($photoData['error']))
-      throw new RuntimeException('Invalid parameters 1.');
-
-    if (is_array($photoData['error']))
-      throw new RuntimeException('Invalid parameters 2.');
-
-    // Check $_FILES['upfile']['error'] value.
-    switch ($photoData['error'])
-    {
-      case UPLOAD_ERR_OK:
-        break;
-      case UPLOAD_ERR_NO_FILE:
-        throw new RuntimeException('No file sent.');
-      case UPLOAD_ERR_INI_SIZE:
-      case UPLOAD_ERR_FORM_SIZE:
-        throw new RuntimeException('Exceeded filesize limit.');
-      default:
-        throw new RuntimeException('Unknown errors.');
-    }
-
-    // You should also check filesize here.
-    if ($photoData['size'] > 10000000)
-      throw new RuntimeException('Exceeded filesize limit.');
-      
-
-    // DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
-    // Check MIME Type by yourself.
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    return;
-    if (false === $ext = array_search($finfo->file($photoData['tmp_name']),
-                                      array('jpg' => 'image/jpeg',
-                                            'png' => 'image/png',
-                                            'gif' => 'image/gif'),
-                                      true))
-    {
-      throw new RuntimeException('Invalid file format.');
-    }
   }
 }
 
