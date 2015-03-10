@@ -994,16 +994,6 @@ Ab Hauptbahnhof Zürich bis Endstation Werdhölzli.]]></description>
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-22</styleUrl>
-				<name>Bellinzona - Arti e Mestieri</name>
-				<ExtendedData>
-				</ExtendedData>
-				<description><![CDATA[Gap circa 1.5 metri da un parcheggio all'altro.]]></description>
-				<Point>
-					<coordinates>9.015200000000002,46.190051,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
 				<name>Bellinzona - Cervia</name>
 				<ExtendedData>
 				</ExtendedData>

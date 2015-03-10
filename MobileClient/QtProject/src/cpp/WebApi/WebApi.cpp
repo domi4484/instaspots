@@ -34,12 +34,12 @@
 //const QString WebApi::CONST::WEB_API_PATH("api/instaspots/instaspots.php");
 
 // Location of the web service (Hostpoint)
-//const QString WebApi::CONST::WEB_API_HOST("http://spots.lowerclassclothing.com/");
-//const QString WebApi::CONST::WEB_API_PATH("index.php");
+const QString WebApi::CONST::WEB_API_HOST("http://spots.lowerclassclothing.com/web/spots/");
+const QString WebApi::CONST::WEB_API_PATH("webservice");
 
 // Location of the web service (Localhost)
-const QString WebApi::CONST::WEB_API_HOST("http://localhost/Symfony/web/app_dev.php/spots/");
-const QString WebApi::CONST::WEB_API_PATH("webservice");
+//const QString WebApi::CONST::WEB_API_HOST("http://localhost/Symfony/web/app_dev.php/spots/");
+//const QString WebApi::CONST::WEB_API_PATH("webservice");
 
 const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");
 const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
