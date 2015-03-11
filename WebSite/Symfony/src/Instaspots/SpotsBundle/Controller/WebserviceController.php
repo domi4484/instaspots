@@ -241,6 +241,17 @@ class WebserviceController extends Controller
     $picture->setPublished(true);
     $em->persist($picture);
     
+    // Check if the spot pictures have to be replaced
+    if($spot->getPicture1()->getLikers()->count() == 0)
+    {
+      $spot->setPicture2($spot->getPicture1());
+      $spot->setPicture1($picture);
+    }
+    else if(   $spot->getPicture2() == null
+            || $spot->getPicture2()->getLikers()->count() == 0)
+    {
+      $spot->setPicture2($picture);
+    }
  
     // Create the directory for the new pictures
     $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
@@ -297,6 +308,8 @@ class WebserviceController extends Controller
     $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
+    $spot->setLatitude($latitude);
+    $spot->setLongitude($longitude);
   
     // New picture
     $picture = new Picture();
@@ -306,6 +319,7 @@ class WebserviceController extends Controller
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
     
+    $spot->setPicture1($picture);
     
     // Persist entities
     $em = $this->getDoctrine()->getManager();

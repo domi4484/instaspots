@@ -2,6 +2,7 @@
 parameters:
     database_driver: pdo_mysql
     database_host: lowerc3.mysql.db.internal
+#    database_host: localhost
     database_port: null
     database_name: lowerc3_spots
     database_user: lowerc3_spots

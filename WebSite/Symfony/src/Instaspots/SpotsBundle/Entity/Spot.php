@@ -62,6 +62,30 @@ class Spot
      */
     private $score;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="float")
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="float")
+     */
+    private $longitude;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Instaspots\SpotsBundle\Entity\Picture")
+     */
+    private $picture1;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Instaspots\SpotsBundle\Entity\Picture")
+     */
+    private $picture2;
+    
     
     /**
      * Constructor
@@ -222,5 +246,97 @@ class Spot
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param float $latitude
+     * @return Spot
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param float $longitude
+     * @return Spot
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set picture1
+     *
+     * @param \Instaspots\SpotsBundle\Entity\Picture $picture1
+     * @return Spot
+     */
+    public function setPicture1(\Instaspots\SpotsBundle\Entity\Picture $picture1 = null)
+    {
+        $this->picture1 = $picture1;
+
+        return $this;
+    }
+
+    /**
+     * Get picture1
+     *
+     * @return \Instaspots\SpotsBundle\Entity\Picture 
+     */
+    public function getPicture1()
+    {
+        return $this->picture1;
+    }
+
+    /**
+     * Set picture2
+     *
+     * @param \Instaspots\SpotsBundle\Entity\Picture $picture2
+     * @return Spot
+     */
+    public function setPicture2(\Instaspots\SpotsBundle\Entity\Picture $picture2 = null)
+    {
+        $this->picture2 = $picture2;
+
+        return $this;
+    }
+
+    /**
+     * Get picture2
+     *
+     * @return \Instaspots\SpotsBundle\Entity\Picture 
+     */
+    public function getPicture2()
+    {
+        return $this->picture2;
     }
 }

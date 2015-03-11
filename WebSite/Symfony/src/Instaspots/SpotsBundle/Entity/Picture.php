@@ -60,7 +60,11 @@ class Picture
      * @ORM\Column(name="published", type="boolean")
      */
     private $published = false;
-     
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Instaspots\UserBundle\Entity\User")
+     */
+    private $likers;
      
      
     /**
@@ -221,10 +225,41 @@ class Picture
 
     public function getUrl()
     {
-      return sprintf('http://localhost/Symfony/web/pictures/%s/%s.jpg',
+      return sprintf('http://spots.lowerclassclothing.com/web/pictures/%s/%s.jpg',
                      $this->created->format('Y/m/d'),
                      $this->id);
     }
+
+    /**
+     * Add likers
+     *
+     * @param \Instaspots\UserBundle\Entity\User $likers
+     * @return Picture
+     */
+    public function addLiker(\Instaspots\UserBundle\Entity\User $liker)
+    {
+        $this->likers[] = $liker;
+
+        return $this;
+    }
+
+    /**
+     * Remove likers
+     *
+     * @param \Instaspots\UserBundle\Entity\User $likers
+     */
+    public function removeLiker(\Instaspots\UserBundle\Entity\User $liker)
+    {
+        $this->likers->removeElement($liker);
+    }
+
+    /**
+     * Get likers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLikers()
+    {
+        return $this->likers;
+    }
 }
-
-
