@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class SpotRepository extends EntityRepository
 {
+
+  public function getByDistance($latitude,
+                                $longitude,
+                                $distance_km)
+  {
+    $qb = $this->createQueryBuilder('s');
+    
+    // TODO
+    //$result = query("SELECT id, name, description, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
+    //               $latitude,
+    //               $longitude);
+                   
+                   
+    return $qb->getQuery()
+                ->getResult();
+  }
 }

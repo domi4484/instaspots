@@ -32,15 +32,6 @@ Verde: non acora visitati]]></description>
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-123</styleUrl>
-				<name>Amsterdam - Miniramp</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>4.883745,52.358173,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-123</styleUrl>
 				<name>Arona</name>
 				<ExtendedData>
 					<Data name='gx_media_links'>

@@ -367,6 +367,7 @@ class WebserviceController extends Controller
       $jPicture['id']          = $picture->getId();
       $jPicture['latitude']    = $picture->getLatitude();
       $jPicture['longitude'  ] = $picture->getLongitude();
+      $jPicture['created']     = $picture->getCreated();
       $jPicture['url']         = $picture->getUrl();
 
       $jPicture['name'       ] = $picture->getSpot()->getName();
@@ -385,25 +386,39 @@ class WebserviceController extends Controller
 
   private function getNearbySpots( &$response,
                                     $latitude,
-                                    $longitude )
+                                    $longitude,
+                                    $distance_km = 150)
   {
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Spot');
-
-    $result = query("SELECT id, name, description, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
+             
+    $jSpots = array();
+    foreach($repository->getByDistance($latitude,
+                                       $longitude,
+                                       $distance_km)
+            as &$spot)
+    {
+      $jSpot = array();
+      
+      $jSpot['id']          = $spot->get
+      $jSpot['name']        = $spot->get
+      $jSpot['description'] = $spot->get
+      $jSpot['latitude']    = $spot->get
+      $jSpot['longitude']   = $spot->get
+      $jSpot['pictureId1']  = $spot->get
+      $jSpot['pictureId2']  = $spot->get
+      $jSpot['pictureUrl1'] = $spot->get
+      $jSpot['pictureUrl2'] = $spot->get
+      
+      ("SELECT id, name, description, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
                     $latitude,
                     $longitude);
-
-    if ($result['error'])
-    {
-      $response['error'] = 'Select query failed';
-      return;
+    
+      $jSpots[] = $jSpot;
     }
 
-    $response['spots'] = $result['result'];
-
-
+    $response['spots'] = $jSpots;
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
