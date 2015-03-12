@@ -392,7 +392,7 @@ class WebserviceController extends Controller
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Spot');
-             
+
     $jSpots = array();
     foreach($repository->getByDistance($latitude,
                                        $longitude,
@@ -401,19 +401,26 @@ class WebserviceController extends Controller
     {
       $jSpot = array();
       
-      $jSpot['id']          = $spot->get
-      $jSpot['name']        = $spot->get
-      $jSpot['description'] = $spot->get
-      $jSpot['latitude']    = $spot->get
-      $jSpot['longitude']   = $spot->get
-      $jSpot['pictureId1']  = $spot->get
-      $jSpot['pictureId2']  = $spot->get
-      $jSpot['pictureUrl1'] = $spot->get
-      $jSpot['pictureUrl2'] = $spot->get
+      $jSpot['id']          = $spot->getId();
+      $jSpot['name']        = $spot->getName();
+      $jSpot['description'] = $spot->getDescription();
+      $jSpot['latitude']    = $spot->getLatitude();
+      $jSpot['longitude']   = $spot->getLongitude();
       
-      ("SELECT id, name, description, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
-                    $latitude,
-                    $longitude);
+      $jSpot['pictureId1']  = $spot->getPicture1()->getId();
+      $jSpot['pictureUrl1'] = $spot->getPicture1()->getUrl();
+//       
+//       $picture2 = $spot->getPicture2();
+//       if($picture2 != null)
+//       {
+//         $jSpot['pictureId2']  = $spot->getPicture2()->getId();
+//         $jSpot['pictureUrl2'] = $spot->getPicture2()->getUrl();
+//       }
+//       else
+//       {
+//         $jSpot['pictureId2']  = -1;
+//         $jSpot['pictureUrl2'] = '';
+//       }
     
       $jSpots[] = $jSpot;
     }

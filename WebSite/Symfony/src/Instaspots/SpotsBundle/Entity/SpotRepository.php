@@ -3,6 +3,7 @@
 namespace Instaspots\SpotsBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * SpotRepository
@@ -17,15 +18,41 @@ class SpotRepository extends EntityRepository
                                 $longitude,
                                 $distance_km)
   {
-    $qb = $this->createQueryBuilder('s');
+    $rsm = new ResultSetMapping;
+
+    $rsm->addEntityResult('InstaspotsSpotsBundle:Spot', 's');
+    $rsm->addFieldResult('s', 'id', 'id');
+    $rsm->addFieldResult('s', 'name', 'name');
+    $rsm->addFieldResult('s', 'description', 'description');
+    $rsm->addFieldResult('s', 'latitude', 'latitude');
+    $rsm->addFieldResult('s', 'longitude', 'longitude');
     
-    // TODO
-    //$result = query("SELECT id, name, description, latitude, longitude, SQRT( POW(111 * (latitude - '%f'), 2) + POW(111 * (%f - longitude) * COS(latitude / 57.3), 2)) AS distance FROM SPOTS HAVING distance < 150 ORDER BY distance",
-    //               $latitude,
-    //               $longitude);
-                   
-                   
-    return $qb->getQuery()
-                ->getResult();
+    $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p1', 's', 'picture1');
+    $rsm->addFieldResult('p1', 'picture1_id', 'id');
+    $rsm->addFieldResult('p1', 'created', 'created');
+    
+    $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p2', 's', 'picture2');
+    $rsm->addFieldResult('p2', 'picture2_id', 'id');
+    $rsm->addFieldResult('p2', 'created', 'created');
+
+    $sql = "SELECT s.id, s.name, s.description, s.latitude, s.longitude, 
+            p1.id AS picture1_id, p1.created,
+            p2.id AS picture2_id, p2.created,
+           ( 6378.137 * acos( cos( radians(?) ) * cos( radians( s.latitude ) ) * 
+           cos( radians( s.longitude ) - radians(?) ) + sin( radians(?) ) * 
+           sin( radians( s.latitude ) ) ) ) AS distance 
+           FROM Spot s
+           INNER JOIN Picture p1 ON s.picture1_id = p1.id
+           INNER JOIN Picture p2 ON s.picture2_id = p2.id
+           GROUP BY s.id HAVING distance < ? 
+           ORDER BY distance";
+
+    $query = $this->_em->createNativeQuery($sql, $rsm);
+    $query->setParameter(1, $latitude);
+    $query->setParameter(2, $longitude);
+    $query->setParameter(3, $latitude);
+    $query->setParameter(4, $distance_km);
+
+    return $query->getResult();
   }
 }
