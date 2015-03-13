@@ -33,8 +33,8 @@ const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION   ("descriptio
 const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_LATITUDE      ("latitude");
 const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_LONGITUDE     ("longitude");
 const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_DISTANCE      ("distance");
-const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1 ("picture_url1");
-const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2 ("picture_url2");
+const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1 ("pictureUrl1");
+const QString NearbySpotsModel::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2 ("pictureUrl2");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

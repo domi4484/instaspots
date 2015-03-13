@@ -86,6 +86,11 @@ class Spot
      */
     private $picture2;
     
+    /**
+     * @var float
+     */
+    private $distance;
+    
     
     /**
      * Constructor
@@ -340,6 +345,7 @@ class Spot
         return $this->picture2;
     }
 
+
     public function pictureAdded(\Instaspots\SpotsBundle\Entity\Picture $picture)
     {
       // Check if the spot pictures have to be replaced
@@ -364,4 +370,19 @@ class Spot
         return;
       }
     }
+    
+    
+    public function setDistance($distance = -1)
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
 }

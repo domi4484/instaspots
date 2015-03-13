@@ -24,6 +24,7 @@ class WebserviceController extends Controller
 {
   public function webserviceAction(Request $request)
   {
+  
     if ($request->isMethod('POST') == false)
     {
       return new JsonResponse(array('error' => 'Not a post request'));
@@ -397,22 +398,23 @@ class WebserviceController extends Controller
       $jSpot['description'] = $spot->getDescription();
       $jSpot['latitude']    = $spot->getLatitude();
       $jSpot['longitude']   = $spot->getLongitude();
+      $jSpot['distance']   = $spot->getDistance();
 
       $picture1 = $spot->getPicture1();
       $jSpot['pictureId1']  = $picture1->getId();
       $jSpot['pictureUrl1'] = $picture1->getUrl();
        
-       $picture2 = $spot->getPicture2();
-       if($picture2->getId() != $picture1->getId())
-       {
-         $jSpot['pictureId2']  = $picture2->getId();
-         $jSpot['pictureUrl2'] = $picture2->getUrl();
-       }
-       else
-       {
-         $jSpot['pictureId2']  = -1;
-         $jSpot['pictureUrl2'] = '';
-       }
+      $picture2 = $spot->getPicture2();
+      if($picture2->getId() != $picture1->getId())
+      {
+        $jSpot['pictureId2']  = $picture2->getId();
+        $jSpot['pictureUrl2'] = $picture2->getUrl();
+      }
+      else
+      {
+        $jSpot['pictureId2']  = -1;
+        $jSpot['pictureUrl2'] = '';
+      }
     
       $jSpots[] = $jSpot;
     }

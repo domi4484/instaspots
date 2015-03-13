@@ -50,18 +50,12 @@ Spot::Spot(int     id,
 
   if(m_PictureUrl1.isEmpty() == false)
   {
-    m_PictureUrl1 = WebApi::CONST::WEB_API_HOST
-                    + "upload/"
-                    + m_PictureUrl1
-                    + "-thumb.jpg";
+    m_PictureUrl1 = m_PictureUrl1;
   }
 
   if(m_PictureUrl2.isEmpty() == false)
   {
-    m_PictureUrl2 = WebApi::CONST::WEB_API_HOST
-                    + "upload/"
-                    + m_PictureUrl2
-                    + "-thumb.jpg";
+    m_PictureUrl2 = m_PictureUrl2;
   }
 }
 

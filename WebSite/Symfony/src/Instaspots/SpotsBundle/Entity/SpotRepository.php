@@ -26,18 +26,19 @@ class SpotRepository extends EntityRepository
     $rsm->addFieldResult('s', 'description', 'description');
     $rsm->addFieldResult('s', 'latitude', 'latitude');
     $rsm->addFieldResult('s', 'longitude', 'longitude');
+//    $rsm->addFieldResult('s', 'distance', 'distance');
     
     $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p1', 's', 'picture1');
     $rsm->addFieldResult('p1', 'picture1_id', 'id');
-    $rsm->addFieldResult('p1', 'created', 'created');
+    $rsm->addFieldResult('p1', 'created1', 'created');
     
     $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p2', 's', 'picture2');
     $rsm->addFieldResult('p2', 'picture2_id', 'id');
-    $rsm->addFieldResult('p2', 'created', 'created');
+    $rsm->addFieldResult('p2', 'created2', 'created');
 
     $sql = "SELECT s.id, s.name, s.description, s.latitude, s.longitude, 
-            p1.id AS picture1_id, p1.created,
-            p2.id AS picture2_id, p2.created,
+            p1.id AS picture1_id, p1.created AS created1,
+            p2.id AS picture2_id, p2.created AS created2,
            ( 6378.137 * acos( cos( radians(?) ) * cos( radians( s.latitude ) ) * 
            cos( radians( s.longitude ) - radians(?) ) + sin( radians(?) ) * 
            sin( radians( s.latitude ) ) ) ) AS distance 
