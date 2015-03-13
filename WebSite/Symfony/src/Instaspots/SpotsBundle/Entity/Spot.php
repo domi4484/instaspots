@@ -339,4 +339,29 @@ class Spot
     {
         return $this->picture2;
     }
+
+    public function pictureAdded(\Instaspots\SpotsBundle\Entity\Picture $picture)
+    {
+      // Check if the spot pictures have to be replaced
+
+      // Check if picture1 and 2 are still the same
+      if($this->picture1->getId() == $this->picture2->getId())
+      {
+        $this->picture1 = $picture;
+        return;
+      }
+
+      if($this->picture1->getLikers()->count() == 0)
+      {
+        $this->picture2 = $this->picture1;
+        $this->picture1 = $picture;
+        return;
+      }
+
+      if($this->picture2->getLikers()->count() == 0)
+      {
+        $this->setPicture2($picture);
+        return;
+      }
+    }
 }

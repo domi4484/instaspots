@@ -241,17 +241,7 @@ class WebserviceController extends Controller
     $picture->setPublished(true);
     $em->persist($picture);
     
-    // Check if the spot pictures have to be replaced
-    if($spot->getPicture1()->getLikers()->count() == 0)
-    {
-      $spot->setPicture2($spot->getPicture1());
-      $spot->setPicture1($picture);
-    }
-    else if(   $spot->getPicture2() == null
-            || $spot->getPicture2()->getLikers()->count() == 0)
-    {
-      $spot->setPicture2($picture);
-    }
+    $spot->pictureAdded($picture);
  
     // Create the directory for the new pictures
     $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
@@ -320,6 +310,7 @@ class WebserviceController extends Controller
     $picture->setPublished(true);
     
     $spot->setPicture1($picture);
+    $spot->setPicture2($picture);
     
     // Persist entities
     $em = $this->getDoctrine()->getManager();
@@ -406,21 +397,22 @@ class WebserviceController extends Controller
       $jSpot['description'] = $spot->getDescription();
       $jSpot['latitude']    = $spot->getLatitude();
       $jSpot['longitude']   = $spot->getLongitude();
-      
-      $jSpot['pictureId1']  = $spot->getPicture1()->getId();
-      $jSpot['pictureUrl1'] = $spot->getPicture1()->getUrl();
-//       
-//       $picture2 = $spot->getPicture2();
-//       if($picture2 != null)
-//       {
-//         $jSpot['pictureId2']  = $spot->getPicture2()->getId();
-//         $jSpot['pictureUrl2'] = $spot->getPicture2()->getUrl();
-//       }
-//       else
-//       {
-//         $jSpot['pictureId2']  = -1;
-//         $jSpot['pictureUrl2'] = '';
-//       }
+
+      $picture1 = $spot->getPicture1();
+      $jSpot['pictureId1']  = $picture1->getId();
+      $jSpot['pictureUrl1'] = $picture1->getUrl();
+       
+       $picture2 = $spot->getPicture2();
+       if($picture2->getId() != $picture1->getId())
+       {
+         $jSpot['pictureId2']  = $picture2->getId();
+         $jSpot['pictureUrl2'] = $picture2->getUrl();
+       }
+       else
+       {
+         $jSpot['pictureId2']  = -1;
+         $jSpot['pictureUrl2'] = '';
+       }
     
       $jSpots[] = $jSpot;
     }
