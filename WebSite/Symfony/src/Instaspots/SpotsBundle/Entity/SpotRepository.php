@@ -13,10 +13,9 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class SpotRepository extends EntityRepository
 {
-
-  public function getByDistance($latitude,
-                                $longitude,
-                                $distance_km)
+  public function getArrayByDistance($latitude,
+                                     $longitude,
+                                     $distance_km)
   {
     $rsm = new ResultSetMapping;
 
@@ -26,7 +25,8 @@ class SpotRepository extends EntityRepository
     $rsm->addFieldResult('s', 'description', 'description');
     $rsm->addFieldResult('s', 'latitude', 'latitude');
     $rsm->addFieldResult('s', 'longitude', 'longitude');
-//    $rsm->addFieldResult('s', 'distance', 'distance');
+    
+    $rsm->addScalarResult('distance', 'distance');
     
     $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p1', 's', 'picture1');
     $rsm->addFieldResult('p1', 'picture1_id', 'id');
@@ -35,7 +35,7 @@ class SpotRepository extends EntityRepository
     $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p2', 's', 'picture2');
     $rsm->addFieldResult('p2', 'picture2_id', 'id');
     $rsm->addFieldResult('p2', 'created2', 'created');
-
+  
     $sql = "SELECT s.id, s.name, s.description, s.latitude, s.longitude, 
             p1.id AS picture1_id, p1.created AS created1,
             p2.id AS picture2_id, p2.created AS created2,
@@ -54,6 +54,6 @@ class SpotRepository extends EntityRepository
     $query->setParameter(3, $latitude);
     $query->setParameter(4, $distance_km);
 
-    return $query->getResult();
+    return $query->getArrayResult();
   }
 }

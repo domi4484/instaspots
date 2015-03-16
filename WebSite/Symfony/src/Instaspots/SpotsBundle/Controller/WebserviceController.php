@@ -24,7 +24,6 @@ class WebserviceController extends Controller
 {
   public function webserviceAction(Request $request)
   {
-  
     if ($request->isMethod('POST') == false)
     {
       return new JsonResponse(array('error' => 'Not a post request'));
@@ -386,25 +385,31 @@ class WebserviceController extends Controller
                          ->getRepository('InstaspotsSpotsBundle:Spot');
 
     $jSpots = array();
-    foreach($repository->getByDistance($latitude,
-                                       $longitude,
-                                       $distance_km)
+    foreach($repository->getArrayByDistance($latitude,
+                                            $longitude,
+                                            $distance_km)
             as &$spot)
     {
       $jSpot = array();
       
-      $jSpot['id']          = $spot->getId();
-      $jSpot['name']        = $spot->getName();
-      $jSpot['description'] = $spot->getDescription();
-      $jSpot['latitude']    = $spot->getLatitude();
-      $jSpot['longitude']   = $spot->getLongitude();
-      $jSpot['distance']   = $spot->getDistance();
+      $jSpot['id']          = $spot[0]['id'];
+      $jSpot['name']        = $spot[0]['name'];
+      $jSpot['description'] = $spot[0]['description'];
+      $jSpot['latitude']    = $spot[0]['latitude'];
+      $jSpot['longitude']   = $spot[0]['longitude'];
+      $jSpot['distance']    = $spot['distance'];
 
-      $picture1 = $spot->getPicture1();
+      $picture1 = new Picture();
+      $picture1->setId     ($spot[0]['picture1']['id']);
+      $picture1->setCreated($spot[0]['picture1']['created']);
+
       $jSpot['pictureId1']  = $picture1->getId();
       $jSpot['pictureUrl1'] = $picture1->getUrl();
-       
-      $picture2 = $spot->getPicture2();
+      
+      $picture2 = new Picture();
+      $picture2->setId     ($spot[0]['picture2']['id']);
+      $picture2->setCreated($spot[0]['picture2']['created']);
+      
       if($picture2->getId() != $picture1->getId())
       {
         $jSpot['pictureId2']  = $picture2->getId();
