@@ -9,9 +9,14 @@ Coira theaterplatz
 Sils snakerun
 Herzblut tour Italia
 Spot vicino a Baden
+Baden trafo
+Baden barceloneta
+Baden slide up
+Baden megarail
 Götzis
 Francoforte piazza con i mini manual pad e quarterini in dadi
 Francoforte gradinata portici railslide
+Pumpwerk
 
 	<Document>
 		<name>My Skate Map</name>
@@ -282,19 +287,10 @@ bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-frauenfeld.html)]]></de
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-123</styleUrl>
-				<name>Hitzkirch</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>8.261611,47.226228,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-123</styleUrl>
 				<name>Karlsruhe</name>
 				<ExtendedData>
 				</ExtendedData>
-				<description><![CDATA[Bowl + street + mini]]></description>
+				<description><![CDATA[Bowl]]></description>
 				<Point>
 					<coordinates>8.400078,49.014005,0.0</coordinates>
 				</Point>
@@ -1493,15 +1489,6 @@ Flat: Ottimo]]></description>
 				<description><![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]></description>
 				<Point>
 					<coordinates>7.5164990000000005,47.210564,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
-				<name>Vancouver - Rail bastardo</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>-123.134632,49.326808,0.0</coordinates>
 				</Point>
 			</Placemark>
 			<Placemark>

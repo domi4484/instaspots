@@ -58,7 +58,7 @@ BasicPage{
         FileDialog {
             id: fileDialog
             title: "Please choose a picture"
-            nameFilters: [ "Image files (*.jpg *.png)" ]
+            nameFilters: [ "Image files (*.jpg *.JPG *.jpeg *.JPEG *.png *.PNG)" ]
 
             onAccepted: {
                 console.log("You chose: " + fileDialog.fileUrl);
