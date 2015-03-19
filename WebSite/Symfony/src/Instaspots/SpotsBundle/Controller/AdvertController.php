@@ -34,16 +34,16 @@ class AdvertController extends Controller
   public function viewAction($id)
   {
     $repository = $this->getDoctrine()
-      ->getManager()
-      ->getRepository('InstaspotsSpotsBundle:User');
+                         ->getManager()
+                         ->getRepository('InstaspotsSpotsBundle:Spot');
     
-    $user = $repository->find($id);
+    $spot = $repository->find($id);
     
-    if (null === $user) {
+    if (null === $spot) {
       throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
     }
 
-    return new Response("Affichage de l'annonce d'id : ".$user->getUsername());
+    return new Response("Affichage de l'annonce d'id : ".$spot->getName());
   }
   
   public function menuAction($limit)

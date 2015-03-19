@@ -32,6 +32,7 @@
         <file>pages-upload/LocationCheck.qml</file>
         <file>pages-upload/NearbySpotSelection.qml</file>
         <file>pages-upload/SourceSelection.qml</file>
+        <file>widgets/CachedPicture.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

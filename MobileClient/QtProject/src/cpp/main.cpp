@@ -3,6 +3,7 @@
 #include "HelperClasses/Logger.h"
 #include "HelperClasses/PlateformDetail.h"
 #include "HelperClasses/LocationManager.h"
+#include "HelperClasses/PictureCacher.h"
 #include "WebApi/User.h"
 #include "WebApi/PictureBase.h"
 #include "WebApi/NewsModel.h"
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
 
     PlateformDetail plateformDetail;
     LocationManager locationManager;
+    PictureCacher   pictureCacher;
 
     QSettings settings;
 
@@ -40,6 +42,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("hc_PlateformDetail", &plateformDetail);
     engine.rootContext()->setContextProperty("hc_LocationManager", &locationManager);
+    engine.rootContext()->setContextProperty("hc_PictureCacher",   &pictureCacher);
 
     // TODO cercare setContextSingleton o qualcosa di simile
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());

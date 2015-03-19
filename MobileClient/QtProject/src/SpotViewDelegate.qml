@@ -1,5 +1,10 @@
+
+// Qt imports ------------------------------
 import QtQuick 2.1
 import QtQuick.Controls 1.0
+
+// Project imports -------------------------
+import "qrc:/widgets"
 
 Item {
     id: root
@@ -37,12 +42,12 @@ Item {
             text: spotName
         }
     }
-    Image {
+    CachedPicture {
         id: image_Picture
         anchors.top: rectangle_Top.bottom
         width: parent.width
         height: width
-        source: url
+        sourceUrl: url
     }
     Text {
         id: text_SpotDescription

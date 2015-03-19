@@ -13,6 +13,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 
+// Project imports -------------------------
+import "qrc:/widgets"
+
 Rectangle {
     id: root
     width: parent.width
@@ -42,20 +45,20 @@ Rectangle {
             text: role_SpotDistance
         }
     }
-    Image {
+    CachedPicture {
         id: image_Picture1
         anchors.top: rectangle_Top.bottom
         width: parent.width/2
         height: parent.width/2
-        source: role_SpotPictureUrl1
+        sourceUrl: role_SpotPictureUrl1
     }
-    Image {
+    CachedPicture {
         id: image_Picture2
         anchors.top: rectangle_Top.bottom
         anchors.left: image_Picture1.right
         width: parent.width/2
         height: parent.width/2
-        source: role_SpotPictureUrl2
+        sourceUrl: role_SpotPictureUrl2
     }
 }
 

@@ -38,7 +38,8 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/PictureUploader.cpp \
     src/cpp/WebApi/NearbySpotsModel.cpp \
     src/cpp/HelperClasses/PlateformDetail.cpp \
-    src/cpp/HelperClasses/LocationManager.cpp
+    src/cpp/HelperClasses/LocationManager.cpp \
+    src/cpp/HelperClasses/PictureCacher.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -65,7 +66,8 @@ HEADERS += \
     src/cpp/WebApi/PictureUploader.h \
     src/cpp/WebApi/NearbySpotsModel.h \
     src/cpp/HelperClasses/PlateformDetail.h \
-    src/cpp/HelperClasses/LocationManager.h
+    src/cpp/HelperClasses/LocationManager.h \
+    src/cpp/HelperClasses/PictureCacher.h
 
 DISTFILES += \
     ../../WebService/api.php \

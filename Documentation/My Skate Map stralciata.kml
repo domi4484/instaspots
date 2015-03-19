@@ -1192,15 +1192,6 @@ flat buono]]></description>
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-22</styleUrl>
-				<name>Coira - Gleis D</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.529293,46.854601,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
 				<name>Coira - Minihip</name>
 				<ExtendedData>
 				</ExtendedData>
@@ -2064,48 +2055,12 @@ bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-wollerau.html)]]></desc
 				</Point>
 			</Placemark>
 			<Placemark>
-				<styleUrl>#icon-157</styleUrl>
-				<name>NTS</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.023391,46.189721,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-157</styleUrl>
-				<name>The Jocker Shop</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>8.956733,46.017924,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-157</styleUrl>
-				<name>Aganè</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.018488,46.192294,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
 				<styleUrl>#icon-22</styleUrl>
 				<name>Coira - Rail in salita</name>
 				<ExtendedData>
 				</ExtendedData>
 				<Point>
 					<coordinates>9.530444,46.849595,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-123</styleUrl>
-				<name>Bad Ragaz</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.494087,47.014758,0.0</coordinates>
 				</Point>
 			</Placemark>
 			<Placemark>
