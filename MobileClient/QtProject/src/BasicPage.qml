@@ -17,4 +17,5 @@ Item {
     // Navigation properties ---------------
     property string title: ""
     property bool continueButtonVisible: false
+    property bool menuButtonVisible : false
 }

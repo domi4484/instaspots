@@ -15,24 +15,29 @@ import QtQuick.Controls 1.1
 
 // Project imports -------------------------
 import "qrc:/views"
+import "qrc:/pages-user"
 
 Rectangle {
+
+    // Pages -------------------------------
+    Page_Settings {
+        id: page_Settings
+        visible: false
+    }
 
     // Gui ---------------------------------
     Navigator{
         id: navigator
         anchors.top: parent.top
-
         backButtonVisible: stackView.depth > 1
-        continueButtonVisible: stackView.currentItem.continueButtonVisible
 
         onPreviousPage: {
             if(stackView.depth > 1)
                 stackView.pop();
         }
 
-        onContinueClicked: {
-            stackView.currentItem.continueClicked();
+        onMenuClicked: {
+            stackView.push(page_Settings);
         }
     }
 
@@ -52,6 +57,7 @@ Rectangle {
             height: parent.height
 
             title: wa_User.username
+            menuButtonVisible: true
         }
 
         onCurrentItemChanged: {
@@ -60,6 +66,7 @@ Rectangle {
 
             navigator.title = currentItem.title;
             navigator.continueButtonVisible = currentItem.continueButtonVisible;
+            navigator.menuButtonVisible     = currentItem.menuButtonVisible;
         }
     }
 }

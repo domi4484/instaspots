@@ -50,6 +50,20 @@ LocationManager::~LocationManager()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void LocationManager::setFakePosition(double latitude,
+                                      double longitude)
+{
+  m_Latitude = latitude;
+  m_Longitude = longitude;
+
+  if(latitude == 0 && longitude == 0)
+    requestLocation();
+
+  emit update(false);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void LocationManager::requestLocation()
 {
   if(m_GeoPositionInfoSource == NULL)

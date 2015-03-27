@@ -12,7 +12,6 @@
         <file>Panel_User.qml</file>
         <file>BasicPage.qml</file>
         <file>SpotViewDelegate.qml</file>
-        <file>UserView.qml</file>
         <file>declarative-camera/CameraListButton.qml</file>
         <file>declarative-camera/CameraListPopup.qml</file>
         <file>declarative-camera/CameraPropertyButton.qml</file>
@@ -33,6 +32,7 @@
         <file>pages-upload/NearbySpotSelection.qml</file>
         <file>pages-upload/SourceSelection.qml</file>
         <file>widgets/CachedPicture.qml</file>
+        <file>pages-user/Page_Settings.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>
@@ -40,5 +40,6 @@
         <file>icon/im-user-offline.png</file>
         <file>icon/BackArrow.png</file>
         <file>icon/camera-photo.png</file>
+        <file>icon/menu.png</file>
     </qresource>
 </RCC>

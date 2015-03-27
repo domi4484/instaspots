@@ -29,6 +29,9 @@ signals:
 
 public slots:
 
+  void setFakePosition(double latitude,
+                       double longitude);
+
   void requestLocation();
 
   double latitude();
