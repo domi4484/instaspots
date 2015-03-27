@@ -18,43 +18,33 @@ Item {
 
     property string sourceUrl: ""
 
-    property string _state: ""
+    property bool _cached: false
+    property bool _thumb: false
 
     onSourceUrlChanged:
     {
-        var imageCached = hc_PictureCacher.isPictureCached(sourceUrl);
-        if(imageCached)
-        {
-            _state = "cached";
-        }
-        else
-        {
-            _state = "thumb";
-        }
-    }
-
-    on_StateChanged:
-    {
-        if(_state == "thumb")
-        {
-            image_Picture.sourceSize.width  = 180;
-            image_Picture.sourceSize.height = 180;
-            image_Picture.source = hc_PictureCacher.getThumb(sourceUrl);
-        }
-        else if(_state == "normal")
-        {
-            image_Picture.sourceSize.width  = 640;
-            image_Picture.sourceSize.height = 640;
-            image_Picture.source = sourceUrl;
-        }
-        else if(_state == "cached")
+        _cached = hc_PictureCacher.isPictureCached(sourceUrl);
+        if(_cached)
         {
             image_Picture.sourceSize.width  = 640;
             image_Picture.sourceSize.height = 640;
             // TODO  image_Picture.source = hc_PictureCacher.getCached(sourceUrl);;
             image_Picture.source = sourceUrl;
         }
+        else if(width <= 180)
+        {
+            _thumb = true;
+            image_Picture.sourceSize.width  = 180;
+            image_Picture.sourceSize.height = 180;
+            image_Picture.source =  hc_PictureCacher.getThumb(sourceUrl);
+        }
 
+        else
+        {
+            image_Picture.sourceSize.width  = 640;
+            image_Picture.sourceSize.height = 640;
+            image_Picture.source = sourceUrl;
+        }
     }
 
     Image {
@@ -63,18 +53,19 @@ Item {
 
         onStatusChanged:
         {
-            if(status == Image.Ready)
+            if(status != Image.Ready)
+                return;
+
+            if(cachedPicture._thumb)
             {
-                if(cachedPicture._state == "thumb")
-                {
-                    cachedPicture._state = "normal";
-                }
-                else if(cachedPicture._state == "normal")
-                {
-                    // TODO Cachare l'immagine
-                    console.log("Download finished");
-                }
+                return;
             }
+
+            if(cachedPicture._cached)
+                return;
+
+            // TODO Cachare l'immagine
+            console.log("Download finished");
         }
     }
 }
