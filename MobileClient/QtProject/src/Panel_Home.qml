@@ -1,3 +1,5 @@
+
+// Qt imports ------------------------------
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 
@@ -33,6 +35,14 @@ Rectangle {
                 anchors.fill: parent
                 model: wa_NewsModel
                 delegate: SpotViewDelegate{
+
+                    onUserClicked: {
+                        console.log(username)
+                    }
+
+                    onSpotClicked: {
+                        console.log(idSpot)
+                    }
                 }
             }
         }

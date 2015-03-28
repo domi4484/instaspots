@@ -13,6 +13,9 @@ Item {
             + image_Picture.height
             + text_SpotDescription.height
 
+    signal userClicked
+    signal spotClicked
+
     Rectangle {
         id: rectangle_Top
         anchors.top: parent.top
@@ -24,6 +27,12 @@ Item {
             width: parent.width / 2
             height: parent.height / 2
             text: username
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    userClicked();
+                }
+            }
         }
         Text {
             anchors.top: parent.top
@@ -48,6 +57,12 @@ Item {
         width: parent.width
         height: width
         sourceUrl: url
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                spotClicked();
+            }
+        }
     }
     Text {
         id: text_SpotDescription

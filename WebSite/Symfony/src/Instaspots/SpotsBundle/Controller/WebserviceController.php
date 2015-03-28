@@ -361,6 +361,7 @@ class WebserviceController extends Controller
       $jPicture['created']     = $picture->getCreated();
       $jPicture['url']         = $picture->getUrl();
 
+      $jPicture['id_spot'    ] = $picture->getSpot()->getId();
       $jPicture['name'       ] = $picture->getSpot()->getName();
       $jPicture['description'] = $picture->getSpot()->getDescription();
       $jPicture['score'      ] = $picture->getSpot()->getScore();
