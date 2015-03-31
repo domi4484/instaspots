@@ -59,6 +59,7 @@ BasicPage{
                 id: cbItems
                 ListElement { text: "GPS Location"; latitude: 0;         longitude: 0 }
                 ListElement { text: "Chur";         latitude: 46.847174; longitude: 9.522164 }
+                ListElement { text: "Chur rail up"; latitude: 46.849522; longitude: 9.530469 }
                 ListElement { text: "Bellinzona";   latitude: 46.195113; longitude: 9.026962 }
                 ListElement { text: "Landquart";    latitude: 46.953120; longitude: 9.566670 }
             }
