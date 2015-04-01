@@ -3,7 +3,7 @@
  * InstaSpots                                                      *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
- * Created:      31.03.2015                                        *
+ * Created:      01.04.2015                                        *
  *                                                                 *
  * Copiright (c) 2015 Damiano Lombardi                             *
  *                                                                 *
@@ -18,7 +18,7 @@ import "qrc:/"
 import "qrc:/views"
 
 BasicPage{
-    id: page_PicturesList
+    id: page_SpotsList
 
     // BasicPage properties ----------------
     title: qsTr("Pictures")
@@ -29,21 +29,26 @@ BasicPage{
     property alias model: listView.model
 
     // Signals -----------------------------
-    signal userClicked(string username)
-    signal spotClicked(int spotId, string spotName)
+    signal spotClicked(int spotId, string spotName, string spotDescription)
+
+    onVisibleChanged: {
+        if(visible == false)
+        {
+            return;
+        }
+
+        wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
+                                       hc_LocationManager.longitude());
+    }
 
     // Gui ---------------------------------
     ListView {
         id: listView
         anchors.fill: parent
-        model: wa_NewsModel
-        delegate: SpotViewDelegate{
+        delegate: SpotOverviewDelegate{
 
-            onUserClicked: {
-                page_PicturesList.userClicked(role_UserUsername);
-            }
             onSpotClicked: {
-                page_PicturesList.spotClicked(role_SpotId, role_SpotName);
+                page_SpotsList.spotClicked(role_SpotId, role_SpotName, role_SpotDescription);
             }
         }
     }

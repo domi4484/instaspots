@@ -208,7 +208,7 @@ class WebserviceController extends Controller
                                          $spotId,
                                          $latitude,
                                          $longitude,
-                                         $photoData )
+                                         UploadedFile $uploadedFile )
   {
     // Check for valid picture
     if(   $uploadedFile->isValid() == false
@@ -230,7 +230,7 @@ class WebserviceController extends Controller
     $em = $this->getDoctrine()->getManager();
     $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
     
-    $spot = $spotRepository->findOneById($id);
+    $spot = $spotRepository->findOneById($spotId);
   
     // New picture
     $picture = new Picture();

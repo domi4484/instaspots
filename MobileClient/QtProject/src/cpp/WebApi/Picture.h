@@ -30,14 +30,14 @@ class Picture : public QObject
 public:
 
   enum PictureRoles {
-    RoleId              = Qt::UserRole + 1,
-    RoleIdUser          = Qt::UserRole + 2,
-    RoleIdSpot          = Qt::UserRole + 3,
-    RoleUsername        = Qt::UserRole + 4,
-    RoleSpotName        = Qt::UserRole + 5,
-    RoleSpotDescription = Qt::UserRole + 6,
-    RoleCreated         = Qt::UserRole + 7,
-    RoleUrl             = Qt::UserRole + 8
+    Role_PictureId       = Qt::UserRole + 1,
+    Role_UserId          = Qt::UserRole + 2,
+    Role_SpotId          = Qt::UserRole + 3,
+    Role_UserUsername    = Qt::UserRole + 4,
+    Role_SpotName        = Qt::UserRole + 5,
+    Role_SpotDescription = Qt::UserRole + 6,
+    Role_PictureCreated  = Qt::UserRole + 7,
+    Role_PictureUrl      = Qt::UserRole + 8
   };
 
   explicit Picture(QObject *parent = 0);

@@ -66,10 +66,23 @@ Item {
         onAddNewSpot: {
             stackView.push(page_AddNewSpot)
         }
+
+        onAddToExistingSpot: {
+            stackView.push(page_AddToExistingSpot);
+        }
     }
 
     AddNewSpot{
         id: page_AddNewSpot
+        visible: false
+
+        onUploadSuccessfull: {
+            stackView.pop(page_SourceSelection);
+        }
+    }
+
+    Page_AddToExistingSpot{
+        id: page_AddToExistingSpot
         visible: false
 
         onUploadSuccessfull: {

@@ -32,6 +32,11 @@ public slots:
 
   QString lastErrorText() const { return m_LastErrorText; }
 
+  // Getters
+  QString name() const;
+  QString description() const;
+
+  // Setters
   void setNewSpot(bool newSpot);
   void setPictureFilePath(const QString &path);
   void setCameraPictureFilePath(const QString &path);
@@ -43,6 +48,7 @@ public slots:
   void setDescription(const QString &description);
   void setPosition(float latitude,
                    float longitude);
+  void setExistingSpotId(int spotId);
 
   bool execute();
 

@@ -35,6 +35,8 @@
         <file>pages-user/Page_Settings.qml</file>
         <file>pages-spot/Page_Spot.qml</file>
         <file>pages-picture/Page_PicturesList.qml</file>
+        <file>pages-spot/Page_SpotsList.qml</file>
+        <file>pages-upload/Page_AddToExistingSpot.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

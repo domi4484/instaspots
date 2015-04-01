@@ -16,6 +16,7 @@ import QtQuick.Controls 1.2
 // Project imports -------------------------
 import "qrc:/"
 import "qrc:/views"
+import "qrc:/pages-spot/"
 
 BasicPage{
     id: nearbySpotSelection
@@ -26,6 +27,7 @@ BasicPage{
 
     // Signals -----------------------------
     signal addNewSpot()
+    signal addToExistingSpot()
 
     // Gui ---------------------------------
     Button{
@@ -41,17 +43,20 @@ BasicPage{
 
         onClicked:{
             wa_PictureUploader.setNewSpot(true);
-
-            addNewSpot();
         }
     }
 
-    ListView {
+    Page_SpotsList {
         width: parent.width
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
         model: wa_NearbySpotModel
-        delegate: SpotOverviewDelegate{
+        onSpotClicked: {
+            wa_PictureUploader.setNewSpot(false);
+            wa_PictureUploader.setExistingSpotId(spotId);
+            wa_PictureUploader.setName(spotName);
+            wa_PictureUploader.setDescription(spotDescription);
+            addToExistingSpot();
         }
     }
 }

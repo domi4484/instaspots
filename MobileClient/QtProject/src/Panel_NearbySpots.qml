@@ -25,17 +25,8 @@ Item {
             return;
         }
 
-        if(hc_PlateformDetail.isMobile())
-        {
-            wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
-                                           hc_LocationManager.longitude());
-        }
-        else
-        {
-            // Host Bellinzona
-            wa_NearbySpotModel.setLocation(46.194755,
-                                           9.027456);
-        }
+        wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
+                                       hc_LocationManager.longitude());
     }
 
     // Gui ---------------------------------

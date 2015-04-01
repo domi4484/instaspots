@@ -99,28 +99,28 @@ QVariant Picture::pictureRole(PictureRoles role) const
 {
   switch (role)
   {
-  case RoleId:
+  case Role_PictureId:
     return m_Id;
   break;
-  case RoleIdUser:
+  case Role_UserId:
     return m_IdUser;
   break;
-  case RoleIdSpot:
+  case Role_SpotId:
   return m_IdSpot;
   break;
-  case RoleUsername:
+  case Role_UserUsername:
   return m_Username;
   break;
-  case RoleSpotName:
+  case Role_SpotName:
   return m_SpotName;
   break;
-  case RoleSpotDescription:
+  case Role_SpotDescription:
   return m_SpotDescription;
   break;
-  case RoleCreated:
+  case Role_PictureCreated:
   return m_Created;
   break;
-  case RoleUrl:
+  case Role_PictureUrl:
   return m_Url;
   break;
   }
@@ -132,14 +132,14 @@ QVariant Picture::pictureRole(PictureRoles role) const
 QHash<int, QByteArray> Picture::roleNames()
 {
   QHash<int, QByteArray> roles;
-  roles[RoleId]              = "idPicture";
-  roles[RoleIdUser]          = "idUser";
-  roles[RoleIdSpot]          = "idSpot";
-  roles[RoleUsername]        = "username";
-  roles[RoleSpotName]        = "spotName";
-  roles[RoleSpotDescription] = "spotDescription";
-  roles[RoleCreated]         = "created";
-  roles[RoleUrl]             = "url";
+  roles[Role_PictureId]       = "role_PictureId";
+  roles[Role_PictureCreated]  = "role_PictureCreated";
+  roles[Role_PictureUrl]      = "role_PictureUrl";
+  roles[Role_UserId]          = "role_UserId";
+  roles[Role_UserUsername]    = "role_UserUsername";
+  roles[Role_SpotId]          = "role_SpotId";
+  roles[Role_SpotName]        = "role_SpotName";
+  roles[Role_SpotDescription] = "role_SpotDescription";
 
   return roles;
 }

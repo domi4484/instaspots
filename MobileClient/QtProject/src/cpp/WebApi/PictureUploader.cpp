@@ -63,6 +63,20 @@ PictureUploader::PictureUploader(QObject *parent) :
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString PictureUploader::name() const
+{
+  return m_Name;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString PictureUploader::description() const
+{
+  return m_Description;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureUploader::setNewSpot(bool newSpot)
 {
   if(newSpot)
@@ -160,6 +174,13 @@ void PictureUploader::setPosition(float latitude,
 {
   m_Latitude = latitude;
   m_Longitude = longitude;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureUploader::setExistingSpotId(int spotId)
+{
+  m_SpotId = spotId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

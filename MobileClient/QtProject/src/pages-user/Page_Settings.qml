@@ -58,10 +58,9 @@ BasicPage{
             model: ListModel {
                 id: cbItems
                 ListElement { text: "GPS Location"; latitude: 0;         longitude: 0 }
-                ListElement { text: "Chur";         latitude: 46.847174; longitude: 9.522164 }
+                ListElement { text: "Airolo";       latitude: 46.528763; longitude: 8.624199 }
+                ListElement { text: "Laax";         latitude: 46.818044; longitude: 9.264813 }
                 ListElement { text: "Chur rail up"; latitude: 46.849522; longitude: 9.530469 }
-                ListElement { text: "Bellinzona";   latitude: 46.195113; longitude: 9.026962 }
-                ListElement { text: "Landquart";    latitude: 46.953120; longitude: 9.566670 }
             }
             width: 200
             onCurrentIndexChanged: hc_LocationManager.setFakePosition(cbItems.get(currentIndex).latitude,

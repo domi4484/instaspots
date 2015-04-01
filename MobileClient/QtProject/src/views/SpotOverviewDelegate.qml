@@ -16,11 +16,13 @@ import QtQuick.Controls 1.2
 // Project imports -------------------------
 import "qrc:/widgets"
 
-Rectangle {
+Item {
     id: root
     width: parent.width
     height:   rectangle_Top.height
             + image_Picture1.height
+
+    signal spotClicked
 
     Rectangle {
         id: rectangle_Top
@@ -44,6 +46,12 @@ Rectangle {
             horizontalAlignment: Text.AlignRight
             text: role_SpotDistance
         }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                spotClicked();
+            }
+        }
     }
     CachedPicture {
         id: image_Picture1
@@ -51,6 +59,12 @@ Rectangle {
         width: parent.width/2
         height: parent.width/2
         sourceUrl: role_SpotPictureUrl1
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                spotClicked();
+            }
+        }
     }
     CachedPicture {
         id: image_Picture2
@@ -59,6 +73,12 @@ Rectangle {
         width: parent.width/2
         height: parent.width/2
         sourceUrl: role_SpotPictureUrl2
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                spotClicked();
+            }
+        }
     }
 }
 

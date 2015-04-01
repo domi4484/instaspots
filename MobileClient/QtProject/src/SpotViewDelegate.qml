@@ -26,7 +26,7 @@ Item {
             id: text_Username
             width: parent.width / 2
             height: parent.height / 2
-            text: username
+            text: role_UserUsername
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -40,7 +40,7 @@ Item {
             width: text_Username.width
             height: text_Username.height
             horizontalAlignment: Text.AlignRight
-            text: created
+            text: role_PictureCreated
         }
         Text {
             id: text_SpotName
@@ -48,7 +48,7 @@ Item {
             width: parent.width
             height: text_Username.height
             horizontalAlignment: Text.AlignHCenter
-            text: spotName
+            text: role_SpotName
         }
     }
     CachedPicture {
@@ -56,7 +56,7 @@ Item {
         anchors.top: rectangle_Top.bottom
         width: parent.width
         height: width
-        sourceUrl: url
+        sourceUrl: role_PictureUrl
         MouseArea {
             anchors.fill: parent
             onClicked: {
@@ -69,6 +69,6 @@ Item {
         anchors.top: image_Picture.bottom
         width: parent.width
         height: 40
-        text: spotDescription
+        text: role_SpotDescription
     }
 }
