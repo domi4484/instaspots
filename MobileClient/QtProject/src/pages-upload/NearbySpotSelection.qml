@@ -43,6 +43,7 @@ BasicPage{
 
         onClicked:{
             wa_PictureUploader.setNewSpot(true);
+            addNewSpot();
         }
     }
 
