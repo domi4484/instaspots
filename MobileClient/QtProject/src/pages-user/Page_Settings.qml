@@ -43,14 +43,70 @@ BasicPage{
         width: parent.width / 1.1
         spacing: 5
 
-        // GPS
-        Text{
-            text: qsTr("Current position")
+        // Application version
+        Item{
+            height: text_ApplicationVersion.height
+            width: parent.width
+            Text{
+                id: text_ApplicationVersion
+                text: qsTr("Application version")
+            }
+
+            Text{
+                anchors.right: parent.right
+                text: hc_Application.version()
+            }
         }
 
-        Text{
-            id: text_CurrentPosition
-            text: qsTr("Lat: %1 Lon: %2").arg(hc_LocationManager.latitude()).arg(hc_LocationManager.longitude())
+        // Platform
+        Item{
+            height: text_ApplicationVersion.height
+            width: parent.width
+            Text{
+                text: qsTr("Plateform")
+            }
+
+            Text{
+                anchors.right: parent.right
+                text: hc_PlateformDetail.name()
+            }
+        }
+
+        // Development mode
+        Item{
+            height: text_DevelopmentMode.height
+            width: parent.width
+            Text{
+                id: text_DevelopmentMode
+                text: qsTr("Development mode")
+            }
+
+            Switch{
+                anchors.right: parent.right
+                checked: hc_Application.developmentMode()
+                onCheckedChanged: hc_Application.setDevelopmentMode(checked)
+            }
+        }
+
+        Rectangle{
+            height: 2
+            width: parent.width
+            color: "#7fb5be"
+        }
+
+        // GPS
+        Item{
+            height: text_CurrentPosition.height
+            width: parent.width
+            Text{
+                text: qsTr("Current position")
+            }
+
+            Text{
+                id: text_CurrentPosition
+                anchors.right: parent.right
+                text: qsTr("Lat: %1 Lon: %2").arg(hc_LocationManager.latitude()).arg(hc_LocationManager.longitude())
+            }
         }
 
         ComboBox {

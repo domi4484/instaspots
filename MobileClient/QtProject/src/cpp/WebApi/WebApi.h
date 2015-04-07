@@ -17,6 +17,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QScriptValue>
+#include <QString>
 
 // Project includes ------------------------
 #include "QueryItem.h"
@@ -31,11 +32,12 @@ class WebApi : public QObject
   Q_OBJECT
 public:
 
+  static const QString URL_DEVELOPMENT;
+  static const QString URL_PRODUCTION;
+
   class CONST
   {
   public:
-    static const QString WEB_API_HOST;
-    static const QString WEB_API_PATH;
 
     class GENERAL_PARAMS
     {
@@ -54,6 +56,8 @@ public:
 
   static WebApi *instance();
   static void destroy();
+
+  void setUrl(const QString url);
 
   void postRequest(WebApiCommand *abstractCommand,
                    const QList<QueryItem> &qList_QueryItems);
@@ -80,6 +84,8 @@ private:
   static const char *PROPERTY_COMMAND_ID;
 
   static WebApi *s_Instance;
+
+  QUrl m_Url;
 
   QNetworkAccessManager m_QNetworkAccessManager;
 

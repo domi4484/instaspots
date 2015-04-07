@@ -33,7 +33,8 @@ public slots:
   QString lastErrorText() const { return m_LastErrorText; }
 
   // Getters
-  QString name() const;
+  bool    isNewSpot()   const;
+  QString name()        const;
   QString description() const;
 
   // Setters

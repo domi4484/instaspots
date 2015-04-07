@@ -1,5 +1,6 @@
 
 // Project includes ------------------------
+#include "HelperClasses/ApplicationHelper.h"
 #include "HelperClasses/Logger.h"
 #include "HelperClasses/PlateformDetail.h"
 #include "HelperClasses/LocationManager.h"
@@ -26,9 +27,10 @@ int main(int argc, char *argv[])
 
     Logger::instanziate(Logger::LOG_VERBOSE);
 
-    PlateformDetail plateformDetail;
-    LocationManager locationManager;
-    PictureCacher   pictureCacher;
+    ApplicationHelper applicationHelper;
+    PlateformDetail   plateformDetail;
+    LocationManager   locationManager;
+    PictureCacher     pictureCacher;
 
     QSettings settings;
 
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
     NearbySpotsModel nearbySpotModel;
 
     QQmlApplicationEngine engine;
-
+    engine.rootContext()->setContextProperty("hc_Application",     &applicationHelper);
     engine.rootContext()->setContextProperty("hc_PlateformDetail", &plateformDetail);
     engine.rootContext()->setContextProperty("hc_LocationManager", &locationManager);
     engine.rootContext()->setContextProperty("hc_PictureCacher",   &pictureCacher);

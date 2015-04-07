@@ -29,17 +29,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-// Location of the web service (Altervista)
-//const QString WebApi::CONST::WEB_API_HOST("http://sk8mapp.altervista.org/");
-//const QString WebApi::CONST::WEB_API_PATH("api/instaspots/instaspots.php");
+// Location of the web service
+const QString WebApi::URL_DEVELOPMENT ("http://localhost/Symfony/web/app_dev.php/spots/webservice");
+const QString WebApi::URL_PRODUCTION  ("http://spots.lowerclassclothing.com/web/spots/webservice");
 
-// Location of the web service (Hostpoint)
-const QString WebApi::CONST::WEB_API_HOST("http://spots.lowerclassclothing.com/web/spots/");
-const QString WebApi::CONST::WEB_API_PATH("webservice");
-
-// Location of the web service (Localhost)
-//const QString WebApi::CONST::WEB_API_HOST("http://localhost/Symfony/web/app_dev.php/spots/");
-//const QString WebApi::CONST::WEB_API_PATH("webservice");
 
 const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");
 const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
@@ -54,6 +47,7 @@ WebApi *WebApi::s_Instance(NULL);
 
 WebApi::WebApi() :
   QObject(),
+  m_Url(URL_PRODUCTION),
   m_QNetworkAccessManager(),
   m_CommandsIdCounter(0),
   m_RunningCommands()
@@ -85,6 +79,13 @@ void WebApi::destroy()
 
   delete s_Instance;
   s_Instance = NULL;
+}
+
+//----------------------------------------------------------------------------------------------------------------------------
+
+void WebApi::setUrl(const QString url)
+{
+  m_Url.setUrl(url);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -272,7 +273,7 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
   int commandId = m_CommandsIdCounter++;
   m_RunningCommands.insert(commandId, abstractCommand);
 
-  QNetworkRequest request(QUrl(CONST::WEB_API_HOST + CONST::WEB_API_PATH));
+  QNetworkRequest request(m_Url);
   request.setHeader(QNetworkRequest::ContentTypeHeader,
                     "application/x-www-form-urlencoded");
 
@@ -333,7 +334,7 @@ void WebApi::multipartRequest(WebApiCommand *abstractCommand,
 
   multiPart->append(imagePart);
 
-  QNetworkRequest request(QUrl(CONST::WEB_API_HOST + CONST::WEB_API_PATH));
+  QNetworkRequest request(m_Url);
 
   QNetworkReply *reply = m_QNetworkAccessManager.post(request, multiPart);
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);

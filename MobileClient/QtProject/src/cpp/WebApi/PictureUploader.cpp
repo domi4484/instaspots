@@ -63,6 +63,13 @@ PictureUploader::PictureUploader(QObject *parent) :
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+bool PictureUploader::isNewSpot() const
+{
+  return m_Command == C_NEW_SPOT;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QString PictureUploader::name() const
 {
   return m_Name;

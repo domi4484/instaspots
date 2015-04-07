@@ -44,6 +44,11 @@ BasicPage{
         target: wa_PictureUploader
         onSignal_UploadFinished:
         {
+            if(wa_PictureUploader.isNewSpot() == false)
+            {
+                return;
+            }
+
             button_UploadNewSpot.enabled = true;
 
             if(success == false)
