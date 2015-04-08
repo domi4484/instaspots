@@ -13,6 +13,7 @@
 #include "ApplicationHelper.h"
 
 // Project includes ------------------------
+#include "Logger.h"
 #include "../WebApi/WebApi.h"
 
 // Qt includes -----------------------------
@@ -50,10 +51,12 @@ void ApplicationHelper::setDevelopmentMode(bool developmentMode)
 
   if(developmentMode)
   {
+    Logger::debug(tr("WebApi development url: %1").arg(WebApi::URL_DEVELOPMENT));
     WebApi::instance()->setUrl(WebApi::URL_DEVELOPMENT);
   }
   else
   {
+    Logger::debug(tr("WebApi production url: %1").arg(WebApi::URL_PRODUCTION));
     WebApi::instance()->setUrl(WebApi::URL_PRODUCTION);
   }
 

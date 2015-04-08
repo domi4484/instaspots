@@ -590,15 +590,6 @@ Sportstrasse 97
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-123</styleUrl>
-				<name>Wangs - Park</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.432554,47.037892,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-123</styleUrl>
 				<name>Santa Cruz</name>
 				<ExtendedData>
 				</ExtendedData>

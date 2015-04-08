@@ -55,7 +55,7 @@ PictureUploader::PictureUploader(QObject *parent) :
           SLOT(slot_CommandUploadNewSpot_Finished(const WebApiError &)));
 
   m_WebApiCommand_UploadPictureToSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadPictureToSpot.setCommand(C_NEW_SPOT);
+  m_WebApiCommand_UploadPictureToSpot.setCommand(C_PICTURE_TO_SPOT);
   connect(&m_WebApiCommand_UploadPictureToSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadPictureToSpot_Finished(const WebApiError &)));
