@@ -113,14 +113,23 @@ BasicPage{
             currentIndex: 0
             model: ListModel {
                 id: cbItems
-                ListElement { text: "GPS Location"; latitude: 0;         longitude: 0 }
-                ListElement { text: "Airolo";       latitude: 46.528763; longitude: 8.624199 }
-                ListElement { text: "Laax";         latitude: 46.818044; longitude: 9.264813 }
-                ListElement { text: "Chur rail up"; latitude: 46.849522; longitude: 9.530469 }
+                ListElement { text: "GPS Location";    latitude: 0;         longitude: 0        }
+                ListElement { text: "Custom Location"; latitude: 0;         longitude: 0        }
+                ListElement { text: "Airolo";          latitude: 46.528763; longitude: 8.624199 }
+                ListElement { text: "Laax";            latitude: 46.818044; longitude: 9.264813 }
+                ListElement { text: "Chur rail up";    latitude: 46.849522; longitude: 9.530469 }
             }
             width: 200
-            onCurrentIndexChanged: hc_LocationManager.setFakePosition(cbItems.get(currentIndex).latitude,
+            onCurrentIndexChanged:
+            {
+                if(cbItems.get(currentIndex).text === "Custom Location")
+                {
+                   // TODO dialogo posizionamento
+                }
+
+                hc_LocationManager.setFakePosition(cbItems.get(currentIndex).latitude,
                                                                       cbItems.get(currentIndex).longitude)
+            }
         }
     }
 }

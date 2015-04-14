@@ -235,13 +235,13 @@ class WebserviceController extends Controller
     // New picture
     $picture = new Picture();
     $picture->setUser($user);
-    $picture->setSpot($spot);
     $picture->setLatitude($latitude);
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
-    $em->persist($picture);
     
-    $spot->pictureAdded($picture);
+    $spot->addPicture($picture);
+ 
+    $em->persist($picture);
  
     // Create the directory for the new pictures
     $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
@@ -298,19 +298,15 @@ class WebserviceController extends Controller
     $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
-    $spot->setLatitude($latitude);
-    $spot->setLongitude($longitude);
   
     // New picture
     $picture = new Picture();
     $picture->setUser($user);
-    $picture->setSpot($spot);
     $picture->setLatitude($latitude);
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
     
-    $spot->setPicture1($picture);
-    $spot->setPicture2($picture);
+    $spot->addPicture($picture);
     
     // Persist entities
     $em = $this->getDoctrine()->getManager();

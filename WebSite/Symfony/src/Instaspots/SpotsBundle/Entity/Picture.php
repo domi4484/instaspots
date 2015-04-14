@@ -19,7 +19,7 @@ class Picture
     private $user;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\Spot")
+     * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\Spot", inversedBy="pictures")
      * @ORM\JoinColumn(nullable=false)
      */
     private $spot;
