@@ -113,11 +113,11 @@ BasicPage{
             currentIndex: 0
             model: ListModel {
                 id: cbItems
-                ListElement { text: "GPS Location";    latitude: 0;         longitude: 0        }
-                ListElement { text: "Custom Location"; latitude: 0;         longitude: 0        }
-                ListElement { text: "Airolo";          latitude: 46.528763; longitude: 8.624199 }
-                ListElement { text: "Laax";            latitude: 46.818044; longitude: 9.264813 }
-                ListElement { text: "Chur rail up";    latitude: 46.849522; longitude: 9.530469 }
+                ListElement { text: "GPS Location";      latitude: 0;         longitude: 0        }
+                ListElement { text: "Custom Location";   latitude: 0;         longitude: 0        }
+                ListElement { text: "Airolo";            latitude: 46.528763; longitude: 8.624199 }
+                ListElement { text: "Laax";              latitude: 46.818044; longitude: 9.264813 }
+                ListElement { text: "Chur Curb Bahnhof"; latitude: 46.853456; longitude: 9.527019 }
             }
             width: 200
             onCurrentIndexChanged:
@@ -131,6 +131,15 @@ BasicPage{
                                                                       cbItems.get(currentIndex).longitude)
             }
         }
+    } // Column
+    Button {
+        id: button_Logout
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 5
+        width: parent.width / 1.1
+        text: qsTr("Logout")
+        onClicked: wa_User.logout()
     }
 }
 

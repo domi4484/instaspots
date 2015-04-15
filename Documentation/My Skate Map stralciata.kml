@@ -1182,38 +1182,11 @@ flat buono]]></description>
 			</Placemark>
 			<Placemark>
 				<styleUrl>#icon-22</styleUrl>
-				<name>Coira - Onda</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.534907,46.852842,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
-				<name>Coira - Scuola olimpica</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.524572,46.855719,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
 				<name>Chur - Twin Towers</name>
 				<ExtendedData>
 				</ExtendedData>
 				<Point>
 					<coordinates>9.509783,46.847058,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
-				<name>Coira - Wallride</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.528816,46.851934,0.0</coordinates>
 				</Point>
 			</Placemark>
 			<Placemark>
@@ -2033,15 +2006,6 @@ bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-wollerau.html)]]></desc
 				<description><![CDATA[Miniramp]]></description>
 				<Point>
 					<coordinates>9.078548,47.030625,0.0</coordinates>
-				</Point>
-			</Placemark>
-			<Placemark>
-				<styleUrl>#icon-22</styleUrl>
-				<name>Coira - Rail in salita</name>
-				<ExtendedData>
-				</ExtendedData>
-				<Point>
-					<coordinates>9.530444,46.849595,0.0</coordinates>
 				</Point>
 			</Placemark>
 			<Placemark>

@@ -24,7 +24,8 @@ class AdvertController extends Controller
   public function downloadAction()
   {
     $listPlatforms = array(
-      array('title' => 'Android', 'link' => 'link')
+      array('title' => 'Android', 'link' => 'link'),
+      array('title' => 'Source',  'link' => 'https://github.com/domi4484/instaspots')
     );
     
     return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig', 
