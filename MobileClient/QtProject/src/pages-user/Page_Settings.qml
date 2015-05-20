@@ -113,11 +113,16 @@ BasicPage{
             currentIndex: 0
             model: ListModel {
                 id: cbItems
-                ListElement { text: "GPS Location";      latitude: 0;         longitude: 0        }
-                ListElement { text: "Custom Location";   latitude: 0;         longitude: 0        }
-                ListElement { text: "Airolo";            latitude: 46.528763; longitude: 8.624199 }
-                ListElement { text: "Laax";              latitude: 46.818044; longitude: 9.264813 }
-                ListElement { text: "Chur Curb Bahnhof"; latitude: 46.853456; longitude: 9.527019 }
+                ListElement { text: "GPS Location";               latitude: 0;         longitude: 0        }
+                ListElement { text: "Custom Location";            latitude: 0;         longitude: 0        }
+                ListElement { text: "Airolo";                     latitude: 46.528763; longitude: 8.624199 }
+                ListElement { text: "Airolo - Camino";            latitude: 46.527863; longitude: 8.599377 }
+                ListElement { text: "Airolo - Diga della Sella";  latitude: 46.558152; longitude: 8.595343 }
+                ListElement { text: "Airolo - Tre scalini banca"; latitude: 46.528897; longitude: 8.611414 }
+                ListElement { text: "Chur - Curb Bahnhof";        latitude: 46.853456; longitude: 9.527019 }
+                ListElement { text: "Chur - Bank";                latitude: 46.851196; longitude: 9.528907 }
+                ListElement { text: "Biasca - Manual pad";        latitude: 46.360764; longitude: 8.969275 }
+                ListElement { text: "Biasca - SPAI";              latitude: 46.349831; longitude: 8.969629 }
             }
             width: 200
             onCurrentIndexChanged:
