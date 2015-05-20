@@ -37,7 +37,7 @@ BasicPage {
             // Register successfull
             if(success == false)
             {
-                messageDialog.text = qsTr("Registration failed.")
+                messageDialog.text = wa_User.lastErrorText();
                 messageDialog.visible = true;
                 return;
             }

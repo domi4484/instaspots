@@ -211,7 +211,8 @@ void WebApi::slot_QNetworkReply_finished()
 {
   // Retrieve command and data
   QNetworkReply *reply = dynamic_cast<QNetworkReply *>(sender());
-  QNetworkReply::NetworkError replyNetworkError = reply->error();
+  QNetworkReply::NetworkError replyNetworkError       = reply->error();
+  QString                     replyNetworkErrorString = reply->errorString();
   unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
   WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
   reply->deleteLater();
@@ -225,8 +226,9 @@ void WebApi::slot_QNetworkReply_finished()
 
   // Network error
   if ( replyNetworkError != QNetworkReply::NoError )
-  {
-    Logger::error(QString("Network error %1").arg(replyNetworkError));
+  {   
+    Logger::error(QString("Network error %1 (%2)").arg(replyNetworkError)
+                                                  .arg(replyNetworkErrorString));
     command->setResult(WebApiError(WebApiError::NETWORK),
                        QScriptValue());
     return;

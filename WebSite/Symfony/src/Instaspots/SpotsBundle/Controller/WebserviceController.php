@@ -135,6 +135,27 @@ class WebserviceController extends Controller
                               $password,
                               $email )
   { 
+  	// check if username is not empty
+  	if (strlen($username) == 0)
+  	{
+  		$response['error'] = 'Empty username';
+  		return;
+  	}
+  	
+  	// check if pssword is not empty
+  	if (strlen($password) == 0)
+  	{
+  		$response['error'] = 'Invalid password';
+  		return;
+  	}
+  	
+  	// TODO validate email or check if it is done by manipulator->create
+  	if (strlen($email) == 0)
+  	{
+  		$response['error'] = 'Empty email';
+  		return;
+  	}
+  	
     $this->canregister($response,
                        $username);
                 

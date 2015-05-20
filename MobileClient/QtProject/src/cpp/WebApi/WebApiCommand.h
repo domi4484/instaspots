@@ -63,6 +63,9 @@ public:
   WebApiError postRequest(const QList<QueryItem> &queryItems,
                           QIODevice *device = NULL);
 
+  WebApiError error();
+  QString errorString();
+
 signals:
 
   void signal_Finished(const WebApiError &error);
@@ -80,6 +83,8 @@ private:
 
   QScriptValue m_Result;
   QByteArray   m_RawResult;
+
+  WebApiError m_Error;
 
 };
 

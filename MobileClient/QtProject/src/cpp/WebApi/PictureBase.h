@@ -40,7 +40,6 @@ public:
   QList<int> getPicturesId();
   QList<Picture *> getPictures();
 
-  void getNews();
   void getNearbySpots();
 
 signals:

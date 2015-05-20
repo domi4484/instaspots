@@ -131,10 +131,10 @@ Rectangle {
 
             button_Login.enabled = true;
 
-            // Login successfull
+            // Login failed
             if(success == false)
             {
-                messageDialog.text = qsTr("Authentication failed.")
+                messageDialog.text = wa_User.lastErrorText();
                 messageDialog.visible = true;
                 return;
             }

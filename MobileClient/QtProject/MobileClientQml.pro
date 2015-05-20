@@ -22,8 +22,6 @@ QT += qml quick widgets script positioning multimedia
 CONFIG   += console debug
 
 SOURCES += src/cpp/main.cpp \
-    src/cpp/WebApi/Command_CanRegister.cpp \
-    src/cpp/WebApi/Command_Register.cpp \
     src/cpp/WebApi/Picture.cpp \
     src/cpp/WebApi/PictureBase.cpp \
     src/cpp/WebApi/QueryItem.cpp \
@@ -51,8 +49,6 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    src/cpp/WebApi/Command_Register.h \
-    src/cpp/WebApi/Command_CanRegister.h \
     src/cpp/WebApi/Picture.h \
     src/cpp/WebApi/PictureBase.h \
     src/cpp/WebApi/QueryItem.h \

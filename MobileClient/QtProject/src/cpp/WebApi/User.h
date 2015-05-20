@@ -38,6 +38,7 @@ public:
 
 
 public slots:
+
   QString lastErrorText() const { return m_LastErrorText; }
 
   bool login();

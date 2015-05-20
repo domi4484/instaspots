@@ -242,7 +242,7 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
     m_Settings->setValue(SETTINGS_PASSWORD, QString());
     m_Settings->sync();
 
-    m_LastErrorText = tr("Registration failed");
+    m_LastErrorText = m_WebApiCommand_Register.errorString();
     emit signal_RegistrationSuccessfull(false);
     return;
   }
@@ -255,7 +255,7 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
 
 void User::slot_CommandCanRegister_Finished(const WebApiError &error)
 {
-  // TODO implement me
+  // TODO implement me autologin
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -19,11 +19,12 @@
 
 WebApiCommand::WebApiCommand(QObject *parent) :
   QObject(parent),
-  m_Command(),
+  m_Command   (),
   m_AnswerType(JSON),
-  m_Running(false),
-  m_Result(),
-  m_RawResult ()
+  m_Running   (false),
+  m_Result    (),
+  m_RawResult (),
+  m_Error     (WebApiError::NONE, "")
 {
 }
 
@@ -49,6 +50,7 @@ void WebApiCommand::setResult(const WebApiError &error,
   m_Running = false;
 
   m_Result = result;
+  m_Error = error;
   emit signal_Finished(error);
 }
 
@@ -125,6 +127,20 @@ WebApiError WebApiCommand::postRequest(const QList<QueryItem> &queryItems,
   }
 
   return WebApiError(WebApiError::NONE);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApiError WebApiCommand::error()
+{
+    return m_Error;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString WebApiCommand::errorString()
+{
+    return m_Error.text();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
