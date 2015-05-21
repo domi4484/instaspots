@@ -15,200 +15,152 @@ Götzis
 Francoforte piazza con i mini manual pad e quarterini in dadi
 Francoforte gradinata portici railslide
 
-			<Placemark>
-				<name>Altdorf</name>
-				<description><![CDATA[Minirampa piccola e stretta, un lato è piu alto dell'altro]]></description>
-					<coordinates>8.645698,46.882595,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Arona</name>
-						<value>http://photos-c.ak.fbcdn.net/photos-ak-snc1/v2354/208/59/1014471167/n1014471167_30316786_3112.jpg</value>
-					<coordinates>8.550451,45.74826,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ascona</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/RhvvGPKQXCI/AAAAAAAAAMs/0uQbj4jwzbg/s144/016_0001.jpg</value>
-				<description><![CDATA[Da ale (http://picasaweb.google.com/STLuina/Ale?feat=embedwebsite)]]></description>
-					<coordinates>8.771671,46.16199,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Balgach</name>
-					<coordinates>9.610709,47.402423,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bern</name>
-					<coordinates>7.407392,46.948548,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Biella</name>
-						<value>http://www.skatemap.it/images/spots/bi/bi_1238_1376733096.jpg http://www.skatemap.it/images/spots/bi/bi_1238_589375621.jpg</value>
-				<description><![CDATA[Piazza Falcone]]></description>
-					<coordinates>8.059759,45.549881,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bologna</name>
-						<value>http://www.dreamlandskateparks.com/images/bologna/bologna.jpg</value>
-					<coordinates>11.343384,44.488668,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Borgomanero</name>
-				<description><![CDATA[Ho sentito dire che il park non c'é piu...]]></description>
-					<coordinates>8.464022,45.697547,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bulle - Skatepark</name>
-					<coordinates>7.067524,46.61509,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bulle - Skateshop</name>
-				<description><![CDATA[Micro rampa]]></description>
-					<coordinates>7.054526,46.615805,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Busswil</name>
-					<coordinates>7.323267000000001,47.100505000000005,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Cervia</name>
-					<coordinates>12.348633,44.260937,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Cesena</name>
-						<value>http://www.skatemap.it/images/spots/fc/fc_1310_1729968930.jpg</value>
-					<coordinates>12.233276,44.134913,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Mini</name>
-				<description><![CDATA[Minirampa privata]]></description>
-					<coordinates>9.534861,46.851381,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Conthey</name>
-				<description><![CDATA[Minirampa in botume]]></description>
-					<coordinates>7.299814,46.223909,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Courtelary</name>
-				<description><![CDATA[Minirampa privata]]></description>
-					<coordinates>7.071075,47.176179,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Delemont</name>
-				<description><![CDATA[Minirampa privata
+Altdorf
+<![CDATA[Minirampa piccola e stretta, un lato è piu alto dell'altro]]>
+8.645698,46.882595
+
+Arona
+http://photos-c.ak.fbcdn.net/photos-ak-snc1/v2354/208/59/1014471167/n1014471167_30316786_3112.jpg
+8.550451,45.74826
+
+Ascona
+http://lh4.ggpht.com/_1mMyAZAEcFQ/RhvvGPKQXCI/AAAAAAAAAMs/0uQbj4jwzbg/s144/016_0001.jpg
+<![CDATA[Da ale (http://picasaweb.google.com/STLuina/Ale?feat=embedwebsite)]]>
+8.771671,46.16199
+
+Balgach
+9.610709,47.402423
+
+Bern
+7.407392,46.948548
+
+Biella
+http://www.skatemap.it/images/spots/bi/bi_1238_1376733096.jpg http://www.skatemap.it/images/spots/bi/bi_1238_589375621.jpg
+<![CDATA[Piazza Falcone]]>
+8.059759,45.549881
+
+Bologna
+http://www.dreamlandskateparks.com/images/bologna/bologna.jpg
+11.343384,44.488668
+
+Borgomanero
+<![CDATA[Ho sentito dire che il park non c'é piu...]]>
+8.464022,45.697547
+
+Bulle - Skatepark
+7.067524,46.61509
+
+Bulle - Skateshop
+<![CDATA[Micro rampa]]>
+7.054526,46.615805
+
+Busswil
+7.323267000000001,47.100505000000005
+
+Cervia
+12.348633,44.260937
+
+Cesena
+http://www.skatemap.it/images/spots/fc/fc_1310_1729968930.jpg
+12.233276,44.134913
+
+Coira - Mini
+<![CDATA[Minirampa privata]]>
+9.534861,46.851381
+
+Conthey
+<![CDATA[Minirampa in botume]]>
+7.299814,46.223909
+
+Courtelary
+<![CDATA[Minirampa privata]]>
+7.071075,47.176179
+
+Delemont
+<![CDATA[Minirampa privata
 Contatto:
-Allfree skate team (http://www.allfreeskateboardteam.blogspot.com/)]]></description>
-					<coordinates>7.221445000000001,47.295018,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Dongio</name>
-				<description><![CDATA[Minirampa della vertical con estensione]]></description>
-					<coordinates>8.958254,46.435877,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Fiesch</name>
-					<coordinates>8.140869,46.3962,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Frauenfeld</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-frauenfeld.html)]]></description>
-					<coordinates>8.888792,47.563462,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Friborgo - Skatepark</name>
-					<coordinates>7.144997,46.80133,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Giubiasco Park</name>
-					<coordinates>8.994927,46.173204,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Hard</name>
-						<value>http://www.sk8mag.de/Spots/Hard/hard1_192.jpg http://www.sk8mag.de/Spots/Hard/hard2_192.jpg</value>
-					<coordinates>9.686251,47.491805,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Karlsruhe</name>
-				<description><![CDATA[Bowl]]></description>
-					<coordinates>8.400078,49.014005,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Kassel</name>
-				<description><![CDATA[Street + beton bowl indoor]]></description>
-					<coordinates>9.506607,51.315164,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>La Chaux de Fonds - Mini</name>
-					<coordinates>6.836543,47.106654,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>La Chaux de Fonds - Park'n sun</name>
-				<description><![CDATA[http://www.parknsun.ch/Renovation.htm
+Allfree skate team (http://www.allfreeskateboardteam.blogspot.com/)]]>
+7.221445000000001,47.295018
+
+Dongio - Minirampa
+8.958254,46.435877
+
+Fiesch
+8.140869,46.3962
+
+Frauenfeld - http://www.bowl.ch/skateparks-schweiz-skatepark-frauenfeld.html
+8.888792,47.563462
+
+Friborgo - Skatepark
+7.144997,46.80133
+
+Giubiasco Park
+8.994927,46.173204
+
+Hard
+http://www.sk8mag.de/Spots/Hard/hard1_192.jpg http://www.sk8mag.de/Spots/Hard/hard2_192.jpg
+9.686251,47.491805
+
+Karlsruhe - Bowl
+8.400078,49.014005
+
+Kassel - Street + beton bowl indoor
+9.506607,51.315164
+
+La Chaux de Fonds - Mini
+6.836543,47.106654
+
+La Chaux de Fonds - Park'n sun
+<![CDATA[http://www.parknsun.ch/Renovation.htm
 Commento personale 06.09.2010:
-Questo skatepark, realizzato interamente dai locals volontari, é appena stato completamente rinnovato. Ci si possono trovare tutte le strutture di base, quali box, rails, banks, etc... In generale é veramente piacevole da sk8are! L'unica pecca è che d'inverno é veramente freddo.]]></description>
-					<coordinates>6.814597,47.09147,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Legnago</name>
-					<coordinates>11.282959,45.182037,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Les Deux Alpes</name>
-					<coordinates>6.126418,45.010201,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Littau</name>
-						<value>http://lh6.ggpht.com/_1mMyAZAEcFQ/Suizb8ci7LI/AAAAAAAACo0/MvGIIYGjOYM/s144/DSC00045.JPG</value>
-				<description><![CDATA[Da 2007 (http://picasaweb.google.ch/STLuina/2007?feat=embedwebsite)]]></description>
-					<coordinates>8.271133,47.057687,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Losanna - Vidy</name>
-					<coordinates>6.599640000000001,46.514874,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Lucca</name>
-					<coordinates>10.506116000000002,43.855766,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Madonna del sasso</name>
-					<coordinates>8.369801,45.79172100000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Maggia</name>
-				<description><![CDATA[Bank e curb in legno fatti in casa]]></description>
-					<coordinates>8.705378,46.24362,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Milano - Lambro</name>
-					<coordinates>9.246229,45.493183,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Milano - Motta</name>
-					<coordinates>9.225072,45.463171,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Montreux - Empire Skate Building</name>
-					<coordinates>6.912374,46.43382,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Moutier</name>
-						<value>http://lh3.ggpht.com/_NFj9nTnRuuA/TMQ9A-zLL_I/AAAAAAAAARM/JdKIoBtEcV8/s400/DSC00045.JPG</value>
-					<coordinates>7.371911999999999,47.278647,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Nafels</name>
-				<description><![CDATA[Bowl + street
-Immagini (http://www.loosetrucks.ch/loosetrucks/SlideShow_assets/SlideShow.html?lang=en)]]></description>
-					<coordinates>9.065051,47.09946,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Neuchatel</name>
-					<coordinates>6.94779,46.994407,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Olten</name>
-				<description><![CDATA[Öffnungszeiten
+6.814597,47.09147
+
+Legnago
+11.282959,45.182037
+
+Les Deux Alpes
+6.126418,45.010201
+
+Littau
+http://lh6.ggpht.com/_1mMyAZAEcFQ/Suizb8ci7LI/AAAAAAAACo0/MvGIIYGjOYM/s144/DSC00045.JPG
+<![CDATA[Da 2007 (http://picasaweb.google.ch/STLuina/2007?feat=embedwebsite)]]>
+8.271133,47.057687
+
+Losanna - Vidy
+6.599640000000001,46.514874
+
+Lucca
+10.506116000000002,43.855766
+
+Madonna del sasso
+8.369801,45.79172100000001
+
+Maggia
+<![CDATA[Bank e curb in legno fatti in casa]]>
+8.705378,46.24362
+
+Milano - Lambro
+9.246229,45.493183
+
+Milano - Motta
+9.225072,45.463171
+
+Montreux - Empire Skate Building
+6.912374,46.43382
+
+Moutier
+http://lh3.ggpht.com/_NFj9nTnRuuA/TMQ9A-zLL_I/AAAAAAAAARM/JdKIoBtEcV8/s400/DSC00045.JPG
+7.371911999999999,47.278647
+
+Nafels - Bowl + street
+Immagini (http://www.loosetrucks.ch/loosetrucks/SlideShow_assets/SlideShow.html?lang=en)]]>
+9.065051,47.09946
+
+Neuchatel
+6.94779,46.994407
+
+Olten
+<![CDATA[Öffnungszeiten
 L'inverno è chiuso perchè fanno il ghiaccio
 Mittwoch 14:00-21:30 Uhr
 Freitag    17:00-21:30 Uhr
@@ -216,730 +168,582 @@ Samstag  14:00-21:00 Uhr
 Sonntag  14:00-18:00 UhrStandort:
 In der Eishalle Olten
 Sportstrasse 97
-4600 Olten]]></description>
-					<coordinates>7.897373000000001,47.343036000000005,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Osimo</name>
-						<value>http://www.skatemap.it/images/frontnews/cover_86.jpg</value>
-					<coordinates>13.493786,43.484532,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Portland - Burnside</name>
-					<coordinates>-122.66343200000001,45.523066,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Riazzino - Vanja</name>
-					<coordinates>8.893175,46.1757,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Riva del Garda</name>
-						<value>http://www.skatemap.it/images/spots/tn/tn_135_621378769.jpg</value>
-					<coordinates>10.879211,45.86515,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Pisa</name>
-				<description><![CDATA[Bowl (http://www.skatemap.it/spot/Pisa)]]></description>
-					<coordinates>10.425124,43.714961,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Saas Fee</name>
-					<coordinates>7.92552,46.102504,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Salt Lake City</name>
-					<coordinates>-111.917333,40.74769,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Santa Cruz</name>
-					<coordinates>-122.02046900000002,36.968692,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Sarnen</name>
-						<value>http://lh5.ggpht.com/_NFj9nTnRuuA/TMQ9BRnbS3I/AAAAAAAAARU/yvQRT_9aLcQ/s400/DSC00047.JPG http://lh5.ggpht.com/_NFj9nTnRuuA/TMQ9BjZiJbI/AAAAAAAAARY/tedR-9iYxbs/s400/DSC00048.JPG</value>
-				<description><![CDATA[Bowl + street]]></description>
-					<coordinates>8.246098000000002,46.884131,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Senigallia</name>
-				<description><![CDATA[Park street]]></description>
-					<coordinates>13.216467,43.711936,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Sesto Calende</name>
-						<value>http://lh6.ggpht.com/_1mMyAZAEcFQ/SudtjW6NthI/AAAAAAAACoI/lSxZvL2FHGY/s144/IMGA0204.JPG http://lh3.ggpht.com/_1mMyAZAEcFQ/SudtjrH5uXI/AAAAAAAACoM/KoCPXbkxfSg/s144/IMGA0206.JPG</value>
-				<description><![CDATA[Da 2007 (http://picasaweb.google.com/STLuina/2007?feat=embedwebsite)
- Da 2007 (http://picasaweb.google.com/STLuina/2007?feat=embedwebsite)]]></description>
-					<coordinates>8.626122,45.729034000000006,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Sion</name>
-				<description><![CDATA[Street + mini]]></description>
-					<coordinates>7.376912000000001,46.232437,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Sonceboz</name>
-				<description><![CDATA[Minirampa privata]]></description>
-					<coordinates>7.180252000000001,47.195312,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>St. Gallen</name>
-				<description><![CDATA[Bowl, Bowl old school, street area
-Immagini (http://www.loosetrucks.ch/loosetrucks/SlideShow_assets/SlideShow.html?lang=en)]]></description>
-					<coordinates>9.36136,47.420959,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Tavannes</name>
-					<coordinates>7.198201000000001,47.223813,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Tenero</name>
-				<description><![CDATA[Minirampa]]></description>
-					<coordinates>8.849447,46.171866,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Tirano</name>
-						<value>http://lh5.ggpht.com/_NFj9nTnRuuA/THlM8k-1ogI/AAAAAAAAAOA/bzEMauicC-4/s144/DSC00036.jpg http://lh5.ggpht.com/_NFj9nTnRuuA/THlNAykwN3I/AAAAAAAAAOE/fbQVrqVreCc/s144/DSC00037.jpg</value>
-				<description><![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]></description>
-					<coordinates>10.140724,46.201221,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ulrichen</name>
-						<value>http://lh5.ggpht.com/_NFj9nTnRuuA/TCPVVofLDgI/AAAAAAAAANc/ENacJWgoJg0/s288/img_6328.jpg</value>
-					<coordinates>8.306994,46.504289,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Vaduz</name>
-						<value>http://www.skate-concept.de/images/ref_vaduz_1.jpg</value>
-					<coordinates>9.50592,47.151435,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Vancouver - Skate plaza</name>
-					<coordinates>-123.10257099999998,49.277338,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Verbania - Nuovo park</name>
-					<coordinates>8.558655,45.932114,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Vicenza</name>
-						<value>http://photos-d.ak.fbcdn.net/hphotos-ak-snc1/hs107.snc1/4791_1148807530398_1533897843_367125_5904546_n.jpg</value>
-				<description><![CDATA[La Bowl si trova in un parco presso la stazione dei vigili del fuoco]]></description>
-					<coordinates>11.541138,45.548679,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Wangs - Scream Cat</name>
-				<description><![CDATA[Mini privata coperta]]></description>
-					<coordinates>9.430521,47.030329,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Widen</name>
-				<description><![CDATA[Mini minirampa - flatbox - flatrail
-Flat perfetto]]></description>
-					<coordinates>8.367913,47.368529,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Widnau</name>
-					<coordinates>9.639806,47.403429,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Freestylehalle</name>
-				<description><![CDATA[http://freestylepark.ch/
+4600 Olten]]>
+7.897373000000001,47.343036000000005
+
+Osimo
+http://www.skatemap.it/images/frontnews/cover_86.jpg
+13.493786,43.484532
+
+Portland - Burnside
+-122.66343200000001,45.523066
+
+Riazzino - Vanja
+8.893175,46.1757
+
+Riva del Garda
+http://www.skatemap.it/images/spots/tn/tn_135_621378769.jpg
+10.879211,45.86515
+
+Pisa
+<![CDATA[Bowl (http://www.skatemap.it/spot/Pisa)]]>
+10.425124,43.714961
+
+Saas Fee
+7.92552,46.102504
+
+Salt Lake City
+-111.917333,40.74769
+
+Santa Cruz
+-122.02046900000002,36.968692
+
+Sarnen
+http://lh5.ggpht.com/_NFj9nTnRuuA/TMQ9BRnbS3I/AAAAAAAAARU/yvQRT_9aLcQ/s400/DSC00047.JPG http://lh5.ggpht.com/_NFj9nTnRuuA/TMQ9BjZiJbI/AAAAAAAAARY/tedR-9iYxbs/s400/DSC00048.JPG
+<![CDATA[Bowl + street]]>
+8.246098000000002,46.884131
+
+Senigallia
+<![CDATA[Park street]]>
+13.216467,43.711936
+
+Sesto Calende
+http://lh6.ggpht.com/_1mMyAZAEcFQ/SudtjW6NthI/AAAAAAAACoI/lSxZvL2FHGY/s144/IMGA0204.JPG http://lh3.ggpht.com/_1mMyAZAEcFQ/SudtjrH5uXI/AAAAAAAACoM/KoCPXbkxfSg/s144/IMGA0206.JPG
+<![CDATA[Da 2007 (http://picasaweb.google.com/STLuina/2007?feat=embedwebsite)
+ Da 2007 (http://picasaweb.google.com/STLuina/2007?feat=embedwebsite)]]>
+8.626122,45.729034000000006
+
+Sion
+<![CDATA[Street + mini]]>
+7.376912000000001,46.232437
+
+Sonceboz
+<![CDATA[Minirampa privata]]>
+7.180252000000001,47.195312
+
+St. Gallen - Bowl, Bowl old school, street area
+Immagini (http://www.loosetrucks.ch/loosetrucks/SlideShow_assets/SlideShow.html?lang=en)]]>
+9.36136,47.420959
+
+Tavannes
+7.198201000000001,47.223813
+
+Tenero
+<![CDATA[Minirampa]]>
+8.849447,46.171866
+
+Tirano
+http://lh5.ggpht.com/_NFj9nTnRuuA/THlM8k-1ogI/AAAAAAAAAOA/bzEMauicC-4/s144/DSC00036.jpg http://lh5.ggpht.com/_NFj9nTnRuuA/THlNAykwN3I/AAAAAAAAAOE/fbQVrqVreCc/s144/DSC00037.jpg
+<![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]>
+10.140724,46.201221
+
+Ulrichen
+http://lh5.ggpht.com/_NFj9nTnRuuA/TCPVVofLDgI/AAAAAAAAANc/ENacJWgoJg0/s288/img_6328.jpg
+8.306994,46.504289
+
+Vaduz
+http://www.skate-concept.de/images/ref_vaduz_1.jpg
+9.50592,47.151435
+
+Vancouver - Skate plaza
+-123.10257099999998,49.277338
+
+Verbania - Nuovo park
+8.558655,45.932114
+
+Vicenza
+http://photos-d.ak.fbcdn.net/hphotos-ak-snc1/hs107.snc1/4791_1148807530398_1533897843_367125_5904546_n.jpg
+<![CDATA[La Bowl si trova in un parco presso la stazione dei vigili del fuoco]]>
+11.541138,45.548679
+
+Wangs - Scream Cat
+<![CDATA[Mini privata coperta]]>
+9.430521,47.030329
+
+Widen
+<![CDATA[Mini minirampa - flatbox - flatrail
+Flat perfetto]]>
+8.367913,47.368529
+
+Widnau
+9.639806,47.403429
+
+Zurigo - Freestylehalle
+<![CDATA[http://freestylepark.ch/
 Öffnungszeiten:
 - Montag und Dienstag: 17.00 – 22.00 Uhr
 - Mittwoch: 14.00 – 22.00 Uhr
 - Donnerstag und Freitag: 17.00 – 22.00 Uhr
 - Samstag : 12.00 – 22.00 Uhr
 - Sonntag : 11.00 – 13.00 Uhr reserviert für Mini-Shreddies (Kinder unter 10 Jahren)Mit dem Tram Nr. 4:
-Ab Hauptbahnhof Zürich bis Endstation Werdhölzli.]]></description>
-					<coordinates>8.482439,47.397537,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Hohlstrasse</name>
-				<description><![CDATA[Piccolo skateparchino]]></description>
-					<coordinates>8.524846000000002,47.37799700000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Skatepark</name>
-					<coordinates>8.52251,47.355451,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - The Beast</name>
-					<coordinates>8.505542,47.392063,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Airolo - Camino</name>
-						<value>http://lh5.ggpht.com/_1mMyAZAEcFQ/RpOUZWDErUI/AAAAAAAAAvM/8jWIKj_FXEk/s144/maik%20e%20bro%2010%20luglio%20064.JPG</value>
-				<description><![CDATA[Da 2007-07-10 maik e bro (http://picasaweb.google.com/STLuina/20070710MaikEBro?feat=embedwebsite)]]></description>
-					<coordinates>8.599377,46.527863,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Airolo - Diga della Sella</name>
-					<coordinates>8.595343,46.558152,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Airolo - Tre scalini banca</name>
-						<value>http://lh5.ggpht.com/_1mMyAZAEcFQ/RhvvFfKQXBI/AAAAAAAAAQ8/xhJqXRWOKbA/s144/foto%20009.JPG http://lh3.ggpht.com/_1mMyAZAEcFQ/RiESSfKQYBI/AAAAAAAAAVE/O3Waulmgngs/s144/skate%2013.03.2007%20012.jpg</value>
+Ab Hauptbahnhof Zürich bis Endstation Werdhölzli.]]>
+8.482439,47.397537
+
+Zurigo - Hohlstrasse
+<![CDATA[Piccolo skateparchino]]>
+8.524846000000002,47.37799700000001
+
+Zurigo - Skatepark
+8.52251,47.355451
+
+Zurigo - The Beast
+8.505542,47.392063
+
+Airolo - Camino
+http://lh5.ggpht.com/_1mMyAZAEcFQ/RpOUZWDErUI/AAAAAAAAAvM/8jWIKj_FXEk/s144/maik%20e%20bro%2010%20luglio%20064.JPG
+<![CDATA[Da 2007-07-10 maik e bro (http://picasaweb.google.com/STLuina/20070710MaikEBro?feat=embedwebsite)]]>
+8.599377,46.527863
+
+Airolo - Diga della Sella
+8.595343,46.558152
+
+Airolo - Tre scalini banca
+http://lh5.ggpht.com/_1mMyAZAEcFQ/RhvvFfKQXBI/AAAAAAAAAQ8/xhJqXRWOKbA/s144/foto%20009.JPG http://lh3.ggpht.com/_1mMyAZAEcFQ/RiESSfKQYBI/AAAAAAAAAVE/O3Waulmgngs/s144/skate%2013.03.2007%20012.jpg
         <description><![CDATA[Da big scalini banca (http://picasaweb.google.com/STLuina/BigScaliniBanca?feat=embedwebsite)
- Da bro (http://picasaweb.google.com/STLuina/Bro?feat=embedwebsite)]]></description>
-					<coordinates>8.611414,46.528897,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ambri - 6 gradini con muretto</name>
-						<value>http://lh6.ggpht.com/_NFj9nTnRuuA/S6-iIX7JJNI/AAAAAAAAAD8/GS70cxPCnYQ/s144/DSC00011.JPG http://lh5.ggpht.com/_NFj9nTnRuuA/S6-iIj-PR9I/AAAAAAAAAEA/gYwZVe7ENGQ/s144/DSC00012.JPG</value>
-				<description><![CDATA[La rincorsa è corta]]></description>
-					<coordinates>8.702803,46.50964700000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ambri - Bank con muretto</name>
-					<coordinates>8.699085000000002,46.514302,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Arona - spalti</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/SvksAVUd5TI/AAAAAAAACpE/jJuXp6Uc5rU/s144/Arona%20spalti.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>8.550864,45.747861,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bellinzona - Cervia</name>
-				<description><![CDATA[7 gradini
-flat buono]]></description>
-					<coordinates>9.023166,46.190579,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bellinzona - Piazza del sole</name>
-					<coordinates>9.024003,46.193301,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Berna - Bümplitz</name>
-				<description><![CDATA[2 curb + un piccolo quarter in cemento]]></description>
-					<coordinates>7.396733000000001,46.94453500000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Biasca - Manual ped</name>
-						<value>http://lh3.ggpht.com/_NFj9nTnRuuA/TMQr34nTO1I/AAAAAAAAAQg/zaGMbk5ViGg/s400/DSC00102.jpg</value>
-					<coordinates>8.969275,46.360764,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Biasca - SPAI</name>
-				<description><![CDATA[5 gradini + curbs in ferro ma bassi]]></description>
-					<coordinates>8.969629,46.349831,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bienne - Eau</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/SvksAgI4edI/AAAAAAAACpM/oPBDndpJpKw/s144/bienne%20eau.jpg</value>
-				<description><![CDATA[Panchina waxata]]></description>
-					<coordinates>7.252473,47.137125,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bienne - Gap to bank</name>
-						<value>http://lh4.ggpht.com/_NFj9nTnRuuA/S64OCafsQOI/AAAAAAAAACs/BzhK2JDxC7U/s144/gap%20to%20bank.jpg</value>
-				<description><![CDATA[From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)]]></description>
-					<coordinates>7.246519000000001,47.129958,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bienne - Gare</name>
-				<description><![CDATA[Handrail su 8 gradini]]></description>
-					<coordinates>7.2419210000000005,47.131327,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bienne - Lac</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/SudgLIdc8II/AAAAAAAACnk/HPb6uYnyUdY/s144/IMGA0287.JPG</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.com/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>7.233907,47.13298,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bienne - Madretsch</name>
-						<value>http://lh6.ggpht.com/_1mMyAZAEcFQ/SvksAeWT9nI/AAAAAAAACpI/2Q8KupbOPUg/s144/bienne.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>7.254881999999999,47.134618,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bienne - Pool jam to fakie</name>
-						<value>http://lh6.ggpht.com/_1mMyAZAEcFQ/SudgMkRArGI/AAAAAAAACn0/mPy6qkDZfFg/s144/img_5121.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.com/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>7.250246999999999,47.139147,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Castione - Bank</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/SudtjAscizI/AAAAAAAACoE/6-_fqtZRkSw/s144/bs%20flip.jpg https://lh6.googleusercontent.com/_NFj9nTnRuuA/TVFTgxO5AjI/AAAAAAAAAS0/UiqpUAA35ao/s400/DSC00128.jpg</value>
-				<description><![CDATA[Da 2007 (http://picasaweb.google.com/STLuina/2007?feat=embedwebsite)
- From Spot (https://picasaweb.google.com/lombardi.damiano/Spot?feat=embedwebsite)]]></description>
-					<coordinates>9.042542,46.221177,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Champagne</name>
-						<value>http://lh4.ggpht.com/_NFj9nTnRuuA/THlMnExCTOI/AAAAAAAAAN8/oyB0plBcpp0/s144/DSC00035.jpg</value>
-				<description><![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]></description>
-					<coordinates>6.659367,46.831279,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - 4 panchine in fila</name>
-					<coordinates>9.531841,46.851266,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Banca</name>
-					<coordinates>9.528907,46.851196,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Bank gigante</name>
-					<coordinates>9.508753,46.861453,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Curb in salita</name>
-					<coordinates>9.519299000000002,46.851453,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Curb storto</name>
-					<coordinates>9.530125,46.85117400000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Curb su gradinata</name>
-					<coordinates>9.527019,46.853456,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Coira - Minihip</name>
-					<coordinates>9.535167000000001,46.851746,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Chur - Twin Towers</name>
-					<coordinates>9.509783,46.847058,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ginevra - CICG</name>
-				<description><![CDATA[6 gradini.
-Flat: Ottimo]]></description>
-					<coordinates>6.137935,46.220242,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ginevra - Double set 5 + 3</name>
-					<coordinates>6.151432,46.194329,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ginevra - Minibowl</name>
-					<coordinates>6.14736,46.212514,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ginevra - Ospedale</name>
-				<description><![CDATA[Curbs + piccoli rails]]></description>
-					<coordinates>6.14816,46.194611,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ginevra - Piccolo rail</name>
-					<coordinates>6.148044,46.214907,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ginevra - Poste</name>
-				<description><![CDATA[2 Gradini e poi 6. Ideale per sequenze]]></description>
-					<coordinates>6.142556,46.212623,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Intra - 6 gradini</name>
-					<coordinates>8.57234,45.939754,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Intra - A.S.L.</name>
-						<value>http://lh3.ggpht.com/_1mMyAZAEcFQ/SvksAomb_XI/AAAAAAAACpQ/wAqgawx2uzA/s144/intra%20asl.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>8.564186,45.929304,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Intra - Beata</name>
-						<value>http://lh5.ggpht.com/_1mMyAZAEcFQ/SvksA17s1zI/AAAAAAAACpU/uWTbtFBrlek/s144/intra%20beata.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>8.530779,45.933927,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Intra - Bennet</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/Svkv04VLzVI/AAAAAAAACpc/1PuQYkO2iNw/s144/intra%20bennet2.jpg http://photos-c.ak.fbcdn.net/hphotos-ak-snc3/hs086.snc3/15338_174830631483_832501483_2778831_7085485_n.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>8.564031,45.931125,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Intra - Gap stretto</name>
-						<value>http://photos-a.ak.fbcdn.net/hphotos-ak-snc3/hs086.snc3/15338_174830636483_832501483_2778832_107394_n.jpg</value>
-					<coordinates>8.577329,45.939344,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>La Chaux de Fonds - Street</name>
-						<value>http://lh3.ggpht.com/_NFj9nTnRuuA/TMQzl21X25I/AAAAAAAAARE/o5ATSzHMxCI/s400/street_la_chaux_de_fonds.jpg</value>
-				<description><![CDATA[Curb lungo, due volte 5 gradini, 4 gradini]]></description>
-					<coordinates>6.828877,47.102630000000005,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Losanna - Ouchy</name>
-					<coordinates>6.626113,46.506398,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Milano - Stazione Centrale</name>
-					<coordinates>9.202268,45.485229,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Mett - Curb</name>
-					<coordinates>7.282132999999999,47.146178,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Mett - Gomma blu + sette scalini</name>
-						<value>http://lh5.ggpht.com/_1mMyAZAEcFQ/SudgMaXQqZI/AAAAAAAACnw/j2HFz0oxZWg/s144/img_5111.jpg</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.com/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>7.283909,47.143522,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Mett - Rail courbe pop out</name>
-						<value>http://lh6.ggpht.com/_NFj9nTnRuuA/TJuQSalRp4I/AAAAAAAAAQA/XYpvDbm_K1g/s144/DSC00086.jpg</value>
-				<description><![CDATA[From Spot (http://picasaweb.google.com/lombardi.damiano/Spot?feat=embedwebsite)]]></description>
-					<coordinates>7.272557999999999,47.14369700000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Neuchatel - Colibrys</name>
-				<description><![CDATA[Bank + wallride]]></description>
-					<coordinates>6.946921,46.997671,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Omegna - Cono</name>
-				<description><![CDATA[Due gradoni]]></description>
-					<coordinates>8.411922,45.881651,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Soletta - Chiesa</name>
-				<description><![CDATA[Rail pop out]]></description>
-					<coordinates>7.535285,47.209242,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Soletta - Ramada</name>
-				<description><![CDATA[Curb un po scarso]]></description>
-					<coordinates>7.541921,47.206164,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Soletta - Solothurn West</name>
-				<description><![CDATA[Handrail su 7 gradini]]></description>
-					<coordinates>7.532355,47.207119,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Soletta - Wildbach</name>
-						<value>http://lh4.ggpht.com/_NFj9nTnRuuA/THlMVPHuMVI/AAAAAAAAAN4/7yQ_07KdyjA/s144/DSC00013.jpg</value>
-				<description><![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]></description>
-					<coordinates>7.5164990000000005,47.210564,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Villa d'Ossola</name>
-						<value>http://lh3.ggpht.com/_1mMyAZAEcFQ/Rhv4n_KQXqI/AAAAAAAAASI/EiGWgugq_nM/s144/DSC01694.JPG</value>
-				<description><![CDATA[Da Villadossola (http://picasaweb.google.com/STLuina/Villadossola?feat=embedwebsite)]]></description>
-					<coordinates>8.25865,46.066919000000006,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Gap in cantiere</name>
-					<coordinates>8.528588,47.367853,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Hardbrücke</name>
-				<description><![CDATA[Piramidi geniali]]></description>
-					<coordinates>8.516743,47.386108,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Ledge potente</name>
-				<description><![CDATA[Ledge su 9 gradini, sulla sinistra]]></description>
-					<coordinates>8.528371,47.364779,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Quarter</name>
-					<coordinates>8.534349,47.369822,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Zurigo - Rails poput</name>
-					<coordinates>8.516602,47.376241,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Aarau</name>
-					<coordinates>8.062044,47.393287,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Aarberg</name>
-						<value>http://a7.sphotos.ak.fbcdn.net/hphotos-ak-ash4/430410_2989984581337_1013765171_32843733_515488849_n.jpg</value>
-				<description><![CDATA[Spot street con banks, curbs e rails]]></description>
-					<coordinates>7.275798000000001,47.038427,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Aardorf</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-aadorf.html)]]></description>
-					<coordinates>8.904183,47.496839,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ambri - Posta</name>
-						<value>http://lh5.ggpht.com/_NFj9nTnRuuA/S6yxqAsQeeI/AAAAAAAAACM/NuL97L47QNg/s144/DSC00005.JPG</value>
-				<description><![CDATA[Rail grosso in fs]]></description>
-					<coordinates>8.696119,46.509296,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Aurich - Playground</name>
-					<coordinates>7.470010000000001,53.4756,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bergamo</name>
-						<value>http://photos-d.ak.fbcdn.net/hphotos-ak-snc1/hs146.snc1/5416_1172102415442_1014471167_30536009_7244223_n.jpg</value>
-					<coordinates>9.645996,45.683158,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Berlino</name>
-					<coordinates>13.45176,52.50816,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Besancon</name>
-						<value>http://mw2.google.com/mw-panoramio/photos/medium/15323294.jpg</value>
-					<coordinates>6.017906,47.231532,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Bolzano - Piramide</name>
-						<value>http://www.skatemap.it/images/spots/bz/bz_428_1626547517.jpg</value>
-					<coordinates>11.318037,46.488007,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Brescia</name>
-						<value>http://www.skatemap.it/images/spots/bs/bs_413_2086379886.jpg</value>
-					<coordinates>10.233765,45.512121,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Brixlegg - The Cradle Skatepark</name>
-						<value>http://www.sk8mag.de/Spots/Rattenberg/brixleggoverview_538.jpg http://www.sk8mag.de/Spots/Rattenberg/streetoverview_538.jpg</value>
-				<description><![CDATA[http://www.skatethecradle.com/
+ Da bro (http://picasaweb.google.com/STLuina/Bro?feat=embedwebsite)]]>
+8.611414,46.528897
+
+Ambri - 6 gradini con muretto
+http://lh6.ggpht.com/_NFj9nTnRuuA/S6-iIX7JJNI/AAAAAAAAAD8/GS70cxPCnYQ/s144/DSC00011.JPG http://lh5.ggpht.com/_NFj9nTnRuuA/S6-iIj-PR9I/AAAAAAAAAEA/gYwZVe7ENGQ/s144/DSC00012.JPG
+<![CDATA[La rincorsa è corta]]>
+8.702803,46.50964700000001
+
+Ambri - Bank con muretto
+8.699085000000002,46.514302
+
+Arona - spalti
+http://lh4.ggpht.com/_1mMyAZAEcFQ/SvksAVUd5TI/AAAAAAAACpE/jJuXp6Uc5rU/s144/Arona%20spalti.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]>
+8.550864,45.747861
+
+Bellinzona - Cervia
+<![CDATA[7 gradini
+flat buono]]>
+9.023166,46.190579
+
+Bellinzona - Piazza del sole
+9.024003,46.193301
+
+Berna - Bümplitz
+<![CDATA[2 curb + un piccolo quarter in cemento]]>
+7.396733000000001,46.94453500000001
+
+Biasca - Manual ped
+http://lh3.ggpht.com/_NFj9nTnRuuA/TMQr34nTO1I/AAAAAAAAAQg/zaGMbk5ViGg/s400/DSC00102.jpg
+8.969275,46.360764
+
+Biasca - SPAI
+<![CDATA[5 gradini + curbs in ferro ma bassi]]>
+8.969629,46.349831
+
+Bienne - Eau
+http://lh4.ggpht.com/_1mMyAZAEcFQ/SvksAgI4edI/AAAAAAAACpM/oPBDndpJpKw/s144/bienne%20eau.jpg
+<![CDATA[Panchina waxata]]>
+7.252473,47.137125
+
+Bienne - Gap to bank
+http://lh4.ggpht.com/_NFj9nTnRuuA/S64OCafsQOI/AAAAAAAAACs/BzhK2JDxC7U/s144/gap%20to%20bank.jpg
+<![CDATA[From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)]]>
+7.246519000000001,47.129958
+
+Bienne - Gare
+<![CDATA[Handrail su 8 gradini]]>
+7.2419210000000005,47.131327
+
+Bienne - Lac
+http://lh4.ggpht.com/_1mMyAZAEcFQ/SudgLIdc8II/AAAAAAAACnk/HPb6uYnyUdY/s144/IMGA0287.JPG
+<![CDATA[Da 2009 (http://picasaweb.google.com/STLuina/2009?feat=embedwebsite)]]>
+7.233907,47.13298
+
+Bienne - Madretsch
+http://lh6.ggpht.com/_1mMyAZAEcFQ/SvksAeWT9nI/AAAAAAAACpI/2Q8KupbOPUg/s144/bienne.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]>
+7.254881999999999,47.134618
+
+Bienne - Pool jam to fakie
+http://lh6.ggpht.com/_1mMyAZAEcFQ/SudgMkRArGI/AAAAAAAACn0/mPy6qkDZfFg/s144/img_5121.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.com/STLuina/2009?feat=embedwebsite)]]>
+7.250246999999999,47.139147
+
+Castione - Bank
+http://lh4.ggpht.com/_1mMyAZAEcFQ/SudtjAscizI/AAAAAAAACoE/6-_fqtZRkSw/s144/bs%20flip.jpg https://lh6.googleusercontent.com/_NFj9nTnRuuA/TVFTgxO5AjI/AAAAAAAAAS0/UiqpUAA35ao/s400/DSC00128.jpg
+<![CDATA[Da 2007 (http://picasaweb.google.com/STLuina/2007?feat=embedwebsite)
+ From Spot (https://picasaweb.google.com/lombardi.damiano/Spot?feat=embedwebsite)]]>
+9.042542,46.221177
+
+Champagne
+http://lh4.ggpht.com/_NFj9nTnRuuA/THlMnExCTOI/AAAAAAAAAN8/oyB0plBcpp0/s144/DSC00035.jpg
+<![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]>
+6.659367,46.831279
+
+Coira - Banca
+9.528907,46.851196
+
+Coira - Bank gigante
+9.508753,46.861453
+
+Coira - Curb in salita
+9.519299000000002,46.851453
+
+Coira - Curb storto
+9.530125,46.85117400000001
+
+Coira - Curb su gradinata
+9.527019,46.853456
+
+Coira - Minihip
+9.535167000000001,46.851746
+
+Chur - Twin Towers
+9.509783,46.847058
+
+Ginevra - CICG
+<![CDATA[6 gradini.
+Flat: Ottimo]]>
+6.137935,46.220242
+
+Ginevra - Double set 5 + 3
+6.151432,46.194329
+
+Ginevra - Minibowl
+6.14736,46.212514
+
+Ginevra - Ospedale
+<![CDATA[Curbs + piccoli rails]]>
+6.14816,46.194611
+
+Ginevra - Piccolo rail
+6.148044,46.214907
+
+Ginevra - Poste
+<![CDATA[2 Gradini e poi 6. Ideale per sequenze]]>
+6.142556,46.212623
+
+Intra - 6 gradini
+8.57234,45.939754
+
+Intra - A.S.L.
+http://lh3.ggpht.com/_1mMyAZAEcFQ/SvksAomb_XI/AAAAAAAACpQ/wAqgawx2uzA/s144/intra%20asl.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]>
+8.564186,45.929304
+
+Intra - Beata
+http://lh5.ggpht.com/_1mMyAZAEcFQ/SvksA17s1zI/AAAAAAAACpU/uWTbtFBrlek/s144/intra%20beata.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]>
+8.530779,45.933927
+
+Intra - Bennet
+http://lh4.ggpht.com/_1mMyAZAEcFQ/Svkv04VLzVI/AAAAAAAACpc/1PuQYkO2iNw/s144/intra%20bennet2.jpg http://photos-c.ak.fbcdn.net/hphotos-ak-snc3/hs086.snc3/15338_174830631483_832501483_2778831_7085485_n.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]>
+8.564031,45.931125
+
+Intra - Gap stretto
+http://photos-a.ak.fbcdn.net/hphotos-ak-snc3/hs086.snc3/15338_174830636483_832501483_2778832_107394_n.jpg
+8.577329,45.939344
+
+La Chaux de Fonds - Street
+http://lh3.ggpht.com/_NFj9nTnRuuA/TMQzl21X25I/AAAAAAAAARE/o5ATSzHMxCI/s400/street_la_chaux_de_fonds.jpg
+<![CDATA[Curb lungo, due volte 5 gradini, 4 gradini]]>
+6.828877,47.102630000000005
+
+Losanna - Ouchy
+6.626113,46.506398
+
+Milano - Stazione Centrale
+9.202268,45.485229
+
+Mett - Curb
+7.282132999999999,47.146178
+
+Mett - Gomma blu + sette scalini
+http://lh5.ggpht.com/_1mMyAZAEcFQ/SudgMaXQqZI/AAAAAAAACnw/j2HFz0oxZWg/s144/img_5111.jpg
+<![CDATA[Da 2009 (http://picasaweb.google.com/STLuina/2009?feat=embedwebsite)]]>
+7.283909,47.143522
+
+Mett - Rail courbe pop out
+http://lh6.ggpht.com/_NFj9nTnRuuA/TJuQSalRp4I/AAAAAAAAAQA/XYpvDbm_K1g/s144/DSC00086.jpg
+<![CDATA[From Spot (http://picasaweb.google.com/lombardi.damiano/Spot?feat=embedwebsite)]]>
+7.272557999999999,47.14369700000001
+
+Neuchatel - Colibrys
+<![CDATA[Bank + wallride]]>
+6.946921,46.997671
+
+Omegna - Cono
+<![CDATA[Due gradoni]]>
+8.411922,45.881651
+
+Soletta - Chiesa
+<![CDATA[Rail pop out]]>
+7.535285,47.209242
+
+Soletta - Ramada
+<![CDATA[Curb un po scarso]]>
+7.541921,47.206164
+
+Soletta - Solothurn West
+<![CDATA[Handrail su 7 gradini]]>
+7.532355,47.207119
+
+Soletta - Wildbach
+http://lh4.ggpht.com/_NFj9nTnRuuA/THlMVPHuMVI/AAAAAAAAAN4/7yQ_07KdyjA/s144/DSC00013.jpg
+<![CDATA[From Drop Box (http://picasaweb.google.ch/lombardi.damiano/DropBox?authkey=Gv1sRgCNLegZrLgK6TpwE&feat=embedwebsite)]]>
+7.5164990000000005,47.210564
+
+Villa d'Ossola
+http://lh3.ggpht.com/_1mMyAZAEcFQ/Rhv4n_KQXqI/AAAAAAAAASI/EiGWgugq_nM/s144/DSC01694.JPG
+<![CDATA[Da Villadossola (http://picasaweb.google.com/STLuina/Villadossola?feat=embedwebsite)]]>
+8.25865,46.066919000000006
+
+Zurigo - Gap in cantiere
+8.528588,47.367853
+
+Zurigo - Hardbrücke
+<![CDATA[Piramidi geniali]]>
+8.516743,47.386108
+
+Zurigo - Ledge potente
+<![CDATA[Ledge su 9 gradini, sulla sinistra]]>
+8.528371,47.364779
+
+Zurigo - Quarter
+8.534349,47.369822
+
+Zurigo - Rails poput
+8.516602,47.376241
+
+Aarau
+8.062044,47.393287
+
+Aarberg
+http://a7.sphotos.ak.fbcdn.net/hphotos-ak-ash4/430410_2989984581337_1013765171_32843733_515488849_n.jpg
+<![CDATA[Spot street con banks, curbs e rails]]>
+7.275798000000001,47.038427
+
+Aardorf
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-aadorf.html)]]>
+8.904183,47.496839
+
+Ambri - Posta
+http://lh5.ggpht.com/_NFj9nTnRuuA/S6yxqAsQeeI/AAAAAAAAACM/NuL97L47QNg/s144/DSC00005.JPG
+<![CDATA[Rail grosso in fs]]>
+8.696119,46.509296
+
+Aurich - Playground
+7.470010000000001,53.4756
+
+Bergamo
+http://photos-d.ak.fbcdn.net/hphotos-ak-snc1/hs146.snc1/5416_1172102415442_1014471167_30536009_7244223_n.jpg
+9.645996,45.683158
+
+Berlino
+13.45176,52.50816
+
+Besancon
+http://mw2.google.com/mw-panoramio/photos/medium/15323294.jpg
+6.017906,47.231532
+
+Bolzano - Piramide
+http://www.skatemap.it/images/spots/bz/bz_428_1626547517.jpg
+11.318037,46.488007
+
+Brescia
+http://www.skatemap.it/images/spots/bs/bs_413_2086379886.jpg
+10.233765,45.512121
+
+Brixlegg - The Cradle Skatepark
+http://www.sk8mag.de/Spots/Rattenberg/brixleggoverview_538.jpg http://www.sk8mag.de/Spots/Rattenberg/streetoverview_538.jpg
+<![CDATA[http://www.skatethecradle.com/
 Öffnungszeiten von 12 bis 20 Uhr, offen ist der Park ca. von April bis Oktober (je nach Wetterkann die Winterpause früher oder später aufhören oder beginnen).
-Eintrittspreis ca. € 5.-]]></description>
-					<coordinates>11.885061000000002,47.43752200000001,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Brügg - Rail</name>
-						<value>http://lh5.ggpht.com/_NFj9nTnRuuA/S-J86VfVSTI/AAAAAAAAALY/4Md8PP1RlC8/s144/DSC00027.JPG http://lh3.ggpht.com/_NFj9nTnRuuA/S-J86vrCeII/AAAAAAAAALc/hUJ-snSd05Y/s144/DSC00028.JPG</value>
-				<description><![CDATA[From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)
- From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)]]></description>
-					<coordinates>7.275626,47.124669,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Concrete park</name>
-						<value>http://photos-a.ak.fbcdn.net/photos-ak-snc1/v2354/208/59/1014471167/n1014471167_30316791_8626.jpg http://photos-g.ak.fbcdn.net/photos-ak-snc1/v2354/208/59/1014471167/n1014471167_30316790_8317.jpg</value>
-					<coordinates>12.65213,45.963084,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Cottbus</name>
-				<description><![CDATA[Street
+Eintrittspreis ca. € 5.-]]>
+11.885061000000002,47.43752200000001
+
+Brügg - Rail
+http://lh5.ggpht.com/_NFj9nTnRuuA/S-J86VfVSTI/AAAAAAAAALY/4Md8PP1RlC8/s144/DSC00027.JPG http://lh3.ggpht.com/_NFj9nTnRuuA/S-J86vrCeII/AAAAAAAAALc/hUJ-snSd05Y/s144/DSC00028.JPG
+<![CDATA[From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)
+ From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)]]>
+7.275626,47.124669
+
+Concrete park
+http://photos-a.ak.fbcdn.net/photos-ak-snc1/v2354/208/59/1014471167/n1014471167_30316791_8626.jpg http://photos-g.ak.fbcdn.net/photos-ak-snc1/v2354/208/59/1014471167/n1014471167_30316790_8317.jpg
+12.65213,45.963084
+
+Cottbus
+<![CDATA[Street
 Info (http://www.skatehallen.de/skatehalle_cottbus_lausitz.htm)
 Dissenchener Waldstraße 11
-03052 Cottbus, Germany]]></description>
-					<coordinates>14.402250000000002,51.766,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Drammen</name>
-				<description><![CDATA[Street + bowl]]></description>
-					<coordinates>10.215858,59.732188,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Faido - Rail</name>
-						<value>http://lh3.ggpht.com/_NFj9nTnRuuA/SvgotS8lTsI/AAAAAAAAABU/BBPfUK8aipM/s144/DSC00046.JPG</value>
-				<description><![CDATA[From Spot (http://picasaweb.google.com/lombardi.damiano/Spot?feat=embedwebsite)]]></description>
-					<coordinates>8.798488,46.478053,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Faido - Rail migros</name>
-					<coordinates>8.800457,46.477957,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Garbagnate</name>
-						<value>http://www.skatemap.it/images/spots/mi/mi_9_171026569.jpg</value>
-					<coordinates>9.068441,45.571435,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Grüningen</name>
-				<description><![CDATA[Internet site:
-bowl,ch (http://www.bowl.ch/skateparks-schweiz-skatepark-grueningen.html)]]></description>
-					<coordinates>8.75988,47.281442,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Hamburg - I-Punkt-Skateland</name>
-					<coordinates>10.0251,53.5516,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Küssnacht</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-kuessnacht-ar.html)]]></description>
-					<coordinates>8.445997,47.08865,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Intra spot pro</name>
-						<value>http://lh3.ggpht.com/_NFj9nTnRuuA/S6yuNUWZ5SI/AAAAAAAAACE/vArXgNJRtEQ/s144/DSC00066.JPG http://lh3.ggpht.com/_NFj9nTnRuuA/S6yuNgxcdwI/AAAAAAAAACI/kUlw4pPXshY/s144/DSC00067.JPG</value>
-				<description><![CDATA[From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)
- From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)]]></description>
-					<coordinates>8.573311,45.93928,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Lido di Camaiore</name>
-				<description><![CDATA[Skateplaza
-fb (http://www.connect.facebook.com/photo.php?pid=9050865&id=110984225952#%21/photo.php?pid=9050865&id=110984225952&fbid=10150265171430953)]]></description>
-					<coordinates>10.226877,43.905097,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Lesyn</name>
-				<description><![CDATA[Mini a Darko]]></description>
-					<coordinates>7.009706,46.343136,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Lustenau</name>
-				<description><![CDATA[Park
-(Penso in stile lamiera)]]></description>
-					<coordinates>9.674237,47.427991,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Monaco - Hirschgarten</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-deutschland-skatepark-muenchen-hirschgarten.html)]]></description>
-					<coordinates>11.51041,48.146188,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Morteau</name>
-					<coordinates>6.606302,47.058692,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Mühlhausen/Thüringen</name>
-				<description><![CDATA[Park street e vert
+03052 Cottbus, Germany]]>
+14.402250000000002,51.766
+
+Drammen
+<![CDATA[Street + bowl]]>
+10.215858,59.732188
+
+Faido - Rail
+http://lh3.ggpht.com/_NFj9nTnRuuA/SvgotS8lTsI/AAAAAAAAABU/BBPfUK8aipM/s144/DSC00046.JPG
+<![CDATA[From Spot (http://picasaweb.google.com/lombardi.damiano/Spot?feat=embedwebsite)]]>
+8.798488,46.478053
+
+Faido - Rail migros
+8.800457,46.477957
+
+Garbagnate
+http://www.skatemap.it/images/spots/mi/mi_9_171026569.jpg
+9.068441,45.571435
+
+Grüningen
+<![CDATA[Internet site:
+bowl,ch (http://www.bowl.ch/skateparks-schweiz-skatepark-grueningen.html)]]>
+8.75988,47.281442
+
+Hamburg - I-Punkt-Skateland
+10.0251,53.5516
+
+Küssnacht
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-kuessnacht-ar.html)]]>
+8.445997,47.08865
+
+Intra spot pro
+http://lh3.ggpht.com/_NFj9nTnRuuA/S6yuNUWZ5SI/AAAAAAAAACE/vArXgNJRtEQ/s144/DSC00066.JPG http://lh3.ggpht.com/_NFj9nTnRuuA/S6yuNgxcdwI/AAAAAAAAACI/kUlw4pPXshY/s144/DSC00067.JPG
+<![CDATA[From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)
+ From Spot (http://picasaweb.google.ch/lombardi.damiano/Spot?feat=embedwebsite)]]>
+8.573311,45.93928
+
+Lido di Camaiore
+<![CDATA[Skateplaza
+fb (http://www.connect.facebook.com/photo.php?pid=9050865&id=110984225952#%21/photo.php?pid=9050865&id=110984225952&fbid=10150265171430953)]]>
+10.226877,43.905097
+
+Lesyn
+<![CDATA[Mini a Darko]]>
+7.009706,46.343136
+
+Lustenau
+<![CDATA[Park
+(Penso in stile lamiera)]]>
+9.674237,47.427991
+
+Monaco - Hirschgarten
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-deutschland-skatepark-muenchen-hirschgarten.html)]]>
+11.51041,48.146188
+
+Morteau
+6.606302,47.058692
+
+Mühlhausen/Thüringen
+<![CDATA[Park street e vert
 Sito internet (http://www.skatehallen.de/skatehalle_thuringia_funpark_muehlhausen.htm)
 Industriestraße 10
-99974 Mühlhausen/Thüringen, Germany]]></description>
-					<coordinates>10.45362,51.22057,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Naturns</name>
-					<coordinates>10.983582000000002,46.649436,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Pietrasanta</name>
-				<description><![CDATA[da cercare bene]]></description>
-					<coordinates>10.214882,43.939192,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Plauen</name>
-				<description><![CDATA[Street + mini
+99974 Mühlhausen/Thüringen, Germany]]>
+10.45362,51.22057
+
+Naturns
+10.983582000000002,46.649436
+
+Pietrasanta
+<![CDATA[da cercare bene]]>
+10.214882,43.939192
+
+Plauen
+<![CDATA[Street + mini
 info (http://www.skatehallen.de/skatehalle_rollkantine_plauen.htm)
 Dürerstraße
-08527 Plauen, Germany]]></description>
-					<coordinates>12.131723,50.48958,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ravensburg</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-deutschland-skatepark-ravensburg.html)]]></description>
-					<coordinates>9.605441,47.791304,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ravenna</name>
-					<coordinates>12.23877,44.418088000000004,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Sant Antonino Manor</name>
-						<value>http://lh4.ggpht.com/_1mMyAZAEcFQ/SugULa7uv3I/AAAAAAAACos/sRIYPuDWk70/s144/DSC00039.JPG</value>
-				<description><![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]></description>
-					<coordinates>8.96626,46.155548,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Seregno - Park</name>
-				<description><![CDATA[Skate Plaza + Bowl]]></description>
-					<coordinates>9.210716,45.660367,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Sondrio</name>
-				<description><![CDATA[Minirampa 1,6 m
-Vicino al sentiero valtellina]]></description>
-					<coordinates>9.87834,46.164139000000006,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Torino</name>
-						<value>http://www.skatemap.it/images/spots/to/to_150_1272375568.jpg http://www.skatemap.it/images/spots/to/to_150_1301707798.jpg</value>
-				<description><![CDATA[Tel. 011 7765680]]></description>
-					<coordinates>7.660748,45.090416,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Vienna</name>
-						<value>http://www.0717.at/uploaded_images/skatepark_bergmiller-799936.JPG</value>
-					<coordinates>16.256161,48.200651,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Wattwil</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-wattwil.html)]]></description>
-					<coordinates>9.091959,47.297568,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Wedemark - Yard</name>
-				<description><![CDATA[www.yard-skatehall.de (http://www.yard-skatehall.de)]]></description>
-					<coordinates>9.73803,52.52769,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Weinfelden</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-weinfelden.html)]]></description>
-					<coordinates>9.12348,47.561932,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Wollerau</name>
-				<description><![CDATA[Internet site:
-bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-wollerau.html)]]></description>
-					<coordinates>8.719625,47.197528,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Wörgl</name>
-				<description><![CDATA[Bowl]]></description>
-					<coordinates>12.062645,47.490297,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Glarona</name>
-				<description><![CDATA[Miniramp]]></description>
-					<coordinates>9.078548,47.030625,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Francoforte - Biblioteca univerisitaria</name>
-					<coordinates>8.653025,50.12014,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Francoforte - Biblioteca</name>
-					<coordinates>8.691216,50.113313,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Atwerpen</name>
-					<coordinates>4.391785,51.208604,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Mechelen</name>
-					<coordinates>4.463196,51.024121,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Halle</name>
-					<coordinates>4.243469,50.73124,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Oostende</name>
-					<coordinates>2.925797,51.22183,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Kortrijk</name>
-					<coordinates>3.268433,50.833698,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Oostende</name>
-					<coordinates>2.912525,51.2313,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Mayrhofen</name>
-				<description><![CDATA[Bowl]]></description>
-					<coordinates>11.862144,47.167076,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Antwerp</name>
-					<coordinates>4.416504,51.213766,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ostende</name>
-					<coordinates>2.897644,51.217207,0.0</coordinates>
-			</Placemark>
-			<Placemark>
-				<name>Ostende</name>
-					<coordinates>2.903137,51.208604,0.0</coordinates>
-			</Placemark>
+08527 Plauen, Germany]]>
+12.131723,50.48958
+
+Ravensburg
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-deutschland-skatepark-ravensburg.html)]]>
+9.605441,47.791304
+
+Ravenna
+12.23877,44.418088000000004
+
+Sant Antonino Manor
+http://lh4.ggpht.com/_1mMyAZAEcFQ/SugULa7uv3I/AAAAAAAACos/sRIYPuDWk70/s144/DSC00039.JPG
+<![CDATA[Da 2009 (http://picasaweb.google.ch/STLuina/2009?feat=embedwebsite)]]>
+8.96626,46.155548
+
+Seregno - Park
+9.210716,45.660367
+
+Sondrio
+<![CDATA[Minirampa 1,6 m
+Vicino al sentiero valtellina]]>
+9.87834,46.164139000000006
+
+Torino
+http://www.skatemap.it/images/spots/to/to_150_1272375568.jpg http://www.skatemap.it/images/spots/to/to_150_1301707798.jpg
+<![CDATA[Tel. 011 7765680]]>
+7.660748,45.090416
+
+Vienna
+http://www.0717.at/uploaded_images/skatepark_bergmiller-799936.JPG
+16.256161,48.200651
+
+Wattwil
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-wattwil.html)]]>
+9.091959,47.297568
+
+Wedemark - Yard
+<![CDATA[www.yard-skatehall.de (http://www.yard-skatehall.de)]]>
+9.73803,52.52769
+
+Weinfelden
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-weinfelden.html)]]>
+9.12348,47.561932
+
+Wollerau
+<![CDATA[Internet site:
+bowl.ch (http://www.bowl.ch/skateparks-schweiz-skatepark-wollerau.html)]]>
+8.719625,47.197528
+
+Wörgl
+<![CDATA[Bowl]]>
+12.062645,47.490297
+
+Glarona
+<![CDATA[Miniramp]]>
+9.078548,47.030625
+
+Francoforte - Biblioteca univerisitaria
+8.653025,50.12014
+
+Francoforte - Biblioteca
+8.691216,50.113313
+
+Atwerpen
+4.391785,51.208604
+
+Mechelen
+4.463196,51.024121
+
+Halle
+4.243469,50.73124
+
+Oostende
+2.925797,51.22183
+
+Kortrijk
+3.268433,50.833698
+
+Oostende
+2.912525,51.2313
+
+Mayrhofen - Bowl
+11.862144,47.167076
+
+Antwerp
+4.416504,51.213766
+
+Ostende
+2.897644,51.217207
+
+Ostende
+2.903137,51.208604
 

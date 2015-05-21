@@ -113,16 +113,18 @@ BasicPage{
             currentIndex: 0
             model: ListModel {
                 id: cbItems
-                ListElement { text: "GPS Location";               latitude: 0;         longitude: 0        }
-                ListElement { text: "Custom Location";            latitude: 0;         longitude: 0        }
-                ListElement { text: "Airolo";                     latitude: 46.528763; longitude: 8.624199 }
-                ListElement { text: "Airolo - Camino";            latitude: 46.527863; longitude: 8.599377 }
-                ListElement { text: "Airolo - Diga della Sella";  latitude: 46.558152; longitude: 8.595343 }
-                ListElement { text: "Airolo - Tre scalini banca"; latitude: 46.528897; longitude: 8.611414 }
-                ListElement { text: "Chur - Curb Bahnhof";        latitude: 46.853456; longitude: 9.527019 }
-                ListElement { text: "Chur - Bank";                latitude: 46.851196; longitude: 9.528907 }
-                ListElement { text: "Biasca - Manual pad";        latitude: 46.360764; longitude: 8.969275 }
-                ListElement { text: "Biasca - SPAI";              latitude: 46.349831; longitude: 8.969629 }
+                ListElement { text: "GPS Location";                 latitude: 0;         longitude: 0        }
+                ListElement { text: "Custom Location";              latitude: 0;         longitude: 0        }
+                ListElement { text: "Airolo - Camino";              latitude: 46.527863; longitude: 8.599377 }
+                ListElement { text: "Airolo - Diga della Sella";    latitude: 46.558152; longitude: 8.595343 }
+                ListElement { text: "Airolo - Tre scalini banca";   latitude: 46.528897; longitude: 8.611414 }
+                ListElement { text: "Bellinzona - Piazza del sole"; latitude: 46.193301; longitude: 9.024003 }
+                ListElement { text: "Bellinzona - Cervia";          latitude: 46.190579; longitude: 9.023166 }
+                ListElement { text: "Biasca - Manual pad";          latitude: 46.360764; longitude: 8.969275 }
+                ListElement { text: "Biasca - SPAI";                latitude: 46.349831; longitude: 8.969629 }
+                ListElement { text: "Castione - Bank";              latitude: 46.221177; longitude: 9.042542 }
+                ListElement { text: "Chur - Curb Bahnhof";          latitude: 46.853456; longitude: 9.527019 }
+                ListElement { text: "Chur - Bank";                  latitude: 46.851196; longitude: 9.528907 }
             }
             width: 200
             onCurrentIndexChanged:
