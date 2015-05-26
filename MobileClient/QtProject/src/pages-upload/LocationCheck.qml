@@ -66,7 +66,7 @@ BasicPage{
             text: qsTr("Latitude: ")
         }
 
-        TextField{
+        Text{
             id: textField_Latitude
             anchors.left: text_Latitude.right
             height: text_Latitude.height
@@ -91,7 +91,7 @@ BasicPage{
             text: qsTr("Longitude: ")
         }
 
-        TextField{
+        Text{
             id: textField_Longitude
             anchors.left: text_Longitude.right
             height: text_Longitude.height
@@ -108,7 +108,9 @@ BasicPage{
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
 
-        onClicked: {
+        onClicked:
+        {
+            // Request location update
             hc_LocationManager.requestLocation();
         }
     }
@@ -123,8 +125,8 @@ BasicPage{
         anchors.horizontalCenter: parent.horizontalCenter
 
         onClicked: {
-            wa_PictureUploader.setPosition(textField_Latitude.text,
-                                           textField_Longitude.text);
+            wa_PictureUploader.setPosition(hc_LocationManager.latitude(),
+                                           hc_LocationManager.longitude());
             locationAccepted();
         }
     }

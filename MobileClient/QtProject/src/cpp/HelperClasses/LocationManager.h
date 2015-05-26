@@ -16,11 +16,15 @@
 #include <QObject>
 #include <QGeoPositionInfoSource>
 
+// Forward declarations --------------------
+class Settings;
+
 class LocationManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit LocationManager(QObject *parent = 0);
+  explicit LocationManager(Settings *settings,
+                           QObject *parent = 0);
   ~LocationManager();
 
 signals:
@@ -34,6 +38,8 @@ public slots:
 
   void requestLocation();
 
+  bool isValid();
+
   double latitude();
   double longitude();
 
@@ -43,7 +49,12 @@ private slots:
   void slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error error);
 private:
 
+  // Link to Settings
+  Settings *m_Settings;
+
   QGeoPositionInfoSource *m_GeoPositionInfoSource;
+
+  bool m_Valid;
 
   double m_Latitude;
   double m_Longitude;

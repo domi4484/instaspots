@@ -18,15 +18,37 @@ import "qrc:/views"
 
 Item {
 
+    // Signals -----------------------------
+    Connections {
+        target: hc_LocationManager
+        onUpdate:
+        {
+            if(visible == false)
+                return;
+
+            if(timeout)
+            {
+                // TODO display message cacca
+            }
+
+            wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
+                                           hc_LocationManager.longitude());
+        }
+    }
+
     // Slots -------------------------------
     onVisibleChanged: {
         if(visible == false)
-        {
             return;
-        }
 
+        // Set current location (also if outdated)
         wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
                                        hc_LocationManager.longitude());
+
+        // Request location update
+        hc_LocationManager.requestLocation();
+
+        // TODO if current location not valid hc_LocationManager.isValid then display waiting animation
     }
 
     // Gui ---------------------------------

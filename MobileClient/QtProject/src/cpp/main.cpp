@@ -1,5 +1,6 @@
 
 // Project includes ------------------------
+#include "Settings.h"
 #include "HelperClasses/ApplicationHelper.h"
 #include "HelperClasses/Logger.h"
 #include "HelperClasses/PlateformDetail.h"
@@ -14,7 +15,6 @@
 // Qt includes -----------------------------
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include <QSettings>
 #include <QQmlContext>
 
 int main(int argc, char *argv[])
@@ -27,12 +27,13 @@ int main(int argc, char *argv[])
 
     Logger::instanziate(Logger::LOG_VERBOSE);
 
+    Settings settings;
+
     ApplicationHelper applicationHelper;
     PlateformDetail   plateformDetail;
-    LocationManager   locationManager;
+    LocationManager   locationManager(&settings);
     PictureCacher     pictureCacher;
 
-    QSettings settings;
 
     User user(&settings);
     PictureBase pictureBase;
@@ -58,4 +59,6 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();
+
+    settings.sync();
 }

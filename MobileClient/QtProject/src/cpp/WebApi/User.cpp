@@ -14,18 +14,11 @@
 
 // Project includes ------------------------
 #include "WebApi.h"
+#include "../Settings.h"
 #include "../HelperClasses/Logger.h"
-
-// Qt includes -----------------------------
-#include <QSettings>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-// Public
-const QString User::SETTINGS_USERNAME("username");
-const QString User::SETTINGS_PASSWORD("password");
-
-// Private
 const QString User::C_LOGIN                ("login");
 const QString User::C_LOGOUT               ("logout");
 const QString User::C_REGISTER             ("register");
@@ -38,7 +31,7 @@ const QString User::A_PARAM_REGISTERED     ("registered");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-User::User(QSettings *settings,
+User::User(Settings *settings,
            QObject *parent) :
   QObject(parent),
   m_Settings           (settings),
@@ -72,8 +65,8 @@ bool User::login()
 {
   m_LastErrorText = "";
 
-  QString username       = m_Settings->value(SETTINGS_USERNAME, "").toString();
-  QString hashedPassword = m_Settings->value(SETTINGS_PASSWORD, "").toString();
+  QString username       = m_Settings->value(Settings::USER_USERNAME, "").toString();
+  QString hashedPassword = m_Settings->value(Settings::USER_PASSWORD, "").toString();
 
   if(   username.isEmpty()
      || hashedPassword.isEmpty())
@@ -105,8 +98,8 @@ bool User::login(const QString &username,
 
 //  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
-  m_Settings->setValue(SETTINGS_USERNAME, username);
-  m_Settings->setValue(SETTINGS_PASSWORD, password);
+  m_Settings->setValue(Settings::USER_USERNAME, username);
+  m_Settings->setValue(Settings::USER_PASSWORD, password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
@@ -128,8 +121,8 @@ bool User::logout()
 {
   m_LastErrorText = "";
 
-  m_Settings->setValue(SETTINGS_USERNAME, QString());
-  m_Settings->setValue(SETTINGS_PASSWORD, QString());
+  m_Settings->setValue(Settings::USER_USERNAME, QString());
+  m_Settings->setValue(Settings::USER_PASSWORD, QString());
   m_Settings->sync();
 
   if(m_WebApiCommand_Login.isRunning())
@@ -159,8 +152,8 @@ bool User::registration(const QString &username,
 
 //  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
-  m_Settings->setValue(SETTINGS_USERNAME, username);
-  m_Settings->setValue(SETTINGS_PASSWORD, password);
+  m_Settings->setValue(Settings::USER_USERNAME, username);
+  m_Settings->setValue(Settings::USER_PASSWORD, password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
@@ -181,7 +174,7 @@ bool User::registration(const QString &username,
 
 QString User::username()
 {
-  return m_Settings->value(SETTINGS_USERNAME, "").toString();
+  return m_Settings->value(Settings::USER_USERNAME, "").toString();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -198,8 +191,8 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Login.resultParameter(A_PARAM_AUTHENTICATION).toBool()
      == false)
   {
-    m_Settings->setValue(SETTINGS_USERNAME, QString());
-    m_Settings->setValue(SETTINGS_PASSWORD, QString());
+    m_Settings->setValue(Settings::USER_USERNAME, QString());
+    m_Settings->setValue(Settings::USER_PASSWORD, QString());
     m_Settings->sync();
 
     m_LastErrorText = tr("Authentication failed");
@@ -238,8 +231,8 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Register.resultParameter(A_PARAM_REGISTERED).toBool()
      == false)
   {
-    m_Settings->setValue(SETTINGS_USERNAME, QString());
-    m_Settings->setValue(SETTINGS_PASSWORD, QString());
+    m_Settings->setValue(Settings::USER_USERNAME, QString());
+    m_Settings->setValue(Settings::USER_PASSWORD, QString());
     m_Settings->sync();
 
     m_LastErrorText = m_WebApiCommand_Register.errorString();
@@ -255,7 +248,7 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
 
 void User::slot_CommandCanRegister_Finished(const WebApiError &error)
 {
-  // TODO implement me autologin
+  // TODO implement me
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

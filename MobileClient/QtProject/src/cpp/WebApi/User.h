@@ -20,7 +20,7 @@
 #include <QObject>
 
 // Forward declarations --------------------
-class QSettings;
+class Settings;
 
 class User : public QObject
 {
@@ -30,10 +30,7 @@ class User : public QObject
 
 public:
 
-  static const QString SETTINGS_USERNAME;
-  static const QString SETTINGS_PASSWORD;
-
-  explicit User(QSettings *settings,
+  explicit User(Settings *settings,
                 QObject *parent = 0);
 
 
@@ -78,7 +75,7 @@ private:
   static const QString A_PARAM_REGISTERED;
 
   // Link to Settings
-  QSettings *m_Settings;
+  Settings *m_Settings;
 
   QString m_LastErrorText;
 

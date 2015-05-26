@@ -12,6 +12,7 @@
 // Qt imports ------------------------------
 import QtQuick 2.3
 import QtQuick.Controls 1.3
+import QtQuick.Dialogs 1.2
 
 // Project imports -------------------------
 import "qrc:/"
@@ -129,13 +130,21 @@ BasicPage{
             width: 200
             onCurrentIndexChanged:
             {
+                if(cbItems.get(currentIndex).text === "GPS Location")
+                {
+                    // Request location update
+                    hc_LocationManager.requestLocation();
+                    return;
+                }
+
                 if(cbItems.get(currentIndex).text === "Custom Location")
                 {
-                   // TODO dialogo posizionamento
+                    dialog_CustomLocation.visible = true;
+                    return;
                 }
 
                 hc_LocationManager.setFakePosition(cbItems.get(currentIndex).latitude,
-                                                                      cbItems.get(currentIndex).longitude)
+                                                   cbItems.get(currentIndex).longitude)
             }
         }
     } // Column
@@ -147,6 +156,43 @@ BasicPage{
         width: parent.width / 1.1
         text: qsTr("Logout")
         onClicked: wa_User.logout()
+    }
+
+
+    // Dialogs
+    Dialog {
+        id: dialog_CustomLocation
+        visible: false
+        title: "Custom Location"
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+
+        onAccepted: hc_LocationManager.setFakePosition(textEdit_Latitude.text,
+                                                       textEdit_Longitude.text)
+
+        Column {
+            anchors.leftMargin: 5
+            width: parent.width / 1.1
+            spacing: 5
+            Text {
+                width: parent.width
+                text: "Latitude:"
+            }
+            TextEdit {
+                id: textEdit_Latitude
+                width: parent.width
+
+            }
+
+            Text {
+                width: parent.width
+                text: "Longitude:"
+            }
+            TextEdit {
+                id: textEdit_Longitude
+                width: parent.width
+
+            }
+        }
     }
 }
 

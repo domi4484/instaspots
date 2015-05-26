@@ -78,6 +78,7 @@ Item {
 
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
+            // TODO go to Panel_Home
         }
     }
 
@@ -87,6 +88,7 @@ Item {
 
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
+            // TODO go to Panel_Home
         }
     }
 

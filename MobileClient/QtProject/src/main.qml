@@ -32,6 +32,7 @@ ApplicationWindow {
             applicationWindow.menuBar = menubar;
         }
 
+        // Start requesting location
         hc_LocationManager.requestLocation();
 
         if(wa_User.login() === false)

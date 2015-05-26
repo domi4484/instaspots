@@ -38,7 +38,8 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/HelperClasses/PlateformDetail.cpp \
     src/cpp/HelperClasses/LocationManager.cpp \
     src/cpp/HelperClasses/PictureCacher.cpp \
-    src/cpp/HelperClasses/ApplicationHelper.cpp
+    src/cpp/HelperClasses/ApplicationHelper.cpp \
+    src/cpp/Settings.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -65,7 +66,8 @@ HEADERS += \
     src/cpp/HelperClasses/PlateformDetail.h \
     src/cpp/HelperClasses/LocationManager.h \
     src/cpp/HelperClasses/PictureCacher.h \
-    src/cpp/HelperClasses/ApplicationHelper.h
+    src/cpp/HelperClasses/ApplicationHelper.h \
+    src/cpp/Settings.h
 
 DISTFILES += \
     ../../WebService/api.php \
