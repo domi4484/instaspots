@@ -12,6 +12,7 @@
 // Qt imports ------------------------------
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import QtQuick.Dialogs 1.2
 import QtPositioning 5.2
 
 // Project imports -------------------------
@@ -125,9 +126,22 @@ BasicPage{
         anchors.horizontalCenter: parent.horizontalCenter
 
         onClicked: {
+            if(hc_LocationManager.isValid() === false)
+            {
+                messageDialog_LocationError.visible = true;
+                return;
+            }
+
             wa_PictureUploader.setPosition(hc_LocationManager.latitude(),
                                            hc_LocationManager.longitude());
             locationAccepted();
         }
+    }
+
+    // Message boxes -----------------------
+    MessageDialog{
+        id: messageDialog_LocationError
+        title: qsTr('Invalid location')
+        text: qsTr('Can\'t determine your current location.')
     }
 } // page_Location
