@@ -70,9 +70,6 @@ HEADERS += \
     src/cpp/Settings.h
 
 DISTFILES += \
-    ../../WebService/api.php \
-    ../../WebService/index.php \
-    ../../WebService/lib.php \
     ../../WebSite/Symfony/app/config/config_dev.yml \
     ../../WebSite/Symfony/app/config/parameters.yml \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/WebserviceController.php \
