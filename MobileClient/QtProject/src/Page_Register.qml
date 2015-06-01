@@ -30,8 +30,8 @@ BasicPage {
     // Connections -------------------------
     Connections {
         target: wa_User
-        onSignal_RegistrationSuccessfull: {
-
+        onSignal_RegistrationSuccessfull:
+        {
             button_Register.enabled = true;
 
             // Register successfull
@@ -70,15 +70,24 @@ BasicPage {
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
-
         Button {
             id: button_Register
             text: qsTr("Register")
             anchors.horizontalCenter: parent.horizontalCenter
 
-            onClicked: wa_User.registration(textField_Username.text,
-                                            textField_EMail.text,
-                                            textField_Password.text)
+            onClicked:
+            {
+                if(wa_User.registration(textField_Username.text,
+                                        textField_EMail.text,
+                                        textField_Password.text) === false)
+                {
+                    messageDialog.text = wa_User.lastErrorText();
+                    messageDialog.visible = true;
+                    return;
+                }
+
+                button_Register.enabled = false;
+            }
         }
     }
 }

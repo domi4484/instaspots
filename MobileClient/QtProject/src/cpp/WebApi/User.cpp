@@ -96,6 +96,18 @@ bool User::login(const QString &username,
 {
   m_LastErrorText = "";
 
+  if(username.isEmpty())
+  {
+      m_LastErrorText = tr("Username is empty.");
+      return false;
+  }
+
+  if(password.isEmpty())
+  {
+      m_LastErrorText = tr("Password is empty.");
+      return false;
+  }
+
 //  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
   m_Settings->setValue(Settings::USER_USERNAME, username);
@@ -149,6 +161,24 @@ bool User::registration(const QString &username,
                         const QString &password)
 {
   m_LastErrorText = "";
+
+  if(username.isEmpty())
+  {
+      m_LastErrorText = tr("Username is empty.");
+      return false;
+  }
+
+  if(password.isEmpty())
+  {
+      m_LastErrorText = tr("Password is empty.");
+      return false;
+  }
+
+  if(e_mail.isEmpty())
+  {
+     m_LastErrorText = tr("E-mail is empty.");
+     return false;
+  }
 
 //  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 

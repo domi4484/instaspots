@@ -3,6 +3,31 @@ import QtQuick.Controls 1.1
 import QtQuick.Dialogs 1.2
 
 Rectangle {
+
+    // Properties --------------------------
+    MessageDialog{
+        id: messageDialog
+        title: qsTr('Login error')
+    }
+
+    // Connections -------------------------
+    Connections {
+        target: wa_User
+        onSignal_LoginSuccessfull:
+        {
+
+            button_Login.enabled = true;
+
+            // Login failed
+            if(success == false)
+            {
+                messageDialog.text = wa_User.lastErrorText();
+                messageDialog.visible = true;
+                return;
+            }
+        }
+    }
+
     // Gui ---------------------------------
     Navigator{
         id: navigator
@@ -92,28 +117,9 @@ Rectangle {
     }
     // Gui ---------------------------------
 
-    MessageDialog{
-        id: messageDialog
-        title: qsTr('Login error')
-    }
-
     function login(username,
                    password)
     {
-        if(username.length === 0)
-        {
-            messageDialog.text = qsTr("Username is empty.")
-            messageDialog.visible = true;
-            return;
-        }
-
-        if(password.length === 0)
-        {
-            messageDialog.text = qsTr("Password is empty.")
-            messageDialog.visible = true;
-            return;
-        }
-
         if(wa_User.login(username,
                          password) === false)
         {
@@ -123,22 +129,6 @@ Rectangle {
         }
 
         button_Login.enabled = false;
-    }
-
-    Connections {
-        target: wa_User
-        onSignal_LoginSuccessfull: {
-
-            button_Login.enabled = true;
-
-            // Login failed
-            if(success == false)
-            {
-                messageDialog.text = wa_User.lastErrorText();
-                messageDialog.visible = true;
-                return;
-            }
-        }
     }
 }
 
