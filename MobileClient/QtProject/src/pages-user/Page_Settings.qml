@@ -120,12 +120,8 @@ BasicPage{
                 ListElement { text: "Airolo - Diga della Sella";    latitude: 46.558152; longitude: 8.595343 }
                 ListElement { text: "Airolo - Tre scalini banca";   latitude: 46.528897; longitude: 8.611414 }
                 ListElement { text: "Basel - St. Johann";           latitude: 47.570368; longitude: 7.573009 }
-                ListElement { text: "Bellinzona - Piazza del sole"; latitude: 46.193301; longitude: 9.024003 }
-                ListElement { text: "Bellinzona - Cervia";          latitude: 46.190579; longitude: 9.023166 }
                 ListElement { text: "Biasca - Manual pad";          latitude: 46.360764; longitude: 8.969275 }
                 ListElement { text: "Biasca - SPAI";                latitude: 46.349831; longitude: 8.969629 }
-                ListElement { text: "Castione - Bank";              latitude: 46.221177; longitude: 9.042542 }
-                ListElement { text: "Chur - Curb Bahnhof";          latitude: 46.853456; longitude: 9.527019 }
                 ListElement { text: "Chur - Bank";                  latitude: 46.851196; longitude: 9.528907 }
             }
             width: 200
