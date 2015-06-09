@@ -82,4 +82,14 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/index.html.twig \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/menu.html.twig \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/routing.yml \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    ../../Documentation/My_Skate_Map_stralciata.kml
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
