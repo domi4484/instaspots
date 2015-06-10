@@ -43,6 +43,9 @@ public slots:
   double latitude();
   double longitude();
 
+  QString googleMapLocationPicture(int width,
+                                   int height);
+
 private slots:
   void slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo geo_position_info);
   void slot_GeoPositionInfoSource_UpdateTimeout();

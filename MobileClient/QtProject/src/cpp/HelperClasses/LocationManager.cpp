@@ -109,6 +109,17 @@ double LocationManager::longitude()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString LocationManager::googleMapLocationPicture(int width,
+                                                  int height)
+{
+  return QString("https://maps.googleapis.com/maps/api/staticmap?center=%1,%2&zoom=17&size=%3x%4&maptype=roadmap").arg(m_Latitude)
+                                                                                                                 .arg(m_Longitude)
+                                                                                                                 .arg(width)
+                                                                                                                 .arg(height);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void LocationManager::slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo geo_position_info)
 {
   m_Valid = true;

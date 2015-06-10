@@ -33,71 +33,32 @@ BasicPage{
         if(visible == false)
             return;
 
-        textField_Latitude.text = hc_LocationManager.latitude();
-        textField_Longitude.text = hc_LocationManager.longitude();
+        image_GoogleMapImage.source = hc_LocationManager.googleMapLocationPicture(image_GoogleMapImage.width,
+                                                                                  image_GoogleMapImage.height);
     }
 
     Connections {
         target: hc_LocationManager
         onUpdate:
         {
+            if(visible == false)
+                return;
+
             if(timeout)
                 return;
 
-            textField_Latitude.text = hc_LocationManager.latitude();
-            textField_Longitude.text = hc_LocationManager.longitude();
+            image_GoogleMapImage.source = hc_LocationManager.googleMapLocationPicture(image_GoogleMapImage.width,
+                                                                                      image_GoogleMapImage.height);
         }
     }
 
     // Gui ---------------------------------
-    Item{
-        id: item_Latitude
 
-        width: parent.width / 1.2
-        height: 40
+    Image{
+        id: image_GoogleMapImage
+        width: parent.width
+        height: parent.height
         anchors.top: parent.top
-        anchors.topMargin: 5
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Text{
-            id: text_Latitude
-            height: parent.height
-            width: parent.width/2
-            verticalAlignment: Text.AlignVCenter
-            text: qsTr("Latitude: ")
-        }
-
-        Text{
-            id: textField_Latitude
-            anchors.left: text_Latitude.right
-            height: text_Latitude.height
-            width: text_Latitude.width
-        }
-    }
-
-    Item{
-        id: item_Longitude
-
-        width: parent.width / 1.2
-        height: 40
-        anchors.top: item_Latitude.bottom
-        anchors.topMargin: 5
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Text{
-            id: text_Longitude
-            height: parent.height
-            width: parent.width/2
-            verticalAlignment: Text.AlignVCenter
-            text: qsTr("Longitude: ")
-        }
-
-        Text{
-            id: textField_Longitude
-            anchors.left: text_Longitude.right
-            height: text_Longitude.height
-            width: text_Longitude.width
-        }
     }
 
     Button{
@@ -105,7 +66,7 @@ BasicPage{
         text: qsTr("Update location")
 
         width: parent.width / 1.1
-        anchors.top: item_Longitude.bottom
+        anchors.top: parent.top
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
 
