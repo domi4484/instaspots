@@ -3,34 +3,30 @@
  * InstaSpots                                                      *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
- * Created:      31.12.2014                                        *
+ * Created:      15.06.2015                                        *
  *                                                                 *
- * Copiright (c) 2014 Damiano Lombardi                             *
+ * Copiright (c) 2015 Damiano Lombardi                             *
  *                                                                 *
 ********************************************************************/
 
 #ifndef NEARBYSPOTSMODEL_H
 #define NEARBYSPOTSMODEL_H
 
-// Projects includes -----------------------
-#include "Spot.h"
-#include "WebApiCommand.h"
-#include "WebApiError.h"
-
 // Qt includes -----------------------------
 #include <QAbstractListModel>
 
 // Forward declarations --------------------
-class PictureBase;
+class Picture;
+class PictureRepository;
 
-class NearbySpotsModel : public QAbstractListModel
+class PicturesModel : public QAbstractListModel
 {
   Q_OBJECT
 
   public:
 
-    explicit NearbySpotsModel(QObject *parent = 0);
-    ~NearbySpotsModel();
+    explicit PicturesModel(PictureRepository *pictureRepository, QObject *parent = 0);
+    ~PicturesModel();
 
     virtual int rowCount(const QModelIndex &parent) const;
 
@@ -42,18 +38,18 @@ class NearbySpotsModel : public QAbstractListModel
 
   public slots:
 
-    void setLocation(float latitude,
-                     float longitude);
+    void setSpotId(int id);
 
   private slots:
-    void slot_CommandGetNearbySpots_Finished (const WebApiError &error);
+    void slot_PictureRepository_DataReady();
 
   private:
 
-    // News data
-    QList<Spot * > m_QList_Spots;
+    // Link to picture repository
+    PictureRepository *m_PictureRepository;
 
-    WebApiCommand m_Command_GetNearbySpots;
+    // News data
+    QList<Picture * > m_QList_Pictures;
 };
 
 #endif // NEARBYSPOTSMODEL_H

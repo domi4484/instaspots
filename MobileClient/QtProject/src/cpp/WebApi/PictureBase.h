@@ -19,7 +19,7 @@
 // Qt includes -----------------------------
 #include <QMap>
 
-class PictureBase : public WebApiCommand
+class PictureBase : public QObject
 {
 
   Q_OBJECT
@@ -31,9 +31,6 @@ public:
   virtual ~PictureBase();
 
   void clear();
-
-  virtual void setResult(const WebApiError &error,
-                         const QScriptValue &result);
 
   void execute();
 

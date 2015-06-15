@@ -80,6 +80,10 @@ class WebserviceController extends Controller
                              $request->files->get('image'));
       break;
       
+      case "getNews":
+        $this->getNews($response);
+      break;
+      
       case "getPictures":
 	$this->getPictures($response);
       break;
@@ -360,8 +364,39 @@ class WebserviceController extends Controller
     $response['successful'] = true;
   }
 
-//-----------------------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------------------
 
+  private function getNews( &$response )
+  {
+     $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsSpotsBundle:Picture');
+
+    $jPictures = array();
+    foreach($repository->getNews() as &$picture)
+    {
+      $jPicture = array();
+      $jPicture['id']          = $picture->getId();
+      $jPicture['latitude']    = $picture->getLatitude();
+      $jPicture['longitude'  ] = $picture->getLongitude();
+      $jPicture['created']     = $picture->getCreated();
+      $jPicture['url']         = $picture->getUrl();
+
+      $jPicture['id_spot'    ] = $picture->getSpot()->getId();
+      $jPicture['name'       ] = $picture->getSpot()->getName();
+      $jPicture['description'] = $picture->getSpot()->getDescription();
+      $jPicture['score'      ] = $picture->getSpot()->getScore();
+
+      $jPicture['username'] = $picture->getUser()->getUsername();
+
+      $jPictures[] = $jPicture;
+    }
+
+    $response['pictures'] = $jPictures;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+  
   private function getPictures( &$response )
   {
     $repository = $this->getDoctrine()

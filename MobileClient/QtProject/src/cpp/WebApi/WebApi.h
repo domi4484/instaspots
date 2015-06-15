@@ -54,6 +54,23 @@ public:
     }; // LATEST_PICTURES_ID
   }; // CONST
 
+  static const QString C_GET_NEARBY_SPOTS;
+
+  static const QString R_PARAM_LATITUDE;
+  static const QString R_PARAM_LONGITUDE;
+
+  static const QString A_ARRAY_SPOTS;
+
+  static const QString A_ARRAY_SPOTS_ELEMENT_ID;
+  static const QString A_ARRAY_SPOTS_ELEMENT_NAME;
+  static const QString A_ARRAY_SPOTS_ELEMENT_DESCRIPTION;
+  static const QString A_ARRAY_SPOTS_ELEMENT_LATITUDE;
+  static const QString A_ARRAY_SPOTS_ELEMENT_LONGITUDE;
+  static const QString A_ARRAY_SPOTS_ELEMENT_DISTANCE;
+  static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1;
+  static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2;
+
+
   static WebApi *instance();
   static void destroy();
 

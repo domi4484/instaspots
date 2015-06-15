@@ -35,7 +35,7 @@ const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_CREATED     ("created");
 //-----------------------------------------------------------------------------------------------------------------------------
 
 PictureBase::PictureBase(QObject *parent) :
-  WebApiCommand(parent),
+  QObject(parent),
   m_QMap_Pictures(),
   m_Command_GetNews()
 {
@@ -63,20 +63,43 @@ void PictureBase::clear()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PictureBase::setResult(const WebApiError &error,
-                            const QScriptValue &result)
+void PictureBase::execute()
+{
+  m_QMap_Pictures.clear();
+
+  // TODO check post return type
+  QList<QueryItem> qList_QueryItems;
+  m_Command_GetNews.postRequest(qList_QueryItems);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QList<int> PictureBase::getPicturesId()
+{
+  return m_QMap_Pictures.keys();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QList<Picture *> PictureBase::getPictures()
+{
+  return m_QMap_Pictures.values();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureBase::slot_CommandGetNews_Finished(const WebApiError &error)
 {
   QList<Picture *> newPictures;
 
   if(error.type() != WebApiError::NONE)
   {
-    emit signal_Finished(error);
     emit signal_News(error,
                      newPictures);
     return;
   }
 
-  QScriptValue qScriptValue_Ids = result.property(A_ARRAY_PICTURES);
+  QScriptValue qScriptValue_Ids = m_Command_GetNews.resultProperty(A_ARRAY_PICTURES);
   int length = qScriptValue_Ids.property("length").toInteger();
 
   for(int i = 0; i < length; i++)
@@ -102,41 +125,6 @@ void PictureBase::setResult(const WebApiError &error,
 
   emit signal_News(error,
                    newPictures);
-
-  emit signal_Finished(error);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void PictureBase::execute()
-{
-  m_QMap_Pictures.clear();
-
-  // TODO check post return type
-  WebApiCommand::setCommand(COMMAND);
-  QList<QueryItem> qList_QueryItems;
-  postRequest(qList_QueryItems);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-QList<int> PictureBase::getPicturesId()
-{
-  return m_QMap_Pictures.keys();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-QList<Picture *> PictureBase::getPictures()
-{
-  return m_QMap_Pictures.values();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void PictureBase::slot_CommandGetNews_Finished(const WebApiError &error)
-{
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

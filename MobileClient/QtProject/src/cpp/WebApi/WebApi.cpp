@@ -39,6 +39,22 @@ const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
 
 const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
 
+const QString WebApi::C_GET_NEARBY_SPOTS ("getNearbySpots");
+
+const QString WebApi::R_PARAM_LATITUDE  ("latitude");
+const QString WebApi::R_PARAM_LONGITUDE ("longitude");
+
+const QString WebApi::A_ARRAY_SPOTS ("spots");
+
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_ID            ("id");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_NAME          ("name");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION   ("description");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE      ("latitude");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE     ("longitude");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE      ("distance");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1 ("pictureUrl1");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2 ("pictureUrl2");
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 WebApi *WebApi::s_Instance(NULL);
