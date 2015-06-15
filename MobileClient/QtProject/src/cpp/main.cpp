@@ -6,6 +6,8 @@
 #include "HelperClasses/PlateformDetail.h"
 #include "HelperClasses/LocationManager.h"
 #include "HelperClasses/PictureCacher.h"
+#include "WebApi/PictureRepository.h"
+#include "WebApi/PicturesModel.h"
 #include "WebApi/User.h"
 #include "WebApi/PictureBase.h"
 #include "WebApi/NewsModel.h"
@@ -35,7 +37,10 @@ int main(int argc, char *argv[])
     PictureCacher     pictureCacher;
 
 
+    PictureRepository pictureRepository;
+
     User user(&settings);
+    PicturesModel picturesModel(&pictureRepository);
     PictureBase pictureBase;
     PictureUploader pictureUploader;
     NewsModel newsModel(&pictureBase);
@@ -51,6 +56,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
 
     engine.rootContext()->setContextProperty("wa_User",            &user           );
+    engine.rootContext()->setContextProperty("wa_PicturesModel",   &picturesModel  );
     engine.rootContext()->setContextProperty("wa_PictureBase",     &pictureBase    );
     engine.rootContext()->setContextProperty("wa_PictureUploader", &pictureUploader);
     engine.rootContext()->setContextProperty("wa_NewsModel",       &newsModel      );

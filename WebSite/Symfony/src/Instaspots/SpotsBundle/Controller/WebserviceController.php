@@ -85,7 +85,8 @@ class WebserviceController extends Controller
       break;
       
       case "getPictures":
-	$this->getPictures($response);
+	$this->getPictures($response,
+	                   $request->get('id_spot'));
       break;
 
       case "getNearbySpots":
@@ -397,14 +398,17 @@ class WebserviceController extends Controller
 
   //-----------------------------------------------------------------------------------------------------------------------------
   
-  private function getPictures( &$response )
+  private function getPictures( &$response,
+                                 $spotId)
   {
-    $repository = $this->getDoctrine()
-                         ->getManager()
-                         ->getRepository('InstaspotsSpotsBundle:Picture');
+    // Get spot
+    $em = $this->getDoctrine()->getManager();
+    $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
+    
+    $spot = $spotRepository->findOneById($spotId);
 
     $jPictures = array();
-    foreach($repository->getNews() as &$picture)
+    foreach($spot->getPictures() as &$picture)
     {
       $jPicture = array();
       $jPicture['id']          = $picture->getId();

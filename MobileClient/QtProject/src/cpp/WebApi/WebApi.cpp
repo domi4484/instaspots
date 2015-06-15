@@ -40,12 +40,15 @@ const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
 const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
 
 const QString WebApi::C_GET_NEARBY_SPOTS ("getNearbySpots");
+const QString WebApi::C_GET_PICTURES     ("getPictures");
+const QString WebApi::C_GET_NEWS         ("getNews");
+
+const QString WebApi::R_PARAM_SPOT_ID ("id_spot");
 
 const QString WebApi::R_PARAM_LATITUDE  ("latitude");
 const QString WebApi::R_PARAM_LONGITUDE ("longitude");
 
 const QString WebApi::A_ARRAY_SPOTS ("spots");
-
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_ID            ("id");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_NAME          ("name");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION   ("description");
@@ -54,6 +57,16 @@ const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE     ("longitude");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE      ("distance");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1 ("pictureUrl1");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2 ("pictureUrl2");
+
+const QString WebApi::A_ARRAY_PICTURES ("pictures");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_ID          ("id");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_ID_USER     ("id_user");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT     ("id_spot");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_URL         ("url");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME    ("username");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_NAME        ("name");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION ("description");
+const QString WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED     ("created");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

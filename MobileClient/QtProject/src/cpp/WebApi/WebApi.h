@@ -55,12 +55,15 @@ public:
   }; // CONST
 
   static const QString C_GET_NEARBY_SPOTS;
+  static const QString C_GET_PICTURES;
+  static const QString C_GET_NEWS;
+
+  static const QString R_PARAM_SPOT_ID;
 
   static const QString R_PARAM_LATITUDE;
   static const QString R_PARAM_LONGITUDE;
 
   static const QString A_ARRAY_SPOTS;
-
   static const QString A_ARRAY_SPOTS_ELEMENT_ID;
   static const QString A_ARRAY_SPOTS_ELEMENT_NAME;
   static const QString A_ARRAY_SPOTS_ELEMENT_DESCRIPTION;
@@ -69,6 +72,16 @@ public:
   static const QString A_ARRAY_SPOTS_ELEMENT_DISTANCE;
   static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1;
   static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2;
+
+  static const QString A_ARRAY_PICTURES;
+  static const QString A_ARRAY_PICTURES_ELEMENT_ID;
+  static const QString A_ARRAY_PICTURES_ELEMENT_ID_USER;
+  static const QString A_ARRAY_PICTURES_ELEMENT_ID_SPOT;
+  static const QString A_ARRAY_PICTURES_ELEMENT_URL;
+  static const QString A_ARRAY_PICTURES_ELEMENT_USERNAME;
+  static const QString A_ARRAY_PICTURES_ELEMENT_NAME;
+  static const QString A_ARRAY_PICTURES_ELEMENT_DESCRIPTION;
+  static const QString A_ARRAY_PICTURES_ELEMENT_CREATED;
 
 
   static WebApi *instance();

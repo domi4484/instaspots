@@ -10,7 +10,7 @@
 ********************************************************************/
 
 // Files includes --------------------------
-#include "SpotModel.h"
+#include "PicturesModel.h"
 
 // Projects includes -----------------------
 #include "Picture.h"
@@ -25,11 +25,14 @@ PicturesModel::PicturesModel(PictureRepository *pictureRepository,
                              QObject *parent)
   : QAbstractListModel(parent),
     m_PictureRepository(pictureRepository),
-    m_QList_Pictures()
+    m_QList_Pictures(),
+    m_RequestId(0)
 {
   connect(m_PictureRepository,
-          SIGNAL(signal_DataReady()),
-          SLOT(slot_PictureRepository_DataReady()));
+          SIGNAL(signal_DataReady(int,
+                                  bool)),
+          SLOT(slot_PictureRepository_DataReady(int,
+                                                bool)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -50,7 +53,7 @@ int PicturesModel::rowCount(const QModelIndex &parent) const
 //-----------------------------------------------------------------------------------------------------------------------------
 
 QVariant PicturesModel::data(const QModelIndex &index,
-                         int role) const
+                             int role) const
 {
   return m_QList_Pictures.at(index.row())->pictureRole((Picture::PictureRoles)role);
 }
@@ -66,14 +69,23 @@ QHash<int, QByteArray> PicturesModel::roleNames() const
 
 void PicturesModel::setSpotId(int id)
 {
-  m_PictureRepository->getBy_SpotId(id);
+  qDebug() << "setSpotId(int id)" << id;
+  m_RequestId = m_PictureRepository->getBy_SpotId(id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PicturesModel::slot_PictureRepository_DataReady()
+void PicturesModel::slot_PictureRepository_DataReady(int requestId,
+                                                     bool success)
 {
-  m_QList_Pictures = m_PictureRepository->getPictures();
+  if(m_RequestId != requestId)
+    return;
+
+  if(success == false)
+    return;
+  // TODO error handling?
+
+  m_QList_Pictures = m_PictureRepository->getPictures(m_RequestId);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -18,29 +18,13 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-const QString PictureBase::COMMAND            ("getPictures");
-const QString PictureBase::C_GET_NEWS         ("getNews");
-
-const QString PictureBase::A_ARRAY_PICTURES ("pictures");
-
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_ID          ("id");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_ID_USER     ("id_user");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_ID_SPOT     ("id_spot");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_URL         ("url");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_USERNAME    ("username");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_NAME        ("name");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION ("description");
-const QString PictureBase::A_ARRAY_PICTURES_ELEMENT_CREATED     ("created");
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 PictureBase::PictureBase(QObject *parent) :
   QObject(parent),
   m_QMap_Pictures(),
   m_Command_GetNews()
 {
   m_Command_GetNews.setAnswerType(WebApiCommand::JSON);
-  m_Command_GetNews.setCommand(C_GET_NEWS);
+  m_Command_GetNews.setCommand(WebApi::C_GET_NEWS);
   connect(&m_Command_GetNews,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandGetNews_Finished(const WebApiError &)));
@@ -99,23 +83,23 @@ void PictureBase::slot_CommandGetNews_Finished(const WebApiError &error)
     return;
   }
 
-  QScriptValue qScriptValue_Ids = m_Command_GetNews.resultProperty(A_ARRAY_PICTURES);
+  QScriptValue qScriptValue_Ids = m_Command_GetNews.resultProperty(WebApi::A_ARRAY_PICTURES);
   int length = qScriptValue_Ids.property("length").toInteger();
 
   for(int i = 0; i < length; i++)
   {
-    int id = qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_ID).toInteger();
+    int id = qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_ID).toInteger();
 
     if(m_QMap_Pictures.keys().contains(id) == false)
     {
       Picture *picture = new Picture(id,
-                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_ID_USER).toInteger(),
-                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInteger(),
-                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_URL).toString(),
-                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_USERNAME).toString(),
-                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_NAME).toString(),
-                                     qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString(),
-                                     QDateTime::fromString(qScriptValue_Ids.property(i).property(A_ARRAY_PICTURES_ELEMENT_CREATED).toString(),
+                                     qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_USER).toInteger(),
+                                     qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInteger(),
+                                     qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_URL).toString(),
+                                     qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME).toString(),
+                                     qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString(),
+                                     qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString(),
+                                     QDateTime::fromString(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED).toString(),
                                                            Qt::ISODate));
 
       m_QMap_Pictures.insert(picture->id(), picture);

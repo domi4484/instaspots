@@ -12,8 +12,12 @@
 #ifndef PICTUREREPOSITORY_H
 #define PICTUREREPOSITORY_H
 
+// Project includes ------------------------
+#include "WebApiError.h"
+
 // Qt includes -----------------------------
 #include <QObject>
+#include <QMap>
 
 // Forward declarations --------------------
 class Picture;
@@ -28,15 +32,28 @@ public:
   explicit PictureRepository(QObject *parent = 0);
   ~PictureRepository();
 
+  QList<Picture *> getPictures(int requestId);
 
-  QList<Picture *> getPictures();
-
-  void getBy_SpotId(int spotId);
-
+  int getBy_SpotId(int spotId);
 
 signals:
 
-public slots:
+  void signal_DataReady(int requestId,
+                        bool success);
+
+private slots:
+
+  void slot_Command_Finished(const WebApiError &error);
+
+private:
+
+  static const char* PROPERTY_REQUEST_ID;
+
+  int m_RequestId;
+
+  QMap<int, Picture *> m_QMap_Pictures;
+
+  QMap<int, QList<Picture *> > m_QMap_Results;
 };
 
 #endif // PICTUREREPOSITORY_H

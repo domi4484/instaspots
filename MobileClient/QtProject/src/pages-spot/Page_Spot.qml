@@ -27,8 +27,9 @@ BasicPage{
     property int spotId
 
     // Signals -----------------------------
-    onSpotIdChanged: {
-
+    onSpotIdChanged:
+    {
+        wa_PicturesModel.setSpotId(spotId);
     }
 
     // Gui ---------------------------------

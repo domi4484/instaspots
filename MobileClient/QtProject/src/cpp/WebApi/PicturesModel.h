@@ -9,8 +9,8 @@
  *                                                                 *
 ********************************************************************/
 
-#ifndef NEARBYSPOTSMODEL_H
-#define NEARBYSPOTSMODEL_H
+#ifndef PICTURESMODEL_H
+#define PICTURESMODEL_H
 
 // Qt includes -----------------------------
 #include <QAbstractListModel>
@@ -41,7 +41,7 @@ class PicturesModel : public QAbstractListModel
     void setSpotId(int id);
 
   private slots:
-    void slot_PictureRepository_DataReady();
+    void slot_PictureRepository_DataReady(int requestId, bool success);
 
   private:
 
@@ -50,7 +50,8 @@ class PicturesModel : public QAbstractListModel
 
     // News data
     QList<Picture * > m_QList_Pictures;
+    int m_RequestId;
 };
 
-#endif // NEARBYSPOTSMODEL_H
+#endif // PICTURESMODEL_H
 

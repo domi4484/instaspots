@@ -44,26 +44,11 @@ signals:
   void signal_News(const WebApiError &,
                    const QList<Picture *> &);
 
-  public slots:
-
   private slots:
 
     void slot_CommandGetNews_Finished        (const WebApiError &error);
 
   private:
-
-    static const QString COMMAND;
-    static const QString C_GET_NEWS;
-
-    static const QString A_ARRAY_PICTURES;
-    static const QString A_ARRAY_PICTURES_ELEMENT_ID;
-    static const QString A_ARRAY_PICTURES_ELEMENT_ID_USER;
-    static const QString A_ARRAY_PICTURES_ELEMENT_ID_SPOT;
-    static const QString A_ARRAY_PICTURES_ELEMENT_URL;
-    static const QString A_ARRAY_PICTURES_ELEMENT_USERNAME;
-    static const QString A_ARRAY_PICTURES_ELEMENT_NAME;
-    static const QString A_ARRAY_PICTURES_ELEMENT_DESCRIPTION;
-    static const QString A_ARRAY_PICTURES_ELEMENT_CREATED;
 
     QMap<int, Picture * > m_QMap_Pictures;
 

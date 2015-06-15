@@ -40,9 +40,9 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/HelperClasses/PictureCacher.cpp \
     src/cpp/HelperClasses/ApplicationHelper.cpp \
     src/cpp/Settings.cpp \
-    src/cpp/WebApi/SpotModel.cpp \
     src/cpp/WebApi/SpotRepository.cpp \
-    src/cpp/WebApi/PictureRepository.cpp
+    src/cpp/WebApi/PictureRepository.cpp \
+    src/cpp/WebApi/PicturesModel.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -71,9 +71,9 @@ HEADERS += \
     src/cpp/HelperClasses/PictureCacher.h \
     src/cpp/HelperClasses/ApplicationHelper.h \
     src/cpp/Settings.h \
-    src/cpp/WebApi/SpotModel.h \
     src/cpp/WebApi/SpotRepository.h \
-    src/cpp/WebApi/PictureRepository.h
+    src/cpp/WebApi/PictureRepository.h \
+    src/cpp/WebApi/PicturesModel.h
 
 DISTFILES += \
     ../../WebSite/Symfony/app/config/config_dev.yml \
