@@ -9,7 +9,6 @@ ApplicationWindow {
     visible: true
     width: 340
     height: 480
-    title: qsTr("InstaSpots")
 
     MenuBar {
         id: menubar

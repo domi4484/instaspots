@@ -8,7 +8,7 @@
 
 TEMPLATE = app
 
-TARGET = InstaSpots
+TARGET = LowerspotService
 
 MOC_DIR            = build
 RCC_DIR            = build

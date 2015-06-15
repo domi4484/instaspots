@@ -112,10 +112,11 @@ double LocationManager::longitude()
 QString LocationManager::googleMapLocationPicture(int width,
                                                   int height)
 {
-  return QString("https://maps.googleapis.com/maps/api/staticmap?center=%1,%2&zoom=17&size=%3x%4&maptype=roadmap").arg(m_Latitude)
-                                                                                                                 .arg(m_Longitude)
-                                                                                                                 .arg(width)
-                                                                                                                 .arg(height);
+  return QString("https://maps.googleapis.com/maps/api/staticmap?center=%1,%2&zoom=17&size=%3x%4&maptype=roadmap&markers=color:0x7FB5BE%7C%1,%2")
+                 .arg(m_Latitude)
+                 .arg(m_Longitude)
+                 .arg(width)
+                 .arg(height);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
