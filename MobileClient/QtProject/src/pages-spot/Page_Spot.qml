@@ -32,6 +32,9 @@ BasicPage{
         wa_PicturesModel.setSpotId(spotId);
     }
 
+    // Connections -------------------------
+
+
     // Gui ---------------------------------
     Column{
         id: column

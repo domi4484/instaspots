@@ -32,6 +32,8 @@ public:
   explicit PictureRepository(QObject *parent = 0);
   ~PictureRepository();
 
+public slots:
+
   QList<Picture *> getPictures(int requestId);
 
   int getBy_SpotId(int spotId);

@@ -53,11 +53,12 @@ int main(int argc, char *argv[])
     // TODO cercare setContextSingleton o qualcosa di simile
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
 
-    engine.rootContext()->setContextProperty("wa_User",            &user           );
-    engine.rootContext()->setContextProperty("wa_PicturesModel",   &picturesModel  );
-    engine.rootContext()->setContextProperty("wa_PictureUploader", &pictureUploader);
-    engine.rootContext()->setContextProperty("wa_NewsModel",       &newsModel      );
-    engine.rootContext()->setContextProperty("wa_NearbySpotModel", &nearbySpotModel);
+    engine.rootContext()->setContextProperty("wa_User",              &user           );
+    engine.rootContext()->setContextProperty("wa_PictureRepository", &pictureRepository);
+    engine.rootContext()->setContextProperty("wa_PicturesModel",     &picturesModel  );
+    engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);
+    engine.rootContext()->setContextProperty("wa_NewsModel",         &newsModel      );
+    engine.rootContext()->setContextProperty("wa_NearbySpotModel",   &nearbySpotModel);
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
