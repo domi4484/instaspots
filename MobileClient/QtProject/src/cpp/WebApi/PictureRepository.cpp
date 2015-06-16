@@ -68,6 +68,29 @@ int PictureRepository::getBy_SpotId(int spotId)
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
   webApiCommand->postRequest(qList_QueryItems);
+
+  return m_RequestId;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int PictureRepository::getNews()
+{
+  QList<QueryItem> qList_QueryItems;
+
+  // TODO check post return type
+  WebApiCommand *webApiCommand = new WebApiCommand(this);
+  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setCommand(WebApi::C_GET_NEWS);
+
+  webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+
+  connect(webApiCommand,
+          SIGNAL(signal_Finished(const WebApiError &)),
+          SLOT(slot_Command_Finished(const WebApiError &)));
+  webApiCommand->postRequest(qList_QueryItems);
+
+  return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

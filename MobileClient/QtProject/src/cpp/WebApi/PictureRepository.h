@@ -35,6 +35,7 @@ public:
   QList<Picture *> getPictures(int requestId);
 
   int getBy_SpotId(int spotId);
+  int getNews();
 
 signals:
 

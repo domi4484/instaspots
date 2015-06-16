@@ -20,8 +20,6 @@
 // Qt includes -----------------------------
 #include <QAbstractListModel>
 
-// Forward declarations --------------------
-class PictureBase;
 
 class NearbySpotsModel : public QAbstractListModel
 {

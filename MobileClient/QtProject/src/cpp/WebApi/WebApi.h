@@ -54,14 +54,25 @@ public:
     }; // LATEST_PICTURES_ID
   }; // CONST
 
+  static const QString C_LOGIN;
+  static const QString C_LOGOUT;
+  static const QString C_REGISTER;
+  static const QString C_CANREGISTER;
   static const QString C_GET_NEARBY_SPOTS;
   static const QString C_GET_PICTURES;
   static const QString C_GET_NEWS;
+
+  static const QString R_PARAM_USERNAME;
+  static const QString R_PARAM_PASSWORD;
+  static const QString R_PARAM_EMAIL;
 
   static const QString R_PARAM_SPOT_ID;
 
   static const QString R_PARAM_LATITUDE;
   static const QString R_PARAM_LONGITUDE;
+
+  static const QString A_PARAM_AUTHENTICATION;
+  static const QString A_PARAM_REGISTERED;
 
   static const QString A_ARRAY_SPOTS;
   static const QString A_ARRAY_SPOTS_ELEMENT_ID;

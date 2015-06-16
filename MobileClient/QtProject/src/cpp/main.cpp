@@ -9,7 +9,6 @@
 #include "WebApi/PictureRepository.h"
 #include "WebApi/PicturesModel.h"
 #include "WebApi/User.h"
-#include "WebApi/PictureBase.h"
 #include "WebApi/NewsModel.h"
 #include "WebApi/NearbySpotsModel.h"
 #include "WebApi/PictureUploader.h"
@@ -41,9 +40,8 @@ int main(int argc, char *argv[])
 
     User user(&settings);
     PicturesModel picturesModel(&pictureRepository);
-    PictureBase pictureBase;
     PictureUploader pictureUploader;
-    NewsModel newsModel(&pictureBase);
+    NewsModel newsModel(&pictureRepository);
     NearbySpotsModel nearbySpotModel;
 
     QQmlApplicationEngine engine;
@@ -57,7 +55,6 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("wa_User",            &user           );
     engine.rootContext()->setContextProperty("wa_PicturesModel",   &picturesModel  );
-    engine.rootContext()->setContextProperty("wa_PictureBase",     &pictureBase    );
     engine.rootContext()->setContextProperty("wa_PictureUploader", &pictureUploader);
     engine.rootContext()->setContextProperty("wa_NewsModel",       &newsModel      );
     engine.rootContext()->setContextProperty("wa_NearbySpotModel", &nearbySpotModel);

@@ -19,18 +19,6 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-const QString User::C_LOGIN                ("login");
-const QString User::C_LOGOUT               ("logout");
-const QString User::C_REGISTER             ("register");
-const QString User::C_CANREGISTER          ("canregister");
-const QString User::R_PARAM_USERNAME       ("username");
-const QString User::R_PARAM_PASSWORD       ("password");
-const QString User::R_PARAM_EMAIL          ("email");
-const QString User::A_PARAM_AUTHENTICATION ("authentication");
-const QString User::A_PARAM_REGISTERED     ("registered");
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 User::User(Settings *settings,
            QObject *parent) :
   QObject(parent),
@@ -42,16 +30,16 @@ User::User(Settings *settings,
   m_WebApiCommand_CanRegister(this)
 {
   m_WebApiCommand_Login.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_Login.setCommand(C_LOGIN);
+  m_WebApiCommand_Login.setCommand(WebApi::C_LOGIN);
 
   m_WebApiCommand_Logout.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_Logout.setCommand(C_LOGOUT);
+  m_WebApiCommand_Logout.setCommand(WebApi::C_LOGOUT);
 
   m_WebApiCommand_Register.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_Register.setCommand(C_REGISTER);
+  m_WebApiCommand_Register.setCommand(WebApi::C_REGISTER);
 
   m_WebApiCommand_CanRegister.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_CanRegister.setCommand(C_CANREGISTER);
+  m_WebApiCommand_CanRegister.setCommand(WebApi::C_CANREGISTER);
 
   connect(&m_WebApiCommand_Login,       SIGNAL(signal_Finished(const WebApiError &)), SLOT(slot_CommandLogin_Finished      (const WebApiError &)));
   connect(&m_WebApiCommand_Logout,      SIGNAL(signal_Finished(const WebApiError &)), SLOT(slot_CommandLogout_Finished     (const WebApiError &)));
@@ -76,8 +64,8 @@ bool User::login()
   }
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
-  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, hashedPassword));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USERNAME, username));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_PASSWORD, hashedPassword));
 
   WebApiError error = m_WebApiCommand_Login.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
@@ -114,8 +102,8 @@ bool User::login(const QString &username,
   m_Settings->setValue(Settings::USER_PASSWORD, password);
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
-  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, password));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USERNAME, username));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_PASSWORD, password));
 
   WebApiError error = m_WebApiCommand_Login.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
@@ -186,9 +174,9 @@ bool User::registration(const QString &username,
   m_Settings->setValue(Settings::USER_PASSWORD, password);
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(R_PARAM_USERNAME, username));
-  qList_QueryItems.append(QueryItem(R_PARAM_EMAIL,    e_mail));
-  qList_QueryItems.append(QueryItem(R_PARAM_PASSWORD, password));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USERNAME, username));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_EMAIL,    e_mail));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_PASSWORD, password));
 
   WebApiError error = m_WebApiCommand_Register.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
@@ -218,7 +206,7 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
     return;
   }
 
-  if(   m_WebApiCommand_Login.resultParameter(A_PARAM_AUTHENTICATION).toBool()
+  if(   m_WebApiCommand_Login.resultParameter(WebApi::A_PARAM_AUTHENTICATION).toBool()
      == false)
   {
     m_Settings->setValue(Settings::USER_USERNAME, QString());
@@ -258,7 +246,7 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
     return;
   }
 
-  if(   m_WebApiCommand_Register.resultParameter(A_PARAM_REGISTERED).toBool()
+  if(   m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_REGISTERED).toBool()
      == false)
   {
     m_Settings->setValue(Settings::USER_USERNAME, QString());

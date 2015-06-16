@@ -23,7 +23,6 @@ CONFIG   += console debug
 
 SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/Picture.cpp \
-    src/cpp/WebApi/PictureBase.cpp \
     src/cpp/WebApi/QueryItem.cpp \
     src/cpp/WebApi/Spot.cpp \
     src/cpp/WebApi/User.cpp \
@@ -54,7 +53,6 @@ include(deployment.pri)
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
-    src/cpp/WebApi/PictureBase.h \
     src/cpp/WebApi/QueryItem.h \
     src/cpp/WebApi/Spot.h \
     src/cpp/WebApi/User.h \

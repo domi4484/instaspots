@@ -69,7 +69,6 @@ QHash<int, QByteArray> PicturesModel::roleNames() const
 
 void PicturesModel::setSpotId(int id)
 {
-  qDebug() << "setSpotId(int id)" << id;
   m_RequestId = m_PictureRepository->getBy_SpotId(id);
 }
 
@@ -85,7 +84,9 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
     return;
   // TODO error handling?
 
+  beginInsertRows(QModelIndex() , 0, m_PictureRepository->getPictures(m_RequestId).size()-1);
   m_QList_Pictures = m_PictureRepository->getPictures(m_RequestId);
+  endInsertRows();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

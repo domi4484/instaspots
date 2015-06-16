@@ -13,23 +13,26 @@
 #include "NewsModel.h"
 
 // Projects includes -----------------------
-#include "PictureBase.h"
+#include "Picture.h"
+#include "PictureRepository.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-NewsModel::NewsModel(PictureBase *pictureBase,
+NewsModel::NewsModel(PictureRepository *pictureRepository,
                      QObject *parent)
   : QAbstractListModel(parent),
-    m_PictureBase(pictureBase)
+    m_PictureRepository(pictureRepository),
+    m_QList_Pictures(),
+    m_RequestId(0)
 {
-  connect(m_PictureBase,
-          SIGNAL(signal_News(const WebApiError &,
-                             const QList<Picture*> &)),
-          SLOT(slot_News(const WebApiError &,
-                         const QList<Picture*> &)));
+  connect(m_PictureRepository,
+          SIGNAL(signal_DataReady(int,
+                                  bool)),
+          SLOT(slot_PictureRepository_DataReady(int,
+                                                bool)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -66,19 +69,23 @@ QHash<int, QByteArray> NewsModel::roleNames() const
 
 void NewsModel::getNewestSpots()
 {
-  m_PictureBase->execute();
+  m_RequestId = m_PictureRepository->getNews();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void NewsModel::slot_News(const WebApiError &error,
-                          const QList<Picture *> &pictures)
+void NewsModel::slot_PictureRepository_DataReady(int requestId,
+                                                 bool success)
 {
-  if(error.type() != WebApiError::NONE)
+  if(m_RequestId != requestId)
     return;
 
-  beginInsertRows(QModelIndex() , 0, pictures.size()-1);
-  m_QList_Pictures.append(pictures);
+  if(success == false)
+    return;
+  // TODO error handling?
+
+  beginInsertRows(QModelIndex() , 0, m_PictureRepository->getPictures(m_RequestId).size()-1);
+  m_QList_Pictures = m_PictureRepository->getPictures(m_RequestId);
   endInsertRows();
 }
 

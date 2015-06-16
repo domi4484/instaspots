@@ -21,18 +21,19 @@ class PictureRepository;
 
 class PicturesModel : public QAbstractListModel
 {
-  Q_OBJECT
+   Q_OBJECT
 
-  public:
+   public:
 
-    explicit PicturesModel(PictureRepository *pictureRepository, QObject *parent = 0);
+   explicit PicturesModel(PictureRepository *pictureRepository,
+                          QObject *parent = 0);
     ~PicturesModel();
 
-    virtual int rowCount(const QModelIndex &parent) const;
+   virtual int rowCount(const QModelIndex &parent) const;
 
-    virtual QVariant data(const QModelIndex &index, int role) const;
+  virtual QVariant data(const QModelIndex &index, int role) const;
 
-    virtual QHash<int, QByteArray> roleNames() const;
+  virtual QHash<int, QByteArray> roleNames() const;
 
   signals:
 
@@ -41,7 +42,8 @@ class PicturesModel : public QAbstractListModel
     void setSpotId(int id);
 
   private slots:
-    void slot_PictureRepository_DataReady(int requestId, bool success);
+    void slot_PictureRepository_DataReady(int requestId, 
+                                          bool success);
 
   private:
 
@@ -54,4 +56,3 @@ class PicturesModel : public QAbstractListModel
 };
 
 #endif // PICTURESMODEL_H
-

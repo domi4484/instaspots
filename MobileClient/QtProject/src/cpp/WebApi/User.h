@@ -64,16 +64,6 @@ private slots:
 
 private:
 
-  static const QString C_LOGIN;
-  static const QString C_LOGOUT;
-  static const QString C_REGISTER;
-  static const QString C_CANREGISTER;
-  static const QString R_PARAM_USERNAME;
-  static const QString R_PARAM_PASSWORD;
-  static const QString R_PARAM_EMAIL;
-  static const QString A_PARAM_AUTHENTICATION;
-  static const QString A_PARAM_REGISTERED;
-
   // Link to Settings
   Settings *m_Settings;
 
