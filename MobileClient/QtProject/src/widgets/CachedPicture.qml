@@ -68,4 +68,13 @@ Item {
             console.log("Download finished");
         }
     }
+
+    Rectangle {
+        anchors.fill: parent
+
+        radius: 2
+        color: "transparent"
+        border.width: 1
+        border.color: "white"
+    }
 }

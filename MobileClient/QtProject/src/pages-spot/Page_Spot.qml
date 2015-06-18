@@ -15,6 +15,7 @@ import QtQuick.Controls 1.3
 
 // Project imports -------------------------
 import "qrc:/"
+import "qrc:/widgets"
 
 BasicPage{
     id: page_Spot
@@ -25,6 +26,8 @@ BasicPage{
 
     // Properties --------------------------
     property int spotId
+    property Navigator navigator
+    property StackView stackView
 
     // Signals -----------------------------
     onSpotIdChanged:
@@ -34,19 +37,52 @@ BasicPage{
 
     // Connections -------------------------
 
+    // Components --------------------------
+    Component {
+        id: component_Picture
+
+        Item {
+            signal pictureClicked
+
+            width: gridView_Pictures.cellWidth
+            height: gridView_Pictures.cellHeight
+
+            CachedPicture {
+                id: image_Picture
+                anchors.fill: parent
+                sourceUrl: role_PictureUrl
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        stackView.push({item: Qt.resolvedUrl("qrc:/widgets/CachedPicture.qml"),
+                                       properties:{width:stackView.width,
+                                                   height:width,
+                                                   sourceUrl:role_PictureUrl}});
+                    }
+                }
+            }
+        }
+    }
 
     // Gui ---------------------------------
-    Column{
-        id: column
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 5
-        width: parent.width / 1.1
-        spacing: 5
+    Item{
+        width: parent.width
+        height: parent.height
 
-        // GPS
-        Text{
-            text: qsTr("Spot id: %1").arg(spotId);
+        Component.onCompleted:
+        {
+            console.log("Width: ", width, "Height: ", height);
+        }
+
+        GridView{
+            id: gridView_Pictures
+            anchors.fill: parent
+
+            cellWidth: parent.width / 2
+            cellHeight: cellWidth
+
+            model: wa_PicturesModel
+            delegate: component_Picture
         }
     }
 }

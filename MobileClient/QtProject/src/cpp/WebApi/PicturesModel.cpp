@@ -69,6 +69,10 @@ QHash<int, QByteArray> PicturesModel::roleNames() const
 
 void PicturesModel::setSpotId(int id)
 {
+  beginResetModel();
+  m_QList_Pictures.clear();
+  endResetModel();
+
   m_RequestId = m_PictureRepository->getBy_SpotId(id);
 }
 

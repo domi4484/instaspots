@@ -22,7 +22,7 @@ Rectangle {
         anchors.top: parent.top
 
         backButtonVisible: stackView.depth > 1
-        continueButtonVisible: stackView.currentItem.continueButtonVisible
+        continueButtonVisible: false
 
         onPreviousPage: {
             if(stackView.depth > 1)
@@ -47,25 +47,31 @@ Rectangle {
             title: qsTr("News")
             model: wa_NewsModel
 
+            Component.onCompleted: {
+                navigator.title = title;
+            }
+
+            onVisibleChanged: {
+                if(visible == true)
+                {
+                    navigator.title = title;
+                }
+            }
+
             onUserClicked: {
                 console.log(username);
             }
 
             onSpotClicked: {
-                stackView.push(Qt.resolvedUrl("pages-spot/Page_Spot.qml"));
-                stackView.currentItem.spotId = spotId;
+                stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
+                               properties:{width:stackView.width,
+                                           height:stackView.height,
+                                           stackView:stackView,
+                                           navigator:navigator,
+                                           spotId:spotId}});
 
                 navigator.title = spotName;
-
             }
-        }
-
-        onCurrentItemChanged: {
-            if(currentItem == null)
-                return;
-
-            navigator.title = currentItem.title;
-            navigator.continueButtonVisible = currentItem.continueButtonVisible;
         }
     }
 }

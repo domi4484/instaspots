@@ -8,7 +8,7 @@
 
 TEMPLATE = app
 
-TARGET = LowerspotService
+TARGET = Lowerspot
 
 MOC_DIR            = build
 RCC_DIR            = build
