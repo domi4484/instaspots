@@ -25,20 +25,27 @@ BasicPage{
     continueButtonVisible: false
     menuButtonVisible: false
 
+    // Properties --------------------------
+    property double maxDistance_km: 150
+
     // Bind properties ---------------------
     property alias model: listView.model
 
     // Signals -----------------------------
     signal spotClicked(int spotId, string spotName, string spotDescription)
 
+    // Connections -------------------------
     onVisibleChanged: {
         if(visible == false)
         {
             return;
         }
 
+        console.log("wa_NearbySpotModel.setLocation")
+
         wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
-                                       hc_LocationManager.longitude());
+                                       hc_LocationManager.longitude(),
+                                       maxDistance_km);
     }
 
     // Gui ---------------------------------

@@ -40,8 +40,9 @@ class NearbySpotsModel : public QAbstractListModel
 
   public slots:
 
-    void setLocation(float latitude,
-                     float longitude);
+    void setLocation(double latitude,
+                     double longitude,
+                     double maxDistance_km);
 
   private slots:
     void slot_CommandGetNearbySpots_Finished (const WebApiError &error);

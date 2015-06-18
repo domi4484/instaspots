@@ -70,6 +70,7 @@ public:
 
   static const QString R_PARAM_LATITUDE;
   static const QString R_PARAM_LONGITUDE;
+  static const QString R_PARAM_MAX_DISTANCE_KM;
 
   static const QString A_PARAM_AUTHENTICATION;
   static const QString A_PARAM_REGISTERED;
@@ -80,7 +81,7 @@ public:
   static const QString A_ARRAY_SPOTS_ELEMENT_DESCRIPTION;
   static const QString A_ARRAY_SPOTS_ELEMENT_LATITUDE;
   static const QString A_ARRAY_SPOTS_ELEMENT_LONGITUDE;
-  static const QString A_ARRAY_SPOTS_ELEMENT_DISTANCE;
+  static const QString A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM;
   static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1;
   static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2;
 

@@ -63,12 +63,14 @@ QHash<int, QByteArray> NearbySpotsModel::roleNames() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void NearbySpotsModel::setLocation(float latitude,
-                                   float longitude)
+void NearbySpotsModel::setLocation(double latitude,
+                                   double longitude,
+                                   double maxDistance_km)
 {
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,  QString::number(latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE, QString::number(longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,        QString::number(latitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE,       QString::number(longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_MAX_DISTANCE_KM, QString::number(maxDistance_km)));
 
   // TODO check post return type
   m_Command_GetNearbySpots.postRequest(qList_QueryItems);
@@ -99,7 +101,7 @@ void NearbySpotsModel::slot_CommandGetNearbySpots_Finished(const WebApiError &er
                                   qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString(),
                                   qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toNumber(),
                                   qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toNumber(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE).toNumber(),
+                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toNumber(),
                                   qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString(),
                                   qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString()));
   }

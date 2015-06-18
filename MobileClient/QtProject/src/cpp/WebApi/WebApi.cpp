@@ -53,8 +53,9 @@ const QString WebApi::R_PARAM_EMAIL    ("email");
 
 const QString WebApi::R_PARAM_SPOT_ID ("id_spot");
 
-const QString WebApi::R_PARAM_LATITUDE  ("latitude");
-const QString WebApi::R_PARAM_LONGITUDE ("longitude");
+const QString WebApi::R_PARAM_LATITUDE       ("latitude");
+const QString WebApi::R_PARAM_LONGITUDE      ("longitude");
+const QString WebApi::R_PARAM_MAX_DISTANCE_KM("maxDistance_km");
 
 const QString WebApi::A_PARAM_AUTHENTICATION ("authentication");
 const QString WebApi::A_PARAM_REGISTERED     ("registered");
@@ -65,7 +66,7 @@ const QString WebApi::A_ARRAY_SPOTS_ELEMENT_NAME          ("name");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION   ("description");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE      ("latitude");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE     ("longitude");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE      ("distance");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM   ("distance_km");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1 ("pictureUrl1");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2 ("pictureUrl2");
 

@@ -35,7 +35,7 @@ class Spot : public QObject
                   QString description,
                   qreal   latitude,
                   qreal   longitude,
-                  qreal   distance,
+                  qreal   distance_km,
                   QString pictureUrl1,
                   QString pictureUrl2,
                   QObject *parent = 0);

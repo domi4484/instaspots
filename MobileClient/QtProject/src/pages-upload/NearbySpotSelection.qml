@@ -52,6 +52,7 @@ BasicPage{
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
         model: wa_NearbySpotModel
+        maxDistance_km: 4
         onSpotClicked: {
             wa_PictureUploader.setNewSpot(false);
             wa_PictureUploader.setExistingSpotId(spotId);

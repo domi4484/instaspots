@@ -25,7 +25,7 @@ Spot::Spot(int     id,
            QString description,
            qreal   latitude,
            qreal   longitude,
-           qreal   distance,
+           qreal   distance_km,
            QString pictureUrl1,
            QString pictureUrl2,
            QObject *parent)
@@ -39,13 +39,13 @@ Spot::Spot(int     id,
     m_PictureUrl1 (pictureUrl1),
     m_PictureUrl2 (pictureUrl2)
 {
-  if(distance >= 2)
+  if(distance_km >= 2)
   {
-    m_Distance = QString("%1 km").arg((int) distance);
+    m_Distance = QString("%1 km").arg((int) distance_km);
   }
   else
   {
-    m_Distance = QString("%1 m").arg((int) (distance*1000));
+    m_Distance = QString("%1 m").arg((int) (distance_km*1000));
   }
 
   if(m_PictureUrl1.isEmpty() == false)

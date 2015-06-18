@@ -91,8 +91,9 @@ class WebserviceController extends Controller
 
       case "getNearbySpots":
 	$this->getNearbySpots($response,
-                              $request->get('latitude' ),
-                              $request->get('longitude'));
+                        $request->get('latitude' ),
+                        $request->get('longitude'),
+                        $request->get('maxDistance_km'));
       break;
     
       default:
@@ -435,7 +436,7 @@ class WebserviceController extends Controller
   private function getNearbySpots( &$response,
                                     $latitude,
                                     $longitude,
-                                    $distance_km = 150)
+                                    $maxDistance_km)
   {
     $repository = $this->getDoctrine()
                          ->getManager()
@@ -444,7 +445,7 @@ class WebserviceController extends Controller
     $jSpots = array();
     foreach($repository->getArrayByDistance($latitude,
                                             $longitude,
-                                            $distance_km)
+                                            $maxDistance_km)
             as &$spot)
     {
       $jSpot = array();
@@ -454,7 +455,7 @@ class WebserviceController extends Controller
       $jSpot['description'] = $spot[0]['description'];
       $jSpot['latitude']    = $spot[0]['latitude'];
       $jSpot['longitude']   = $spot[0]['longitude'];
-      $jSpot['distance']    = $spot['distance'];
+      $jSpot['distance_km'] = $spot['distance'];
 
       $picture1 = new Picture();
       $picture1->setId     ($spot[0]['picture1']['id']);
