@@ -15,7 +15,7 @@ import QtQuick.Controls 1.1
 
 // Project imports -------------------------
 import "qrc:/views"
-import "qrc:/widgets"
+import "qrc:/pages-spot"
 
 Item {
 
@@ -50,77 +50,6 @@ Item {
         hc_LocationManager.requestLocation();
 
         // TODO if current location not valid hc_LocationManager.isValid then display waiting animation
-    }
-
-    // Components --------------------------
-    Component {
-        id: component_SpotOverview
-
-        Item {
-            id: root
-            width: parent.width
-            height:   rectangle_Top.height
-                      + image_Picture1.height
-
-            signal spotClicked
-
-            Rectangle {
-                id: rectangle_Top
-                anchors.top: parent.top
-                width: parent.width
-                height: 40
-                color: "#aaaaaa"
-                Text{
-                    id: text_SpotName
-                    anchors.leftMargin: 2
-                    width: parent.width / 2
-                    height: parent.height / 2
-                    text: role_SpotName
-                }
-                Text {
-                    anchors.top: parent.top
-                    anchors.left: text_SpotName.right
-                    anchors.rightMargin: 2
-                    width: text_SpotName.width
-                    height: text_SpotName.height
-                    horizontalAlignment: Text.AlignRight
-                    text: role_SpotDistance
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        spotClicked();
-                    }
-                }
-            }
-            CachedPicture {
-                id: image_Picture1
-                anchors.top: rectangle_Top.bottom
-                width: parent.width/2
-                height: parent.width/2
-                sourceUrl: role_SpotPictureUrl1
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        spotClicked();
-                    }
-                }
-            }
-            CachedPicture {
-                id: image_Picture2
-                anchors.top: rectangle_Top.bottom
-                anchors.left: image_Picture1.right
-                width: parent.width/2
-                height: parent.width/2
-                sourceUrl: role_SpotPictureUrl2
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        spotClicked();
-                    }
-                }
-            }
-        }
     }
 
     // Gui ---------------------------------
@@ -158,12 +87,20 @@ Item {
 
             title: qsTr('Nearby spots')
 
-            ListView {
-                id: listView_SpotsOverview
+            Page_SpotsList {
                 width: parent.width
                 height: parent.height
                 model: wa_NearbySpotModel
-                delegate: component_SpotOverview
+                onSpotClicked: {
+                    stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
+                                   properties:{width:stackView.width,
+                                               height:stackView.height,
+                                               stackView:stackView,
+                                               navigator:navigator,
+                                               spotId:spotId}});
+
+                    navigator.title = spotName;
+                }
             }
         }
 
