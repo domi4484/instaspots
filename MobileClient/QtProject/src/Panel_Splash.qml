@@ -4,9 +4,9 @@ Rectangle {
     width: 100
     height: 62
 
-    Text {
-        text: qsTr("Starting up...")
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+    Image {
+        anchors.fill: parent
+        source: "icon/icon/splash.png"
+        fillMode: Image.Stretch
     }
 }

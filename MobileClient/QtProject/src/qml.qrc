@@ -45,5 +45,6 @@
         <file>icon/BackArrow.png</file>
         <file>icon/camera-photo.png</file>
         <file>icon/menu.png</file>
+        <file>icon/splash.png</file>
     </qresource>
 </RCC>
