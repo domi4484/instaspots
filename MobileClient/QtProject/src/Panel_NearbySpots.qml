@@ -13,11 +13,18 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 
+// Project c++ imports ---------------------
+import NearbySpotsModel 1.0
+
 // Project imports -------------------------
 import "qrc:/views"
 import "qrc:/pages-spot"
 
 Item {
+
+    NearbySpotsModel{
+        id: nearbySpotsModel
+    }
 
     // Signals -----------------------------
     Connections {
@@ -43,8 +50,9 @@ Item {
             return;
 
         // Set current location (also if outdated)
-        wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
-                                       hc_LocationManager.longitude());
+        nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+                                     hc_LocationManager.longitude(),
+                                     150);
 
         // Request location update
         hc_LocationManager.requestLocation();
@@ -90,7 +98,7 @@ Item {
             Page_SpotsList {
                 width: parent.width
                 height: parent.height
-                model: wa_NearbySpotModel
+                model: nearbySpotsModel
                 maxDistance_km: 150
                 onSpotClicked: {
                     stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),

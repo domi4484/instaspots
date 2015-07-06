@@ -6,6 +6,7 @@
 #include "HelperClasses/PlateformDetail.h"
 #include "HelperClasses/LocationManager.h"
 #include "HelperClasses/PictureCacher.h"
+#include "WebApi/SpotRepository.h"
 #include "WebApi/PictureRepository.h"
 #include "WebApi/PicturesModel.h"
 #include "WebApi/User.h"
@@ -37,11 +38,10 @@ int main(int argc, char *argv[])
     PictureCacher     pictureCacher;
 
     PictureRepository::instanziate();
+    SpotRepository::instanziate();
 
     User user(&settings);
     PictureUploader pictureUploader;
-    NewsModel newsModel(PictureRepository::instance());
-    NearbySpotsModel nearbySpotModel;
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("hc_Application",     &applicationHelper);
@@ -53,13 +53,11 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
 
     engine.rootContext()->setContextProperty("wa_User",              &user           );
-    engine.rootContext()->setContextProperty("wa_PictureRepository", PictureRepository::instance());
     engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);
-    engine.rootContext()->setContextProperty("wa_NewsModel",         &newsModel      );
-    engine.rootContext()->setContextProperty("wa_NearbySpotModel",   &nearbySpotModel);
 
-    qmlRegisterType<PicturesModel>("PicturesModel",1,0,"PicturesModel");
-
+    qmlRegisterType<PicturesModel>   ("PicturesModel",    1, 0, "PicturesModel");
+    qmlRegisterType<NewsModel>       ("NewsModel",        1, 0, "NewsModel");
+    qmlRegisterType<NearbySpotsModel>("NearbySpotsModel", 1, 0, "NearbySpotsModel");
 
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
@@ -69,5 +67,6 @@ int main(int argc, char *argv[])
     settings.sync();
 
     Logger::destroy();
+    SpotRepository::destroy();
     PictureRepository::destroy();
 }

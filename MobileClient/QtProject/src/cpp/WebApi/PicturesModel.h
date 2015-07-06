@@ -22,7 +22,7 @@ class PicturesModel : public QAbstractListModel
 {
    Q_OBJECT
 
-   public:
+public:
 
    explicit PicturesModel(QObject *parent = 0);
     ~PicturesModel();
@@ -32,8 +32,6 @@ class PicturesModel : public QAbstractListModel
   virtual QVariant data(const QModelIndex &index, int role) const;
 
   virtual QHash<int, QByteArray> roleNames() const;
-
-  signals:
 
   public slots:
 

@@ -13,6 +13,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 
+// Project c++ imports ---------------------
+import NearbySpotsModel 1.0
+
 // Project imports -------------------------
 import "qrc:/"
 import "qrc:/views"
@@ -20,6 +23,10 @@ import "qrc:/pages-spot/"
 
 BasicPage{
     id: nearbySpotSelection
+
+    NearbySpotsModel{
+        id: nearbySpotsModel
+    }
 
     // BasicPage properties ----------------
     title: qsTr("Spot selection")
@@ -51,7 +58,7 @@ BasicPage{
         width: parent.width
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
-        model: wa_NearbySpotModel
+        model: nearbySpotsModel
         maxDistance_km: 4
         onSpotClicked: {
             wa_PictureUploader.setNewSpot(false);

@@ -71,6 +71,7 @@ void PicturesModel::setSpotId(int id)
   m_QList_Pictures.clear();
   endResetModel();
 
+
   m_RequestId = PictureRepository::instance()->getBy_SpotId(id);
 }
 

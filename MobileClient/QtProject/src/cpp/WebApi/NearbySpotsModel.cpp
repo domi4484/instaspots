@@ -13,7 +13,8 @@
 #include "NearbySpotsModel.h"
 
 // Projects includes -----------------------
-#include "WebApi.h"
+#include "Spot.h"
+#include "SpotRepository.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
@@ -22,13 +23,14 @@
 
 NearbySpotsModel::NearbySpotsModel(QObject *parent)
   : QAbstractListModel(parent),
-    m_Command_GetNearbySpots()
+    m_QList_Spots(),
+    m_RequestId(0)
 {
-  m_Command_GetNearbySpots.setAnswerType(WebApiCommand::JSON);
-  m_Command_GetNearbySpots.setCommand(WebApi::C_GET_NEARBY_SPOTS);
-  connect(&m_Command_GetNearbySpots,
-          SIGNAL(signal_Finished(const WebApiError &)),
-          SLOT(slot_CommandGetNearbySpots_Finished(const WebApiError &)));
+  connect(SpotRepository::instance(),
+          SIGNAL(signal_DataReady(int,
+                                  bool)),
+          SLOT(slot_SpotRepository_DataReady(int,
+                                                bool)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -67,45 +69,29 @@ void NearbySpotsModel::setLocation(double latitude,
                                    double longitude,
                                    double maxDistance_km)
 {
-  QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,        QString::number(latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE,       QString::number(longitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_MAX_DISTANCE_KM, QString::number(maxDistance_km)));
-
-  // TODO check post return type
-  m_Command_GetNearbySpots.postRequest(qList_QueryItems);
+  m_RequestId = SpotRepository::instance()->getByDistance(latitude,
+                                                          longitude,
+                                                          maxDistance_km);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void NearbySpotsModel::slot_CommandGetNearbySpots_Finished(const WebApiError &error)
+void NearbySpotsModel::slot_SpotRepository_DataReady(int requestId,
+                                                     bool success)
 {
-  if(error.type() != WebApiError::NONE)
-  {
+  if(m_RequestId != requestId)
     return;
-  }
 
-  QScriptValue qScriptValue_Ids = m_Command_GetNearbySpots.resultProperty(WebApi::A_ARRAY_SPOTS);
-  int length = qScriptValue_Ids.property("length").toInteger();
+  if(success == false)
+    return;
+  // TODO error handling?
 
   beginResetModel();
   m_QList_Spots.clear();
   endResetModel();
 
-  beginInsertRows(QModelIndex(), 0, length-1);
-
-  for(int i = 0; i < length; i++)
-  { 
-    m_QList_Spots.append(new Spot(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_ID).toInteger(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toNumber(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toNumber(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toNumber(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString(),
-                                  qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString()));
-  }
-
+  beginInsertRows(QModelIndex() , 0, SpotRepository::instance()->getSpots(m_RequestId).size()-1);
+  m_QList_Spots = SpotRepository::instance()->getSpots(m_RequestId);
   endInsertRows();
 }
 

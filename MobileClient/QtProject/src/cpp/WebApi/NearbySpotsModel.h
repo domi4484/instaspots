@@ -12,31 +12,26 @@
 #ifndef NEARBYSPOTSMODEL_H
 #define NEARBYSPOTSMODEL_H
 
-// Projects includes -----------------------
-#include "Spot.h"
-#include "WebApiCommand.h"
-#include "WebApiError.h"
-
 // Qt includes -----------------------------
 #include <QAbstractListModel>
 
+// Forward declarations --------------------
+class Spot;
 
 class NearbySpotsModel : public QAbstractListModel
 {
-  Q_OBJECT
+   Q_OBJECT
 
-  public:
+public:
 
-    explicit NearbySpotsModel(QObject *parent = 0);
+   explicit NearbySpotsModel(QObject *parent = 0);
     ~NearbySpotsModel();
 
-    virtual int rowCount(const QModelIndex &parent) const;
+   virtual int rowCount(const QModelIndex &parent) const;
 
-    virtual QVariant data(const QModelIndex &index, int role) const;
+  virtual QVariant data(const QModelIndex &index, int role) const;
 
-    virtual QHash<int, QByteArray> roleNames() const;
-
-  signals:
+  virtual QHash<int, QByteArray> roleNames() const;
 
   public slots:
 
@@ -45,14 +40,14 @@ class NearbySpotsModel : public QAbstractListModel
                      double maxDistance_km);
 
   private slots:
-    void slot_CommandGetNearbySpots_Finished (const WebApiError &error);
+    void slot_SpotRepository_DataReady(int requestId,
+                                       bool success);
 
   private:
 
     // News data
     QList<Spot * > m_QList_Spots;
-
-    WebApiCommand m_Command_GetNearbySpots;
+    int m_RequestId;
 };
 
 #endif // NEARBYSPOTSMODEL_H

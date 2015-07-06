@@ -3,17 +3,24 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 
-// Project imports -------------------------
+// Project c++ imports ---------------------
+import NewsModel 1.0
+
+// Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/pages-picture/"
 import "qrc:/pages-spot/"
 
 Rectangle {
 
+    NewsModel{
+        id: newsModel
+    }
+
     // Signals -----------------------------
     Component.onCompleted:
     {
-        wa_NewsModel.getNewestSpots();
+        newsModel.getNewestSpots();
     }
 
     // Gui ---------------------------------
@@ -45,7 +52,7 @@ Rectangle {
             width: parent.width
             height: parent.height
             title: qsTr("News")
-            model: wa_NewsModel
+            model: newsModel
 
             Component.onCompleted: {
                 navigator.title = title;

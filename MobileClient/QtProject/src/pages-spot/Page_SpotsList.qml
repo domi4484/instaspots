@@ -13,6 +13,9 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.3
 
+// Project c++ imports ---------------------
+import NearbySpotsModel 1.0
+
 // Project imports -------------------------
 import "qrc:/"
 import "qrc:/views"
@@ -31,6 +34,10 @@ BasicPage{
     // Bind properties ---------------------
     property alias model: listView.model
 
+    NearbySpotsModel{
+        id: nearbySpotsModel
+    }
+
     // Signals -----------------------------
     signal spotClicked(int spotId, string spotName, string spotDescription)
 
@@ -43,9 +50,9 @@ BasicPage{
 
         console.log("wa_NearbySpotModel.setLocation")
 
-        wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
-                                       hc_LocationManager.longitude(),
-                                       maxDistance_km);
+        nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+                                     hc_LocationManager.longitude(),
+                                     maxDistance_km);
     }
 
     // Gui ---------------------------------
