@@ -52,6 +52,20 @@ void Logger::instanziate(Logger::LOG_LEVEL logLevel)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Logger::destroy()
+{
+  if(s_Logger == NULL)
+  {
+    qWarning() << "Logger instance is already null.";
+    return;
+  }
+
+  delete s_Logger;
+  s_Logger = NULL;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Logger::error(const QString &text)
 {
   if(s_Logger == NULL)

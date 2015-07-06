@@ -13,7 +13,10 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.3
 
-// Project imports -------------------------
+// Project c++ imports ---------------------
+import PicturesModel 1.0
+
+// Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/widgets"
 
@@ -29,10 +32,14 @@ BasicPage{
     property Navigator navigator
     property StackView stackView
 
+    PicturesModel{
+        id: picturesModel
+    }
+
     // Signals -----------------------------
     onSpotIdChanged:
     {
-        wa_PicturesModel.setSpotId(spotId);
+        picturesModel.setSpotId(spotId)
     }
 
     // Connections -------------------------
@@ -66,6 +73,7 @@ BasicPage{
 
     // Gui ---------------------------------
     Item{
+        id: item_Gui
         width: parent.width
         height: parent.height
 
@@ -81,7 +89,7 @@ BasicPage{
             cellWidth: parent.width / 2
             cellHeight: cellWidth
 
-            model: wa_PicturesModel
+            model: picturesModel
             delegate: component_Picture
         }
     }

@@ -17,7 +17,6 @@
 
 // Forward declarations --------------------
 class Picture;
-class PictureRepository;
 
 class PicturesModel : public QAbstractListModel
 {
@@ -25,8 +24,7 @@ class PicturesModel : public QAbstractListModel
 
    public:
 
-   explicit PicturesModel(PictureRepository *pictureRepository,
-                          QObject *parent = 0);
+   explicit PicturesModel(QObject *parent = 0);
     ~PicturesModel();
 
    virtual int rowCount(const QModelIndex &parent) const;
@@ -46,9 +44,6 @@ class PicturesModel : public QAbstractListModel
                                           bool success);
 
   private:
-
-    // Link to picture repository
-    PictureRepository *m_PictureRepository;
 
     // News data
     QList<Picture * > m_QList_Pictures;

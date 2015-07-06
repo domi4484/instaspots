@@ -21,14 +21,12 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PicturesModel::PicturesModel(PictureRepository *pictureRepository,
-                             QObject *parent)
+PicturesModel::PicturesModel(QObject *parent)
   : QAbstractListModel(parent),
-    m_PictureRepository(pictureRepository),
     m_QList_Pictures(),
     m_RequestId(0)
 {
-  connect(m_PictureRepository,
+  connect(PictureRepository::instance(),
           SIGNAL(signal_DataReady(int,
                                   bool)),
           SLOT(slot_PictureRepository_DataReady(int,
@@ -73,7 +71,7 @@ void PicturesModel::setSpotId(int id)
   m_QList_Pictures.clear();
   endResetModel();
 
-  m_RequestId = m_PictureRepository->getBy_SpotId(id);
+  m_RequestId = PictureRepository::instance()->getBy_SpotId(id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -88,8 +86,8 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
     return;
   // TODO error handling?
 
-  beginInsertRows(QModelIndex() , 0, m_PictureRepository->getPictures(m_RequestId).size()-1);
-  m_QList_Pictures = m_PictureRepository->getPictures(m_RequestId);
+  beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
+  m_QList_Pictures = PictureRepository::instance()->getPictures(m_RequestId);
   endInsertRows();
 }
 

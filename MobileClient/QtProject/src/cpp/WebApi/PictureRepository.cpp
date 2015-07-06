@@ -23,6 +23,10 @@ const char* PictureRepository::PROPERTY_REQUEST_ID("request_id");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+PictureRepository *PictureRepository::s_PictureRepository = NULL;
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 PictureRepository::PictureRepository(QObject *parent)
   : QObject(parent),
     m_RequestId(0),
@@ -40,6 +44,34 @@ PictureRepository::~PictureRepository()
   {
     delete m_QMap_Pictures.take(pictureId);
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureRepository::instanziate()
+{
+    if(s_PictureRepository != NULL)
+    {
+      qWarning() << "Logger is already initialised.";
+      return;
+    }
+
+    s_PictureRepository = new PictureRepository();
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureRepository::destroy()
+{
+  if(s_PictureRepository == NULL)
+  {
+    qWarning() << "Logger instance is already null.";
+    return;
+  }
+
+  delete s_PictureRepository;
+  s_PictureRepository = NULL;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

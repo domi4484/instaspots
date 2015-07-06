@@ -32,6 +32,11 @@ public:
   explicit PictureRepository(QObject *parent = 0);
   ~PictureRepository();
 
+  static void instanziate();
+  static void destroy();
+
+  static PictureRepository *instance() { return s_PictureRepository; }
+
 public slots:
 
   QList<Picture *> getPictures(int requestId);
@@ -51,6 +56,8 @@ private slots:
 private:
 
   static const char* PROPERTY_REQUEST_ID;
+
+  static PictureRepository *s_PictureRepository;
 
   int m_RequestId;
 

@@ -50,6 +50,7 @@ public:
    virtual ~Logger();
 
    static void instanziate(LOG_LEVEL logLevel);
+   static void destroy();
    static Logger *instance() { return s_Logger; }
 
    /*!

@@ -17,6 +17,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QtQml>
 
 int main(int argc, char *argv[])
 {
@@ -35,13 +36,11 @@ int main(int argc, char *argv[])
     LocationManager   locationManager(&settings);
     PictureCacher     pictureCacher;
 
-
-    PictureRepository pictureRepository;
+    PictureRepository::instanziate();
 
     User user(&settings);
-    PicturesModel picturesModel(&pictureRepository);
     PictureUploader pictureUploader;
-    NewsModel newsModel(&pictureRepository);
+    NewsModel newsModel(PictureRepository::instance());
     NearbySpotsModel nearbySpotModel;
 
     QQmlApplicationEngine engine;
@@ -54,15 +53,21 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
 
     engine.rootContext()->setContextProperty("wa_User",              &user           );
-    engine.rootContext()->setContextProperty("wa_PictureRepository", &pictureRepository);
-    engine.rootContext()->setContextProperty("wa_PicturesModel",     &picturesModel  );
+    engine.rootContext()->setContextProperty("wa_PictureRepository", PictureRepository::instance());
     engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);
     engine.rootContext()->setContextProperty("wa_NewsModel",         &newsModel      );
     engine.rootContext()->setContextProperty("wa_NearbySpotModel",   &nearbySpotModel);
+
+    qmlRegisterType<PicturesModel>("PicturesModel",1,0,"PicturesModel");
+
+
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
     return app.exec();
 
     settings.sync();
+
+    Logger::destroy();
+    PictureRepository::destroy();
 }
