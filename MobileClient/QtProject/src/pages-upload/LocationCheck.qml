@@ -90,7 +90,6 @@ BasicPage{
             if(hc_LocationManager.isValid() === false)
             {
                 messageDialog_LocationError.visible = true;
-                return;
             }
 
             wa_PictureUploader.setPosition(hc_LocationManager.latitude(),
@@ -102,7 +101,7 @@ BasicPage{
     // Message boxes -----------------------
     MessageDialog{
         id: messageDialog_LocationError
-        title: qsTr('Invalid location')
-        text: qsTr('Can\'t determine your current location.')
+        title: qsTr('Location error')
+        text: qsTr('Can\'t determine your current location in a precise way.')
     }
 } // page_Location

@@ -41,14 +41,14 @@ class Spot : public QObject
                   QObject *parent = 0);
     ~Spot();
 
-
     QVariant spotRole(SpotRoles role) const;
-
     static QHash<int, QByteArray> roleNames();
 
-  signals:
+    QString distanceText() const;
 
-  public slots:
+    void setDistance(qreal distance) {m_Distance_km = distance;}
+    void setPictureUrl1(const QString &pictureUrl1) {m_PictureUrl1 = pictureUrl1;}
+    void setPictureUrl2(const QString &pictureUrl2) {m_PictureUrl2 = pictureUrl2;}
 
   private:
 
@@ -57,7 +57,7 @@ class Spot : public QObject
     QString m_Description;
     qreal   m_Latitude;
     qreal   m_Longitude;
-    QString m_Distance;
+    qreal   m_Distance_km;
     QString m_PictureUrl1;
     QString m_PictureUrl2;
 };

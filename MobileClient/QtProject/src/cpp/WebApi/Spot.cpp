@@ -35,19 +35,10 @@ Spot::Spot(int     id,
     m_Description (description),
     m_Latitude    (latitude),
     m_Longitude   (longitude),
-    m_Distance    (),
+    m_Distance_km (distance_km),
     m_PictureUrl1 (pictureUrl1),
     m_PictureUrl2 (pictureUrl2)
 {
-  if(distance_km >= 2)
-  {
-    m_Distance = QString("%1 km").arg((int) distance_km);
-  }
-  else
-  {
-    m_Distance = QString("%1 m").arg((int) (distance_km*1000));
-  }
-
   if(m_PictureUrl1.isEmpty() == false)
   {
     m_PictureUrl1 = m_PictureUrl1;
@@ -88,7 +79,7 @@ QVariant Spot::spotRole(Spot::SpotRoles role) const
     return m_Longitude;
   break;
   case RoleSpotDistance:
-    return m_Distance;
+    return distanceText();
   break;
   case RoleSpotPictureUrl1:
     return m_PictureUrl1;
@@ -115,6 +106,20 @@ QHash<int, QByteArray> Spot::roleNames()
   roles[RoleSpotPictureUrl2] = "role_SpotPictureUrl2";
 
   return roles;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString Spot::distanceText() const
+{
+  if(m_Distance_km >= 2)
+  {
+    return QString("%1 km").arg((int) m_Distance_km);
+  }
+  else
+  {
+    return QString("%1 m").arg((int) (m_Distance_km*1000));
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

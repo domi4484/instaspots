@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Red Coping Company");
     app.setOrganizationDomain("spots.lowerclassclothing.com");
     app.setApplicationName("Lowerspot");
-    app.setApplicationVersion("0.0.1");
+    app.setApplicationVersion("0.0.2");
 
     Logger::instanziate(Logger::LOG_VERBOSE);
 

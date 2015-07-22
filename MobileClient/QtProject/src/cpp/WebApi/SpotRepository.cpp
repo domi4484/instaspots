@@ -145,6 +145,13 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
 
       m_QMap_Spots.insert(id, spot);
     }
+	else
+    {
+      m_QMap_Spots.value(id)->setDistance(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toNumber());
+      m_QMap_Spots.value(id)->setPictureUrl1(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());
+      m_QMap_Spots.value(id)->setPictureUrl2(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
+    }
+
     newSpots.append(m_QMap_Spots.value(id));
   }
 
