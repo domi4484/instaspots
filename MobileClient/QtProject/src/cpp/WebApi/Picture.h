@@ -51,17 +51,20 @@ public:
   ~Picture();
   Picture &operator=(const Picture &other);
 
+  QVariant pictureRole(PictureRoles role) const;
+  static QHash<int, QByteArray> roleNames();
 
   int id() const { return m_Id; }
-
   QString username()        const { return m_Username;        }
   QString spotName()        const { return m_SpotName;        }
   QString spotDescription() const { return m_SpotDescription; }
   QDateTime created() const { return m_Created; }
 
-  QVariant pictureRole(PictureRoles role) const;
-
-  static QHash<int, QByteArray> roleNames();
+  void setIdSpot          (int idSpot)                     {m_IdSpot = idSpot;}
+  void setUrl             (const QString &url)             {m_Url = url;}
+  void setUsername        (const QString &username)        {m_Username = username;}
+  void setSpotName        (const QString &spotName)        {m_SpotName = spotName;}
+  void setSpotDescription (const QString &spotDescription) {m_SpotDescription = spotDescription;}
 
 signals:
 

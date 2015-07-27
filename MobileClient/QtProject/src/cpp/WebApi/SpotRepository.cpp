@@ -147,7 +147,11 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
     }
 	else
     {
-      m_QMap_Spots.value(id)->setDistance(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toNumber());
+      m_QMap_Spots.value(id)->setName       (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString());
+      m_QMap_Spots.value(id)->setDescription(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString());
+      m_QMap_Spots.value(id)->setLatitude   (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toNumber());
+      m_QMap_Spots.value(id)->setLongitude  (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toNumber());
+      m_QMap_Spots.value(id)->setDistance   (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toNumber());
       m_QMap_Spots.value(id)->setPictureUrl1(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());
       m_QMap_Spots.value(id)->setPictureUrl2(qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
     }

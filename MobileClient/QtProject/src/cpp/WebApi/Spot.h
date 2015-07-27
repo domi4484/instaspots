@@ -46,7 +46,11 @@ class Spot : public QObject
 
     QString distanceText() const;
 
-    void setDistance(qreal distance) {m_Distance_km = distance;}
+    void setName(const QString &name)               {m_Name = name;}
+    void setDescription(const QString &description) {m_Description = description;}
+    void setLatitude (qreal latitude)               {m_Latitude = latitude;}
+    void setLongitude(qreal longitude)              {m_Longitude = longitude;}
+    void setDistance(qreal distance)                {m_Distance_km = distance;}
     void setPictureUrl1(const QString &pictureUrl1) {m_PictureUrl1 = pictureUrl1;}
     void setPictureUrl2(const QString &pictureUrl2) {m_PictureUrl2 = pictureUrl2;}
 

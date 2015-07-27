@@ -163,6 +163,15 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
 
       m_QMap_Pictures.insert(picture->id(), picture);
     }
+    else
+    {
+      m_QMap_Pictures.value(id)->setIdSpot          (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInteger());
+      m_QMap_Pictures.value(id)->setUrl             (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_URL).toString());
+      m_QMap_Pictures.value(id)->setUsername        (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME).toString());
+      m_QMap_Pictures.value(id)->setSpotName        (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString());
+      m_QMap_Pictures.value(id)->setSpotDescription (qScriptValue_Ids.property(i).property(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString());
+    }
+
     newPictures.append(m_QMap_Pictures.value(id));
   }
 
