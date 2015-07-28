@@ -17,6 +17,9 @@
 #include "WebApi.h"
 #include "WebApiCommand.h"
 
+// Qt includes -----------------------------
+#include <QDebug>
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 const char* SpotRepository::PROPERTY_REQUEST_ID("request_id");
@@ -52,7 +55,7 @@ void SpotRepository::instanziate()
 {
     if(s_SpotRepository != NULL)
     {
-      qWarning() << "Logger is already initialised.";
+      qWarning() << "SpotRepository is already initialised.";
       return;
     }
 
@@ -66,7 +69,7 @@ void SpotRepository::destroy()
 {
   if(s_SpotRepository == NULL)
   {
-    qWarning() << "Logger instance is already null.";
+    qWarning() << "SpotRepository instance is already null.";
     return;
   }
 
