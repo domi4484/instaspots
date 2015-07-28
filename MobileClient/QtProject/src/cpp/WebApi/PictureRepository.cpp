@@ -17,6 +17,9 @@
 #include "WebApi.h"
 #include "WebApiCommand.h"
 
+// Qt includes -----------------------------
+#include <QDebug>
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 const char* PictureRepository::PROPERTY_REQUEST_ID("request_id");
@@ -52,7 +55,7 @@ void PictureRepository::instanziate()
 {
     if(s_PictureRepository != NULL)
     {
-      qWarning() << "Logger is already initialised.";
+      qWarning() << "PictureRepository is already initialised.";
       return;
     }
 
@@ -66,7 +69,7 @@ void PictureRepository::destroy()
 {
   if(s_PictureRepository == NULL)
   {
-    qWarning() << "Logger instance is already null.";
+    qWarning() << "PictureRepository instance is already null.";
     return;
   }
 
