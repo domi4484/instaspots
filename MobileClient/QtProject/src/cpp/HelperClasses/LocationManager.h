@@ -31,6 +31,8 @@ signals:
 
   void update(bool timeout);
 
+  void signal_RequestLocation();
+
 public slots:
 
   void setFakePosition(double latitude,
@@ -55,7 +57,7 @@ private:
   // Link to Settings
   Settings *m_Settings;
 
-  QGeoPositionInfoSource *m_GeoPositionInfoSource;
+//  QGeoPositionInfoSource *m_GeoPositionInfoSource;
 
   bool m_Valid;
 

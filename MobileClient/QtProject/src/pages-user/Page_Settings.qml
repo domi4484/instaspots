@@ -121,7 +121,7 @@ BasicPage{
                 ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
                 ListElement { text: "Biasca - Manual pad";                latitude: 46.360764; longitude: 8.969275 }
                 ListElement { text: "Biasca - SPAI";                      latitude: 46.349831; longitude: 8.969629 }
-                ListElement { text: "Chur - Bank Curbs";                        latitude: 46.851196; longitude: 9.528907 }
+                ListElement { text: "Chur - Bank Curbs";                  latitude: 46.851196; longitude: 9.528907 }
                 ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
             }
             width: 200

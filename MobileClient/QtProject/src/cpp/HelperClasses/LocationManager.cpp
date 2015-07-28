@@ -23,30 +23,30 @@ LocationManager::LocationManager(Settings *settings,
                                  QObject *parent)
   : QObject(parent),
     m_Settings(settings),
-    m_GeoPositionInfoSource(NULL),
+//    m_GeoPositionInfoSource(NULL),
     m_Valid(false),
     m_Latitude(0.0),
     m_Longitude(0.0)
 {
-  m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
+//  m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
 
-  if (m_GeoPositionInfoSource == NULL)
-  {
-    Logger::warning(tr("Invalid GeoPositionInfoSource"));
-  }
-  else
-  {
-    m_GeoPositionInfoSource->setUpdateInterval(3000);
-    connect(m_GeoPositionInfoSource,
-            SIGNAL(positionUpdated(QGeoPositionInfo)),
-            SLOT(slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo)));
-    connect(m_GeoPositionInfoSource,
-            SIGNAL(updateTimeout()),
-            SLOT(slot_GeoPositionInfoSource_UpdateTimeout()));
-    connect(m_GeoPositionInfoSource,
-            SIGNAL(error(QGeoPositionInfoSource::Error)),
-            SLOT(slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error)));
-  }
+//  if (m_GeoPositionInfoSource == NULL)
+//  {
+//    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+//  }
+//  else
+//  {
+//    m_GeoPositionInfoSource->setUpdateInterval(3000);
+//    connect(m_GeoPositionInfoSource,
+//            SIGNAL(positionUpdated(QGeoPositionInfo)),
+//            SLOT(slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo)));
+//    connect(m_GeoPositionInfoSource,
+//            SIGNAL(updateTimeout()),
+//            SLOT(slot_GeoPositionInfoSource_UpdateTimeout()));
+//    connect(m_GeoPositionInfoSource,
+//            SIGNAL(error(QGeoPositionInfoSource::Error)),
+//            SLOT(slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error)));
+//  }
 
   m_Latitude  = m_Settings->value(Settings::LOCATION_LAST_LATITUDE,  0.0).toDouble();
   m_Longitude = m_Settings->value(Settings::LOCATION_LAST_LONGITUDE, 0.0).toDouble();
@@ -76,14 +76,16 @@ void LocationManager::setFakePosition(double latitude,
 
 void LocationManager::requestLocation()
 {
-  if(m_GeoPositionInfoSource == NULL)
-  {
-    Logger::warning(tr("Invalid GeoPositionInfoSource"));
-    return;
-  }
+  emit signal_RequestLocation();
 
-  Logger::debug(tr("LocationManager::requestLocation()"));
-  m_GeoPositionInfoSource->requestUpdate();
+//  if(m_GeoPositionInfoSource == NULL)
+//  {
+//    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+//    return;
+//  }
+
+//  Logger::debug(tr("LocationManager::requestLocation()"));
+//  m_GeoPositionInfoSource->requestUpdate();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

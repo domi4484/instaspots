@@ -56,8 +56,6 @@ Item {
 
         // Request location update
         hc_LocationManager.requestLocation();
-
-        // TODO if current location not valid hc_LocationManager.isValid then display waiting animation
     }
 
     // Gui ---------------------------------

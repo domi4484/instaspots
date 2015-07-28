@@ -3,6 +3,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Dialogs 1.2
+import QtPositioning 5.2
 
 ApplicationWindow {
     id: applicationWindow
@@ -25,6 +26,12 @@ ApplicationWindow {
         }
     }
 
+    PositionSource {
+        id: positionSource
+        onPositionChanged: hc_LocationManager.setFakePosition(position.coordinate.latitude,
+                                                              position.coordinate.longitude)
+    }
+
     Component.onCompleted:{
         if(hc_PlateformDetail.isMobile() === false)
         {
@@ -32,7 +39,8 @@ ApplicationWindow {
         }
 
         // Start requesting location
-        hc_LocationManager.requestLocation();
+        //hc_LocationManager.requestLocation();
+        positionSource.update();
 
         if(wa_User.login() === false)
         {
@@ -70,5 +78,10 @@ ApplicationWindow {
         {
             pageLoader.source = "Panel_Login.qml";
         }
+    }
+
+    Connections{
+        target: hc_LocationManager
+        onSignal_RequestLocation: positionSource.update()
     }
 }
