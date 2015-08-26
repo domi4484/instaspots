@@ -59,7 +59,7 @@ public:
   static const QString C_REGISTER;
   static const QString C_CANREGISTER;
   static const QString C_GET_NEARBY_SPOTS;
-  static const QString C_GET_PICTURES;
+  static const QString C_GET_PICTURES_BY_SPOT_ID;
   static const QString C_GET_PICTURES_BY_USER_ID;
   static const QString C_GET_NEWS;
 

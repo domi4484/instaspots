@@ -95,7 +95,7 @@ int PictureRepository::getBy_SpotId(int spotId)
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::C_GET_PICTURES);
+  webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_SPOT_ID);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
 
@@ -117,7 +117,7 @@ int PictureRepository::getBy_UserId(int userId)
    // TODO check post return type
    WebApiCommand *webApiCommand = new WebApiCommand(this);
    webApiCommand->setAnswerType(WebApiCommand::JSON);
-   webApiCommand->setCommand(WebApi::C_GET_PICTURES);
+   webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_USER_ID);
 
    webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
 
