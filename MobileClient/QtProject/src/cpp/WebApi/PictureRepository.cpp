@@ -109,6 +109,28 @@ int PictureRepository::getBy_SpotId(int spotId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+int PictureRepository::getBy_UserId(int userId)
+{
+   QList<QueryItem> qList_QueryItems;
+   qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USER_ID,  QString::number(userId)));
+
+   // TODO check post return type
+   WebApiCommand *webApiCommand = new WebApiCommand(this);
+   webApiCommand->setAnswerType(WebApiCommand::JSON);
+   webApiCommand->setCommand(WebApi::C_GET_PICTURES);
+
+   webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+
+   connect(webApiCommand,
+           SIGNAL(signal_Finished(const WebApiError &)),
+           SLOT(slot_Command_Finished(const WebApiError &)));
+   webApiCommand->postRequest(qList_QueryItems);
+
+   return m_RequestId;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 int PictureRepository::getNews()
 {
   QList<QueryItem> qList_QueryItems;

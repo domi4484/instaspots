@@ -37,6 +37,7 @@
         <file>pages-spot/Page_SpotsList.qml</file>
         <file>pages-upload/Page_AddToExistingSpot.qml</file>
         <file>views/SpotOverviewDelegate.qml</file>
+        <file>pages-user/Page_User.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

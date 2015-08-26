@@ -28,7 +28,7 @@ BasicPage{
     menuButtonVisible: false
 
     // Properties --------------------------
-    property int spotId
+    property int spotId: -1
     property Navigator navigator
     property StackView stackView
 
@@ -76,11 +76,6 @@ BasicPage{
         id: item_Gui
         width: parent.width
         height: parent.height
-
-        Component.onCompleted:
-        {
-            console.log("Width: ", width, "Height: ", height);
-        }
 
         GridView{
             id: gridView_Pictures

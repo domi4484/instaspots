@@ -37,6 +37,8 @@ public:
 
     void setSpotId(int id);
 
+    void setUserId(int id);
+
   private slots:
     void slot_PictureRepository_DataReady(int requestId, 
                                           bool success);

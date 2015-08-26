@@ -39,14 +39,16 @@ const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
 
 const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
 
-const QString WebApi::C_LOGIN            ("login");
-const QString WebApi::C_LOGOUT           ("logout");
-const QString WebApi::C_REGISTER         ("register");
-const QString WebApi::C_CANREGISTER      ("canregister");
-const QString WebApi::C_GET_NEARBY_SPOTS ("getNearbySpots");
-const QString WebApi::C_GET_PICTURES     ("getPictures");
-const QString WebApi::C_GET_NEWS         ("getNews");
+const QString WebApi::C_LOGIN                   ("login");
+const QString WebApi::C_LOGOUT                  ("logout");
+const QString WebApi::C_REGISTER                ("register");
+const QString WebApi::C_CANREGISTER             ("canregister");
+const QString WebApi::C_GET_NEARBY_SPOTS        ("getNearbySpots");
+const QString WebApi::C_GET_PICTURES            ("getPictures");
+const QString WebApi::C_GET_PICTURES_BY_USER_ID ("getPicturesByUserId");
+const QString WebApi::C_GET_NEWS                ("getNews");
 
+const QString WebApi::R_PARAM_USER_ID  ("id_user");
 const QString WebApi::R_PARAM_USERNAME ("username");
 const QString WebApi::R_PARAM_PASSWORD ("password");
 const QString WebApi::R_PARAM_EMAIL    ("email");

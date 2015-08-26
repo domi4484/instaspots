@@ -42,6 +42,7 @@ public slots:
   QList<Picture *> getPictures(int requestId);
 
   int getBy_SpotId(int spotId);
+  int getBy_UserId(int userId);
   int getNews();
 
 signals:

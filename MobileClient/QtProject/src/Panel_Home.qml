@@ -66,11 +66,17 @@ Rectangle {
             }
 
             onUserClicked: {
-                console.log(username);
+                stackView.push({item: Qt.resolvedUrl("qrc:/pages-user/Page_User.qml"),
+                               properties:{width:stackView.width,
+                                           height:stackView.height,
+                                           stackView:stackView,
+                                           navigator:navigator,
+                                           userId:userId}});
+                navigator.title = username;
             }
 
             onSpotClicked: {
-                stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
+                stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
                                properties:{width:stackView.width,
                                            height:stackView.height,
                                            stackView:stackView,

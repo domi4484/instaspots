@@ -85,10 +85,15 @@ class WebserviceController extends Controller
       break;
       
       case "getPictures":
-	$this->getPictures($response,
-	                   $request->get('id_spot'));
+	    $this->getPictures($response,
+	                       $request->get('id_spot'));
       break;
-
+	  
+	  case "getPicturesByUserId":
+	    $this->getPicturesByUserId($response,
+		                           $request->get('id_user'));
+      break;
+		
       case "getNearbySpots":
 	$this->getNearbySpots($response,
                         $request->get('latitude' ),
@@ -430,6 +435,14 @@ class WebserviceController extends Controller
 
     $response['pictures'] = $jPictures;
   }
+  
+//-----------------------------------------------------------------------------------------------------------------------------
+  
+  private function getPicturesByUserId( &$response,
+                                          $userId)
+    {
+	  // TODO implement me please
+	}
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

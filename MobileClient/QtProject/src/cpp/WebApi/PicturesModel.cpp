@@ -77,6 +77,17 @@ void PicturesModel::setSpotId(int id)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void PicturesModel::setUserId(int id)
+{
+  beginResetModel();
+  m_QList_Pictures.clear();
+  endResetModel();
+
+  m_RequestId = PictureRepository::instance()->getBy_UserId(id);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PicturesModel::slot_PictureRepository_DataReady(int requestId,
                                                      bool success)
 {

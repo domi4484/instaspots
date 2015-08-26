@@ -29,7 +29,7 @@ BasicPage{
     property alias model: listView.model
 
     // Signals -----------------------------
-    signal userClicked(string username)
+    signal userClicked(int userId, string username)
     signal spotClicked(int spotId, string spotName)
 
     // Gui ---------------------------------
@@ -40,7 +40,7 @@ BasicPage{
         delegate: SpotViewDelegate{
 
             onUserClicked: {
-                page_PicturesList.userClicked(role_UserUsername);
+                page_PicturesList.userClicked(role_UserId, role_UserUsername);
             }
             onSpotClicked: {
                 page_PicturesList.spotClicked(role_SpotId, role_SpotName);
