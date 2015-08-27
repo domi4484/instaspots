@@ -394,6 +394,7 @@ class WebserviceController extends Controller
       $jPicture['description'] = $picture->getSpot()->getDescription();
       $jPicture['score'      ] = $picture->getSpot()->getScore();
 
+      $jPicture['id_user']  = $picture->getUser()->getId();
       $jPicture['username'] = $picture->getUser()->getUsername();
 
       $jPictures[] = $jPicture;
@@ -428,6 +429,7 @@ class WebserviceController extends Controller
       $jPicture['description'] = $picture->getSpot()->getDescription();
       $jPicture['score'      ] = $picture->getSpot()->getScore();
 
+      $jPicture['id_user']  = $picture->getUser()->getId();
       $jPicture['username'] = $picture->getUser()->getUsername();
 
       $jPictures[] = $jPicture;
@@ -443,10 +445,8 @@ class WebserviceController extends Controller
   {
     // Get user
     $em = $this->getDoctrine()->getManager();
-  
     $userRepository = $em->getRepository('InstaspotsUserBundle:User');
-    
-    $user = $repository->findOneById($userId);
+    $user = $userRepository->findOneById($userId);
 
     if(empty($user))
     {
@@ -454,9 +454,13 @@ class WebserviceController extends Controller
       return;
     }
   
+  
     // Get pictures
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $pictureList = $pictureRepository->findByUser($user);
+    
     $jPictures = array();
-    foreach($user->getPictures() as &$picture)
+    foreach($pictureList as &$picture)
     {
       $jPicture = array();
       $jPicture['id']          = $picture->getId();
@@ -470,6 +474,7 @@ class WebserviceController extends Controller
       $jPicture['description'] = $picture->getSpot()->getDescription();
       $jPicture['score'      ] = $picture->getSpot()->getScore();
 
+      $jPicture['id_user']  = $picture->getUser()->getId();
       $jPicture['username'] = $picture->getUser()->getUsername();
 
       $jPictures[] = $jPicture;

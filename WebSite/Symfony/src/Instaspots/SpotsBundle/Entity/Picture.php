@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Picture
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Instaspots\UserBundle\Entity\User", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="Instaspots\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
