@@ -440,9 +440,43 @@ class WebserviceController extends Controller
   
   private function getPicturesByUserId( &$response,
                                           $userId)
+  {
+    // Get user
+    $em = $this->getDoctrine()->getManager();
+  
+    $userRepository = $em->getRepository('InstaspotsUserBundle:User');
+    
+    $user = $repository->findOneById($userId);
+
+    if(empty($user))
     {
-	  // TODO implement me please
-	}
+      $response['error'] = 'User with id \''.$userId.'\' not found';
+      return;
+    }
+  
+    // Get pictures
+    $jPictures = array();
+    foreach($user->getPictures() as &$picture)
+    {
+      $jPicture = array();
+      $jPicture['id']          = $picture->getId();
+      $jPicture['latitude']    = $picture->getLatitude();
+      $jPicture['longitude'  ] = $picture->getLongitude();
+      $jPicture['created']     = $picture->getCreated();
+      $jPicture['url']         = $picture->getUrl();
+
+      $jPicture['id_spot'    ] = $picture->getSpot()->getId();
+      $jPicture['name'       ] = $picture->getSpot()->getName();
+      $jPicture['description'] = $picture->getSpot()->getDescription();
+      $jPicture['score'      ] = $picture->getSpot()->getScore();
+
+      $jPicture['username'] = $picture->getUser()->getUsername();
+
+      $jPictures[] = $jPicture;
+    }
+
+    $response['pictures'] = $jPictures;
+  }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

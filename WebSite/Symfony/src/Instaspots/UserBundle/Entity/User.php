@@ -34,6 +34,12 @@ class User extends BaseUser
      * @ORM\Column(name="reputation", type="integer")
      */
     private $reputation = 0;
+    
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Instaspots\UserBundle\Entity\User", mappedBy="user")
+     */
+    private $pictures; // // Inverso della relazione many to one
 
 
     /**
@@ -101,5 +107,11 @@ class User extends BaseUser
     public function getReputation()
     {
         return $this->reputation;
+    }
+    
+    
+    public function getPictures()
+    {
+      return $this->pictures;
     }
 }
