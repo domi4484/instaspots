@@ -36,6 +36,21 @@ BasicPage{
     signal addNewSpot()
     signal addToExistingSpot()
 
+
+    // Connections -------------------------
+    onVisibleChanged: {
+        if(visible == false)
+        {
+            return;
+        }
+
+        console.log("nearbySpotModel.setLocation")
+
+        nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+                                     hc_LocationManager.longitude(),
+                                     4);
+    }
+
     // Gui ---------------------------------
     Button{
         id: button_AddNewSpot
@@ -59,7 +74,6 @@ BasicPage{
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
         model: nearbySpotsModel
-        maxDistance_km: 4
         onSpotClicked: {
             wa_PictureUploader.setNewSpot(false);
             wa_PictureUploader.setExistingSpotId(spotId);

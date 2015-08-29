@@ -97,7 +97,6 @@ Item {
                 width: parent.width
                 height: parent.height
                 model: nearbySpotsModel
-                maxDistance_km: 150
                 onSpotClicked: {
                     stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
                                    properties:{width:stackView.width,
