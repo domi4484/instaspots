@@ -269,4 +269,26 @@ class Picture
     {
         return $this->likers;
     }
+    
+    //-----------------------------------------------------------------------------------------------------------------------------
+    
+   public function toJson()
+    {
+      $jPicture = array();
+      $jPicture['id']          = $this->getId();
+      $jPicture['latitude']    = $this->getLatitude();
+      $jPicture['longitude'  ] = $this->getLongitude();
+      $jPicture['created']     = $this->getCreated();
+      $jPicture['url']         = $this->getUrl();
+
+      $jPicture['id_spot'    ] = $this->getSpot()->getId();
+      $jPicture['name'       ] = $this->getSpot()->getName();
+      $jPicture['description'] = $this->getSpot()->getDescription();
+      $jPicture['score'      ] = $this->getSpot()->getScore();
+
+      $jPicture['id_user']  = $this->getUser()->getId();
+      $jPicture['username'] = $this->getUser()->getUsername();
+      
+      return $jPicture;
+    }
 }

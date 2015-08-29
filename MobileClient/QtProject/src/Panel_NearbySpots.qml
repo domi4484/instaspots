@@ -39,8 +39,9 @@ Item {
                 // TODO display message cacca
             }
 
-            wa_NearbySpotModel.setLocation(hc_LocationManager.latitude(),
-                                           hc_LocationManager.longitude());
+            nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+                                         hc_LocationManager.longitude(),
+                                         150);
         }
     }
 
@@ -99,13 +100,12 @@ Item {
                 model: nearbySpotsModel
                 onSpotClicked: {
                     stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
-                                   properties:{width:stackView.width,
+                                   properties:{title:spotName,
+                                               width:stackView.width,
                                                height:stackView.height,
                                                stackView:stackView,
                                                navigator:navigator,
                                                spotId:spotId}});
-
-                    navigator.title = spotName;
                 }
             }
         }

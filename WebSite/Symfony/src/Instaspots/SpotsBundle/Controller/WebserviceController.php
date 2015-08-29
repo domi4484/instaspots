@@ -84,27 +84,27 @@ class WebserviceController extends Controller
         $this->getNews($response);
       break;
       
-      case "getPictures":
-	    $this->getPictures($response,
-	                       $request->get('id_spot'));
+      case "getPicturesBySpotId":
+        $this->getPicturesBySpotId($response,
+                                   $request->get('id_spot'));
       break;
-	  
-	  case "getPicturesByUserId":
-	    $this->getPicturesByUserId($response,
-		                           $request->get('id_user'));
+
+      case "getPicturesByUserId":
+        $this->getPicturesByUserId($response,
+                                   $request->get('id_user'));
       break;
-		
+
       case "getNearbySpots":
-	$this->getNearbySpots($response,
-                        $request->get('latitude' ),
-                        $request->get('longitude'),
-                        $request->get('maxDistance_km'));
+        $this->getNearbySpots($response,
+                              $request->get('latitude' ),
+                              $request->get('longitude'),
+                             $request->get('maxDistance_km'));
       break;
     
       default:
       {
-	$command = $response['command'];
-	$response['error'] = "Unknown command: $command";
+        $command = $response['command'];
+        $response['error'] = "Unknown command: $command";
       }
     }
     
@@ -382,22 +382,7 @@ class WebserviceController extends Controller
     $jPictures = array();
     foreach($repository->getNews() as &$picture)
     {
-      $jPicture = array();
-      $jPicture['id']          = $picture->getId();
-      $jPicture['latitude']    = $picture->getLatitude();
-      $jPicture['longitude'  ] = $picture->getLongitude();
-      $jPicture['created']     = $picture->getCreated();
-      $jPicture['url']         = $picture->getUrl();
-
-      $jPicture['id_spot'    ] = $picture->getSpot()->getId();
-      $jPicture['name'       ] = $picture->getSpot()->getName();
-      $jPicture['description'] = $picture->getSpot()->getDescription();
-      $jPicture['score'      ] = $picture->getSpot()->getScore();
-
-      $jPicture['id_user']  = $picture->getUser()->getId();
-      $jPicture['username'] = $picture->getUser()->getUsername();
-
-      $jPictures[] = $jPicture;
+      $jPictures[] = $picture->toJson();
     }
 
     $response['pictures'] = $jPictures;
@@ -405,34 +390,24 @@ class WebserviceController extends Controller
 
   //-----------------------------------------------------------------------------------------------------------------------------
   
-  private function getPictures( &$response,
-                                 $spotId)
+  private function getPicturesBySpotId( &$response,
+                                         $spotId)
   {
     // Get spot
     $em = $this->getDoctrine()->getManager();
     $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
     
     $spot = $spotRepository->findOneById($spotId);
+    
+    // Get pictures
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $pictures = $pictureRepository->findBySpot($spot,
+                                               array('created' => 'DESC'));
 
     $jPictures = array();
-    foreach($spot->getPictures() as &$picture)
+    foreach($pictures as &$picture)
     {
-      $jPicture = array();
-      $jPicture['id']          = $picture->getId();
-      $jPicture['latitude']    = $picture->getLatitude();
-      $jPicture['longitude'  ] = $picture->getLongitude();
-      $jPicture['created']     = $picture->getCreated();
-      $jPicture['url']         = $picture->getUrl();
-
-      $jPicture['id_spot'    ] = $picture->getSpot()->getId();
-      $jPicture['name'       ] = $picture->getSpot()->getName();
-      $jPicture['description'] = $picture->getSpot()->getDescription();
-      $jPicture['score'      ] = $picture->getSpot()->getScore();
-
-      $jPicture['id_user']  = $picture->getUser()->getId();
-      $jPicture['username'] = $picture->getUser()->getUsername();
-
-      $jPictures[] = $jPicture;
+      $jPictures[] = $picture->toJson();
     }
 
     $response['pictures'] = $jPictures;
@@ -454,30 +429,15 @@ class WebserviceController extends Controller
       return;
     }
   
-  
     // Get pictures
     $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
-    $pictureList = $pictureRepository->findByUser($user);
+    $pictureList = $pictureRepository->findByUser($user,
+                                                  array('created' => 'DESC'));
     
     $jPictures = array();
     foreach($pictureList as &$picture)
     {
-      $jPicture = array();
-      $jPicture['id']          = $picture->getId();
-      $jPicture['latitude']    = $picture->getLatitude();
-      $jPicture['longitude'  ] = $picture->getLongitude();
-      $jPicture['created']     = $picture->getCreated();
-      $jPicture['url']         = $picture->getUrl();
-
-      $jPicture['id_spot'    ] = $picture->getSpot()->getId();
-      $jPicture['name'       ] = $picture->getSpot()->getName();
-      $jPicture['description'] = $picture->getSpot()->getDescription();
-      $jPicture['score'      ] = $picture->getSpot()->getScore();
-
-      $jPicture['id_user']  = $picture->getUser()->getId();
-      $jPicture['username'] = $picture->getUser()->getUsername();
-
-      $jPictures[] = $jPicture;
+      $jPictures[] = $picture->toJson();
     }
 
     $response['pictures'] = $jPictures;
