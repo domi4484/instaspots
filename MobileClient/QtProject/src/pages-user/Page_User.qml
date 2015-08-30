@@ -61,12 +61,12 @@ BasicPage{
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        stackView.push({item: Qt.resolvedUrl("qrc:/page-spot/Page_Spot.qml"),
+                        stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
                                         properties:{width:stackView.width,
                                                     height:stackView.height,
                                                     stackView:stackView,
                                                     navigator:navigator,
-                                                    spotId:spotId}});
+                                                    spotId:role_SpotId}});
                     }
                 }
             }
