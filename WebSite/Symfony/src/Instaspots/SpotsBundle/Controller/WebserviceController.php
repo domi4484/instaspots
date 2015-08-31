@@ -2,10 +2,14 @@
 
 namespace Instaspots\SpotsBundle\Controller;
 
+// Bundle imports --------------------------
 use Instaspots\UserBundle\Entity\User;
 use Instaspots\SpotsBundle\Entity\Spot;
 use Instaspots\SpotsBundle\Entity\Picture;
 
+use Instaspots\SpotsBundle\Controller\Response;
+
+// Symfony imports -------------------------
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,25 +22,35 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+// FOS imports -----------------------------
 use FOS\UserBundle\Util\UserManipulator;
 
 class WebserviceController extends Controller
 {
   public function webserviceAction(Request $request)
   {
+    $response = new Response();
+  
     if ($request->isMethod('POST') == false)
     {
-      return new JsonResponse(array('error' => 'Not a post request'));
+      $response->setError('Not a post request');
+      return new JsonResponse($response->toJson());
     }
 
     $command = $request->get('command');
-    $response = array ('error'      => "",
-                       'command'    => $command);
+    $response->setCommand($command);
                        
     if (strlen($command) == 0)
     {
-      $response['error'] = 'Empty command';
-      return new JsonResponse($response);
+      $response->setError('Empty command');
+      return new JsonResponse($response->toJson());
+    }
+    
+    $clientVersion = $request->get('clientVersion');
+    if (strlen($clientVersion) == 0)
+    {
+      $response->setError('Version Error');
+      return new JsonResponse($response->toJson());
     }
     
     switch ($command)
@@ -52,12 +66,12 @@ class WebserviceController extends Controller
       break;
 
       case "canregister":
-	    $this->canregister($response,
-                               $request->get('username'));
+        $this->canregister($response,
+                           $request->get('username'));
       break;
 
       case "register":
-	$this->register($response,
+        $this->register($response,
                         $request->get('username'),
                         $request->get('password'),
                         $request->get('email'   ));
@@ -98,17 +112,17 @@ class WebserviceController extends Controller
         $this->getNearbySpots($response,
                               $request->get('latitude' ),
                               $request->get('longitude'),
-                             $request->get('maxDistance_km'));
+                              $request->get('maxDistance_km'));
       break;
     
       default:
       {
-        $command = $response['command'];
-        $response['error'] = "Unknown command: $command";
+        $command = $response->getCommand();
+        $response->setError("Unknown command: $command");
       }
     }
     
-    return new JsonResponse($response);
+    return new JsonResponse($response->toJson());
   }
   
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -117,10 +131,12 @@ class WebserviceController extends Controller
   private function canregister( &$response,
                                  $username )
   {
+    $minimumClientVersion = 'V0.0.1';
+  
     // check if username is not empty
     if (strlen($username) == 0)
     {
-      $response['error'] = 'Empty username';
+      $response->setError('Empty username';)
       return;
     }
     
@@ -132,11 +148,11 @@ class WebserviceController extends Controller
 
     if(empty($listUsers) == false)
     {
-      $response['canregister'] = false;
+      $response->addData('canregister', false);
       return;
     }
     
-    $response['canregister'] = true;
+    $response->addData('canregister', true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -145,34 +161,36 @@ class WebserviceController extends Controller
                               $username, 
                               $password,
                               $email )
-  { 
-  	// check if username is not empty
-  	if (strlen($username) == 0)
-  	{
-  		$response['error'] = 'Empty username';
-  		return;
-  	}
-  	
-  	// check if pssword is not empty
-  	if (strlen($password) == 0)
-  	{
-  		$response['error'] = 'Invalid password';
-  		return;
-  	}
-  	
-  	// TODO validate email or check if it is done by manipulator->create
-  	if (strlen($email) == 0)
-  	{
-  		$response['error'] = 'Empty email';
-  		return;
-  	}
-  	
+  {
+    $minimumClientVersion = 'V0.0.1';
+  
+    // check if username is not empty
+    if (strlen($username) == 0)
+    {
+      $response->setError('Empty username');
+      return;
+    }
+  
+    // check if password is not empty
+    if (strlen($password) == 0)
+    {
+      $response->setError('Invalid password');
+      return;
+    }
+  
+    // TODO validate email or check if it is done by manipulator->create
+    if (strlen($email) == 0)
+    {
+      $response->setError('Empty email');
+      return;
+    }
+  
     $this->canregister($response,
                        $username);
                 
-    if($response['canregister'] == false)
+    if($response->getData('canregister') == false)
     {
-      $response['registered'] = false;
+      $response->addData('canregister', false);
       return;
     }
 
@@ -186,7 +204,7 @@ class WebserviceController extends Controller
                          $active,
                          $superadmin);
 
-    $response['registered'] = true;
+    $response->addData('registered', true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -195,6 +213,8 @@ class WebserviceController extends Controller
                            $username, 
                            $password )
   {
+    $minimumClientVersion = 'V0.0.1';
+  
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsUserBundle:User');
@@ -203,7 +223,7 @@ class WebserviceController extends Controller
 
     if(empty($listUsers))
     {
-      $response['authentication'] = false;
+      $response->setData('authentication', false);
       return;
     }
     $user = current($listUsers);
@@ -220,15 +240,17 @@ class WebserviceController extends Controller
     $event = new InteractiveLoginEvent($request, $token);
     $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-    $response['authentication'] = ($encoder->isPasswordValid($user->getPassword(),
-                                                             $password,
-                                                             $user->getSalt())) ? "true" : "false";
+    $response->setData('authentication', ($encoder->isPasswordValid($user->getPassword(),
+                                                                    $password,
+                                                                    $user->getSalt()) ? "true" : "false"));
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function logout()
   {
+    $minimumClientVersion = 'V0.0.1';
+  
   // TODO
     //$_SESSION = array();
     //session_destroy();
@@ -242,11 +264,13 @@ class WebserviceController extends Controller
                                          $longitude,
                                          UploadedFile $uploadedFile )
   {
+    $minimumClientVersion = 'V0.0.1';
+    
     // Check for valid picture
     if(   $uploadedFile->isValid() == false
        || $uploadedFile->getMimeType() != 'image/jpeg')
     {
-      $response['error'] = 'Invalid file received';
+      $response->setError('Invalid file received');
       return;
     }
   
@@ -254,7 +278,7 @@ class WebserviceController extends Controller
     $user = $this->getUser();
     if($user == null)
     {
-      $response['error'] = 'Authentication required';
+      $response->setError('Authentication required');
       return;
     }
     
@@ -284,7 +308,7 @@ class WebserviceController extends Controller
     }
     catch (IOExceptionInterface $e) 
     {
-      $response['error'] = "An error occurred while creating your directory at ".$e->getPath();
+      $response->setError("An error occurred while creating directory at ".$e->getPath());
       return;
     }
   
@@ -297,7 +321,7 @@ class WebserviceController extends Controller
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
     
-    $response['successful'] = true;
+    $response->addData('successful', true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -309,11 +333,13 @@ class WebserviceController extends Controller
                                    $description,
                                    UploadedFile $uploadedFile )
   {
+    $minimumClientVersion = 'V0.0.1';
+  
     // Check for valid picture
     if(   $uploadedFile->isValid() == false
        || $uploadedFile->getMimeType() != 'image/jpeg')
     {
-      $response['error'] = 'Invalid file received';
+      $response->setError('Invalid file received');
       return;
     }
   
@@ -321,7 +347,7 @@ class WebserviceController extends Controller
     $user = $this->getUser();
     if($user == null)
     {
-      $response['error'] = 'Authentication required';
+      $response->setError('Authentication required');
       return;
     }
   
@@ -355,7 +381,7 @@ class WebserviceController extends Controller
     }
     catch (IOExceptionInterface $e) 
     {
-      $response['error'] = "An error occurred while creating your directory at ".$e->getPath();
+      $response->setError("An error occurred while creating your directory at ".$e->getPath());
       return;
     }
   
@@ -368,13 +394,15 @@ class WebserviceController extends Controller
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
     
-    $response['successful'] = true;
+    $response->addData('successful', true);
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
 
   private function getNews( &$response )
   {
+    $minimumClientVersion = 'V0.0.1';
+  
      $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Picture');
@@ -385,7 +413,7 @@ class WebserviceController extends Controller
       $jPictures[] = $picture->toJson();
     }
 
-    $response['pictures'] = $jPictures;
+    $response->addData('pictures', $jPictures);
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
@@ -393,6 +421,8 @@ class WebserviceController extends Controller
   private function getPicturesBySpotId( &$response,
                                          $spotId)
   {
+    $minimumClientVersion = 'V0.0.2';
+  
     // Get spot
     $em = $this->getDoctrine()->getManager();
     $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
@@ -410,7 +440,7 @@ class WebserviceController extends Controller
       $jPictures[] = $picture->toJson();
     }
 
-    $response['pictures'] = $jPictures;
+    $response->addData('pictures', $jPictures);
   }
   
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -418,6 +448,8 @@ class WebserviceController extends Controller
   private function getPicturesByUserId( &$response,
                                           $userId)
   {
+    $minimumClientVersion = 'V0.0.2';
+  
     // Get user
     $em = $this->getDoctrine()->getManager();
     $userRepository = $em->getRepository('InstaspotsUserBundle:User');
@@ -425,7 +457,7 @@ class WebserviceController extends Controller
 
     if(empty($user))
     {
-      $response['error'] = 'User with id \''.$userId.'\' not found';
+      $response->setError('User with id \''.$userId.'\' not found');
       return;
     }
   
@@ -440,7 +472,7 @@ class WebserviceController extends Controller
       $jPictures[] = $picture->toJson();
     }
 
-    $response['pictures'] = $jPictures;
+    $response->addData('pictures', $jPictures);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -450,6 +482,8 @@ class WebserviceController extends Controller
                                     $longitude,
                                     $maxDistance_km)
   {
+    $minimumClientVersion = 'V0.0.2';
+  
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Spot');
@@ -494,7 +528,7 @@ class WebserviceController extends Controller
       $jSpots[] = $jSpot;
     }
 
-    $response['spots'] = $jSpots;
+    $response->addData('spots', $jSpots);
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
