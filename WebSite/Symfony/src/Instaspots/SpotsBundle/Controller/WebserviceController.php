@@ -46,13 +46,13 @@ class WebserviceController extends Controller
       return new JsonResponse($response->toJson());
     }
     
-    $clientVersion = $request->get('clientVersion');
-    if (strlen($clientVersion) == 0)
-    {
-      $response->setError('Version Error');
-      return new JsonResponse($response->toJson());
-    }
-    
+//     $clientVersion = $request->get('clientVersion');
+//     if (strlen($clientVersion) == 0)
+//     {
+//       $response->setError('Version Error');
+//       return new JsonResponse($response->toJson());
+//     }
+
     switch ($command)
     {
       case "login": 
@@ -136,7 +136,7 @@ class WebserviceController extends Controller
     // check if username is not empty
     if (strlen($username) == 0)
     {
-      $response->setError('Empty username';)
+      $response->setError('Empty username');
       return;
     }
     
@@ -223,7 +223,7 @@ class WebserviceController extends Controller
 
     if(empty($listUsers))
     {
-      $response->setData('authentication', false);
+      $response->addData('authentication', false);
       return;
     }
     $user = current($listUsers);
@@ -240,9 +240,10 @@ class WebserviceController extends Controller
     $event = new InteractiveLoginEvent($request, $token);
     $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-    $response->setData('authentication', ($encoder->isPasswordValid($user->getPassword(),
-                                                                    $password,
-                                                                    $user->getSalt()) ? "true" : "false"));
+    $validPassword = $encoder->isPasswordValid($user->getPassword(),
+                                               $password,
+                                               $user->getSalt());
+    $response->addData('authentication', $validPassword);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

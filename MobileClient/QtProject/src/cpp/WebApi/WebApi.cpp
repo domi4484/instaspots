@@ -39,6 +39,7 @@ const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
 
 const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
 
+// Commands
 const QString WebApi::C_LOGIN                   ("login");
 const QString WebApi::C_LOGOUT                  ("logout");
 const QString WebApi::C_REGISTER                ("register");
@@ -48,6 +49,7 @@ const QString WebApi::C_GET_PICTURES_BY_SPOT_ID ("getPicturesBySpotId");
 const QString WebApi::C_GET_PICTURES_BY_USER_ID ("getPicturesByUserId");
 const QString WebApi::C_GET_NEWS                ("getNews");
 
+// Request parameters
 const QString WebApi::R_PARAM_USER_ID  ("id_user");
 const QString WebApi::R_PARAM_USERNAME ("username");
 const QString WebApi::R_PARAM_PASSWORD ("password");
@@ -59,6 +61,8 @@ const QString WebApi::R_PARAM_LATITUDE       ("latitude");
 const QString WebApi::R_PARAM_LONGITUDE      ("longitude");
 const QString WebApi::R_PARAM_MAX_DISTANCE_KM("maxDistance_km");
 
+
+// Answer parameters
 const QString WebApi::A_PARAM_AUTHENTICATION ("authentication");
 const QString WebApi::A_PARAM_REGISTERED     ("registered");
 
