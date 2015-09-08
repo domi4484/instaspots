@@ -45,7 +45,7 @@ QString WebApiCommand::command() const
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void WebApiCommand::setResult(const WebApiError &error,
-                              const QScriptValue &result)
+                              const QJsonObject &result)
 {
   m_Running = false;
 
@@ -58,14 +58,21 @@ void WebApiCommand::setResult(const WebApiError &error,
 
 QVariant WebApiCommand::resultParameter(const QString &parameterName)
 {
-  return m_Result.property(parameterName).toVariant();
+  return m_Result.value(parameterName).toVariant();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QScriptValue WebApiCommand::resultProperty(const QString &propertyName)
+QJsonValue WebApiCommand::resultProperty(const QString &propertyName)
 {
-  return m_Result.property(propertyName);
+  return m_Result.value(propertyName);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QJsonArray WebApiCommand::resultArray(const QString &arrayName)
+{
+  return m_Result.value(arrayName).toArray();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

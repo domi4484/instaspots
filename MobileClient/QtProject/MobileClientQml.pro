@@ -17,7 +17,7 @@ UI_DIR             = build
 
 DESTDIR = bin
 
-QT += qml quick widgets script positioning multimedia
+QT += qml quick widgets positioning multimedia
 
 CONFIG   += console debug
 

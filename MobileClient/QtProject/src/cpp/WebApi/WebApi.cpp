@@ -20,10 +20,9 @@
 // Qt includes -----------------------------
 #include <QDebug>
 #include <QFile>
+#include <QJsonParseError>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <QScriptEngine>
-#include <QScriptValueList>
 #include <QUrlQuery>
 #include <QHttpMultiPart>
 
@@ -159,7 +158,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   {
     Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
-                       QScriptValue());
+                       QJsonObject());
     return;
   }
 
@@ -177,36 +176,44 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   reply->deleteLater();
 
   // Received data
-  QString data = reply->readAll();
-  Logger::debug(QString("Received: %1").arg(data));
+  QByteArray data = reply->readAll();
+  QString dataText = data;
+  Logger::debug(QString("Received: %1").arg(dataText));
 
   // Parse received JSON
-  QScriptEngine engine;
-  QScriptValue result = engine.evaluate(QString("(%1)").arg(data));
-  QScriptValue qScriptValue_Error = result.property(CONST::GENERAL_PARAMS::ERROR);
+  QJsonParseError jsonParseError;
+  QJsonDocument jsonDocument = QJsonDocument::fromJson(data,
+                                                       &jsonParseError);
 
-  // Answer not valid. Probably a script syntax error
-  if(qScriptValue_Error.isValid() == false)
+  if(jsonParseError.error != QJsonParseError::NoError)
   {
-    Logger::error("Script error");
-    command->setResult(WebApiError(WebApiError::SERVER),
-                       result);
-    return;
+      Logger::error(tr("Parse Json error: %1").arg(jsonParseError.errorString()));
+      command->setResult(WebApiError(WebApiError::SERVER),
+                         jsonDocument.object());
+      return;
+  }
+
+  if(jsonDocument.object().isEmpty())
+  {
+      Logger::error(tr("Server error: received an empty answer").arg(jsonParseError.errorString()));
+      command->setResult(WebApiError(WebApiError::SERVER),
+                         jsonDocument.object());
+      return;
   }
 
   // Command error
-  QString errorText = qScriptValue_Error.toString();
+  QString errorText = jsonDocument.object().value(CONST::GENERAL_PARAMS::ERROR).toString();
   if(errorText.isEmpty() == false)
   {
     Logger::error("Error: " + errorText);
     command->setResult(WebApiError(WebApiError::COMMAND,
                                    errorText),
-                       result);
+                       jsonDocument.object());
     return;
   }
 
   command->setResult(WebApiError(WebApiError::NONE),
-                     result);
+                     jsonDocument.object());
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -232,7 +239,7 @@ void WebApi::slot_QNetworkReply_downloadProgress(qint64 received,
   {
     Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
-                       QScriptValue());
+                       QJsonObject());
     return;
   }
 
@@ -278,41 +285,49 @@ void WebApi::slot_QNetworkReply_finished()
     Logger::error(QString("Network error %1 (%2)").arg(replyNetworkError)
                                                   .arg(replyNetworkErrorString));
     command->setResult(WebApiError(WebApiError::NETWORK),
-                       QScriptValue());
+                       QJsonObject());
     return;
   }
 
   // Received data
-  QString data = reply->readAll();
-  Logger::debug(QString("Received: %1").arg(data));
+  QByteArray data = reply->readAll();
+  QString dataText = data;
+  Logger::debug(QString("Received: %1").arg(dataText));
 
   // Parse received JSON
-  QScriptEngine engine;
-  QScriptValue result = engine.evaluate(QString("(%1)").arg(data));
-  QScriptValue qScriptValue_Error = result.property(CONST::GENERAL_PARAMS::ERROR);
+  QJsonParseError jsonParseError;
+  QJsonDocument jsonDocument = QJsonDocument::fromJson(data,
+                                                       &jsonParseError);
 
-  // Answer not valid. Probably a script syntax error
-  if(qScriptValue_Error.isValid() == false)
+  if(jsonParseError.error != QJsonParseError::NoError)
   {
-    Logger::error("Script error");
-    command->setResult(WebApiError(WebApiError::SERVER),
-                       result);
-    return;
+      Logger::error(tr("Parse Json error: %1").arg(jsonParseError.errorString()));
+      command->setResult(WebApiError(WebApiError::SERVER),
+                         jsonDocument.object());
+      return;
+  }
+
+  if(jsonDocument.object().isEmpty())
+  {
+      Logger::error(tr("Server error: received an empty answer").arg(jsonParseError.errorString()));
+      command->setResult(WebApiError(WebApiError::SERVER),
+                         jsonDocument.object());
+      return;
   }
 
   // Command error
-  QString errorText = qScriptValue_Error.toString();
+  QString errorText = jsonDocument.object().value(CONST::GENERAL_PARAMS::ERROR).toString();
   if(errorText.isEmpty() == false)
   {
     Logger::error("Error: " + errorText);
     command->setResult(WebApiError(WebApiError::COMMAND,
                                    errorText),
-                       result);
+                       jsonDocument.object());
     return;
   }
 
   command->setResult(WebApiError(WebApiError::NONE),
-                     result);
+                     jsonDocument.object());
 }
 
 //----------------------------------------------------------------------------------------------------------------------------

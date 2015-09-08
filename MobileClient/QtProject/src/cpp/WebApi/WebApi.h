@@ -16,7 +16,6 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QScriptValue>
 #include <QString>
 
 // Project includes ------------------------

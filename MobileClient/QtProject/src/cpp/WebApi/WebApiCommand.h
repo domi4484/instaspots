@@ -19,7 +19,8 @@
 // Qt includes -----------------------------
 #include <QObject>
 #include <QByteArray>
-#include <QScriptValue>
+#include <QJsonObject>
+#include <QJsonArray>
 
 // Forward declarations --------------------
 class QIODevice;
@@ -42,10 +43,11 @@ public:
   QString command() const;
 
   // Result (JSON)
-  virtual void setResult(const WebApiError &error,
-                         const QScriptValue &result);
-  QVariant     resultParameter(const QString &parameterName);
-  QScriptValue resultProperty(const QString &propertyName);
+  void setResult(const WebApiError &error,
+                 const QJsonObject &result);
+  QVariant   resultParameter(const QString &parameterName);
+  QJsonValue resultProperty(const QString &propertyName);
+  QJsonArray resultArray(const QString &arrayName);
 
   // RawResult (BINARY)
   virtual void setRawResult(const WebApiError &error,
@@ -81,8 +83,8 @@ private:
 
   bool m_Running;
 
-  QScriptValue m_Result;
-  QByteArray   m_RawResult;
+  QJsonObject m_Result;
+  QByteArray m_RawResult;
 
   WebApiError m_Error;
 
