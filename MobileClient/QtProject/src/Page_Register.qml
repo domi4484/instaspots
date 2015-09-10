@@ -55,12 +55,16 @@ BasicPage {
             placeholderText: qsTr("Username")
             width: parent.width / 1.3
             anchors.horizontalCenter: parent.horizontalCenter
+
+            validator: RegExpValidator {regExp: /[a-z1-9\_\.]+/;}
         }
         TextField {
             id: textField_EMail
             placeholderText: qsTr("e Mail")
             width: parent.width / 1.3
             anchors.horizontalCenter: parent.horizontalCenter
+
+            validator: RegExpValidator { regExp:/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/ }
         }
         TextField {
             id: textField_Password

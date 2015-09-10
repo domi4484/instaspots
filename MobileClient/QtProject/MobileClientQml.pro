@@ -87,6 +87,7 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/menu.html.twig \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/routing.yml \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml \
+    ../../WebSite/Symfony/src/Instaspots/UserBundle/Entity/User.php \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/gradlew.bat \
