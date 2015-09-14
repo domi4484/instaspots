@@ -7,7 +7,7 @@ use Instaspots\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdvertController extends Controller
+class NewsController extends Controller
 {
   public function indexAction()
   {

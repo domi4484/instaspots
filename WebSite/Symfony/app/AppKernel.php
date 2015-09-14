@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new AppBundle\AppBundle(),
+
             new Instaspots\SpotsBundle\InstaspotsSpotsBundle(),
             new Instaspots\UserBundle\InstaspotsUserBundle(),
         );
