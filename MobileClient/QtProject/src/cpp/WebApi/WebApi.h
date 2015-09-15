@@ -75,6 +75,7 @@ public:
 
   static const QString A_PARAM_AUTHENTICATION;
   static const QString A_PARAM_REGISTERED;
+  static const QString A_PARAM_ID_USER;
 
   static const QString A_ARRAY_SPOTS;
   static const QString A_ARRAY_SPOTS_ELEMENT_ID;

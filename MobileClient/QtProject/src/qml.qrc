@@ -24,7 +24,6 @@
         <file>declarative-camera/VideoPreview.qml</file>
         <file>TabWidget.qml</file>
         <file>Page_Register.qml</file>
-        <file>views/ProfileView.qml</file>
         <file>pages-upload/CropPicture.qml</file>
         <file>pages-upload/AddNewSpot.qml</file>
         <file>pages-upload/LocationCheck.qml</file>

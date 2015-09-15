@@ -46,13 +46,6 @@ class WebserviceController extends Controller
       return new JsonResponse($response->toJson());
     }
     
-//     $clientVersion = $request->get('clientVersion');
-//     if (strlen($clientVersion) == 0)
-//     {
-//       $response->setError('Version Error');
-//       return new JsonResponse($response->toJson());
-//     }
-
     switch ($command)
     {
       case "login": 
@@ -243,6 +236,8 @@ class WebserviceController extends Controller
     $validPassword = $encoder->isPasswordValid($user->getPassword(),
                                                $password,
                                                $user->getSalt());
+
+    $response->addData('id_user',        $user->getId());
     $response->addData('authentication', $validPassword);
   }
 

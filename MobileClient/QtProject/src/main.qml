@@ -38,18 +38,10 @@ ApplicationWindow {
             applicationWindow.menuBar = menubar;
         }
 
-        // Start requesting location
-        //hc_LocationManager.requestLocation();
-        positionSource.update();
+        // Try to login
+        wa_User.login();
 
-        if(wa_User.login() === false)
-        {
-            pageLoader.source = "Panel_Login.qml";
-        }
-        else
-        {
-            pageLoader.source = "Panel_Splash.qml"
-        }
+        pageLoader.source = "Panel_Main.qml";
     }
 
     Loader {

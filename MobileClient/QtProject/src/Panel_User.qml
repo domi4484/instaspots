@@ -25,6 +25,24 @@ Rectangle {
         visible: false
     }
 
+    // Slots -------------------------------
+    onVisibleChanged: {
+        if(visible == false)
+            return;
+
+        stackView.pop();
+
+        if(wa_User.isConnected())
+        {
+           stackView.initialItem = {item: Qt.resolvedUrl("qrc:/pages-user/Page_User.qml"),
+                                    properties:{width:stackView.width,
+                                    height:stackView.height,
+                                    stackView:stackView,
+                                    navigator:navigator,
+                                    userId:wa_User.id}};
+        }
+    }
+
     // Gui ---------------------------------
     Navigator{
         id: navigator
@@ -51,22 +69,32 @@ Rectangle {
                              stackView.pop();
                              event.accepted = true;
                          }
-        initialItem: ProfileView {
+        initialItem: Page_User {
             id: page_ProfileView
+
+            menuButtonVisible: true
+
             width: parent.width
             height: parent.height
-
-            title: wa_User.username
-            menuButtonVisible: true
+            stackView:stackView
+            navigator: navigator
+            userId: wa_User.id
         }
+
+        onVisibleChanged: {
+            if(visible == true)
+            {
+                navigator.title = wa_User.username;
+            }
+        }
+
 
         onCurrentItemChanged: {
             if(currentItem == null)
                 return;
 
-            navigator.title = currentItem.title;
-            navigator.continueButtonVisible = currentItem.continueButtonVisible;
-            navigator.menuButtonVisible     = currentItem.menuButtonVisible;
+            navigator.continueButtonVisible = false;
+            navigator.menuButtonVisible     = true;
         }
     }
 }

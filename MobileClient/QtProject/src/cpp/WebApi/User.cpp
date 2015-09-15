@@ -22,11 +22,12 @@
 User::User(Settings *settings,
            QObject *parent) :
   QObject(parent),
-  m_Settings           (settings),
-  m_LastErrorText      (),
-  m_WebApiCommand_Login(this),
-  m_WebApiCommand_Logout(this),
-  m_WebApiCommand_Register(this),
+  m_Settings                 (settings),
+  m_Id                       (-1),
+  m_LastErrorText            (),
+  m_WebApiCommand_Login      (this),
+  m_WebApiCommand_Logout     (this),
+  m_WebApiCommand_Register   (this),
   m_WebApiCommand_CanRegister(this)
 {
   m_WebApiCommand_Login.setAnswerType(WebApiCommand::JSON);
@@ -49,8 +50,17 @@ User::User(Settings *settings,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+bool User::isConnected()
+{
+    return m_Id >= 0;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 bool User::login()
 {
+  m_Id = -1;
+
   m_LastErrorText = "";
 
   QString username       = m_Settings->value(Settings::USER_USERNAME, "").toString();
@@ -82,6 +92,8 @@ bool User::login()
 bool User::login(const QString &username,
                  const QString &password)
 {
+  m_Id = -1;
+
   m_LastErrorText = "";
 
   if(username.isEmpty())
@@ -192,7 +204,14 @@ bool User::registration(const QString &username,
 
 QString User::username()
 {
-  return m_Settings->value(Settings::USER_USERNAME, "").toString();
+    return m_Settings->value(Settings::USER_USERNAME, "").toString();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int User::id()
+{
+    return m_Id;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -213,10 +232,14 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
     m_Settings->setValue(Settings::USER_PASSWORD, QString());
     m_Settings->sync();
 
+    m_Id = -1;
     m_LastErrorText = tr("Authentication failed");
     emit signal_LoginSuccessfull(false);
     return;
   }
+
+
+  m_Id = m_WebApiCommand_Login.resultParameter(WebApi::A_PARAM_ID_USER).toInt();
 
   m_Settings->sync();
   emit signal_LoginSuccessfull(true);
@@ -231,6 +254,7 @@ void User::slot_CommandLogout_Finished(const WebApiError &error)
     Logger::warning(QString("User::slot_CommandLogout_Finished (%1)").arg(error.text()));
   }
 
+  m_Id = false;
   emit signal_Logout();
   return;
 }

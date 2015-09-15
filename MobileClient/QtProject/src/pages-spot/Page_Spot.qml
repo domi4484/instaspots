@@ -44,6 +44,7 @@ BasicPage{
 
     // Connections -------------------------
 
+
     // Components --------------------------
     Component {
         id: component_Picture

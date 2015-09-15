@@ -64,6 +64,7 @@ const QString WebApi::R_PARAM_MAX_DISTANCE_KM("maxDistance_km");
 // Answer parameters
 const QString WebApi::A_PARAM_AUTHENTICATION ("authentication");
 const QString WebApi::A_PARAM_REGISTERED     ("registered");
+const QString WebApi::A_PARAM_ID_USER        ("id_user");
 
 const QString WebApi::A_ARRAY_SPOTS ("spots");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_ID            ("id");

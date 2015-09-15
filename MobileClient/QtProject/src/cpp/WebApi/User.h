@@ -27,6 +27,7 @@ class User : public QObject
   Q_OBJECT
 
   Q_PROPERTY(QString username          READ username)
+  Q_PROPERTY(int     id                READ id)
 
 public:
 
@@ -38,6 +39,8 @@ public slots:
 
   QString lastErrorText() const { return m_LastErrorText; }
 
+  bool isConnected();
+
   bool login();
   bool login(const QString &username,
              const QString &password);
@@ -48,6 +51,7 @@ public slots:
                     const QString &password);
 
   QString username();
+  int id();
 
 signals:
 
@@ -67,13 +71,14 @@ private:
   // Link to Settings
   Settings *m_Settings;
 
+  int m_Id;
+
   QString m_LastErrorText;
 
   WebApiCommand m_WebApiCommand_Login;
   WebApiCommand m_WebApiCommand_Logout;
   WebApiCommand m_WebApiCommand_Register;
   WebApiCommand m_WebApiCommand_CanRegister;
-
 };
 
 #endif // USER_H
