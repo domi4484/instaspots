@@ -30,16 +30,16 @@ Rectangle {
         if(visible == false)
             return;
 
-        stackView.pop();
 
-        if(wa_User.isConnected())
+        if(wa_User.isConnected() === false)
         {
-           stackView.initialItem = {item: Qt.resolvedUrl("qrc:/pages-user/Page_User.qml"),
-                                    properties:{width:stackView.width,
-                                    height:stackView.height,
-                                    stackView:stackView,
-                                    navigator:navigator,
-                                    userId:wa_User.id}};
+            stackView.pop();
+            stackView.push( {item: Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml"),
+                             immediate: true,
+                             properties:{width:stackView.width,
+                                         height:stackView.height,
+                                         stackView:stackView,
+                                         navigator:navigator}} );
         }
     }
 

@@ -1,11 +1,18 @@
-import QtQuick 2.2
+
+// Qt imports ------------------------------
+import QtQuick 2.0
+
+// Project qml imports ---------------------
+import "qrc:/"
+import "qrc:/widgets"
 
 Rectangle {
     id: rectangle_Base
     color: "#777777"
 
     property bool   checked:      false
-    property string image_IconSource: ""
+    property string iconSource: ""
+    property string buttonText: ""
 
     Rectangle {
         id: rectangle_Line
@@ -23,10 +30,24 @@ Rectangle {
         anchors.top: rectangle_Line.bottom
         anchors.bottom: parent.bottom
         anchors.margins: 1
+
         fillMode: Image.PreserveAspectFit
         smooth: true
         antialiasing: true
-        source: image_IconSource
+        source: iconSource
+    }
+
+    Text {
+        id: rectangle_Text
+        width: parent.width
+        anchors.top: rectangle_Line.bottom
+        anchors.bottom: parent.bottom
+        anchors.margins: 1
+
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment:   Text.AlignVCenter
+        color: "white"
+        text: buttonText
     }
 
     onCheckedChanged: {

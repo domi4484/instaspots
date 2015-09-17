@@ -1,4 +1,10 @@
+
+// Qt imports ------------------------------
 import QtQuick 2.0
+
+// Project qml imports ---------------------
+import "qrc:/"
+import "qrc:/widgets"
 
 Item {
     id: tabWidget
@@ -39,7 +45,9 @@ Item {
             model: stack.children.length
             delegate: TabButton {
                 width: tabWidget.width / stack.children.length; height: 36
-                image_IconSource: stack.children[index].image_IconSource
+                iconSource: stack.children[index].tabWidget_ButtonIconSource
+                buttonText: stack.children[index].tabWidget_ButtonText
+
                 checked: tabWidget.current == index
                 MouseArea {
                     anchors.fill: parent

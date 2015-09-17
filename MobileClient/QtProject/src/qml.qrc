@@ -1,11 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>Panel_Login.qml</file>
         <file>main.qml</file>
         <file>Navigator.qml</file>
         <file>Panel_Main.qml</file>
         <file>Panel_Splash.qml</file>
-        <file>TabButton.qml</file>
         <file>Panel_Home.qml</file>
         <file>Panel_NearbySpots.qml</file>
         <file>Panel_Upload.qml</file>
@@ -22,21 +20,24 @@
         <file>declarative-camera/PhotoPreview.qml</file>
         <file>declarative-camera/Popup.qml</file>
         <file>declarative-camera/VideoPreview.qml</file>
-        <file>TabWidget.qml</file>
-        <file>Page_Register.qml</file>
-        <file>pages-upload/CropPicture.qml</file>
+        <file>pages-picture/Page_PicturesList.qml</file>
+        <file>pages-spot/Page_Spot.qml</file>
+        <file>pages-spot/Page_SpotsList.qml</file>
         <file>pages-upload/AddNewSpot.qml</file>
         <file>pages-upload/LocationCheck.qml</file>
         <file>pages-upload/NearbySpotSelection.qml</file>
         <file>pages-upload/SourceSelection.qml</file>
-        <file>widgets/CachedPicture.qml</file>
-        <file>pages-user/Page_Settings.qml</file>
-        <file>pages-spot/Page_Spot.qml</file>
-        <file>pages-picture/Page_PicturesList.qml</file>
-        <file>pages-spot/Page_SpotsList.qml</file>
         <file>pages-upload/Page_AddToExistingSpot.qml</file>
-        <file>views/SpotOverviewDelegate.qml</file>
+        <file>pages-upload/CropPicture.qml</file>
+        <file>pages-user/Page_Login.qml</file>
+        <file>pages-user/Page_Register.qml</file>
+        <file>pages-user/Page_Settings.qml</file>
+        <file>pages-user/Page_SignIn.qml</file>
         <file>pages-user/Page_User.qml</file>
+        <file>views/SpotOverviewDelegate.qml</file>
+        <file>widgets/CachedPicture.qml</file>
+        <file>widgets/TabButton.qml</file>
+        <file>widgets/TabWidget.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

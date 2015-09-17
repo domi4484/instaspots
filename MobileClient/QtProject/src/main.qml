@@ -49,29 +49,6 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    Connections {
-        target: wa_User
-        onSignal_LoginSuccessfull:
-        {
-            // Login successfull
-            if(success)
-            {
-                pageLoader.source = "Panel_Main.qml";
-                return;
-            }
-
-            if(pageLoader.source != Qt.resolvedUrl("Panel_Login.qml"))
-            {
-                pageLoader.source = "Panel_Login.qml";
-            }
-        }
-
-        onSignal_Logout:
-        {
-            pageLoader.source = "Panel_Login.qml";
-        }
-    }
-
     Connections{
         target: hc_LocationManager
         onSignal_RequestLocation: positionSource.update()

@@ -1,7 +1,21 @@
+/********************************************************************
+ *                                                                 *
+ * InstaSpots                                                      *
+ *                                                                 *
+ * Author:       Damiano Lombardi                                  *
+ * Created:                                                        *
+ *                                                                 *
+ * Copiright (c) 2015 Damiano Lombardi                             *
+ *                                                                 *
+********************************************************************/
 
 // Qt imports ------------------------------
 import QtQuick 2.2
 import QtQuick.Controls 1.1
+
+// Project qml imports ---------------------
+import "qrc:/"
+import "qrc:/widgets"
 
 TabWidget {
     id: tabs
@@ -9,21 +23,25 @@ TabWidget {
 
     Panel_Home {
         anchors.fill: parent
-        property string image_IconSource: "icon/icon/folder-home.png"
+        property string tabWidget_ButtonText: ""
+        property string tabWidget_ButtonIconSource: "qrc:/icon/icon/folder-home.png"
     }
 
     Panel_NearbySpots {
         anchors.fill: parent
-        property string image_IconSource: "icon/icon/find-location.png"
+        property string tabWidget_ButtonText: ""
+        property string tabWidget_ButtonIconSource: "qrc:/icon/icon/find-location.png"
     }
 
     Panel_Upload {
         anchors.fill: parent
-        property string image_IconSource: "icon/icon/camera-photo.png"
+        property string tabWidget_ButtonText: ""
+        property string tabWidget_ButtonIconSource: "qrc:/icon/icon/camera-photo.png"
     }
 
     Panel_User {
         anchors.fill: parent
-        property string image_IconSource: "icon/icon/im-user-offline.png"
+        property string tabWidget_ButtonText: ""
+        property string tabWidget_ButtonIconSource: "qrc:/icon/icon/im-user-offline.png"
     }
 }
