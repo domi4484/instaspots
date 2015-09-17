@@ -47,6 +47,26 @@ Rectangle {
         }
     }
 
+    Component{
+        id: page_ProfileView
+        Page_User {
+
+            menuButtonVisible: true
+
+            width: parent.width
+            height: parent.height
+            stackView:stackView
+            navigator: navigator
+
+            onVisibleChanged: {
+                if(visible == false)
+                    return;
+
+                userId = wa_User.id
+            }
+        }
+    }
+
     // Gui ---------------------------------
     Navigator{
         id: navigator
@@ -73,17 +93,7 @@ Rectangle {
                              stackView.pop();
                              event.accepted = true;
                          }
-        initialItem: Page_User {
-            id: page_ProfileView
-
-            menuButtonVisible: true
-
-            width: parent.width
-            height: parent.height
-            stackView:stackView
-            navigator: navigator
-            userId: wa_User.id
-        }
+        initialItem: page_ProfileView
 
         onVisibleChanged: {
             if(visible == true)
