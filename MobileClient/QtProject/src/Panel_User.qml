@@ -34,12 +34,16 @@ Rectangle {
         if(wa_User.isConnected() === false)
         {
             stackView.pop();
-            stackView.push( {item: Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml"),
+            var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
+            stackView.push( {item: page_SignIn,
                              immediate: true,
+                             replace: true,
                              properties:{width:stackView.width,
                                          height:stackView.height,
                                          stackView:stackView,
                                          navigator:navigator}} );
+
+
         }
     }
 
