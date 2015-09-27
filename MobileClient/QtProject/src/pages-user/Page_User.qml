@@ -67,6 +67,7 @@ BasicPage{
                                                     stackView:stackView,
                                                     navigator:navigator,
                                                     spotId:role_SpotId}});
+                        navigator.backButtonVisible = true;
                     }
                 }
             }

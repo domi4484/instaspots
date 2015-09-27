@@ -33,30 +33,32 @@ BasicPage{
 
     // Signals -----------------------------
 
+    // Slots -------------------------------
+    onVisibleChanged: {
+        if(visible == false)
+            return;
+
+        // TODO
+         Qua non funziona come dovrebbe
+        navigator.backButtonVisible     = false;
+        navigator.continueButtonVisible = false;
+        navigator.menuButtonVisible     = false;
+
+    }
+
     // Connections -------------------------
-
-//    Connections {
-//        target: wa_User
-//        onSignal_LoginSuccessfull:
-//        {
-//            // Login successfull
-//            if(success)
-//            {
-//                pageLoader.source = "Panel_Main.qml";
-//                return;
-//            }
-
-//            if(pageLoader.source != Qt.resolvedUrl("Panel_Login.qml"))
-//            {
-//                pageLoader.source = "Panel_Login.qml";
-//            }
-//        }
-
-//        onSignal_Logout:
-//        {
-//            pageLoader.source = "Panel_Login.qml";
-//        }
-//    }
+    Connections {
+        target: wa_User
+        onSignal_LoginSuccessfull:
+        {
+            // Login successfull
+            if(success)
+            {
+                stackView.pop();
+                return;
+            }
+        }
+    }
 
     // Components --------------------------
     Component {

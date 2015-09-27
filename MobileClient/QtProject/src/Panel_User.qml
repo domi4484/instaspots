@@ -33,17 +33,14 @@ Rectangle {
 
         if(wa_User.isConnected() === false)
         {
-            stackView.pop();
             var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
             stackView.push( {item: page_SignIn,
                              immediate: true,
-                             replace: true,
+                             replace: false,
                              properties:{width:stackView.width,
                                          height:stackView.height,
                                          stackView:stackView,
                                          navigator:navigator}} );
-
-
         }
     }
 
@@ -80,6 +77,7 @@ Rectangle {
 
         onMenuClicked: {
             stackView.push(page_Settings);
+            backButtonVisible = true;
         }
     }
 

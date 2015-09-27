@@ -131,6 +131,8 @@ bool User::login(const QString &username,
 
 bool User::logout()
 {
+  m_Id = -1;
+
   m_LastErrorText = "";
 
   m_Settings->setValue(Settings::USER_USERNAME, QString());
@@ -254,7 +256,7 @@ void User::slot_CommandLogout_Finished(const WebApiError &error)
     Logger::warning(QString("User::slot_CommandLogout_Finished (%1)").arg(error.text()));
   }
 
-  m_Id = false;
+  m_Id = -1;
   emit signal_Logout();
   return;
 }
