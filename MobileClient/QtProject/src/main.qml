@@ -56,7 +56,6 @@ ApplicationWindow {
 
     Connections {
         target: wa_User
-
         onSignal_Logout:
         {
             pageLoader.source = "qrc:/Panel_Main.qml";

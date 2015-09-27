@@ -57,9 +57,9 @@ Rectangle {
 
         onMenuClicked: {
             stackView.push(page_Settings);
-            backButtonVisible = true;
+            backButtonVisible     = true;
             continueButtonVisible = false;
-            menuButtonVisible = false;
+            menuButtonVisible     = false;
             title = page_Settings.title;
         }
     }
@@ -93,7 +93,6 @@ Rectangle {
         if(visible == false)
             return;
 
-
         if(wa_User.isConnected() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
@@ -106,6 +105,11 @@ Rectangle {
                                          navigator:navigator}} );
 
             return;
+        }
+
+        if(stackView.depth === 1)
+        {
+            navigator.title = wa_User.username;
         }
     }
 }

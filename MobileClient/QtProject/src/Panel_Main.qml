@@ -18,28 +18,32 @@ import "qrc:/"
 import "qrc:/widgets"
 
 TabWidget {
-    id: tabs
+    id: tabWidget_Main
     width: 640; height: 480
 
     Panel_Home {
+        id: panel_Home
         anchors.fill: parent
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/folder-home.png"
     }
 
     Panel_NearbySpots {
+        id: panel_NearbySpots
         anchors.fill: parent
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/find-location.png"
     }
 
     Panel_Upload {
+        id: panel_Upload
         anchors.fill: parent
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/camera-photo.png"
     }
 
     Panel_User {
+        id: panel_User
         anchors.fill: parent
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/im-user-offline.png"

@@ -34,6 +34,10 @@ Item {
                 onImageSaved: {
                     wa_PictureUploader.setCameraPictureFilePath(path);
                     stackView.push(page_LocationCheck);
+                    navigator.backButtonVisible     = true;
+                    navigator.continueButtonVisible = false;
+                    navigator.menuButtonVisible     = false;
+                    navigator.title = page_LocationCheck.title;
                 }
             }
         }
@@ -48,6 +52,10 @@ Item {
                                               cropY,
                                               cropSide);
             stackView.push(page_LocationCheck);
+            navigator.backButtonVisible     = true;
+            navigator.continueButtonVisible = false;
+            navigator.menuButtonVisible     = false;
+            navigator.title = page_LocationCheck.title;
         }
     }
 
@@ -56,6 +64,10 @@ Item {
 
        onLocationAccepted: {
            stackView.push(page_NearbySpotSelection);
+           navigator.backButtonVisible     = true;
+           navigator.continueButtonVisible = false;
+           navigator.menuButtonVisible     = false;
+           navigator.title = page_NearbySpotSelection.title;
        }
     }
 
@@ -65,10 +77,18 @@ Item {
 
         onAddNewSpot: {
             stackView.push(page_AddNewSpot)
+            navigator.backButtonVisible     = true;
+            navigator.continueButtonVisible = false;
+            navigator.menuButtonVisible     = false;
+            navigator.title = page_AddNewSpot.title;
         }
 
         onAddToExistingSpot: {
             stackView.push(page_AddToExistingSpot);
+            navigator.backButtonVisible     = true;
+            navigator.continueButtonVisible = false;
+            navigator.menuButtonVisible     = false;
+            navigator.title = page_AddToExistingSpot.title;
         }
     }
 
@@ -78,7 +98,7 @@ Item {
 
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
-            // TODO go to Panel_Home
+            tabWidget_Main.setCurrentItem(panel_Home);
         }
     }
 
@@ -88,7 +108,7 @@ Item {
 
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
-            // TODO go to Panel_Home
+            tabWidget_Main.setCurrentItem(panel_Home);
         }
     }
 
@@ -96,9 +116,6 @@ Item {
     Navigator{
         id: navigator
         anchors.top: parent.top
-
-        backButtonVisible: stackView.depth > 1
-        continueButtonVisible: stackView.currentItem.continueButtonVisible
 
         onPreviousPage: {
             if(stackView.depth > 1)
@@ -125,19 +142,51 @@ Item {
             width: parent.width
             height: parent.height
 
-            onTakeCameraPicture: stackView.push(page_TakeCameraPicture)
+            onTakeCameraPicture: {
+                stackView.push(page_TakeCameraPicture)
+                navigator.backButtonVisible     = true;
+                navigator.continueButtonVisible = false;
+                navigator.menuButtonVisible     = false;
+                navigator.title = page_TakeCameraPicture.title;
+            }
             onPictureSelected: {
                 page_CropPicture.source = imageUrl;
                 stackView.push(page_CropPicture);
+                navigator.backButtonVisible     = true;
+                navigator.continueButtonVisible = false;
+                navigator.menuButtonVisible     = false;
+                navigator.title = page_CropPicture.title;
             }
         }
 
-        onCurrentItemChanged: {
-            if(currentItem == null)
-                return;
+        onDepthChanged: {
+            if(depth === 1)
+            {
+                navigator.backButtonVisible     = false;
+                navigator.continueButtonVisible = false;
+                navigator.menuButtonVisible     = false;
+                navigator.title = page_SourceSelection.title;
+            }
+        }
+    }
 
-            navigator.title = currentItem.title;
-            navigator.continueButtonVisible = currentItem.continueButtonVisible;
+
+    // Slots -------------------------------
+    onVisibleChanged: {
+        if(visible == false)
+            return;
+
+        if(wa_User.isConnected() === false)
+        {
+            stackView.push( {item: Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml"),
+                             immediate: true,
+                             replace: false,
+                             properties:{width:stackView.width,
+                                         height:stackView.height,
+                                         stackView:stackView,
+                                         navigator:navigator}} );
+
+            return;
         }
     }
 }

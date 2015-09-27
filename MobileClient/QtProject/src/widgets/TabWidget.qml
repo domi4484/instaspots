@@ -20,7 +20,19 @@ Item {
     onCurrentChanged: setOpacities()
     Component.onCompleted: setOpacities()
 
-    function setOpacities() {
+    function setCurrentItem(item)
+    {
+        for (var i = 0; i < stack.children.length; ++i) {
+            if(stack.children[i] === item)
+            {
+                current = i;
+                return;
+            }
+        }
+    }
+
+    function setOpacities()
+    {
         for (var i = 0; i < stack.children.length; ++i) {
             stack.children[i].opacity = (i == current ? 1 : 0)
             stack.children[i].enabled = (i == current)

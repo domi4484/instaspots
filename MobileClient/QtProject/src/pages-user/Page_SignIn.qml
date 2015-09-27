@@ -35,9 +35,6 @@ BasicPage{
 
     // Slots -------------------------------
     Component.onCompleted: {
-        if(visible == false)
-            return;
-
         navigator.backButtonVisible     = false;
         navigator.continueButtonVisible = false;
         navigator.menuButtonVisible     = false;
@@ -52,7 +49,7 @@ BasicPage{
             // Login successfull
             if(success)
             {
-                stackView.pop();
+                stackView.pop({immediate: true});
                 return;
             }
         }
