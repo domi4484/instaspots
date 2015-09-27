@@ -25,25 +25,6 @@ Rectangle {
         visible: false
     }
 
-    // Slots -------------------------------
-    onVisibleChanged: {
-        if(visible == false)
-            return;
-
-
-        if(wa_User.isConnected() === false)
-        {
-            var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
-            stackView.push( {item: page_SignIn,
-                             immediate: true,
-                             replace: false,
-                             properties:{width:stackView.width,
-                                         height:stackView.height,
-                                         stackView:stackView,
-                                         navigator:navigator}} );
-        }
-    }
-
     Component{
         id: page_ProfileView
         Page_User {
@@ -68,7 +49,6 @@ Rectangle {
     Navigator{
         id: navigator
         anchors.top: parent.top
-        backButtonVisible: stackView.depth > 1
 
         onPreviousPage: {
             if(stackView.depth > 1)
@@ -78,6 +58,9 @@ Rectangle {
         onMenuClicked: {
             stackView.push(page_Settings);
             backButtonVisible = true;
+            continueButtonVisible = false;
+            menuButtonVisible = false;
+            title = page_Settings.title;
         }
     }
 
@@ -93,20 +76,36 @@ Rectangle {
                          }
         initialItem: page_ProfileView
 
-        onVisibleChanged: {
-            if(visible == true)
+        onDepthChanged: {
+            if(depth === 1)
             {
+                navigator.backButtonVisible     = false;
+                navigator.continueButtonVisible = false;
+                navigator.menuButtonVisible     = true;
                 navigator.title = wa_User.username;
             }
         }
+    }
 
 
-        onCurrentItemChanged: {
-            if(currentItem == null)
-                return;
+    // Slots -------------------------------
+    onVisibleChanged: {
+        if(visible == false)
+            return;
 
-            navigator.continueButtonVisible = false;
-            navigator.menuButtonVisible     = true;
+
+        if(wa_User.isConnected() === false)
+        {
+            var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
+            stackView.push( {item: page_SignIn,
+                             immediate: true,
+                             replace: false,
+                             properties:{width:stackView.width,
+                                         height:stackView.height,
+                                         stackView:stackView,
+                                         navigator:navigator}} );
+
+            return;
         }
     }
 }

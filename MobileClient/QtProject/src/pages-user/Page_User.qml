@@ -36,6 +36,26 @@ BasicPage{
         id: picturesModel
     }
 
+
+    // Gui ---------------------------------
+    Item{
+        id: item_Gui
+        width: parent.width
+        height: parent.height
+
+        GridView{
+            id: gridView_Pictures
+            anchors.fill: parent
+
+            cellWidth: parent.width / 2
+            cellHeight: cellWidth
+
+            model: picturesModel
+            delegate: component_Picture
+        }
+    }
+
+
     // Signals -----------------------------
     onUserIdChanged:
     {
@@ -71,24 +91,6 @@ BasicPage{
                     }
                 }
             }
-        }
-    }
-
-    // Gui ---------------------------------
-    Item{
-        id: item_Gui
-        width: parent.width
-        height: parent.height
-
-        GridView{
-            id: gridView_Pictures
-            anchors.fill: parent
-
-            cellWidth: parent.width / 2
-            cellHeight: cellWidth
-
-            model: picturesModel
-            delegate: component_Picture
         }
     }
 }

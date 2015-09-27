@@ -28,22 +28,20 @@ BasicPage{
     title: qsTr("Sign in")
 
     // Properties --------------------------
-    property Navigator navigator
+    property var navigator
     property StackView stackView
 
     // Signals -----------------------------
 
     // Slots -------------------------------
-    onVisibleChanged: {
+    Component.onCompleted: {
         if(visible == false)
             return;
 
-        // TODO
-         Qua non funziona come dovrebbe
         navigator.backButtonVisible     = false;
         navigator.continueButtonVisible = false;
         navigator.menuButtonVisible     = false;
-
+        navigator.title = title;
     }
 
     // Connections -------------------------
