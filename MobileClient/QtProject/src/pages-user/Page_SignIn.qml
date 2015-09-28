@@ -35,9 +35,6 @@ BasicPage{
 
     // Slots -------------------------------
     Component.onCompleted: {
-        navigator.backButtonVisible     = false;
-        navigator.continueButtonVisible = false;
-        navigator.menuButtonVisible     = false;
         navigator.title = title;
     }
 

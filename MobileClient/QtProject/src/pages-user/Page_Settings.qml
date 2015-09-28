@@ -152,7 +152,12 @@ BasicPage{
         anchors.bottomMargin: 5
         width: parent.width / 1.1
         text: qsTr("Logout")
-        onClicked: wa_User.logout()
+        onClicked:
+        {
+            wa_User.logout();
+            stackView.pop();
+            tabWidget_Main.setCurrentItem(panel_Home);
+        }
     }
 
 

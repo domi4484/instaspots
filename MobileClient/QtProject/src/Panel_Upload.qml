@@ -178,14 +178,17 @@ Item {
 
         if(wa_User.isConnected() === false)
         {
-            stackView.push( {item: Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml"),
+            var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
+            stackView.push( {item: page_SignIn,
                              immediate: true,
                              replace: false,
                              properties:{width:stackView.width,
                                          height:stackView.height,
                                          stackView:stackView,
                                          navigator:navigator}} );
-
+            navigator.backButtonVisible     = false;
+            navigator.continueButtonVisible = false;
+            navigator.menuButtonVisible     = false;
             return;
         }
     }

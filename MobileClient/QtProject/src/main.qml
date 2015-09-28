@@ -53,12 +53,4 @@ ApplicationWindow {
         target: hc_LocationManager
         onSignal_RequestLocation: positionSource.update()
     }
-
-    Connections {
-        target: wa_User
-        onSignal_Logout:
-        {
-            pageLoader.source = "qrc:/Panel_Main.qml";
-        }
-    }
 }

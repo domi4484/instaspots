@@ -103,7 +103,9 @@ Rectangle {
                                          height:stackView.height,
                                          stackView:stackView,
                                          navigator:navigator}} );
-
+            navigator.backButtonVisible     = false;
+            navigator.continueButtonVisible = false;
+            navigator.menuButtonVisible     = false;
             return;
         }
 
