@@ -497,7 +497,7 @@ class WebserviceController extends Controller
       $jSpot['description'] = $spot[0]['description'];
       $jSpot['latitude']    = $spot[0]['latitude'];
       $jSpot['longitude']   = $spot[0]['longitude'];
-      $jSpot['distance_km'] = $spot['distance'];
+      $jSpot['distance_km'] = (float)$spot['distance'];
 
       $picture1 = new Picture();
       $picture1->setId     ($spot[0]['picture1']['id']);

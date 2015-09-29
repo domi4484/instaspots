@@ -34,6 +34,7 @@ Rectangle {
         }
     }
 
+
     // Gui ---------------------------------
     width: parent.width
     height: parent.height
@@ -45,6 +46,12 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
+
+        Keys.onEnterPressed:
+        {
+            login(textField_Username.text,
+                  textField_Password.text)
+        }
     }
     TextField {
         id: textField_Password
@@ -54,6 +61,12 @@ Rectangle {
         anchors.top: textField_Username.bottom
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
+
+        Keys.onEnterPressed:
+        {
+            login(textField_Username.text,
+                  textField_Password.text)
+        }
     }
     Button {
         id: button_Login
@@ -65,7 +78,6 @@ Rectangle {
         onClicked: login(textField_Username.text,
                          textField_Password.text)
     }
-
 
     // Functions ---------------------------
     function login(username,
