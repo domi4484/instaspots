@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Navigator.qml</file>
-        <file>Panel_Main.qml</file>
         <file>Panel_Splash.qml</file>
         <file>Panel_Home.qml</file>
         <file>Panel_NearbySpots.qml</file>

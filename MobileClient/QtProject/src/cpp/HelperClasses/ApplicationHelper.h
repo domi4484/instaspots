@@ -12,6 +12,10 @@
 #ifndef APPLICATIONHELPER_H
 #define APPLICATIONHELPER_H
 
+// Project includes ------------------------
+#include "../WebApi/WebApiError.h"
+#include "../WebApi/WebApiCommand.h"
+
 // Qt includes -----------------------------
 #include <QObject>
 
@@ -29,12 +33,19 @@ signals:
 
 public slots:
 
-  QString version();
-  bool developmentMode() const { return m_DevelopmentMode; }
+  QString version()              const;
+  bool    checkForNewerVersion() const;
 
+  bool developmentMode() const;
   void setDevelopmentMode(bool developmentMode);
 
+private slots:
+
+  void slot_CommandVersionCheck_Finished(const WebApiError &);
+
 private:
+
+  WebApiCommand m_WebApiCommand_VersionCheck;
 
   bool m_DevelopmentMode;
 };

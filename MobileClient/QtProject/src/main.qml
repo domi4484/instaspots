@@ -1,3 +1,13 @@
+/********************************************************************
+ *                                                                 *
+ * Lowerspot                                                       *
+ *                                                                 *
+ * Author:       Damiano Lombardi                                  *
+ * Created:      13.12.2015                                        *
+ *                                                                 *
+ * Copiright (c) 2015 Damiano Lombardi                             *
+ *                                                                 *
+********************************************************************/
 
 // Qt imports ------------------------------
 import QtQuick 2.2
@@ -5,11 +15,16 @@ import QtQuick.Controls 1.1
 import QtQuick.Dialogs 1.2
 import QtPositioning 5.2
 
+// Project qml imports ---------------------
+import "qrc:/"
+import "qrc:/widgets"
+
+
 ApplicationWindow {
     id: applicationWindow
     visible: true
     width: 340
-    height: 480
+    height: 500
 
     MenuBar {
         id: menubar
@@ -26,12 +41,6 @@ ApplicationWindow {
         }
     }
 
-    PositionSource {
-        id: positionSource
-        onPositionChanged: hc_LocationManager.setFakePosition(position.coordinate.latitude,
-                                                              position.coordinate.longitude)
-    }
-
     Component.onCompleted:{
         if(hc_PlateformDetail.isMobile() === false)
         {
@@ -41,12 +50,49 @@ ApplicationWindow {
         // Try to login
         wa_User.login();
 
-        pageLoader.source = "Panel_Main.qml";
+        // Check newer version
     }
 
-    Loader {
-        id: pageLoader
+
+    TabWidget {
+        id: tabWidget_Main
         anchors.fill: parent
+
+        Panel_Home {
+            id: panel_Home
+            anchors.fill: parent
+            property string tabWidget_ButtonText: ""
+            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/folder-home.png"
+        }
+
+        Panel_NearbySpots {
+            id: panel_NearbySpots
+            anchors.fill: parent
+            property string tabWidget_ButtonText: ""
+            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/find-location.png"
+        }
+
+        Panel_Upload {
+            id: panel_Upload
+            anchors.fill: parent
+            property string tabWidget_ButtonText: ""
+            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/camera-photo.png"
+        }
+
+        Panel_User {
+            id: panel_User
+            anchors.fill: parent
+            property string tabWidget_ButtonText: ""
+            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/im-user-offline.png"
+        }
+    }
+
+
+    // Positioning
+    PositionSource {
+        id: positionSource
+        onPositionChanged: hc_LocationManager.setFakePosition(position.coordinate.latitude,
+                                                              position.coordinate.longitude)
     }
 
     Connections{
