@@ -57,6 +57,7 @@ public:
   static const QString C_LOGOUT;
   static const QString C_REGISTER;
   static const QString C_CANREGISTER;
+  static const QString C_GET_CURRENT_CLIENT_VERSION;
   static const QString C_GET_NEARBY_SPOTS;
   static const QString C_GET_PICTURES_BY_SPOT_ID;
   static const QString C_GET_PICTURES_BY_USER_ID;
@@ -76,6 +77,7 @@ public:
   static const QString A_PARAM_AUTHENTICATION;
   static const QString A_PARAM_REGISTERED;
   static const QString A_PARAM_ID_USER;
+  static const QString A_PARAM_VERSION;
 
   static const QString A_ARRAY_SPOTS;
   static const QString A_ARRAY_SPOTS_ELEMENT_ID;

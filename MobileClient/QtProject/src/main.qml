@@ -41,6 +41,17 @@ ApplicationWindow {
         }
     }
 
+    MessageDialog{
+        id: messageDialog_NewClientVersionAvailable
+        title: qsTr('New version out!')
+        text: qsTr('There is a new Lowerspot app version available for download! Get it on the Lowerspot homepage for a better experience!')
+
+        onAccepted:
+        {
+            hc_Application.newerClientVersionAvailableGotIt();
+        }
+    }
+
     Component.onCompleted:{
         if(hc_PlateformDetail.isMobile() === false)
         {
@@ -51,9 +62,10 @@ ApplicationWindow {
         wa_User.login();
 
         // Check newer version
+        hc_Application.checkCurrentClientVersion();
     }
 
-
+    // Gui ---------------------------------
     TabWidget {
         id: tabWidget_Main
         anchors.fill: parent
@@ -98,5 +110,13 @@ ApplicationWindow {
     Connections{
         target: hc_LocationManager
         onSignal_RequestLocation: positionSource.update()
+    }
+
+    Connections{
+        target: hc_Application
+        onSignal_NewClientVersionAvailable:
+        {
+            messageDialog_NewClientVersionAvailable.visible = true;
+        }
     }
 }

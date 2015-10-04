@@ -24,6 +24,10 @@ public:
   explicit Settings(QObject *parent = 0);
   virtual ~Settings();
 
+  // Application settings
+  static const QString APPLICATION_LAST_VERSION;
+  static const QString APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT;
+
   // User settings
   static const QString USER_USERNAME;
   static const QString USER_PASSWORD;

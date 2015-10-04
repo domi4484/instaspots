@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Red Coping Company");
     app.setOrganizationDomain("spots.lowerclassclothing.com");
     app.setApplicationName("Lowerspot");
-    app.setApplicationVersion("0.0.2");
+    app.setApplicationVersion("V0.0.2");
 
     Logger::instanziate(Logger::LOG_VERBOSE);
 
     Settings settings;
 
-    ApplicationHelper applicationHelper;
+    ApplicationHelper applicationHelper(&settings);
     PlateformDetail   plateformDetail;
     LocationManager   locationManager(&settings);
     PictureCacher     pictureCacher;
@@ -62,11 +62,14 @@ int main(int argc, char *argv[])
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
-    return app.exec();
+    int exitCode = app.exec();
 
+    settings.setValue(Settings::APPLICATION_LAST_VERSION, app.applicationVersion());
     settings.sync();
 
     Logger::destroy();
     SpotRepository::destroy();
     PictureRepository::destroy();
+
+    return exitCode;
 }

@@ -14,25 +14,38 @@
 
 // Project includes ------------------------
 #include "Logger.h"
+#include "../Settings.h"
 #include "../WebApi/WebApi.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
 #include <QApplication>
+#include <QRegularExpression>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-ApplicationHelper::ApplicationHelper(QObject *parent)
+ApplicationHelper::ApplicationHelper(Settings *settings,
+                                     QObject *parent)
   : QObject(parent),
-    m_WebApiCommand_VersionCheck(this),
+    m_Settings(settings),
+    m_CurrentClientVersion(),
+    m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false)
 {
-    m_WebApiCommand_VersionCheck.setAnswerType(WebApiCommand::JSON);
-    m_WebApiCommand_VersionCheck.setCommand(WebApi::C_GET_CURRENT_CLIENT_VERSION);
+    qDebug() << m_Settings->value(Settings::APPLICATION_LAST_VERSION).toString();
+    qDebug() << QApplication::applicationVersion();
 
-    connect(&m_WebApiCommand_VersionCheck,
+    if(m_Settings->value(Settings::APPLICATION_LAST_VERSION).toString() != QApplication::applicationVersion())
+    {
+        m_Settings->setValue(Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT, false);
+    }
+
+    m_WebApiCommand_GetCurrentClientVersion.setAnswerType(WebApiCommand::JSON);
+    m_WebApiCommand_GetCurrentClientVersion.setCommand(WebApi::C_GET_CURRENT_CLIENT_VERSION);
+
+    connect(&m_WebApiCommand_GetCurrentClientVersion,
             SIGNAL(signal_Finished(const WebApiError &)),
-            SLOT(slot_CommandVersionCheck_Finished(const WebApiError &)));
+            SLOT(slot_CommandGetCurrentClientVersion_Finished(const WebApiError &)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -51,34 +64,104 @@ QString ApplicationHelper::version() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool ApplicationHelper::checkForNewerVersion() const
+int ApplicationHelper::compareVersions(const QString &version1,
+                                       const QString &version2) const
 {
-    m_Id = -1;
+    QRegularExpression regexp("V(\\d+).(\\d+).(\\d+)");
 
-    m_LastErrorText = "";
-
-    QString username       = m_Settings->value(Settings::USER_USERNAME, "").toString();
-    QString hashedPassword = m_Settings->value(Settings::USER_PASSWORD, "").toString();
-
-    if(   username.isEmpty()
-       || hashedPassword.isEmpty())
+    // Match version1
+    int first1  = 0;
+    int second1 = 0;
+    int third1  = 0;
     {
-      m_LastErrorText = tr("Empty username or password.");
-      return false;
+        QRegularExpressionMatch match = regexp.match(version1);
+        if (match.hasMatch() == false)
+        {
+            Logger::error(QString("ApplicationHelper::compareVersions: invalid version '%1'").arg(version1));
+            return 0;
+        }
+        first1  = match.captured(1).toInt();
+        second1 = match.captured(2).toInt();
+        third1  = match.captured(3).toInt();
     }
 
-    QList<QueryItem> qList_QueryItems;
-    qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USERNAME, username));
-    qList_QueryItems.append(QueryItem(WebApi::R_PARAM_PASSWORD, hashedPassword));
+    // Match version2
+    int first2  = 0;
+    int second2 = 0;
+    int third2  = 0;
+    {
+        QRegularExpressionMatch match = regexp.match(version2);
+        if (match.hasMatch() == false)
+        {
+            Logger::error(QString("ApplicationHelper::compareVersions: invalid version '%1'").arg(version2));
+            return 0;
+        }
+        first2  = match.captured(1).toInt();
+        second2 = match.captured(2).toInt();
+        third2  = match.captured(3).toInt();
+    }
 
-    WebApiError error = m_WebApiCommand_Login.postRequest(qList_QueryItems);
+    if(first1 > first2)
+    {
+        return 1;
+    }
+    else if(first1 < first2)
+    {
+        return -1;
+    }
+    else
+    {
+        if(second1 > second2)
+        {
+            return 1;
+        }
+        else if(second1 < second2)
+        {
+            return -1;
+        }
+        else
+        {
+            if(third1 > third2)
+            {
+                return 1;
+            }
+            else if(third1 < third2)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool ApplicationHelper::checkCurrentClientVersion()
+{
+    if(m_Settings->value(Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT).toBool() == true)
+    {
+        return true;
+    }
+
+    WebApiError error = m_WebApiCommand_GetCurrentClientVersion.postRequest();
     if(error.type() != WebApiError::NONE)
     {
-      m_LastErrorText = error.text();
+      Logger::error(QString("ApplicationHelper::checkForNewerVersion: %1").arg(error.text()));
       return false;
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::newerClientVersionAvailableGotIt()
+{
+    m_Settings->setValue(Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT, true);
+    m_Settings->sync();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -110,33 +193,22 @@ void ApplicationHelper::setDevelopmentMode(bool developmentMode)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void ApplicationHelper::slot_CommandVersionCheck_Finished(const WebApiError &)
+void ApplicationHelper::slot_CommandGetCurrentClientVersion_Finished(const WebApiError &error)
 {
     if(error.type() != WebApiError::NONE)
     {
-      m_LastErrorText = error.text();
-      emit signal_LoginSuccessfull(false);
+      Logger::error(QString("ApplicationHelper::slot_CommandVersionCheck_Finished: %1").arg(error.text()));
       return;
     }
 
-    if(   m_WebApiCommand_Login.resultParameter(WebApi::A_PARAM_AUTHENTICATION).toBool()
-       == false)
+    m_CurrentClientVersion = m_WebApiCommand_GetCurrentClientVersion.resultParameter(WebApi::A_PARAM_VERSION).toString();
+
+    if(compareVersions(version(), m_CurrentClientVersion) >= 0)
     {
-      m_Settings->setValue(Settings::USER_USERNAME, QString());
-      m_Settings->setValue(Settings::USER_PASSWORD, QString());
-      m_Settings->sync();
-
-      m_Id = -1;
-      m_LastErrorText = tr("Authentication failed");
-      emit signal_LoginSuccessfull(false);
-      return;
+        return;
     }
 
-
-    m_Id = m_WebApiCommand_Login.resultParameter(WebApi::A_PARAM_ID_USER).toInt();
-
-    m_Settings->sync();
-    emit signal_LoginSuccessfull(true);
+    emit signal_NewClientVersionAvailable();
 }
 
 

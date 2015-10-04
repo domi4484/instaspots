@@ -69,6 +69,10 @@ class WebserviceController extends Controller
                         $request->get('password'),
                         $request->get('email'   ));
       break;
+
+      case "getCurrentClientVersion":
+        $this->getCurrentClientVersion($response);
+      break;
       
       case "uploadPictureToSpot":
         $this->uploadPictureToSpot($response,
@@ -250,6 +254,13 @@ class WebserviceController extends Controller
   // TODO
     //$_SESSION = array();
     //session_destroy();
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function getCurrentClientVersion( &$response )
+  {
+    $response->addData('version', 'V0.0.2');
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

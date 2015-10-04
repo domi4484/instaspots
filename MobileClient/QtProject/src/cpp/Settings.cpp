@@ -14,6 +14,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+// Application settings
+const QString Settings::APPLICATION_LAST_VERSION                   ("application_last_version");
+const QString Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT ("application_newer_version_available_got_it");
+
 // User settings
 const QString Settings::USER_USERNAME("username");
 const QString Settings::USER_PASSWORD("password");
