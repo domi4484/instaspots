@@ -23,7 +23,7 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-            
+
         main:
             pattern: ^/
             anonymous: true
@@ -31,13 +31,13 @@ security:
             form_login:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
-                default_target_path: /spots
+                default_target_path: /
             logout:
                 path:   fos_user_security_logout
-                target: /spots
+                target: /
             remember_me:
                 key: %secret%
-            
+
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/cookbook/security/access_control.html

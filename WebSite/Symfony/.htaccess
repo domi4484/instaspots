@@ -1,0 +1,10 @@
+AddHandler application/x-httpd-php56 .php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ web/$1 [QSA,L]
+</IfModule>
+
+#@__HCP_END__@#
+# Anything after the comment above is left alone

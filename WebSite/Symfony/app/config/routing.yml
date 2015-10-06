@@ -1,7 +1,7 @@
 
 instaspots_spots:
     resource: "@InstaspotsSpotsBundle/Resources/config/routing.yml"
-    prefix:   /spots
+    prefix:   /
     
 
 fos_user_security:
