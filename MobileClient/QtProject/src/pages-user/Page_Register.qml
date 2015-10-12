@@ -56,6 +56,7 @@ BasicPage {
             width: parent.width / 1.3
             anchors.horizontalCenter: parent.horizontalCenter
 
+            inputMethodHints: Qt.ImhNoAutoUppercase
             validator: RegExpValidator {regExp: /[a-z1-9\_\.]+/;}
         }
         TextField {

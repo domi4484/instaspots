@@ -47,6 +47,9 @@ Rectangle {
         anchors.topMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter
 
+        inputMethodHints: Qt.ImhNoAutoUppercase
+        validator: RegExpValidator {regExp: /[a-z1-9\_\.]+/;}
+
         Keys.onEnterPressed:
         {
             login(textField_Username.text,
