@@ -59,6 +59,21 @@ BasicPage{
             }
         }
 
+        // Build timestamp
+        Item{
+            height: text_BuilTimestamp.height
+            width: parent.width
+            Text{
+                id: text_BuilTimestamp
+                text: qsTr("Built on")
+            }
+
+            Text{
+                anchors.right: parent.right
+                text: hc_Application.buildTimestamp()
+            }
+        }
+
         // Platform
         Item{
             height: text_ApplicationVersion.height

@@ -166,6 +166,15 @@ void ApplicationHelper::newerClientVersionAvailableGotIt()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString ApplicationHelper::buildTimestamp() const
+{
+    QString timestamp = QString("%1 %2").arg(__DATE__).arg(__TIME__);
+    timestamp.chop(3);
+    return timestamp;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 bool ApplicationHelper::developmentMode() const
 {
     return m_DevelopmentMode;

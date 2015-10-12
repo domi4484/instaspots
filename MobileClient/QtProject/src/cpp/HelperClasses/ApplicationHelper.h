@@ -45,6 +45,8 @@ public slots:
   bool    checkCurrentClientVersion();
   void    newerClientVersionAvailableGotIt();
 
+  QString buildTimestamp() const;
+
   bool developmentMode() const;
   void setDevelopmentMode(bool developmentMode);
 
