@@ -31,9 +31,10 @@ int main(int argc, char *argv[])
     Logger::instanziate(Logger::LOG_VERBOSE);
 
     Settings settings;
-
-    ApplicationHelper applicationHelper(&settings);
     PlateformDetail   plateformDetail;
+
+    ApplicationHelper applicationHelper(&settings,
+                                        &plateformDetail);
     LocationManager   locationManager(&settings);
     PictureCacher     pictureCacher;
 

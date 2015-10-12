@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "Logger.h"
+#include "PlateformDetail.h"
 #include "../Settings.h"
 #include "../WebApi/WebApi.h"
 
@@ -24,17 +25,22 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-ApplicationHelper::ApplicationHelper(Settings *settings,
+ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *plateformDetail,
                                      QObject *parent)
   : QObject(parent),
     m_Settings(settings),
+    m_PlateformDetail(plateformDetail),
     m_CurrentClientVersion(),
     m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false)
 {
-    qDebug() << m_Settings->value(Settings::APPLICATION_LAST_VERSION).toString();
-    qDebug() << QApplication::applicationVersion();
+    // Log application version
+    Logger::info(QString("%1 %2 built on %3 for %4 plateform").arg(QApplication::applicationName())
+                                                              .arg(version())
+                                                              .arg(buildTimestamp())
+                                                              .arg(m_PlateformDetail->name()));
 
+    // Check if newer version was installed
     if(m_Settings->value(Settings::APPLICATION_LAST_VERSION).toString() != QApplication::applicationVersion())
     {
         m_Settings->setValue(Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT, false);

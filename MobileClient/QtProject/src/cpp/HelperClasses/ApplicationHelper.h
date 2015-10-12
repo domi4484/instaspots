@@ -21,6 +21,7 @@
 
 // Forward declarations --------------------
 class Settings;
+class PlateformDetail;
 
 class ApplicationHelper : public QObject
 {
@@ -28,6 +29,7 @@ class ApplicationHelper : public QObject
 
 public:
   explicit ApplicationHelper(Settings *settings,
+                             PlateformDetail *plateformDetail,
                              QObject *parent = 0);
   ~ApplicationHelper();
 
@@ -58,6 +60,9 @@ private:
 
   // Link to Settings
   Settings *m_Settings;
+
+  // Link to PlateformDetail
+  PlateformDetail *m_PlateformDetail;
 
   QString       m_CurrentClientVersion;
   WebApiCommand m_WebApiCommand_GetCurrentClientVersion;

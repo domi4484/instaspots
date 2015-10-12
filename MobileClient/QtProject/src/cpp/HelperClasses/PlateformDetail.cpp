@@ -12,9 +12,6 @@
 // Files includes --------------------------
 #include "PlateformDetail.h"
 
-// Project includes ------------------------
-#include "Logger.h"
-
 //-----------------------------------------------------------------------------------------------------------------------------
 
 PlateformDetail::PlateformDetail(QObject *parent) :
@@ -30,8 +27,6 @@ PlateformDetail::PlateformDetail(QObject *parent) :
 #ifdef Q_OS_WINPHONE
   m_Os = OS_WINPHONE;
 #endif
-
-  Logger::info(QString("Plateform: %1").arg(name()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
