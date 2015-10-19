@@ -58,10 +58,11 @@ public:
   static const QString C_REGISTER;
   static const QString C_CANREGISTER;
   static const QString C_GET_CURRENT_CLIENT_VERSION;
-  static const QString C_GET_NEARBY_SPOTS;
+  static const QString C_GET_SPOTS_BY_DISTANCE;
+  static const QString C_GET_SPOTS_BY_USER_ID;
   static const QString C_GET_PICTURES_BY_SPOT_ID;
   static const QString C_GET_PICTURES_BY_USER_ID;
-  static const QString C_GET_NEWS;
+  static const QString C_GET_PICTURES_BY_NEWEST;
 
   static const QString R_PARAM_USER_ID;
   static const QString R_PARAM_USERNAME;

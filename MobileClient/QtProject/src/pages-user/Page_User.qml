@@ -14,11 +14,14 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 
 // Project c++ imports ---------------------
+import SpotsModel 1.0
 import PicturesModel 1.0
 
 // Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/widgets"
+import "qrc:/views"
+import "qrc:/pages-spot"
 
 BasicPage{
     id: page_User
@@ -36,30 +39,79 @@ BasicPage{
         id: picturesModel
     }
 
+    SpotsModel{
+        id: spotsModel
+    }
 
     // Gui ---------------------------------
-    Item{
-        id: item_Gui
+    TabWidgetTop {
+        id: tabWidget
         width: parent.width
         height: parent.height
 
-        GridView{
-            id: gridView_Pictures
+        Item{
+            id: tab_Pictures
+            anchors.fill: parent
+            property string tabWidget_ButtonText: qsTr("Pictures(%1)").arg(picturesModel.count)
+            property string tabWidget_ButtonIconSource: ""
+
+            GridView{
+                id: gridView_Pictures
+                anchors.fill: parent
+
+                cellWidth: parent.width / 2
+                cellHeight: cellWidth
+
+                model: picturesModel
+                delegate: component_Picture
+            }
+        }
+
+        StackView {
+            id: stackView
             anchors.fill: parent
 
-            cellWidth: parent.width / 2
-            cellHeight: cellWidth
+            // Tab widget properties
+            property string tabWidget_ButtonText: qsTr("Spots(%1)").arg(spotsModel.count)
+            property string tabWidget_ButtonIconSource: ""
 
-            model: picturesModel
-            delegate: component_Picture
+            // Implements back key navigation
+            focus: true
+            Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
+                                 stackView.pop();
+                                 event.accepted = true;
+                             }
+            initialItem: BasicPage {
+                id: page_Locating
+                width: parent.width
+                height: parent.height
+
+                title: qsTr('Nearby spots')
+
+                Page_SpotsList {
+                    anchors.fill: parent
+                    model: spotsModel
+                    onSpotClicked: {
+                        stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
+                                       properties:{title:spotName,
+                                                   width:stackView.width,
+                                                   height:stackView.height,
+                                                   stackView:stackView,
+                                                   navigator:navigator,
+                                                   spotId:spotId}});
+                    }
+                }
+            }
         }
     }
+
 
 
     // Signals -----------------------------
     onUserIdChanged:
     {
         picturesModel.setUserId(userId);
+        spotsModel.setUserId(userId);
     }
 
     // Connections -------------------------

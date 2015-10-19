@@ -30,7 +30,7 @@ class WebserviceController extends Controller
   public function webserviceAction(Request $request)
   {
     $response = new Response();
-  
+
     if ($request->isMethod('POST') == false)
     {
       $response->setError('Not a post request');
@@ -39,21 +39,21 @@ class WebserviceController extends Controller
 
     $command = $request->get('command');
     $response->setCommand($command);
-                       
+
     if (strlen($command) == 0)
     {
       $response->setError('Empty command');
       return new JsonResponse($response->toJson());
     }
-    
+
     switch ($command)
     {
-      case "login": 
+      case "login":
         $this->login($response,
-                     $request->get('username'), 
-                     $request->get('password')); 
+                     $request->get('username'),
+                     $request->get('password'));
       break;
-      
+
       case "logout":
         $this->logout();
       break;
@@ -73,7 +73,7 @@ class WebserviceController extends Controller
       case "getCurrentClientVersion":
         $this->getCurrentClientVersion($response);
       break;
-      
+
       case "uploadPictureToSpot":
         $this->uploadPictureToSpot($response,
                                    $request->get('id_spot'  ),
@@ -81,7 +81,7 @@ class WebserviceController extends Controller
                                    $request->get('longitude'),
                                    $request->files->get('image'));
       break;
-      
+
       case "uploadNewSpot":
         $this->uploadNewSpot($response,
                              $request->get('latitude'   ),
@@ -90,11 +90,11 @@ class WebserviceController extends Controller
                              $request->get('description'),
                              $request->files->get('image'));
       break;
-      
-      case "getNews":
-        $this->getNews($response);
+
+      case "getPicturesByNewest":
+        $this->getPicturesByNewest($response);
       break;
-      
+
       case "getPicturesBySpotId":
         $this->getPicturesBySpotId($response,
                                    $request->get('id_spot'));
@@ -105,23 +105,28 @@ class WebserviceController extends Controller
                                    $request->get('id_user'));
       break;
 
-      case "getNearbySpots":
-        $this->getNearbySpots($response,
-                              $request->get('latitude' ),
-                              $request->get('longitude'),
-                              $request->get('maxDistance_km'));
+      case "getSpotsByDistance":
+        $this->getSpotsByDistance($response,
+                                  $request->get('latitude' ),
+                                  $request->get('longitude'),
+                                  $request->get('maxDistance_km'));
       break;
-    
+
+      case "getSpotsByUserId":
+        $this->getSpotsByUserId($response,
+                                $request->get('id_user'));
+      break;
+
       default:
       {
         $command = $response->getCommand();
         $response->setError("Unknown command: $command");
       }
     }
-    
+
     return new JsonResponse($response->toJson());
   }
-  
+
 //-----------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -129,18 +134,18 @@ class WebserviceController extends Controller
                                  $username )
   {
     $minimumClientVersion = 'V0.0.1';
-  
+
     // check if username is not empty
     if (strlen($username) == 0)
     {
       $response->setError('Empty username');
       return;
     }
-    
+
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsUserBundle:User');
-    
+
     $listUsers = $repository->findByUsername($username);
 
     if(empty($listUsers) == false)
@@ -148,43 +153,43 @@ class WebserviceController extends Controller
       $response->addData('canregister', false);
       return;
     }
-    
+
     $response->addData('canregister', true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
   private function register( &$response,
-                              $username, 
+                              $username,
                               $password,
                               $email )
   {
     $minimumClientVersion = 'V0.0.1';
-  
+
     // check if username is not empty
     if (strlen($username) == 0)
     {
       $response->setError('Empty username');
       return;
     }
-  
+
     // check if password is not empty
     if (strlen($password) == 0)
     {
       $response->setError('Invalid password');
       return;
     }
-  
+
     // TODO validate email or check if it is done by manipulator->create
     if (strlen($email) == 0)
     {
       $response->setError('Empty email');
       return;
     }
-  
+
     $this->canregister($response,
                        $username);
-                
+
     if($response->getData('canregister') == false)
     {
       $response->addData('canregister', false);
@@ -206,12 +211,12 @@ class WebserviceController extends Controller
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function login( &$response, 
-                           $username, 
+  private function login( &$response,
+                           $username,
                            $password )
   {
     $minimumClientVersion = 'V0.0.1';
-  
+
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsUserBundle:User');
@@ -227,11 +232,11 @@ class WebserviceController extends Controller
 
     $factory = $this->get('security.encoder_factory');
     $encoder = $factory->getEncoder($user);
-    
+
     // Creo il token
     $token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
     $this->get("security.context")->setToken($token); //now the user is logged in
-     
+
     //now dispatch the login event
     $request = $this->get("request");
     $event = new InteractiveLoginEvent($request, $token);
@@ -250,7 +255,7 @@ class WebserviceController extends Controller
   private function logout()
   {
     $minimumClientVersion = 'V0.0.1';
-  
+
   // TODO
     //$_SESSION = array();
     //session_destroy();
@@ -272,7 +277,7 @@ class WebserviceController extends Controller
                                          UploadedFile $uploadedFile )
   {
     $minimumClientVersion = 'V0.0.1';
-    
+
     // Check for valid picture
     if(   $uploadedFile->isValid() == false
        || $uploadedFile->getMimeType() != 'image/jpeg')
@@ -280,7 +285,7 @@ class WebserviceController extends Controller
       $response->setError('Invalid file received');
       return;
     }
-  
+
     // Get current user
     $user = $this->getUser();
     if($user == null)
@@ -288,24 +293,24 @@ class WebserviceController extends Controller
       $response->setError('Authentication required');
       return;
     }
-    
+
     // Get spot
     $em = $this->getDoctrine()->getManager();
     $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
-    
+
     $spot = $spotRepository->findOneById($spotId);
-  
+
     // New picture
     $picture = new Picture();
     $picture->setUser($user);
     $picture->setLatitude($latitude);
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
-    
+
     $spot->addPicture($picture);
- 
+
     $em->persist($picture);
- 
+
     // Create the directory for the new pictures
     $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
     $fs = new Filesystem();
@@ -313,21 +318,21 @@ class WebserviceController extends Controller
     {
       $fs->mkdir($destinationDirectory);
     }
-    catch (IOExceptionInterface $e) 
+    catch (IOExceptionInterface $e)
     {
       $response->setError("An error occurred while creating directory at ".$e->getPath());
       return;
     }
-  
+
     // Flush
     $em->flush();
 
     // Move the temporarily stored file to a convenient location
     $movedFile = $uploadedFile->move($destinationDirectory, $picture->getId().'.jpg');
-    
+
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
-    
+
     $response->addData('successful', true);
   }
 
@@ -341,7 +346,7 @@ class WebserviceController extends Controller
                                    UploadedFile $uploadedFile )
   {
     $minimumClientVersion = 'V0.0.1';
-  
+
     // Check for valid picture
     if(   $uploadedFile->isValid() == false
        || $uploadedFile->getMimeType() != 'image/jpeg')
@@ -349,7 +354,7 @@ class WebserviceController extends Controller
       $response->setError('Invalid file received');
       return;
     }
-  
+
     // Get current user
     $user = $this->getUser();
     if($user == null)
@@ -357,28 +362,28 @@ class WebserviceController extends Controller
       $response->setError('Authentication required');
       return;
     }
-  
+
     // New spot
     $spot = new Spot();
     $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
-  
+
     // New picture
     $picture = new Picture();
     $picture->setUser($user);
     $picture->setLatitude($latitude);
     $picture->setLongitude($longitude);
     $picture->setPublished(true);
-    
+
     $spot->addPicture($picture);
-    
+
     // Persist entities
     $em = $this->getDoctrine()->getManager();
     $em->persist($spot);
     $em->persist($picture);
- 
- 
+
+
     // Create the directory for the new pictures
     $destinationDirectory = 'pictures/'.$picture->getCreated()->format('Y/m/d/');
     $fs = new Filesystem();
@@ -386,36 +391,36 @@ class WebserviceController extends Controller
     {
       $fs->mkdir($destinationDirectory);
     }
-    catch (IOExceptionInterface $e) 
+    catch (IOExceptionInterface $e)
     {
       $response->setError("An error occurred while creating your directory at ".$e->getPath());
       return;
     }
-  
+
     // Flush
     $em->flush();
 
     // Move the temporarily stored file to a convenient location
     $movedFile = $uploadedFile->move($destinationDirectory, $picture->getId().'.jpg');
-    
+
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
-    
+
     $response->addData('successful', true);
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getNews( &$response )
+  private function getPicturesByNewest( &$response )
   {
     $minimumClientVersion = 'V0.0.1';
-  
+
      $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Picture');
 
     $jPictures = array();
-    foreach($repository->getNews() as &$picture)
+    foreach($repository->getPicturesByNewest() as &$picture)
     {
       $jPictures[] = $picture->toJson();
     }
@@ -424,18 +429,18 @@ class WebserviceController extends Controller
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
-  
+
   private function getPicturesBySpotId( &$response,
                                          $spotId)
   {
     $minimumClientVersion = 'V0.0.2';
-  
+
     // Get spot
     $em = $this->getDoctrine()->getManager();
     $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
-    
+
     $spot = $spotRepository->findOneById($spotId);
-    
+
     // Get pictures
     $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
     $pictures = $pictureRepository->findBySpot($spot,
@@ -449,14 +454,14 @@ class WebserviceController extends Controller
 
     $response->addData('pictures', $jPictures);
   }
-  
+
 //-----------------------------------------------------------------------------------------------------------------------------
-  
+
   private function getPicturesByUserId( &$response,
-                                          $userId)
+                                          $userId )
   {
     $minimumClientVersion = 'V0.0.2';
-  
+
     // Get user
     $em = $this->getDoctrine()->getManager();
     $userRepository = $em->getRepository('InstaspotsUserBundle:User');
@@ -467,12 +472,12 @@ class WebserviceController extends Controller
       $response->setError('User with id \''.$userId.'\' not found');
       return;
     }
-  
+
     // Get pictures
     $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
     $pictureList = $pictureRepository->findByUser($user,
                                                   array('created' => 'DESC'));
-    
+
     $jPictures = array();
     foreach($pictureList as &$picture)
     {
@@ -484,13 +489,13 @@ class WebserviceController extends Controller
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getNearbySpots( &$response,
-                                    $latitude,
-                                    $longitude,
-                                    $maxDistance_km)
+  private function getSpotsByDistance( &$response,
+                                        $latitude,
+                                        $longitude,
+                                        $maxDistance_km )
   {
     $minimumClientVersion = 'V0.0.2';
-  
+
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Spot');
@@ -502,7 +507,7 @@ class WebserviceController extends Controller
             as &$spot)
     {
       $jSpot = array();
-      
+
       $jSpot['id']          = $spot[0]['id'];
       $jSpot['name']        = $spot[0]['name'];
       $jSpot['description'] = $spot[0]['description'];
@@ -516,11 +521,11 @@ class WebserviceController extends Controller
 
       $jSpot['pictureId1']  = $picture1->getId();
       $jSpot['pictureUrl1'] = $picture1->getUrl();
-      
+
       $picture2 = new Picture();
       $picture2->setId     ($spot[0]['picture2']['id']);
       $picture2->setCreated($spot[0]['picture2']['created']);
-      
+
       if($picture2->getId() != $picture1->getId())
       {
         $jSpot['pictureId2']  = $picture2->getId();
@@ -531,18 +536,51 @@ class WebserviceController extends Controller
         $jSpot['pictureId2']  = -1;
         $jSpot['pictureUrl2'] = '';
       }
-    
+
       $jSpots[] = $jSpot;
     }
 
     $response->addData('spots', $jSpots);
   }
 
-  //-----------------------------------------------------------------------------------------------------------------------------
-  //-----------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function getSpotsByUserId( &$response,
+                                      $userId )
+  {
+    $minimumClientVersion = 'V0.0.2';
+
+    // Get user
+    $em = $this->getDoctrine()->getManager();
+    $userRepository = $em->getRepository('InstaspotsUserBundle:User');
+    $user = $userRepository->findOneById($userId);
+
+    if(empty($user))
+    {
+      $response->setError('User with id \''.$userId.'\' not found');
+      return;
+    }
+
+    // Get spots
+    $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
+    $spotList = $spotRepository->findByUser($user,
+                                               array('modified' => 'DESC'));
+
+    $jSpots = array();
+    foreach($spotList as &$spot)
+    {
+      $jSpots[] = $spot->toJson();
+    }
+
+    $response->addData('spots', $jSpots);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------
 
   //loads up the source image, resizes it and saves with -thumb in the file name
-  private function thumb($srcFile, $sideInPx)
+  private function thumb( $srcFile,
+                          $sideInPx )
   {
     $image = imagecreatefromjpeg($srcFile);
     $width = imagesx($image);
@@ -558,4 +596,3 @@ class WebserviceController extends Controller
     imagedestroy($image);
   }
 }
-

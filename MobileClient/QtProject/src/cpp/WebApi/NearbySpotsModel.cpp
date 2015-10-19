@@ -69,7 +69,7 @@ void NearbySpotsModel::setLocation(double latitude,
                                    double longitude,
                                    double maxDistance_km)
 {
-  m_RequestId = SpotRepository::instance()->getByDistance(latitude,
+  m_RequestId = SpotRepository::instance()->getBy_Distance(latitude,
                                                           longitude,
                                                           maxDistance_km);
 }

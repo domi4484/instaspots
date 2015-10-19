@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class PictureRepository extends EntityRepository
 {
 
-  public function getNews()
+  public function getPicturesByNewest()
   {
     $qb = $this->createQueryBuilder('p');
 

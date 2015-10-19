@@ -3,93 +3,80 @@
  * InstaSpots                                                      *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
- * Created:      15.06.2015                                        *
+ * Created:      19.10.2015                                        *
  *                                                                 *
  * Copiright (c) 2015 Damiano Lombardi                             *
  *                                                                 *
 ********************************************************************/
 
 // Files includes --------------------------
-#include "PicturesModel.h"
+#include "SpotsModel.h"
 
 // Projects includes -----------------------
-#include "Picture.h"
-#include "PictureRepository.h"
+#include "Spot.h"
+#include "SpotRepository.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PicturesModel::PicturesModel(QObject *parent)
-  : QAbstractListModel(parent),
-    m_QList_Pictures(),
+SpotsModel::SpotsModel(QObject *parent) :
+    QAbstractListModel(parent),
+    m_QList_Spots(),
     m_RequestId(0)
 {
-  connect(PictureRepository::instance(),
-          SIGNAL(signal_DataReady(int,
-                                  bool)),
-          SLOT(slot_PictureRepository_DataReady(int,
-                                                bool)));
+    connect(SpotRepository::instance(),
+            SIGNAL(signal_DataReady(int,
+                                    bool)),
+            SLOT(slot_SpotRepository_DataReady(int,
+                                               bool)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PicturesModel::~PicturesModel()
+SpotsModel::~SpotsModel()
 {
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int PicturesModel::rowCount(const QModelIndex &parent) const
+int SpotsModel::rowCount(const QModelIndex &parent) const
 {
   Q_UNUSED(parent)
-  return m_QList_Pictures.count();
+  return m_QList_Spots.count();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QVariant PicturesModel::data(const QModelIndex &index,
-                             int role) const
+QVariant SpotsModel::data(const QModelIndex &index,
+                          int role) const
 {
-  return m_QList_Pictures.at(index.row())->pictureRole((Picture::PictureRoles)role);
+  return m_QList_Spots.at(index.row())->spotRole((Spot::SpotRoles)role);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QHash<int, QByteArray> PicturesModel::roleNames() const
+QHash<int, QByteArray> SpotsModel::roleNames() const
 {
-    return Picture::roleNames();
+    return Spot::roleNames();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PicturesModel::setSpotId(int id)
-{
-  beginResetModel();
-  m_QList_Pictures.clear();
-  endResetModel();
-
-
-  m_RequestId = PictureRepository::instance()->getBy_SpotId(id);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void PicturesModel::setUserId(int id)
+void SpotsModel::setUserId(int id)
 {
   beginResetModel();
-  m_QList_Pictures.clear();
+  m_QList_Spots.clear();
   endResetModel();
 
-  m_RequestId = PictureRepository::instance()->getBy_UserId(id);
+  m_RequestId = SpotRepository::instance()->getBy_UserId(id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PicturesModel::slot_PictureRepository_DataReady(int requestId,
-                                                     bool success)
+void SpotsModel::slot_SpotRepository_DataReady(int requestId,
+                                                  bool success)
 {
   if(m_RequestId != requestId)
     return;
@@ -98,11 +85,13 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
     return;
   // TODO error handling?
 
-  beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
-  m_QList_Pictures = PictureRepository::instance()->getPictures(m_RequestId);
+  beginInsertRows(QModelIndex() , 0, SpotRepository::instance()->getSpots(m_RequestId).size()-1);
+  m_QList_Spots = SpotRepository::instance()->getSpots(m_RequestId);
   endInsertRows();
 
-  countChanged(m_QList_Pictures.count());
+  countChanged(m_QList_Spots.count());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
+
+

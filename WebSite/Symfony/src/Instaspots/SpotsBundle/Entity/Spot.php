@@ -75,30 +75,30 @@ class Spot
      * @ORM\Column(name="longitude", type="float")
      */
     private $longitude;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Instaspots\SpotsBundle\Entity\Picture")
      */
     private $picture1;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Instaspots\SpotsBundle\Entity\Picture")
      */
     private $picture2;
-    
-    
+
+
     /**
      * @ORM\OneToMany(targetEntity="Instaspots\SpotsBundle\Entity\Picture", mappedBy="spot")
      */
     private $pictures; // // Inverso della relazione many to one
-    
-    
+
+
     /**
      * @var float
      */
     private $distance;
-    
-    
+
+
     /**
      * Constructor
      */
@@ -107,15 +107,15 @@ class Spot
       $now = new \DateTime();
       $this->created = $now;
       $this->modified = $now;
-      
+
       $this->score = 0;
     }
-    
-    
+
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -138,7 +138,7 @@ class Spot
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -161,7 +161,7 @@ class Spot
     /**
      * Get modified
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getModified()
     {
@@ -184,7 +184,7 @@ class Spot
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -207,7 +207,7 @@ class Spot
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -230,7 +230,7 @@ class Spot
     /**
      * Get score
      *
-     * @return integer 
+     * @return integer
      */
     public function getScore()
     {
@@ -253,7 +253,7 @@ class Spot
     /**
      * Get user
      *
-     * @return \Instaspots\UserBundle\Entity\User 
+     * @return \Instaspots\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -276,7 +276,7 @@ class Spot
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -299,7 +299,7 @@ class Spot
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -322,7 +322,7 @@ class Spot
     /**
      * Get picture1
      *
-     * @return \Instaspots\SpotsBundle\Entity\Picture 
+     * @return \Instaspots\SpotsBundle\Entity\Picture
      */
     public function getPicture1()
     {
@@ -345,7 +345,7 @@ class Spot
     /**
      * Get picture2
      *
-     * @return \Instaspots\SpotsBundle\Entity\Picture 
+     * @return \Instaspots\SpotsBundle\Entity\Picture
      */
     public function getPicture2()
     {
@@ -356,20 +356,20 @@ class Spot
 
     public function pictureAdded(\Instaspots\SpotsBundle\Entity\Picture $picture)
     {
-      
+
 
     }
-    
+
     //-----------------------------------------------------------------------------------------------------------------------------
-    
+
     public function addPicture(Picture $picture)
     {
       $this->pictures[] = $picture;
       $picture->setSpot($this);
-      
-      $picturesCount = count($this->pictures); 
-      
-     
+
+      $picturesCount = count($this->pictures);
+
+
       if($picturesCount == 1) // First picture added
       {
         $this->latitude  = $picture->getLatitude();
@@ -378,12 +378,12 @@ class Spot
         $this->picture2 = $picture;
         return $this;
       }
-      
-      
+
+
       // Update location
       $this->latitude  = ($this->latitude  * ($picturesCount - 1) + $picture->getLatitude() ) / $picturesCount;
       $this->longitude = ($this->longitude * ($picturesCount - 1) + $picture->getLongitude()) / $picturesCount;
-       
+
       // Check if picture1 and 2 are still the same
       if($this->picture1->getId() == $this->picture2->getId())
       {
@@ -412,24 +412,58 @@ class Spot
       $this->pictures->removeElement($picture);
     }
 
-    public function getPictures()
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function getPictures()
+  {
+    return $this->pictures;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function setDistance($distance = -1)
+  {
+      $this->distance = $distance;
+
+      return $this;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function getDistance()
+  {
+      return $this->distance;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function toJson()
+  {
+    $jSpot = array();
+
+    $jSpot['id']          = $this->getId();
+    $jSpot['name']        = $this->getName();
+    $jSpot['description'] = $this->getDescription();
+    $jSpot['latitude']    = $this->getLatitude();
+    $jSpot['longitude']   = $this->getLongitude();
+    $jSpot['distance_km'] = -1;
+
+    $picture1 = $this->getPicture1();
+    $jSpot['pictureId1']  = $picture1->getId();
+    $jSpot['pictureUrl1'] = $picture1->getUrl();
+
+    $picture2 = $this->getPicture2();
+    if($picture2->getId() != $picture1->getId())
     {
-      return $this->pictures;
+      $jSpot['pictureId2']  = $picture2->getId();
+      $jSpot['pictureUrl2'] = $picture2->getUrl();
     }
-    
-    //-----------------------------------------------------------------------------------------------------------------------------
-    
-    public function setDistance($distance = -1)
+    else
     {
-        $this->distance = $distance;
-
-        return $this;
+      $jSpot['pictureId2']  = -1;
+      $jSpot['pictureUrl2'] = '';
     }
 
-
-    public function getDistance()
-    {
-        return $this->distance;
-    }
-
+    return $jSpot;
+  }
 }

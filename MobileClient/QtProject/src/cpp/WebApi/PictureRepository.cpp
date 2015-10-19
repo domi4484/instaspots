@@ -138,7 +138,7 @@ int PictureRepository::getNews()
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::C_GET_NEWS);
+  webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_NEWEST);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
 

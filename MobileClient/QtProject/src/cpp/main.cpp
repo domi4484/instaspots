@@ -7,6 +7,7 @@
 #include "HelperClasses/LocationManager.h"
 #include "HelperClasses/PictureCacher.h"
 #include "WebApi/SpotRepository.h"
+#include "WebApi/SpotsModel.h"
 #include "WebApi/PictureRepository.h"
 #include "WebApi/PicturesModel.h"
 #include "WebApi/User.h"
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);
 
     qmlRegisterType<PicturesModel>   ("PicturesModel",    1, 0, "PicturesModel");
+    qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
     qmlRegisterType<NewsModel>       ("NewsModel",        1, 0, "NewsModel");
     qmlRegisterType<NearbySpotsModel>("NearbySpotsModel", 1, 0, "NearbySpotsModel");
 

@@ -112,6 +112,11 @@ QHash<int, QByteArray> Spot::roleNames()
 
 QString Spot::distanceText() const
 {
+  if(m_Distance_km < 0)
+  {
+      return "";
+  }
+
   if(m_Distance_km >= 2)
   {
     return QString("%1 km").arg((int) m_Distance_km);

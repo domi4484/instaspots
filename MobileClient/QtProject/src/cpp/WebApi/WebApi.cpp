@@ -44,10 +44,11 @@ const QString WebApi::C_LOGOUT                     ("logout");
 const QString WebApi::C_REGISTER                   ("register");
 const QString WebApi::C_CANREGISTER                ("canregister");
 const QString WebApi::C_GET_CURRENT_CLIENT_VERSION ("getCurrentClientVersion");
-const QString WebApi::C_GET_NEARBY_SPOTS           ("getNearbySpots");
+const QString WebApi::C_GET_SPOTS_BY_DISTANCE      ("getSpotsByDistance");
+const QString WebApi::C_GET_SPOTS_BY_USER_ID       ("getSpotsByUserId");
 const QString WebApi::C_GET_PICTURES_BY_SPOT_ID    ("getPicturesBySpotId");
 const QString WebApi::C_GET_PICTURES_BY_USER_ID    ("getPicturesByUserId");
-const QString WebApi::C_GET_NEWS                   ("getNews");
+const QString WebApi::C_GET_PICTURES_BY_NEWEST     ("getPicturesByNewest");
 
 // Request parameters
 const QString WebApi::R_PARAM_USER_ID  ("id_user");

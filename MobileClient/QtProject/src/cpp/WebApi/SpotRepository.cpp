@@ -88,7 +88,7 @@ QList<Spot *> SpotRepository::getSpots(int requestId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int SpotRepository::getByDistance(double latitude,
+int SpotRepository::getBy_Distance(double latitude,
                                   double longitude,
                                   double maxDistance_km)
 {
@@ -100,7 +100,7 @@ int SpotRepository::getByDistance(double latitude,
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::C_GET_NEARBY_SPOTS);
+  webApiCommand->setCommand(WebApi::C_GET_SPOTS_BY_DISTANCE);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
 
@@ -110,6 +110,28 @@ int SpotRepository::getByDistance(double latitude,
   webApiCommand->postRequest(qList_QueryItems);
 
   return m_RequestId;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int SpotRepository::getBy_UserId(int userId)
+{
+    QList<QueryItem> qList_QueryItems;
+    qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USER_ID,  QString::number(userId)));
+
+    // TODO check post return type
+    WebApiCommand *webApiCommand = new WebApiCommand(this);
+    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setCommand(WebApi::C_GET_SPOTS_BY_USER_ID);
+
+    webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+
+    connect(webApiCommand,
+            SIGNAL(signal_Finished(const WebApiError &)),
+            SLOT(slot_Command_Finished(const WebApiError &)));
+    webApiCommand->postRequest(qList_QueryItems);
+
+    return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -155,9 +177,15 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
       m_QMap_Spots.value(id)->setDescription(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString());
       m_QMap_Spots.value(id)->setLatitude   (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble());
       m_QMap_Spots.value(id)->setLongitude  (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble());
-      m_QMap_Spots.value(id)->setDistance   (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toDouble());
       m_QMap_Spots.value(id)->setPictureUrl1(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());
       m_QMap_Spots.value(id)->setPictureUrl2(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
+
+      // Set dinstance only if it was really computed
+      double distance = jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toDouble();
+      if(distance > 0)
+      {
+        m_QMap_Spots.value(id)->setDistance(distance);
+      }
     }
 
     newSpots.append(m_QMap_Spots.value(id));

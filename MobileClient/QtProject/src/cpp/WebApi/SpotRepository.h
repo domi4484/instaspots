@@ -41,9 +41,11 @@ public slots:
 
   QList<Spot *> getSpots(int requestId);
 
-  int getByDistance(double latitude,
-                    double longitude,
-                    double maxDistance_km);
+  int getBy_Distance(double latitude,
+                     double longitude,
+                     double maxDistance_km);
+
+  int getBy_UserId(int userId);
 
 signals:
 

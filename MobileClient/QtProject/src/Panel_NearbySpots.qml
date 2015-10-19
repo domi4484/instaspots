@@ -95,8 +95,7 @@ Item {
             title: qsTr('Nearby spots')
 
             Page_SpotsList {
-                width: parent.width
-                height: parent.height
+                anchors.fill: parent
                 model: nearbySpotsModel
                 onSpotClicked: {
                     stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),

@@ -41,7 +41,8 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/Settings.cpp \
     src/cpp/WebApi/SpotRepository.cpp \
     src/cpp/WebApi/PictureRepository.cpp \
-    src/cpp/WebApi/PicturesModel.cpp
+    src/cpp/WebApi/PicturesModel.cpp \
+    src/cpp/WebApi/SpotsModel.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -71,7 +72,8 @@ HEADERS += \
     src/cpp/Settings.h \
     src/cpp/WebApi/SpotRepository.h \
     src/cpp/WebApi/PictureRepository.h \
-    src/cpp/WebApi/PicturesModel.h
+    src/cpp/WebApi/PicturesModel.h \
+    src/cpp/WebApi/SpotsModel.h
 
 DISTFILES += \
     ../../WebSite/Symfony/app/config/config_dev.yml \
