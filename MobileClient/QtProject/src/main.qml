@@ -66,7 +66,7 @@ ApplicationWindow {
     }
 
     // Gui ---------------------------------
-    TabWidget {
+    TabWidgetBottom {
         id: tabWidget_Main
         anchors.fill: parent
 

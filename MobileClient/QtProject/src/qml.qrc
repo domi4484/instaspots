@@ -36,7 +36,8 @@
         <file>views/SpotOverviewDelegate.qml</file>
         <file>widgets/CachedPicture.qml</file>
         <file>widgets/TabButton.qml</file>
-        <file>widgets/TabWidget.qml</file>
+        <file>widgets/TabWidgetBottom.qml</file>
+        <file>widgets/TabWidgetTop.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

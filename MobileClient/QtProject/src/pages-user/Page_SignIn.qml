@@ -66,7 +66,7 @@ BasicPage{
     }
 
     // Gui ---------------------------------
-    TabWidget {
+    TabWidgetTop {
         id: tabWidget
         width: parent.width
         height: parent.height

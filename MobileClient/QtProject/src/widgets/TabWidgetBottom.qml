@@ -7,7 +7,9 @@ import "qrc:/"
 import "qrc:/widgets"
 
 Item {
-    id: tabWidget
+    id: tabWidgetBottom
+
+    // Properties --------------------------
 
     // Setting the default property to stack.children means any child items
     // of the TabWidget are actually added to the 'stack' item's children.
@@ -42,8 +44,8 @@ Item {
 
     Item {
         id: stack
-        width: tabWidget.width
-        anchors.top: tabWidget.top
+        width: tabWidgetBottom.width
+        anchors.top: tabWidgetBottom.top
         anchors.bottom: header.top
 
     }
@@ -51,19 +53,22 @@ Item {
     Row {
         id: header
 
-        anchors.bottom: tabWidget.bottom
+        anchors.bottom: tabWidgetBottom.bottom
 
         Repeater {
             model: stack.children.length
             delegate: TabButton {
-                width: tabWidget.width / stack.children.length; height: 36
+                width: tabWidgetBottom.width / stack.children.length; height: 36
                 iconSource: stack.children[index].tabWidget_ButtonIconSource
                 buttonText: stack.children[index].tabWidget_ButtonText
 
-                checked: tabWidget.current == index
+                lineTopVisible:    true
+                lineBottomVisible: false
+
+                checked: tabWidgetBottom.current == index
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: tabWidget.current = index
+                    onClicked: tabWidgetBottom.current = index
                 }
             }
         }
