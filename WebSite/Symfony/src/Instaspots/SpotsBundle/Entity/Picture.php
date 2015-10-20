@@ -17,7 +17,7 @@ class Picture
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Instaspots\SpotsBundle\Entity\Spot", inversedBy="pictures")
      * @ORM\JoinColumn(nullable=false)
@@ -53,20 +53,20 @@ class Picture
      * @ORM\Column(name="longitude", type="float")
      */
     private $longitude;
-    
+
     /**
      * @var bool
      *
      * @ORM\Column(name="published", type="boolean")
      */
     private $published = false;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Instaspots\UserBundle\Entity\User")
      */
     private $likers;
-     
-     
+
+
     /**
      * Constructor
      */
@@ -78,14 +78,14 @@ class Picture
     public function setId($id)
     {
         $this->id = $id;
-        
+
         return $this;
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -108,11 +108,16 @@ class Picture
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
         return $this->created;
+    }
+
+    public function getCreatedISOText()
+    {
+        return $this->created->format(DATE_ISO8601);
     }
 
     /**
@@ -131,7 +136,7 @@ class Picture
     /**
      * Get latitude
      *
-     * @return float 
+     * @return float
      */
     public function getLatitude()
     {
@@ -154,7 +159,7 @@ class Picture
     /**
      * Get longitude
      *
-     * @return float 
+     * @return float
      */
     public function getLongitude()
     {
@@ -177,7 +182,7 @@ class Picture
     /**
      * Get published
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPublished()
     {
@@ -200,7 +205,7 @@ class Picture
     /**
      * Get user
      *
-     * @return \Instaspots\UserBundle\Entity\User 
+     * @return \Instaspots\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -223,7 +228,7 @@ class Picture
     /**
      * Get spot
      *
-     * @return \Instaspots\SpotsBundle\Entity\Spot 
+     * @return \Instaspots\SpotsBundle\Entity\Spot
      */
     public function getSpot()
     {
@@ -263,22 +268,22 @@ class Picture
     /**
      * Get likers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLikers()
     {
         return $this->likers;
     }
-    
+
     //-----------------------------------------------------------------------------------------------------------------------------
-    
+
    public function toJson()
     {
       $jPicture = array();
       $jPicture['id']          = $this->getId();
       $jPicture['latitude']    = $this->getLatitude();
       $jPicture['longitude'  ] = $this->getLongitude();
-      $jPicture['created']     = $this->getCreated();
+      $jPicture['created']     = $this->getCreatedISOText();
       $jPicture['url']         = $this->getUrl();
 
       $jPicture['id_spot'    ] = $this->getSpot()->getId();
@@ -288,7 +293,7 @@ class Picture
 
       $jPicture['id_user']  = $this->getUser()->getId();
       $jPicture['username'] = $this->getUser()->getUsername();
-      
+
       return $jPicture;
     }
 }

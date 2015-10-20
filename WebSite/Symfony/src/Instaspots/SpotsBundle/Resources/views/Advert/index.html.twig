@@ -10,7 +10,7 @@
 
   <ul>
     {% for picture in listPictures %}
-    
+
       <div class="panel panel-default">
         <div class="panel-heading"><a href="{{ path('instaspots_spots_view', {'id': picture.spot.id}) }}">
           {{ picture.spot.name }}
@@ -19,7 +19,7 @@
           <img src="{{ picture.getUrl }}" alt="{{ picture.spot.name }}" style="width:640px;height:640px;">
         </div>
       </div>
-    
+
     {% else %}
       <li>No spots found</li>
     {% endfor %}

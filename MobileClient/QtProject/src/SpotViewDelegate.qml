@@ -3,7 +3,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/widgets"
 
 Item {
@@ -11,7 +11,6 @@ Item {
     width: parent.width
     height:   rectangle_Top.height
             + image_Picture.height
-            + text_SpotDescription.height
 
     signal userClicked
     signal spotClicked
@@ -22,11 +21,17 @@ Item {
         width: parent.width
         height: 40
         color: "#aaaaaa"
+
+        // Username
         Text{
             id: text_Username
             width: parent.width / 2
             height: parent.height / 2
-            text: role_UserUsername
+
+            text:      role_UserUsername
+            color:     hc_Application.color_TextLink()
+            font.bold: true
+
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -34,41 +39,44 @@ Item {
                 }
             }
         }
+
+        // Time
         Text {
             anchors.top: parent.top
             anchors.left: text_Username.right
             width: text_Username.width
             height: text_Username.height
             horizontalAlignment: Text.AlignRight
+
             text: role_PictureCreated
         }
+
+        // Title
         Text {
             id: text_SpotName
             anchors.top: text_Username.bottom
             width: parent.width
             height: text_Username.height
             horizontalAlignment: Text.AlignHCenter
+
             text: role_SpotName
         }
     }
+
+    // Picture
     CachedPicture {
         id: image_Picture
         anchors.top: rectangle_Top.bottom
         width: parent.width
         height: width
+
         sourceUrl: role_PictureUrl
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
                 spotClicked();
             }
         }
-    }
-    Text {
-        id: text_SpotDescription
-        anchors.top: image_Picture.bottom
-        width: parent.width
-        height: 40
-        text: role_SpotDescription
     }
 }

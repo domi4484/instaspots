@@ -52,6 +52,9 @@ public slots:
   bool developmentMode() const;
   void setDevelopmentMode(bool developmentMode);
 
+  // Colors
+  QString color_TextLink() const { return "#265f8b"; }
+
 private slots:
 
   void slot_CommandGetCurrentClientVersion_Finished(const WebApiError &error);

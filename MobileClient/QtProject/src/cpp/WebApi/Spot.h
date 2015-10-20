@@ -39,6 +39,7 @@ class Spot : public QObject
                   QString pictureUrl1,
                   QString pictureUrl2,
                   QObject *parent = 0);
+    explicit Spot(QObject *parent = 0);
     ~Spot();
 
     QVariant spotRole(SpotRoles role) const;

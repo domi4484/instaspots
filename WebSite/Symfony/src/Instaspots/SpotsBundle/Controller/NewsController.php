@@ -15,38 +15,38 @@ class NewsController extends Controller
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Picture');
 
-    $pictures = $repository->getNews();
+    $pictures = $repository->getPicturesByNewest();
 
-    return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig', 
+    return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig',
                          array('listPictures' => $pictures));
   }
-  
+
   public function downloadAction()
   {
     $listPlatforms = array(
       array('title' => 'Android', 'link' => 'link'),
       array('title' => 'Source',  'link' => 'https://github.com/domi4484/instaspots')
     );
-    
-    return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig', 
+
+    return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig',
                          array('listPlatforms' => $listPlatforms));
   }
-  
+
   public function viewAction($id)
   {
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Spot');
-    
+
     $spot = $repository->find($id);
-    
+
     if (null === $spot) {
       throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
     }
 
     return new Response("Affichage de l'annonce d'id : ".$spot->getName());
   }
-  
+
   public function menuAction($limit)
   {
     // On fixe en dur une liste ici, bien entendu par la suite
@@ -64,4 +64,3 @@ class NewsController extends Controller
     ));
   }
 }
-

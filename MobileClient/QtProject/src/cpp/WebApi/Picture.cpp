@@ -30,20 +30,6 @@ Picture::Picture(QObject *parent) :
 {
 }
 
-Picture::Picture(const Picture &other) :
-  QObject(other.parent()),
-  m_Id         (other.m_Id),
-  m_IdUser     (other.m_IdUser),
-  m_IdSpot     (other.m_IdSpot),
-  m_Url            (other.m_Url),
-  m_Username       (other.m_Username),
-  m_SpotName       (other.m_SpotName),
-  m_SpotDescription(other.m_SpotDescription),
-  m_Created        (other.m_Created),
-  m_WebApiCommand  (NULL)
-{
-
-}
 
 Picture::Picture(int id,
                  int idUser,
@@ -118,7 +104,7 @@ QVariant Picture::pictureRole(PictureRoles role) const
   return m_SpotDescription;
   break;
   case Role_PictureCreated:
-  return m_Created;
+  return createdText();
   break;
   case Role_PictureUrl:
   return m_Url;
@@ -142,6 +128,27 @@ QHash<int, QByteArray> Picture::roleNames()
   roles[Role_SpotDescription] = "role_SpotDescription";
 
   return roles;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString Picture::createdText() const
+{
+    int elapseTime = m_Created.msecsTo(QDateTime::currentDateTime()) / 1000;
+
+    if(elapseTime < 60)
+        return tr("%1s").arg(elapseTime);
+
+    if(elapseTime < 60 * 60)
+        return tr("%1m").arg(elapseTime / 60);
+
+    if(elapseTime < 60 * 60 * 24)
+        return tr("%1h").arg(elapseTime / (60 * 60));
+
+    if(elapseTime < 60 * 60 * 24 * 7)
+        return tr("%1d").arg(elapseTime / (60 * 60 * 24));
+
+    return tr("%1w").arg(elapseTime / (60 * 60 * 24 * 7));
 }
 
 

@@ -8,8 +8,10 @@
 #include "HelperClasses/PictureCacher.h"
 #include "WebApi/SpotRepository.h"
 #include "WebApi/SpotsModel.h"
+#include "WebApi/Spot.h"
 #include "WebApi/PictureRepository.h"
 #include "WebApi/PicturesModel.h"
+#include "WebApi/Picture.h"
 #include "WebApi/User.h"
 #include "WebApi/NewsModel.h"
 #include "WebApi/NearbySpotsModel.h"
@@ -58,7 +60,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);
 
     qmlRegisterType<PicturesModel>   ("PicturesModel",    1, 0, "PicturesModel");
+    qmlRegisterType<Picture>         ("Picture",          1, 0, "Picture");
     qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
+    qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
     qmlRegisterType<NewsModel>       ("NewsModel",        1, 0, "NewsModel");
     qmlRegisterType<NearbySpotsModel>("NearbySpotsModel", 1, 0, "NearbySpotsModel");
 
