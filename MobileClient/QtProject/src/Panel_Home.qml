@@ -1,3 +1,13 @@
+/********************************************************************
+ *                                                                 *
+ * Lowerspot                                                       *
+ *                                                                 *
+ * Author:       Damiano Lombardi                                  *
+ * Created:      14.12.2014                                        *
+ *                                                                 *
+ * Copiright (c) 2014 Damiano Lombardi                             *
+ *                                                                 *
+********************************************************************/
 
 // Qt imports ------------------------------
 import QtQuick 2.3
@@ -11,7 +21,7 @@ import "qrc:/"
 import "qrc:/pages-picture/"
 import "qrc:/pages-spot/"
 
-Rectangle {
+Item {
 
     NewsModel{
         id: newsModel
@@ -23,17 +33,25 @@ Rectangle {
         newsModel.getNewestSpots();
     }
 
+
     // Gui ---------------------------------
+
     Navigator{
         id: navigator
         anchors.top: parent.top
 
-        backButtonVisible: stackView.depth > 1
-        continueButtonVisible: false
+        title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
+        backButtonVisible     : stackView.depth > 1
+        continueButtonVisible : (stackView.currentItem != null) ? stackView.currentItem.navigation_ContinueButtonVisible : false;
+        menuButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_MenuButtonVisible     : false;
 
         onPreviousPage: {
             if(stackView.depth > 1)
                 stackView.pop();
+        }
+
+        onContinueClicked: {
+            stackView.currentItem.continueClicked();
         }
     }
 
@@ -49,41 +67,31 @@ Rectangle {
                          }
 
         initialItem: Page_PicturesList {
-            width: parent.width
+            width : parent.width
             height: parent.height
-            title: qsTr("News")
+
+            navigation_Title: qsTr("News")
+
             model: newsModel
-
-            Component.onCompleted: {
-                navigator.title = title;
-            }
-
-            onVisibleChanged: {
-                if(visible == true)
-                {
-                    navigator.title = title;
-                }
-            }
 
             onUserClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-user/Page_User.qml"),
-                               properties:{width:stackView.width,
-                                           height:stackView.height,
-                                           stackView:stackView,
-                                           navigator:navigator,
-                                           userId:userId}});
-                navigator.title = username;
+                               properties:{width            : stackView.width,
+                                           height           : stackView.height,
+                                           navigation_Title : username,
+                                           stackView        : stackView,
+                                           navigator        : navigator,
+                                           userId           : userId}});
             }
 
             onSpotClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                               properties:{width:stackView.width,
-                                           height:stackView.height,
-                                           stackView:stackView,
-                                           navigator:navigator,
-                                           spotId:spotId}});
-
-                navigator.title = spotName;
+                               properties:{width            : stackView.width,
+                                           height           : stackView.height,
+                                           navigation_Title : spotName,
+                                           stackView        : stackView,
+                                           navigator        : navigator,
+                                           spotId           : spotId}});
             }
         }
     }

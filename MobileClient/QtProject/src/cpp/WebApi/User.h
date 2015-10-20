@@ -26,8 +26,8 @@ class User : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(QString username          READ username)
-  Q_PROPERTY(int     id                READ id)
+  Q_PROPERTY(QString username          READ username NOTIFY signal_Username_changed)
+  Q_PROPERTY(int     id                READ id       NOTIFY signal_Id_changed)
 
 public:
 
@@ -58,6 +58,9 @@ signals:
   void signal_LoginSuccessfull(bool success);
   void signal_Logout();
   void signal_RegistrationSuccessfull(bool success);
+
+  void signal_Username_changed();
+  void signal_Id_changed();
 
 private slots:
 

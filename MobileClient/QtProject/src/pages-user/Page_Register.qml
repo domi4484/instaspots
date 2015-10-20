@@ -14,20 +14,29 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 
-BasicPage {
+Item {
 
-    // BasicPage properties ----------------
-    property string title: qsTr("Register")
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Register")
+    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
+
+    // Message boxes -----------------------
 
     MessageDialog{
         id: messageDialog
         title: qsTr('Registration error')
     }
 
+
     // Connections -------------------------
+
     Connections {
         target: wa_User
         onSignal_RegistrationSuccessfull:
@@ -44,7 +53,9 @@ BasicPage {
         }
     }
 
+
     // Gui ---------------------------------
+
     Column{
         anchors.fill: parent
         anchors.topMargin: 5

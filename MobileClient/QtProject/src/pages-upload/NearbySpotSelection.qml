@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      30.12.2014                                        *
@@ -16,28 +16,35 @@ import QtQuick.Controls 1.2
 // Project c++ imports ---------------------
 import NearbySpotsModel 1.0
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/views"
 import "qrc:/pages-spot/"
 
-BasicPage{
+Item{
     id: nearbySpotSelection
 
     NearbySpotsModel{
         id: nearbySpotsModel
     }
 
-    // BasicPage properties ----------------
-    title: qsTr("Spot selection")
-    continueButtonVisible: false
+
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Spot selection")
+    property bool   navigation_BackButtonVisible:     true
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
 
     // Signals -----------------------------
+
     signal addNewSpot()
     signal addToExistingSpot()
 
 
     // Connections -------------------------
+
     onVisibleChanged: {
         if(visible == false)
         {
@@ -51,7 +58,9 @@ BasicPage{
                                      4);
     }
 
+
     // Gui ---------------------------------
+
     Button{
         id: button_AddNewSpot
         z: 2

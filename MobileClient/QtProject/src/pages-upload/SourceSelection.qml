@@ -15,14 +15,17 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtMultimedia 5.4
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 
-BasicPage{
+Item{
 
-    // BasicPage properties ----------------
-    title: qsTr("Upload")
-    continueButtonVisible: false
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Upload")
+    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
 
     // Signals -----------------------------
     signal takeCameraPicture()

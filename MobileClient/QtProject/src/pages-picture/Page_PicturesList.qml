@@ -13,26 +13,34 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.3
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/views"
 
-BasicPage{
+Item{
     id: page_PicturesList
 
-    // BasicPage properties ----------------
-    title: qsTr("Pictures")
-    continueButtonVisible: false
-    menuButtonVisible: false
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Pictures")
+    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
 
     // Bind properties ---------------------
+
     property alias model: listView.model
 
+
     // Signals -----------------------------
+
     signal userClicked(int userId, string username)
     signal spotClicked(int spotId, string spotName)
 
+
     // Gui ---------------------------------
+
     ListView {
         id: listView
         anchors.fill: parent

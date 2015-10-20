@@ -7,7 +7,6 @@
         <file>Panel_NearbySpots.qml</file>
         <file>Panel_Upload.qml</file>
         <file>Panel_User.qml</file>
-        <file>BasicPage.qml</file>
         <file>SpotViewDelegate.qml</file>
         <file>declarative-camera/CameraListButton.qml</file>
         <file>declarative-camera/CameraListPopup.qml</file>

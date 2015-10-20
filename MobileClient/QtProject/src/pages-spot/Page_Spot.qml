@@ -20,32 +20,42 @@ import PicturesModel 1.0
 import "qrc:/"
 import "qrc:/widgets"
 
-BasicPage{
+Item{
     id: page_Spot
 
-    // BasicPage properties ----------------
-    continueButtonVisible: false
-    menuButtonVisible: false
 
     // Properties --------------------------
+
     property int spotId: -1
     property Navigator navigator
     property StackView stackView
+
+
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 "-"
+    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
+
+    // Models ------------------------------
 
     PicturesModel{
         id: picturesModel
     }
 
+
     // Signals -----------------------------
+
     onSpotIdChanged:
     {
         picturesModel.setSpotId(spotId)
     }
 
-    // Connections -------------------------
-
 
     // Components --------------------------
+
     Component {
         id: component_Picture
 
@@ -72,7 +82,9 @@ BasicPage{
         }
     }
 
+
     // Gui ---------------------------------
+
     Item{
         id: item_Gui
         width: parent.width

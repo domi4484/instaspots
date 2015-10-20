@@ -139,6 +139,9 @@ bool User::logout()
   m_Settings->setValue(Settings::USER_PASSWORD, QString());
   m_Settings->sync();
 
+  emit signal_Username_changed();
+  emit signal_Id_changed();
+
   if(m_WebApiCommand_Login.isRunning())
   {
     Logger::error("User::logout() Command login is running");
@@ -237,6 +240,8 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
     m_Id = -1;
     m_LastErrorText = tr("Authentication failed");
     emit signal_LoginSuccessfull(false);
+    emit signal_Username_changed();
+    emit signal_Id_changed();
     return;
   }
 
@@ -245,6 +250,8 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
 
   m_Settings->sync();
   emit signal_LoginSuccessfull(true);
+  emit signal_Username_changed();
+  emit signal_Id_changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

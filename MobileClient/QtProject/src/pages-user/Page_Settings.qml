@@ -14,17 +14,18 @@ import QtQuick 2.3
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/views"
 
-BasicPage{
+Item{
     id: page_Settings
 
-    // BasicPage properties ----------------
-    title: qsTr("Settings")
-    continueButtonVisible: false
-    menuButtonVisible: false
+    // Navigation properties
+    property string navigation_Title:                 qsTr("Settings")
+    property bool   navigation_BackButtonVisible:     true
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
 
     // Signals -----------------------------
     Connections {

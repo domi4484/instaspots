@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      30.12.2014                                        *
@@ -15,18 +15,23 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtPositioning 5.2
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 
-BasicPage{
+Item{
     id: locationCheck
     visible: false
 
-    // BasiPage properties -----------------
-    title: qsTr("Location")
-    continueButtonVisible: false
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Location")
+    property bool   navigation_BackButtonVisible:     true
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
 
     // Signals -----------------------------
+
     signal locationAccepted()
 
     onVisibleChanged: {
@@ -51,6 +56,7 @@ BasicPage{
                                                                                       image_GoogleMapImage.height);
         }
     }
+
 
     // Gui ---------------------------------
 
@@ -98,10 +104,12 @@ BasicPage{
         }
     }
 
+
     // Message boxes -----------------------
+
     MessageDialog{
         id: messageDialog_LocationError
         title: qsTr('Location error')
         text: qsTr('Can\'t determine your current location in a precise way.')
     }
-} // page_Location
+}

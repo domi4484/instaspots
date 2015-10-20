@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      30.12.2014                                        *
@@ -15,18 +15,26 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtMultimedia 5.4
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/declarative-camera"
 import "qrc:/pages-upload"
 
 Item {
 
+
     // Pages -------------------------------
+
     Component{
         id: page_TakeCameraPicture
 
-        BasicPage{
-            title: qsTr('Camera')
+        Item{
+
+            // Navigation properties ---------------
+
+            property string navigation_Title:                 qsTr('Camera')
+            property bool   navigation_BackButtonVisible:     true
+            property bool   navigation_ContinueButtonVisible: false
+            property bool   navigation_MenuButtonVisible:     false
 
             CameraUi{
                 anchors.fill: parent
@@ -34,10 +42,6 @@ Item {
                 onImageSaved: {
                     wa_PictureUploader.setCameraPictureFilePath(path);
                     stackView.push(page_LocationCheck);
-                    navigator.backButtonVisible     = true;
-                    navigator.continueButtonVisible = false;
-                    navigator.menuButtonVisible     = false;
-                    navigator.title = page_LocationCheck.title;
                 }
             }
         }
@@ -52,10 +56,6 @@ Item {
                                               cropY,
                                               cropSide);
             stackView.push(page_LocationCheck);
-            navigator.backButtonVisible     = true;
-            navigator.continueButtonVisible = false;
-            navigator.menuButtonVisible     = false;
-            navigator.title = page_LocationCheck.title;
         }
     }
 
@@ -64,10 +64,6 @@ Item {
 
        onLocationAccepted: {
            stackView.push(page_NearbySpotSelection);
-           navigator.backButtonVisible     = true;
-           navigator.continueButtonVisible = false;
-           navigator.menuButtonVisible     = false;
-           navigator.title = page_NearbySpotSelection.title;
        }
     }
 
@@ -77,18 +73,10 @@ Item {
 
         onAddNewSpot: {
             stackView.push(page_AddNewSpot)
-            navigator.backButtonVisible     = true;
-            navigator.continueButtonVisible = false;
-            navigator.menuButtonVisible     = false;
-            navigator.title = page_AddNewSpot.title;
         }
 
         onAddToExistingSpot: {
             stackView.push(page_AddToExistingSpot);
-            navigator.backButtonVisible     = true;
-            navigator.continueButtonVisible = false;
-            navigator.menuButtonVisible     = false;
-            navigator.title = page_AddToExistingSpot.title;
         }
     }
 
@@ -112,10 +100,17 @@ Item {
         }
     }
 
+
     // Gui ---------------------------------
+
     Navigator{
         id: navigator
         anchors.top: parent.top
+
+        title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
+        backButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_BackButtonVisible     : false;
+        continueButtonVisible : (stackView.currentItem != null) ? stackView.currentItem.navigation_ContinueButtonVisible : false;
+        menuButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_MenuButtonVisible     : false;
 
         onPreviousPage: {
             if(stackView.depth > 1)
@@ -139,39 +134,22 @@ Item {
                          }
         initialItem: SourceSelection {
             id: page_SourceSelection
-            width: parent.width
+            width : parent.width
             height: parent.height
 
             onTakeCameraPicture: {
                 stackView.push(page_TakeCameraPicture)
-                navigator.backButtonVisible     = true;
-                navigator.continueButtonVisible = false;
-                navigator.menuButtonVisible     = false;
-                navigator.title = page_TakeCameraPicture.title;
             }
             onPictureSelected: {
                 page_CropPicture.source = imageUrl;
                 stackView.push(page_CropPicture);
-                navigator.backButtonVisible     = true;
-                navigator.continueButtonVisible = false;
-                navigator.menuButtonVisible     = false;
-                navigator.title = page_CropPicture.title;
-            }
-        }
-
-        onDepthChanged: {
-            if(depth === 1)
-            {
-                navigator.backButtonVisible     = false;
-                navigator.continueButtonVisible = false;
-                navigator.menuButtonVisible     = false;
-                navigator.title = page_SourceSelection.title;
             }
         }
     }
 
 
     // Slots -------------------------------
+
     onVisibleChanged: {
         if(visible == false)
             return;
@@ -182,13 +160,10 @@ Item {
             stackView.push( {item: page_SignIn,
                              immediate: true,
                              replace: false,
-                             properties:{width:stackView.width,
-                                         height:stackView.height,
-                                         stackView:stackView,
-                                         navigator:navigator}} );
-            navigator.backButtonVisible     = false;
-            navigator.continueButtonVisible = false;
-            navigator.menuButtonVisible     = false;
+                             properties:{width     : stackView.width,
+                                         height    : stackView.height,
+                                         stackView : stackView,
+                                         navigator : navigator}} );
             return;
         }
     }

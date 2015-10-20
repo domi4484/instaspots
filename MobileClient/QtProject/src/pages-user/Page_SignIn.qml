@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      17.09.2015                                        *
@@ -19,26 +19,26 @@ import QtQuick.Controls 1.3
 import "qrc:/"
 import "qrc:/widgets"
 
-BasicPage{
+Item{
     id: page_SignIn
 
-    // BasicPage properties ----------------
-    continueButtonVisible: false
-    menuButtonVisible: false
-    title: qsTr("Sign in")
 
     // Properties --------------------------
+
     property var navigator
     property StackView stackView
 
-    // Signals -----------------------------
 
-    // Slots -------------------------------
-    Component.onCompleted: {
-        navigator.title = title;
-    }
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Sign in")
+    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
 
     // Connections -------------------------
+
     Connections {
         target: wa_User
         onSignal_LoginSuccessfull:
@@ -52,20 +52,9 @@ BasicPage{
         }
     }
 
-    // Components --------------------------
-    Component {
-        id: component_SignIn
-        Item {
-        }
-    }
-
-    Component {
-        id: component_Register
-        Item {
-        }
-    }
 
     // Gui ---------------------------------
+
     TabWidgetTop {
         id: tabWidget
         width: parent.width

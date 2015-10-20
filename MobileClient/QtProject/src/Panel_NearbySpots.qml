@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      30.12.2014                                        *
@@ -10,13 +10,13 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick 2.3
+import QtQuick.Controls 1.2
 
 // Project c++ imports ---------------------
 import NearbySpotsModel 1.0
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/views"
 import "qrc:/pages-spot"
 
@@ -59,21 +59,21 @@ Item {
         hc_LocationManager.requestLocation();
     }
 
+
     // Gui ---------------------------------
+
     Navigator{
         id: navigator
         anchors.top: parent.top
 
-        backButtonVisible: stackView.depth > 1
-        continueButtonVisible: stackView.currentItem.continueButtonVisible
+        title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
+        backButtonVisible     : stackView.depth > 1
+        continueButtonVisible : (stackView.currentItem != null) ? stackView.currentItem.navigation_ContinueButtonVisible : false;
+        menuButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_MenuButtonVisible     : false;
 
         onPreviousPage: {
             if(stackView.depth > 1)
                 stackView.pop();
-        }
-
-        onContinueClicked: {
-            stackView.currentItem.continueClicked();
         }
     }
 
@@ -87,34 +87,23 @@ Item {
                              stackView.pop();
                              event.accepted = true;
                          }
-        initialItem: BasicPage {
-            id: page_Locating
-            width: parent.width
+        initialItem: Page_SpotsList {
+            width : parent.width
             height: parent.height
 
-            title: qsTr('Nearby spots')
+            navigation_Title: qsTr('Nearby spots')
 
-            Page_SpotsList {
-                anchors.fill: parent
-                model: nearbySpotsModel
-                onSpotClicked: {
-                    stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
-                                   properties:{title:spotName,
-                                               width:stackView.width,
-                                               height:stackView.height,
-                                               stackView:stackView,
-                                               navigator:navigator,
-                                               spotId:spotId}});
-                }
+            model: nearbySpotsModel
+
+            onSpotClicked: {
+                stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
+                                properties:{width            : stackView.width,
+                                            height           : stackView.height,
+                                            navigation_Title : spotName,
+                                            stackView        : stackView,
+                                            navigator        : navigator,
+                                            spotId           : spotId}});
             }
-        }
-
-        onCurrentItemChanged: {
-            if(currentItem == null)
-                return;
-
-            navigator.title = currentItem.title;
-            navigator.continueButtonVisible = currentItem.continueButtonVisible;
         }
     }
 }

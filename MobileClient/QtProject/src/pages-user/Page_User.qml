@@ -23,17 +23,24 @@ import "qrc:/widgets"
 import "qrc:/views"
 import "qrc:/pages-spot"
 
-BasicPage{
+Item{
     id: page_User
 
-    // BasicPage properties ----------------
-    continueButtonVisible: false
-    menuButtonVisible: false
 
     // Properties --------------------------
+
     property int userId: -1
-    property Navigator navigator
-    property StackView stackView
+
+
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 "-"
+    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
+
+    // Models ------------------------------
 
     PicturesModel{
         id: picturesModel
@@ -43,7 +50,9 @@ BasicPage{
         id: spotsModel
     }
 
+
     // Gui ---------------------------------
+
     TabWidgetTop {
         id: tabWidget
         width: parent.width
@@ -52,6 +61,8 @@ BasicPage{
         Item{
             id: tab_Pictures
             anchors.fill: parent
+
+            // Tab widget properties
             property string tabWidget_ButtonText: qsTr("Pictures(%1)").arg(picturesModel.count)
             property string tabWidget_ButtonIconSource: ""
 
@@ -67,56 +78,43 @@ BasicPage{
             }
         }
 
-        StackView {
-            id: stackView
+        Item {
+            id: tab_Spots
             anchors.fill: parent
 
             // Tab widget properties
             property string tabWidget_ButtonText: qsTr("Spots(%1)").arg(spotsModel.count)
             property string tabWidget_ButtonIconSource: ""
 
-            // Implements back key navigation
-            focus: true
-            Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
-                                 stackView.pop();
-                                 event.accepted = true;
-                             }
-            initialItem: BasicPage {
-                id: page_Locating
-                width: parent.width
-                height: parent.height
-
-                title: qsTr('Nearby spots')
-
-                Page_SpotsList {
-                    anchors.fill: parent
-                    model: spotsModel
-                    onSpotClicked: {
-                        stackView.push({item: Qt.resolvedUrl("pages-spot/Page_Spot.qml"),
-                                       properties:{title:spotName,
-                                                   width:stackView.width,
-                                                   height:stackView.height,
-                                                   stackView:stackView,
-                                                   navigator:navigator,
-                                                   spotId:spotId}});
-                    }
+            Page_SpotsList {
+                anchors.fill: parent
+                model: spotsModel
+                onSpotClicked: {
+                    stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
+                                    properties:{width                        : stackView.width,
+                                                height                       : stackView.height,
+                                                navigation_Title             : spotName,
+                                                navigation_BackButtonVisible : true,
+                                                stackView                    : stackView,
+                                                navigator                    : navigator,
+                                                spotId                       : spotId}});
                 }
             }
         }
     }
 
 
-
     // Signals -----------------------------
+
     onUserIdChanged:
     {
         picturesModel.setUserId(userId);
         spotsModel.setUserId(userId);
     }
 
-    // Connections -------------------------
 
     // Components --------------------------
+
     Component {
         id: component_Picture
 
@@ -134,11 +132,12 @@ BasicPage{
                     anchors.fill: parent
                     onClicked: {
                         stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                                        properties:{width:stackView.width,
-                                                    height:stackView.height,
-                                                    stackView:stackView,
-                                                    navigator:navigator,
-                                                    spotId:role_SpotId}});
+                                        properties:{width     : stackView.width,
+                                                    height    : stackView.height,
+                                                    title     : spotName,
+                                                    stackView : stackView,
+                                                    navigator : navigator,
+                                                    spotId    : role_SpotId}});
                         navigator.backButtonVisible = true;
                     }
                 }

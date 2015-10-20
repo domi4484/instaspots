@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      30.12.2014                                        *
@@ -10,45 +10,46 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick 2.3
+import QtQuick.Controls 1.2
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/views"
 import "qrc:/pages-user"
 
-Rectangle {
+Item {
 
-    // Pages -------------------------------
+    // Components --------------------------
+
     Page_Settings {
         id: page_Settings
         visible: false
     }
 
-    Component{
-        id: page_ProfileView
-        Page_User {
+    Page_User {
+        id: page_User
+        width: parent.width
+        height: parent.height
 
-            menuButtonVisible: true
+        // Properties
+        userId: wa_User.id
 
-            width: parent.width
-            height: parent.height
-            stackView:stackView
-            navigator: navigator
-
-            onVisibleChanged: {
-                if(visible == false)
-                    return;
-
-                userId = wa_User.id
-            }
-        }
+        // Navigation properties
+        navigation_Title:             wa_User.username
+        navigation_MenuButtonVisible: true
     }
 
+
     // Gui ---------------------------------
+
     Navigator{
         id: navigator
         anchors.top: parent.top
+
+        title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
+        backButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_BackButtonVisible     : false;
+        continueButtonVisible : (stackView.currentItem != null) ? stackView.currentItem.navigation_ContinueButtonVisible : false;
+        menuButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_MenuButtonVisible     : false;
 
         onPreviousPage: {
             if(stackView.depth > 1)
@@ -57,10 +58,6 @@ Rectangle {
 
         onMenuClicked: {
             stackView.push(page_Settings);
-            backButtonVisible     = true;
-            continueButtonVisible = false;
-            menuButtonVisible     = false;
-            title = page_Settings.title;
         }
     }
 
@@ -74,21 +71,12 @@ Rectangle {
                              stackView.pop();
                              event.accepted = true;
                          }
-        initialItem: page_ProfileView
-
-        onDepthChanged: {
-            if(depth === 1)
-            {
-                navigator.backButtonVisible     = false;
-                navigator.continueButtonVisible = false;
-                navigator.menuButtonVisible     = true;
-                navigator.title = wa_User.username;
-            }
-        }
+        initialItem: page_User
     }
 
 
     // Slots -------------------------------
+
     onVisibleChanged: {
         if(visible == false)
             return;
@@ -99,19 +87,11 @@ Rectangle {
             stackView.push( {item: page_SignIn,
                              immediate: true,
                              replace: false,
-                             properties:{width:stackView.width,
-                                         height:stackView.height,
-                                         stackView:stackView,
-                                         navigator:navigator}} );
-            navigator.backButtonVisible     = false;
-            navigator.continueButtonVisible = false;
-            navigator.menuButtonVisible     = false;
+                             properties:{width     : stackView.width,
+                                         height    : stackView.height,
+                                         stackView : stackView,
+                                         navigator : navigator}} );
             return;
-        }
-
-        if(stackView.depth === 1)
-        {
-            navigator.title = wa_User.username;
         }
     }
 }

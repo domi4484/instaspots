@@ -16,15 +16,19 @@ import QtQuick.Controls 1.2
 // Project imports -------------------------
 import "qrc:/"
 
-BasicPage{
+Item{
     id: cropPicture
     visible: false
 
-    // BasiPage properties -----------------
-    title: qsTr("Crop")
-    continueButtonVisible: false
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("Crop")
+    property bool   navigation_BackButtonVisible:     true
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
 
 
+    // Properties
 
     property alias source: image.source
     property alias cropX: flick.cropX
@@ -39,10 +43,14 @@ BasicPage{
         source: cropPicture.source
     }
 
+
     // Signals -----------------------------
+
     signal cropFinished()
 
+
     // Gui ---------------------------------
+
     Flickable {
         id: flick
         width: parent.width

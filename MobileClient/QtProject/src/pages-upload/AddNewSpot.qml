@@ -14,20 +14,28 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
-// Project imports -------------------------
+// Project qml imports ---------------------
 import "qrc:/"
 
-BasicPage{
+Item{
     id: addNewSpot
 
-    // BasicPage properties ----------------
-    title: qsTr("New spot")
-    continueButtonVisible: false
+
+    // Navigation properties ---------------
+
+    property string navigation_Title:                 qsTr("New spot")
+    property bool   navigation_BackButtonVisible:     true
+    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_MenuButtonVisible:     false
+
 
     // Signals -----------------------------
+
     signal uploadSuccessfull()
 
+
     // Message boxes -----------------------
+
     MessageDialog{
         id: messageDialog_Error
         title: qsTr('Upload error')
@@ -39,7 +47,9 @@ BasicPage{
         text: qsTr('Spot succesfully uploaded')
     }
 
+
     // Connections -------------------------
+
     Connections{
         target: wa_PictureUploader
         onSignal_UploadFinished:
@@ -63,7 +73,9 @@ BasicPage{
         }
     }
 
+
     // Gui ---------------------------------
+
     Column{
         id: column
         anchors.top: parent.top
