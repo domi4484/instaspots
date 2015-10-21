@@ -26,6 +26,8 @@ SpotsModel::SpotsModel(QObject *parent) :
     m_QList_Spots(),
     m_RequestId(0)
 {
+    m_RequestId = SpotRepository::instance()->getNewRequestId();
+
     connect(SpotRepository::instance(),
             SIGNAL(signal_DataReady(int,
                                     bool)),
@@ -64,19 +66,35 @@ QHash<int, QByteArray> SpotsModel::roleNames() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void SpotsModel::clear()
+{
+    beginResetModel();
+    m_QList_Spots.clear();
+    endResetModel();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void SpotsModel::setUserId(int id)
 {
-  beginResetModel();
-  m_QList_Spots.clear();
-  endResetModel();
+    SpotRepository::instance()->getBy_UserId(m_RequestId,
+                                             id);
+}
 
-  m_RequestId = SpotRepository::instance()->getBy_UserId(id);
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotsModel::setLocation(double latitude, double longitude, double maxDistance_km)
+{
+    SpotRepository::instance()->getBy_Distance(m_RequestId,
+                                               latitude,
+                                               longitude,
+                                               maxDistance_km);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void SpotsModel::slot_SpotRepository_DataReady(int requestId,
-                                                  bool success)
+                                               bool success)
 {
   if(m_RequestId != requestId)
     return;

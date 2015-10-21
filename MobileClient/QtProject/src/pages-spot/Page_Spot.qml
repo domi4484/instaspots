@@ -19,6 +19,7 @@ import PicturesModel 1.0
 // Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/widgets"
+import "qrc:/pages-picture"
 
 Item{
     id: page_Spot
@@ -26,9 +27,13 @@ Item{
 
     // Properties --------------------------
 
-    property int spotId: -1
     property Navigator navigator
     property StackView stackView
+
+
+    // Bind properties ---------------------
+
+    property alias model: picturesModel
 
 
     // Navigation properties ---------------
@@ -44,15 +49,6 @@ Item{
     PicturesModel{
         id: picturesModel
     }
-
-
-    // Signals -----------------------------
-
-    onSpotIdChanged:
-    {
-        picturesModel.setSpotId(spotId)
-    }
-
 
     // Components --------------------------
 
@@ -72,10 +68,13 @@ Item{
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        stackView.push({item: Qt.resolvedUrl("qrc:/widgets/CachedPicture.qml"),
-                                       properties:{width:stackView.width,
-                                                   height:width,
-                                                   sourceUrl:role_PictureUrl}});
+                        var page_PicturesList = Qt.resolvedUrl("qrc:/pages-picture/Page_PicturesList.qml");
+                        stackView.push({item: page_PicturesList,
+                                        properties : {width                        : page_Spot.width,
+                                                      height                       : page_Spot.height,
+                                                      navigation_Title             : navigation_Title,
+                                                      navigation_BackButtonVisible : true}});
+                        stackView.currentItem.model.getBy_PictureId(role_PictureId);
                     }
                 }
             }

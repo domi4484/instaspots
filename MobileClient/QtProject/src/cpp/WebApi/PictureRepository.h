@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      15.06.2015                                        *
@@ -37,13 +37,16 @@ public:
 
   static PictureRepository *instance() { return s_PictureRepository; }
 
+  int getNewRequestId();
+
 public slots:
 
   QList<Picture *> getPictures(int requestId);
 
-  int getBy_SpotId(int spotId);
-  int getBy_UserId(int userId);
-  int getNews();
+  void getBy_PictureId(int requestId, int pictureId);
+  void getBy_SpotId(int requestId, int spotId);
+  void getBy_UserId(int requestId, int userId);
+  void getBy_Newest(int requestId);
 
 signals:
 

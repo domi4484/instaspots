@@ -35,9 +35,11 @@ public:
 
   public slots:
 
-    void setSpotId(int id);
+    void getNewestSpots();
 
-    void setUserId(int id);
+    void getBy_PictureId(int id);
+    void getBy_SpotId(int id);
+    void getBy_UserId(int id);
 
 signals:
     void countChanged(int count);

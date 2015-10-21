@@ -14,7 +14,6 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 // Project c++ imports ---------------------
-import NewsModel 1.0
 
 // Project qml imports ---------------------
 import "qrc:/"
@@ -22,17 +21,6 @@ import "qrc:/pages-picture/"
 import "qrc:/pages-spot/"
 
 Item {
-
-    NewsModel{
-        id: newsModel
-    }
-
-    // Signals -----------------------------
-    Component.onCompleted:
-    {
-        newsModel.getNewestSpots();
-    }
-
 
     // Gui ---------------------------------
 
@@ -67,12 +55,15 @@ Item {
                          }
 
         initialItem: Page_PicturesList {
+            id: page_PicturesList
             width : parent.width
             height: parent.height
 
             navigation_Title: qsTr("News")
 
-            model: newsModel
+            Component.onCompleted: {
+                model.getNewestSpots();
+            }
 
             onUserClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-user/Page_User.qml"),
@@ -88,10 +79,10 @@ Item {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
                                properties:{width            : stackView.width,
                                            height           : stackView.height,
-                                           navigation_Title : spotName,
+                                       navigation_Title : spotName,
                                            stackView        : stackView,
-                                           navigator        : navigator,
-                                           spotId           : spotId}});
+                                           navigator        : navigator}});
+                stackView.currentItem.model.getBy_SpotId(spotId);
             }
         }
     }

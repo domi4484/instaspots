@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      15.06.2015                                        *
@@ -26,11 +26,13 @@ PicturesModel::PicturesModel(QObject *parent)
     m_QList_Pictures(),
     m_RequestId(0)
 {
-  connect(PictureRepository::instance(),
-          SIGNAL(signal_DataReady(int,
-                                  bool)),
-          SLOT(slot_PictureRepository_DataReady(int,
-                                                bool)));
+    m_RequestId = PictureRepository::instance()->getNewRequestId();
+
+    connect(PictureRepository::instance(),
+            SIGNAL(signal_DataReady(int,
+                                    bool)),
+            SLOT(slot_PictureRepository_DataReady(int,
+                                                  bool)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -65,25 +67,34 @@ QHash<int, QByteArray> PicturesModel::roleNames() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PicturesModel::setSpotId(int id)
+void PicturesModel::getNewestSpots()
 {
-  beginResetModel();
-  m_QList_Pictures.clear();
-  endResetModel();
-
-
-  m_RequestId = PictureRepository::instance()->getBy_SpotId(id);
+    PictureRepository::instance()->getBy_Newest(m_RequestId);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PicturesModel::setUserId(int id)
+void PicturesModel::getBy_PictureId(int id)
 {
-  beginResetModel();
-  m_QList_Pictures.clear();
-  endResetModel();
+    PictureRepository::instance()->getBy_PictureId(m_RequestId,
+                                                   id);
+}
 
-  m_RequestId = PictureRepository::instance()->getBy_UserId(id);
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PicturesModel::getBy_SpotId(int id)
+{
+
+    PictureRepository::instance()->getBy_SpotId(m_RequestId,
+                                                id);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PicturesModel::getBy_UserId(int id)
+{
+    PictureRepository::instance()->getBy_UserId(m_RequestId,
+                                                id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

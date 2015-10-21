@@ -96,8 +96,8 @@ Item{
                                                 navigation_Title             : spotName,
                                                 navigation_BackButtonVisible : true,
                                                 stackView                    : stackView,
-                                                navigator                    : navigator,
-                                                spotId                       : spotId}});
+                                                navigator                    : navigator}});
+                    stackView.currentItem.model.getBy_SpotId(spotId);
                 }
             }
         }
@@ -108,7 +108,7 @@ Item{
 
     onUserIdChanged:
     {
-        picturesModel.setUserId(userId);
+        picturesModel.getBy_UserId(userId);
         spotsModel.setUserId(userId);
     }
 
@@ -132,13 +132,13 @@ Item{
                     anchors.fill: parent
                     onClicked: {
                         stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                                        properties:{width     : stackView.width,
-                                                    height    : stackView.height,
-                                                    title     : spotName,
-                                                    stackView : stackView,
-                                                    navigator : navigator,
-                                                    spotId    : role_SpotId}});
-                        navigator.backButtonVisible = true;
+                                        properties:{width                        : stackView.width,
+                                                    height                       : stackView.height,
+                                                    navigation_Title             : spotName,
+                                                    navigation_BackButtonVisible : true,
+                                                    stackView                    : stackView,
+                                                    navigator                    : navigator}});
+                        stackView.currentItem.model.getBy_SpotId(spotId);
                     }
                 }
             }

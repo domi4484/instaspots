@@ -37,15 +37,19 @@ public:
 
   static SpotRepository *instance() { return s_SpotRepository; }
 
+  int getNewRequestId();
+
 public slots:
 
   QList<Spot *> getSpots(int requestId);
 
-  int getBy_Distance(double latitude,
-                     double longitude,
-                     double maxDistance_km);
+  void getBy_Distance(int requestId,
+                      double latitude,
+                      double longitude,
+                      double maxDistance_km);
 
-  int getBy_UserId(int userId);
+  void getBy_UserId(int requestId,
+                    int userId);
 
 signals:
 

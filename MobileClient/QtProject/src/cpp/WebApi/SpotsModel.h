@@ -35,7 +35,13 @@ public:
 
 public slots:
 
+    void clear();
+
     void setUserId(int id);
+
+    void setLocation(double latitude,
+                     double longitude,
+                     double maxDistance_km);
 
 signals:
     void countChanged(int count);

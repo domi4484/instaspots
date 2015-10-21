@@ -31,9 +31,7 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/WebApiError.cpp \
     src/cpp/HelperClasses/Logger.cpp \
     src/cpp/HelperClasses/StringHelper.cpp \
-    src/cpp/WebApi/NewsModel.cpp \
     src/cpp/WebApi/PictureUploader.cpp \
-    src/cpp/WebApi/NearbySpotsModel.cpp \
     src/cpp/HelperClasses/PlateformDetail.cpp \
     src/cpp/HelperClasses/LocationManager.cpp \
     src/cpp/HelperClasses/PictureCacher.cpp \
@@ -62,9 +60,7 @@ HEADERS += \
     src/cpp/WebApi/WebApiError.h \
     src/cpp/HelperClasses/Logger.h \
     src/cpp/HelperClasses/StringHelper.h \
-    src/cpp/WebApi/NewsModel.h \
     src/cpp/WebApi/PictureUploader.h \
-    src/cpp/WebApi/NearbySpotsModel.h \
     src/cpp/HelperClasses/PlateformDetail.h \
     src/cpp/HelperClasses/LocationManager.h \
     src/cpp/HelperClasses/PictureCacher.h \

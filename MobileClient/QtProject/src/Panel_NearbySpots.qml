@@ -14,7 +14,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 // Project c++ imports ---------------------
-import NearbySpotsModel 1.0
+import SpotsModel 1.0
 
 // Project qml imports ---------------------
 import "qrc:/views"
@@ -22,8 +22,8 @@ import "qrc:/pages-spot"
 
 Item {
 
-    NearbySpotsModel{
-        id: nearbySpotsModel
+    SpotsModel{
+        id: spotsModel
     }
 
     // Signals -----------------------------
@@ -39,7 +39,7 @@ Item {
                 // TODO display message cacca
             }
 
-            nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+            spotsModel.setLocation(hc_LocationManager.latitude(),
                                          hc_LocationManager.longitude(),
                                          150);
         }
@@ -51,7 +51,7 @@ Item {
             return;
 
         // Set current location (also if outdated)
-        nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+        spotsModel.setLocation(hc_LocationManager.latitude(),
                                      hc_LocationManager.longitude(),
                                      150);
 
@@ -93,7 +93,7 @@ Item {
 
             navigation_Title: qsTr('Nearby spots')
 
-            model: nearbySpotsModel
+            model: spotsModel
 
             onSpotClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
@@ -101,8 +101,8 @@ Item {
                                             height           : stackView.height,
                                             navigation_Title : spotName,
                                             stackView        : stackView,
-                                            navigator        : navigator,
-                                            spotId           : spotId}});
+                                            navigator        : navigator}});
+                stackView.currentItem.model.getBy_SpotId(spotId);
             }
         }
     }

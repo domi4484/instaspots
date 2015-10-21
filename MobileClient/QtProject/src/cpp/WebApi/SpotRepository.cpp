@@ -80,17 +80,24 @@ void SpotRepository::destroy()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QList<Spot *> SpotRepository::getSpots(int requestId)
+int SpotRepository::getNewRequestId()
 {
-  return m_QMap_Results.value(requestId,
-                              QList<Spot *>());
+    return ++m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int SpotRepository::getBy_Distance(double latitude,
-                                  double longitude,
-                                  double maxDistance_km)
+QList<Spot *> SpotRepository::getSpots(int requestId)
+{
+  return m_QMap_Results.value(requestId);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotRepository::getBy_Distance(int requestId,
+                                    double latitude,
+                                    double longitude,
+                                    double maxDistance_km)
 {
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,        QString::number(latitude)));
@@ -102,19 +109,18 @@ int SpotRepository::getBy_Distance(double latitude,
   webApiCommand->setAnswerType(WebApiCommand::JSON);
   webApiCommand->setCommand(WebApi::C_GET_SPOTS_BY_DISTANCE);
 
-  webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+  webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
   webApiCommand->postRequest(qList_QueryItems);
-
-  return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int SpotRepository::getBy_UserId(int userId)
+void SpotRepository::getBy_UserId(int requestId,
+                                  int userId)
 {
     QList<QueryItem> qList_QueryItems;
     qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USER_ID,  QString::number(userId)));
@@ -124,14 +130,12 @@ int SpotRepository::getBy_UserId(int userId)
     webApiCommand->setAnswerType(WebApiCommand::JSON);
     webApiCommand->setCommand(WebApi::C_GET_SPOTS_BY_USER_ID);
 
-    webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+    webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
     connect(webApiCommand,
             SIGNAL(signal_Finished(const WebApiError &)),
             SLOT(slot_Command_Finished(const WebApiError &)));
     webApiCommand->postRequest(qList_QueryItems);
-
-    return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

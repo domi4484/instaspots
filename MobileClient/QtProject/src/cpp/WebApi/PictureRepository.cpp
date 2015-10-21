@@ -79,15 +79,42 @@ void PictureRepository::destroy()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QList<Picture *> PictureRepository::getPictures(int requestId)
+int PictureRepository::getNewRequestId()
 {
-  return m_QMap_Results.value(requestId,
-                              QList<Picture *>());
+    return ++m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int PictureRepository::getBy_SpotId(int spotId)
+QList<Picture *> PictureRepository::getPictures(int requestId)
+{
+  return m_QMap_Results.value(requestId);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureRepository::getBy_PictureId(int requestId,
+                                        int pictureId)
+{
+    // Get local
+    if(m_QMap_Pictures.contains(pictureId))
+    {
+        QList<Picture *> newPictures;
+        newPictures.append(m_QMap_Pictures.value(pictureId));
+        m_QMap_Results.insert(requestId,
+                              newPictures);
+        emit signal_DataReady(requestId,
+                              true);
+        return;
+    }
+
+    // Get internet
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureRepository::getBy_SpotId(int requestId,
+                                     int spotId)
 {
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::R_PARAM_SPOT_ID,  QString::number(spotId)));
@@ -97,19 +124,18 @@ int PictureRepository::getBy_SpotId(int spotId)
   webApiCommand->setAnswerType(WebApiCommand::JSON);
   webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_SPOT_ID);
 
-  webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+  webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
   webApiCommand->postRequest(qList_QueryItems);
-
-  return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int PictureRepository::getBy_UserId(int userId)
+void PictureRepository::getBy_UserId(int requestId,
+                                     int userId)
 {
    QList<QueryItem> qList_QueryItems;
    qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USER_ID,  QString::number(userId)));
@@ -119,19 +145,17 @@ int PictureRepository::getBy_UserId(int userId)
    webApiCommand->setAnswerType(WebApiCommand::JSON);
    webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_USER_ID);
 
-   webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
    connect(webApiCommand,
            SIGNAL(signal_Finished(const WebApiError &)),
            SLOT(slot_Command_Finished(const WebApiError &)));
    webApiCommand->postRequest(qList_QueryItems);
-
-   return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int PictureRepository::getNews()
+void PictureRepository::getBy_Newest(int requestId)
 {
   QList<QueryItem> qList_QueryItems;
 
@@ -140,14 +164,12 @@ int PictureRepository::getNews()
   webApiCommand->setAnswerType(WebApiCommand::JSON);
   webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_NEWEST);
 
-  webApiCommand->setProperty(PROPERTY_REQUEST_ID, ++m_RequestId);
+  webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
   webApiCommand->postRequest(qList_QueryItems);
-
-  return m_RequestId;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

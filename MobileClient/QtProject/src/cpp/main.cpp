@@ -13,8 +13,6 @@
 #include "WebApi/PicturesModel.h"
 #include "WebApi/Picture.h"
 #include "WebApi/User.h"
-#include "WebApi/NewsModel.h"
-#include "WebApi/NearbySpotsModel.h"
 #include "WebApi/PictureUploader.h"
 
 // Qt includes -----------------------------
@@ -63,8 +61,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<Picture>         ("Picture",          1, 0, "Picture");
     qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
     qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
-    qmlRegisterType<NewsModel>       ("NewsModel",        1, 0, "NewsModel");
-    qmlRegisterType<NearbySpotsModel>("NearbySpotsModel", 1, 0, "NearbySpotsModel");
 
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));

@@ -14,7 +14,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.2
 
 // Project c++ imports ---------------------
-import NearbySpotsModel 1.0
+import SpotsModel 1.0
 
 // Project qml imports ---------------------
 import "qrc:/"
@@ -24,8 +24,8 @@ import "qrc:/pages-spot/"
 Item{
     id: nearbySpotSelection
 
-    NearbySpotsModel{
-        id: nearbySpotsModel
+    SpotsModel{
+        id: spotsModel
     }
 
 
@@ -53,7 +53,7 @@ Item{
 
         console.log("nearbySpotModel.setLocation")
 
-        nearbySpotsModel.setLocation(hc_LocationManager.latitude(),
+        spotsModel.setLocation(hc_LocationManager.latitude(),
                                      hc_LocationManager.longitude(),
                                      4);
     }
@@ -82,7 +82,7 @@ Item{
         width: parent.width
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
-        model: nearbySpotsModel
+        model: spotsModel
         onSpotClicked: {
             wa_PictureUploader.setNewSpot(false);
             wa_PictureUploader.setExistingSpotId(spotId);

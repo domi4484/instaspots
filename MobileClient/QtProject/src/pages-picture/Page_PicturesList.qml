@@ -13,12 +13,21 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.3
 
+// Project c++ imports ---------------------
+import PicturesModel 1.0
+
 // Project qml imports ---------------------
 import "qrc:/"
 import "qrc:/views"
 
 Item{
     id: page_PicturesList
+
+
+    // Bind properties ---------------------
+
+    property alias model: picturesModel
+
 
     // Navigation properties ---------------
 
@@ -28,9 +37,11 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
-    // Bind properties ---------------------
+    // Model -------------------------------
 
-    property alias model: listView.model
+    PicturesModel{
+        id: picturesModel
+    }
 
 
     // Signals -----------------------------
@@ -44,7 +55,7 @@ Item{
     ListView {
         id: listView
         anchors.fill: parent
-        model: wa_NewsModel
+        model: picturesModel
         delegate: SpotViewDelegate{
 
             onUserClicked: {
