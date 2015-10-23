@@ -67,21 +67,15 @@ Item {
 
             onUserClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-user/Page_User.qml"),
-                               properties:{width            : stackView.width,
-                                           height           : stackView.height,
-                                           navigation_Title : username,
+                               properties:{navigation_Title : username,
                                            stackView        : stackView,
-                                           navigator        : navigator,
                                            userId           : userId}});
             }
 
             onSpotClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                               properties:{width            : stackView.width,
-                                           height           : stackView.height,
-                                       navigation_Title : spotName,
-                                           stackView        : stackView,
-                                           navigator        : navigator}});
+                               properties:{navigation_Title : spotName,
+                                           stackView        : stackView}});
                 stackView.currentItem.model.getBy_SpotId(spotId);
             }
         }

@@ -84,13 +84,12 @@ Item {
         if(wa_User.isConnected() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
-            stackView.push( {item: page_SignIn,
-                             immediate: true,
-                             replace: false,
-                             properties:{width     : stackView.width,
-                                         height    : stackView.height,
-                                         stackView : stackView,
-                                         navigator : navigator}} );
+            stackView.push( {
+                               item       : page_SignIn,
+                               immediate  : true,
+                               replace    : false,
+                               properties : { stackView : stackView }
+                             } );
             return;
         }
     }

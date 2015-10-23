@@ -37,6 +37,7 @@
         <file>widgets/TabButton.qml</file>
         <file>widgets/TabWidgetBottom.qml</file>
         <file>widgets/TabWidgetTop.qml</file>
+        <file>pages-picture/Page_Picture.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

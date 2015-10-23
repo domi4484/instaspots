@@ -27,7 +27,6 @@ Item{
 
     // Properties --------------------------
 
-    property Navigator navigator
     property StackView stackView
 
 
@@ -68,12 +67,11 @@ Item{
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        var page_PicturesList = Qt.resolvedUrl("qrc:/pages-picture/Page_PicturesList.qml");
-                        stackView.push({item: page_PicturesList,
-                                        properties : {width                        : page_Spot.width,
-                                                      height                       : page_Spot.height,
-                                                      navigation_Title             : navigation_Title,
-                                                      navigation_BackButtonVisible : true}});
+                        var page_Picture = Qt.resolvedUrl("qrc:/pages-picture/Page_Picture.qml");
+                        stackView.push( { item: page_Picture,
+                                          properties : {  stackView                    : stackView,
+                                                          navigation_Title             : navigation_Title,
+                                                          navigation_BackButtonVisible : true } });
                         stackView.currentItem.model.getBy_PictureId(role_PictureId);
                     }
                 }

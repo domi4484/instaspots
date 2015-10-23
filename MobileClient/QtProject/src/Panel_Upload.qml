@@ -160,10 +160,7 @@ Item {
             stackView.push( {item: page_SignIn,
                              immediate: true,
                              replace: false,
-                             properties:{width     : stackView.width,
-                                         height    : stackView.height,
-                                         stackView : stackView,
-                                         navigator : navigator}} );
+                             properties:{stackView : stackView}} );
             return;
         }
     }

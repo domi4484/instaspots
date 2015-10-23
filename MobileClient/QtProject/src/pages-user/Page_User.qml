@@ -90,13 +90,10 @@ Item{
                 anchors.fill: parent
                 model: spotsModel
                 onSpotClicked: {
-                    stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                                    properties:{width                        : stackView.width,
-                                                height                       : stackView.height,
-                                                navigation_Title             : spotName,
-                                                navigation_BackButtonVisible : true,
-                                                stackView                    : stackView,
-                                                navigator                    : navigator}});
+                    stackView.push( { item       : Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
+                                      properties : { navigation_Title             : spotName,
+                                                     navigation_BackButtonVisible : true,
+                                                     stackView                    : stackView } });
                     stackView.currentItem.model.getBy_SpotId(spotId);
                 }
             }
@@ -131,13 +128,10 @@ Item{
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                                        properties:{width                        : stackView.width,
-                                                    height                       : stackView.height,
-                                                    navigation_Title             : spotName,
-                                                    navigation_BackButtonVisible : true,
-                                                    stackView                    : stackView,
-                                                    navigator                    : navigator}});
+                        stackView.push( { item       : Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
+                                          properties : {navigation_Title             : spotName,
+                                                        navigation_BackButtonVisible : true,
+                                                        stackView                    : stackView } } );
                         stackView.currentItem.model.getBy_SpotId(spotId);
                     }
                 }
