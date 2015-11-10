@@ -180,22 +180,30 @@ class WebserviceController extends Controller
       return;
     }
 
-    // TODO validate email or check if it is done by manipulator->create
+    // validate email
     if (strlen($email) == 0)
     {
       $response->setError('Empty email');
       return;
     }
 
+    if (filter_var($email, FILTER_VALIDATE_EMAIL) === false)
+    {
+      $response->setError('Invalid email format');
+      return;
+    }
+
+    // check if user was already registered
     $this->canregister($response,
                        $username);
 
     if($response->getData('canregister') == false)
     {
-      $response->addData('canregister', false);
+      $response->addData('registered', false);
       return;
     }
 
+    // Create new user
     $manipulator = $this->container->get('fos_user.util.user_manipulator');
 
     $active = true;
@@ -206,11 +214,24 @@ class WebserviceController extends Controller
                          $active,
                          $superadmin);
 
+    // Login the new user
+    $this->login($response,
+                 $username,
+                 $password);
+
     $response->addData('registered', true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+  /**
+   * Login
+   *
+   * @param \Response $response
+   * @param \String   $username
+   * @param \String   $password
+   * @return WebserviceController
+   */
   private function login( &$response,
                            $username,
                            $password )

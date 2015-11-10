@@ -44,7 +44,7 @@ Item {
             button_Register.enabled = true;
 
             // Register successfull
-            if(success == false)
+            if(success === false)
             {
                 messageDialog.text = wa_User.lastErrorText();
                 messageDialog.visible = true;

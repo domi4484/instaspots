@@ -272,27 +272,48 @@ void User::slot_CommandLogout_Finished(const WebApiError &error)
 
 void User::slot_CommandRegister_Finished(const WebApiError &error)
 {
-  if(error.type() != WebApiError::NONE)
+  if(   error.type() != WebApiError::NONE
+     && error.type() != WebApiError::COMMAND)
   {
     m_LastErrorText = error.text();
     emit signal_RegistrationSuccessfull(false);
     return;
   }
 
+  // Registered
   if(   m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_REGISTERED).toBool()
      == false)
   {
-    m_Settings->setValue(Settings::USER_USERNAME, QString());
     m_Settings->setValue(Settings::USER_PASSWORD, QString());
     m_Settings->sync();
 
-    m_LastErrorText = m_WebApiCommand_Register.errorString();
+    m_LastErrorText = m_WebApiCommand_Register.resultParameter(WebApi::CONST::GENERAL_PARAMS::ERROR).toString();
     emit signal_RegistrationSuccessfull(false);
     return;
   }
 
+  // Authenticated
+  if(   m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_AUTHENTICATION).toBool()
+     == false)
+  {
+    m_Settings->setValue(Settings::USER_PASSWORD, QString());
+    m_Settings->sync();
+
+    m_Id = -1;
+    m_LastErrorText = tr("Authentication failed");
+    emit signal_RegistrationSuccessfull(false);
+    return;
+  }
+
+  // User id
+  m_Id = m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_ID_USER).toInt();
+
   m_Settings->sync();
   emit signal_RegistrationSuccessfull(true);
+  emit signal_LoginSuccessfull(true);
+  emit signal_Username_changed();
+  emit signal_Id_changed();
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
