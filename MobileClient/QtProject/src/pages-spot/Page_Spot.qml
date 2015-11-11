@@ -20,6 +20,7 @@ import PicturesModel 1.0
 import "qrc:/"
 import "qrc:/widgets"
 import "qrc:/pages-picture"
+import "qrc:/component"
 
 Item{
     id: page_Spot
@@ -27,18 +28,13 @@ Item{
 
     // Properties --------------------------
 
-    property StackView stackView
-
-
-    // Bind properties ---------------------
-
-    property alias model: picturesModel
+    property int       spotId: -1
 
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 "-"
-    property bool   navigation_BackButtonVisible:     false
+    property string navigation_Title:                 picturesModel.first().role_SpotName
+    property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
 
@@ -49,53 +45,29 @@ Item{
         id: picturesModel
     }
 
-    // Components --------------------------
 
-    Component {
-        id: component_Picture
+    // Gui ---------------------------------
 
-        Item {
-            signal pictureClicked
+    Component_PicturesGrid {
+        id: component_PicturesGrid
 
-            width: gridView_Pictures.cellWidth
-            height: gridView_Pictures.cellHeight
-
-            CachedPicture {
-                id: image_Picture
-                anchors.fill: parent
-                sourceUrl: role_PictureUrl
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        var page_Picture = Qt.resolvedUrl("qrc:/pages-picture/Page_Picture.qml");
-                        stackView.push( { item: page_Picture,
-                                          properties : {  stackView                    : stackView,
-                                                          navigation_Title             : navigation_Title,
-                                                          navigation_BackButtonVisible : true } });
-                        stackView.currentItem.model.getBy_PictureId(role_PictureId);
-                    }
-                }
-            }
+        anchors.fill: parent
+        model: picturesModel
+        onPictureClicked: {
+            stackView.push( { item: Qt.resolvedUrl("qrc:/pages-picture/Page_Picture.qml"),
+                              properties : {
+                                              stackView                    : stackView,
+                                              navigation_BackButtonVisible : true
+                                           } });
+            stackView.currentItem.model.getBy_PictureId(pictureId);
         }
     }
 
 
-    // Gui ---------------------------------
+    // Signals -----------------------------
 
-    Item{
-        id: item_Gui
-        width: parent.width
-        height: parent.height
-
-        GridView{
-            id: gridView_Pictures
-            anchors.fill: parent
-
-            cellWidth: parent.width / 2
-            cellHeight: cellWidth
-
-            model: picturesModel
-            delegate: component_Picture
-        }
+    onSpotIdChanged:
+    {
+        picturesModel.getBy_SpotId(spotId);
     }
 }

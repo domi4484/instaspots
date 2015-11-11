@@ -67,10 +67,16 @@ Item{
                                                   stackView        : stackView,
                                                   userId           : role_UserId
                                                 }
-                                });
+                                } );
             }
             onSpotClicked: {
-         //       page_PicturesList.spotClicked(role_SpotId, role_SpotName);
+                stackView.push( {
+                                   item       : Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
+                                   properties : {
+                                                  stackView        : stackView,
+                                                  spotId           : role_SpotId
+                                                }
+                                } );
             }
         }
     }

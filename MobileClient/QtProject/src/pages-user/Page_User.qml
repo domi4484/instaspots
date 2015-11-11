@@ -22,6 +22,8 @@ import "qrc:/"
 import "qrc:/widgets"
 import "qrc:/views"
 import "qrc:/pages-spot"
+import "qrc:/pages-picture"
+import "qrc:/component"
 
 Item{
     id: page_User
@@ -35,7 +37,7 @@ Item{
     // Navigation properties ---------------
 
     property string navigation_Title:                 "-"
-    property bool   navigation_BackButtonVisible:     false
+    property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
 
@@ -66,15 +68,18 @@ Item{
             property string tabWidget_ButtonText: qsTr("Pictures(%1)").arg(picturesModel.count)
             property string tabWidget_ButtonIconSource: ""
 
-            GridView{
-                id: gridView_Pictures
+            Component_PicturesGrid {
                 anchors.fill: parent
-
-                cellWidth: parent.width / 2
-                cellHeight: cellWidth
-
                 model: picturesModel
-                delegate: component_Picture
+                onPictureClicked: {
+                    stackView.push( { item: Qt.resolvedUrl("qrc:/pages-picture/Page_Picture.qml"),
+                                      properties : {
+                                                      stackView                    : stackView,
+                                                      navigation_Title             : navigation_Title,
+                                                      navigation_BackButtonVisible : true
+                                                   } });
+                    stackView.currentItem.model.getBy_PictureId(pictureId);
+                }
             }
         }
 
@@ -93,8 +98,8 @@ Item{
                     stackView.push( { item       : Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
                                       properties : { navigation_Title             : spotName,
                                                      navigation_BackButtonVisible : true,
-                                                     stackView                    : stackView } });
-                    stackView.currentItem.model.getBy_SpotId(spotId);
+                                                     stackView                    : stackView,
+                                                     spotId                       : spotId} });
                 }
             }
         }
@@ -107,35 +112,5 @@ Item{
     {
         picturesModel.getBy_UserId(userId);
         spotsModel.setUserId(userId);
-    }
-
-
-    // Components --------------------------
-
-    Component {
-        id: component_Picture
-
-        Item {
-            signal pictureClicked
-
-            width: gridView_Pictures.cellWidth
-            height: gridView_Pictures.cellHeight
-
-            CachedPicture {
-                id: image_Picture
-                anchors.fill: parent
-                sourceUrl: role_PictureUrl
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push( { item       : Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
-                                          properties : {navigation_Title             : spotName,
-                                                        navigation_BackButtonVisible : true,
-                                                        stackView                    : stackView } } );
-                        stackView.currentItem.model.getBy_SpotId(spotId);
-                    }
-                }
-            }
-        }
     }
 }

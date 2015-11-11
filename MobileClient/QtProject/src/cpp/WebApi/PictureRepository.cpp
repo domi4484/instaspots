@@ -206,7 +206,8 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
                                      jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString(),
                                      jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString(),
                                      QDateTime::fromString(jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED).toString(),
-                                                           Qt::ISODate));
+                                                           Qt::ISODate),
+                                     this);
 
       m_QMap_Pictures.insert(picture->id(), picture);
     }

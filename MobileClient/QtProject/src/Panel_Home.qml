@@ -75,8 +75,8 @@ Item {
             onSpotClicked: {
                 stackView.push({item: Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
                                properties:{navigation_Title : spotName,
-                                           stackView        : stackView}});
-                stackView.currentItem.model.getBy_SpotId(spotId);
+                                           stackView        : stackView,
+                                           spotId           : spotId }});
             }
         }
     }

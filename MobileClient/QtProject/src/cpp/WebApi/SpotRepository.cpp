@@ -171,7 +171,8 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble(),
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toDouble(),
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
+                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString(),
+                            this);
 
       m_QMap_Spots.insert(id, spot);
     }

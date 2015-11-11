@@ -57,6 +57,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("wa_User",              &user           );
     engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);
 
+    engine.rootContext()->setContextProperty("re_PictureRepository", PictureRepository::instance());
+    engine.rootContext()->setContextProperty("re_SpotRepository",    SpotRepository::instance());
+
     qmlRegisterType<PicturesModel>   ("PicturesModel",    1, 0, "PicturesModel");
     qmlRegisterType<Picture>         ("Picture",          1, 0, "Picture");
     qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
