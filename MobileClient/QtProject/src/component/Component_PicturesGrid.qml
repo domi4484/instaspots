@@ -30,14 +30,6 @@ Item{
     property alias model: gridView_Pictures.model
 
 
-    // Navigation properties ---------------
-
-    property string navigation_Title:                 qsTr("Pictures")
-    property bool   navigation_BackButtonVisible:     true
-    property bool   navigation_ContinueButtonVisible: false
-    property bool   navigation_MenuButtonVisible:     false
-
-
     // Signals -----------------------------
 
     signal pictureClicked(int pictureId)

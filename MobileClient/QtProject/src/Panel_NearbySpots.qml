@@ -40,8 +40,8 @@ Item {
             }
 
             spotsModel.setLocation(hc_LocationManager.latitude(),
-                                         hc_LocationManager.longitude(),
-                                         150);
+                                   hc_LocationManager.longitude(),
+                                   150);
         }
     }
 
@@ -52,8 +52,8 @@ Item {
 
         // Set current location (also if outdated)
         spotsModel.setLocation(hc_LocationManager.latitude(),
-                                     hc_LocationManager.longitude(),
-                                     150);
+                               hc_LocationManager.longitude(),
+                               150);
 
         // Request location update
         hc_LocationManager.requestLocation();
