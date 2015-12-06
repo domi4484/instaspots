@@ -28,14 +28,22 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
-    // Properties
+    // Properties --------------------------
 
     property alias source: image.source
-    property alias cropX: flick.cropX
-    property alias cropY: flick.cropY
+
+    property alias cropX:    flick.cropX
+    property alias cropY:    flick.cropY
     property alias cropSide: flick.cropSide
+
     property alias sourceSize: image.sourceSize
     property alias imageElement: originalImage
+
+    property real  displayAspectRatio: height / width
+    property bool  displayPortrait:    displayAspectRatio > 1.0
+    property bool  displayLandscape:   !displayPortrait
+
+    property int   transparentMargin:  10
 
     Image {
         id:originalImage
@@ -54,7 +62,7 @@ Item{
     Flickable {
         id: flick
         width: parent.width
-        height: width
+        height: parent.height
         contentWidth: minimumWidth
         contentHeight: minimumHeight
 
@@ -133,6 +141,56 @@ Item{
 //                flick.returnToBounds()
 //            }
 //        }
+    }
+
+    // Semitransparent rectangles
+    Rectangle{
+        id: rectangle_Semitransparent_Top
+
+        anchors.left:   parent.left
+        anchors.right:  parent.right
+        anchors.top:    parent.top
+
+        height: displayPortrait ? (parent.height - parent.width)/2 : transparentMargin
+
+        color:   "gray"
+        opacity: 0.5
+    }
+    Rectangle{
+        id: rectangle_Semitransparent_Left
+
+        anchors.left:   parent.left
+        anchors.top:    rectangle_Semitransparent_Top.bottom
+        anchors.bottom: parent.bottom
+
+        width: displayLandscape ? (parent.width - parent.height)/2 : transparentMargin
+
+        color:   "gray"
+        opacity: 0.5
+    }
+    Rectangle{
+        id: rectangle_Semitransparent_Right
+
+        anchors.right:  parent.right
+        anchors.top:    rectangle_Semitransparent_Top.bottom
+        anchors.bottom: parent.bottom
+
+        width: displayLandscape ? (parent.width - parent.height)/2 : transparentMargin
+
+        color:   "gray"
+        opacity: 0.5
+    }
+    Rectangle{
+        id: rectangle_Semitransparent_Bottom
+
+        anchors.left:   rectangle_Semitransparent_Left.right
+        anchors.right:  rectangle_Semitransparent_Right.left
+        anchors.bottom: parent.bottom
+
+        height: displayPortrait ? (parent.height - parent.width)/2 : transparentMargin
+
+        color:   "gray"
+        opacity: 0.5
     }
 
     Button {

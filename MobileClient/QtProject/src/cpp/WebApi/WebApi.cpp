@@ -182,7 +182,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   if(   received != 0
      && total    != 0)
   {
-    Logger::trace(QString("%1/%2").arg(received)
+    Logger::verbose(QString("%1/%2").arg(received)
                   .arg(total));
     command->setProgress(received,
                          total);
@@ -195,7 +195,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   // Received data
   QByteArray data = reply->readAll();
   QString dataText = data;
-  Logger::trace(QString("Received: %1").arg(dataText));
+  Logger::verbose(QString("Received: %1").arg(dataText));
 
   // Parse received JSON
   QJsonParseError jsonParseError;
@@ -262,7 +262,7 @@ void WebApi::slot_QNetworkReply_downloadProgress(qint64 received,
 
   if(received != total)
   {
-    Logger::trace(QString("%1/%2").arg(received)
+    Logger::verbose(QString("%1/%2").arg(received)
                                   .arg(total));
     command->setProgress(received,
                          total);
@@ -309,7 +309,7 @@ void WebApi::slot_QNetworkReply_finished()
   // Received data
   QByteArray data = reply->readAll();
   QString dataText = data;
-  Logger::trace(QString("Received: %1").arg(dataText));
+  Logger::verbose(QString("Received: %1").arg(dataText));
 
   // Parse received JSON
   QJsonParseError jsonParseError;
