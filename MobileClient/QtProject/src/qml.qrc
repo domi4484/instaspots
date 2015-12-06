@@ -48,5 +48,6 @@
         <file>icon/camera-photo.png</file>
         <file>icon/menu.png</file>
         <file>icon/splash.png</file>
+        <file>icon/dialog-question.png</file>
     </qresource>
 </RCC>

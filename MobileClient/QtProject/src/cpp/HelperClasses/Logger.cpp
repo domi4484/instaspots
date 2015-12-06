@@ -66,20 +66,6 @@ void Logger::destroy()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Logger::setLogLevel(Logger::LOG_LEVEL log_level)
-{
-  m_LogLevel = log_level;
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-Logger::LOG_LEVEL Logger::getLogLevel()
-{
-  return m_LogLevel;
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void Logger::error(const QString &text)
 {
   if(s_Logger == NULL)
@@ -144,6 +130,52 @@ void Logger::verbose(const QString &text)
   }
 
   s_Logger->write (LOG_VERBOSE, text);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Logger::setLogLevel(Logger::LOG_LEVEL log_level)
+{
+  m_LogLevel = log_level;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Logger::LOG_LEVEL Logger::getLogLevel()
+{
+  return m_LogLevel;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Logger::slot_error(const QString &text)
+{
+  write (LOG_ERROR, text);
+}
+
+void Logger::slot_warning(const QString &text)
+{
+  write (LOG_WARNING, text);
+}
+
+void Logger::slot_info(const QString &text)
+{
+  write (LOG_INFO, text);
+}
+
+void Logger::slot_trace(const QString &text)
+{
+  write (LOG_TRACE, text);
+}
+
+void Logger::slot_debug(const QString &text)
+{
+  write (LOG_DEBUG, text);
+}
+
+void Logger::slot_verbose(const QString &text)
+{
+  write (LOG_VERBOSE, text);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

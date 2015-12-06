@@ -54,8 +54,8 @@ Item{
         console.log("nearbySpotModel.setLocation")
 
         spotsModel.setLocation(hc_LocationManager.latitude(),
-                                     hc_LocationManager.longitude(),
-                                     4);
+                               hc_LocationManager.longitude(),
+                               4);
     }
 
 

@@ -23,16 +23,18 @@ class Spot : public QObject
       RoleSpotId           = Qt::UserRole + 1,
       RoleSpotName         = Qt::UserRole + 2,
       RoleSpotDescription  = Qt::UserRole + 3,
-      RoleSpotLatitude     = Qt::UserRole + 4,
-      RoleSpotLongitude    = Qt::UserRole + 5,
-      RoleSpotDistance     = Qt::UserRole + 6,
-      RoleSpotPictureUrl1  = Qt::UserRole + 7,
-      RoleSpotPictureUrl2  = Qt::UserRole + 8
+      RoleSpotSecretSpot   = Qt::UserRole + 4,
+      RoleSpotLatitude     = Qt::UserRole + 5,
+      RoleSpotLongitude    = Qt::UserRole + 6,
+      RoleSpotDistance     = Qt::UserRole + 7,
+      RoleSpotPictureUrl1  = Qt::UserRole + 8,
+      RoleSpotPictureUrl2  = Qt::UserRole + 9
     };
 
     explicit Spot(int     id,
                   QString name,
                   QString description,
+                  bool    secretSpot,
                   qreal   latitude,
                   qreal   longitude,
                   qreal   distance_km,
@@ -47,19 +49,21 @@ class Spot : public QObject
 
     QString distanceText() const;
 
-    void setName(const QString &name)               {m_Name = name;}
-    void setDescription(const QString &description) {m_Description = description;}
-    void setLatitude (qreal latitude)               {m_Latitude = latitude;}
-    void setLongitude(qreal longitude)              {m_Longitude = longitude;}
-    void setDistance (qreal distance)               {m_Distance_km = distance;}
-    void setPictureUrl1(const QString &pictureUrl1) {m_PictureUrl1 = pictureUrl1;}
-    void setPictureUrl2(const QString &pictureUrl2) {m_PictureUrl2 = pictureUrl2;}
+    void setName(const QString &name)               { m_Name        = name;        }
+    void setDescription(const QString &description) { m_Description = description; }
+    void setSecretSpot(bool secretSpot)             { m_SecretSpot  = secretSpot;  }
+    void setLatitude (qreal latitude)               { m_Latitude    = latitude;    }
+    void setLongitude(qreal longitude)              { m_Longitude   = longitude;   }
+    void setDistance (qreal distance)               { m_Distance_km = distance;    }
+    void setPictureUrl1(const QString &pictureUrl1) { m_PictureUrl1 = pictureUrl1; }
+    void setPictureUrl2(const QString &pictureUrl2) { m_PictureUrl2 = pictureUrl2; }
 
   private:
 
     int m_Id;
     QString m_Name;
     QString m_Description;
+    bool    m_SecretSpot;
     qreal   m_Latitude;
     qreal   m_Longitude;
     qreal   m_Distance_km;

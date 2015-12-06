@@ -152,7 +152,8 @@ bool ApplicationHelper::checkCurrentClientVersion()
     return true;
   }
 
-  WebApiError error = m_WebApiCommand_GetCurrentClientVersion.postRequest();
+  QList<QueryItem> qList_QueryItems;
+  WebApiError error = m_WebApiCommand_GetCurrentClientVersion.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     Logger::error(QString("ApplicationHelper::checkForNewerVersion: %1").arg(error.text()));

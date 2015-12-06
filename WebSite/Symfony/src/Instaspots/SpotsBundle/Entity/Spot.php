@@ -56,6 +56,13 @@ class Spot
     private $description;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="secretSpot", type="boolean")
+     */
+    private $secretSpot;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="score", type="integer")
@@ -212,6 +219,29 @@ class Spot
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set secetSpot
+     *
+     * @param bool $secetSpot
+     * @return Spot
+     */
+    public function setDescription($secetSpot)
+    {
+        $this->secetSpot = $secetSpot;
+
+        return $this;
+    }
+
+    /**
+     * Get secetSpot
+     *
+     * @return boolean
+     */
+    public function getSecetSpot()
+    {
+        return $this->secetSpot;
     }
 
     /**
@@ -446,6 +476,7 @@ class Spot
     $jSpot['description'] = $this->getDescription();
     $jSpot['latitude']    = $this->getLatitude();
     $jSpot['longitude']   = $this->getLongitude();
+    $jSpot['secretSpot']  = $this->getSecetSpot();
     $jSpot['distance_km'] = -1;
 
     $picture1 = $this->getPicture1();

@@ -39,6 +39,7 @@ class WebserviceController extends Controller
 
     $command = $request->get('command');
     $response->setCommand($command);
+    $response->setClientVersion($request->get('version'))
 
     if (strlen($command) == 0)
     {
@@ -88,6 +89,7 @@ class WebserviceController extends Controller
                              $request->get('longitude'  ),
                              $request->get('name'       ),
                              $request->get('description'),
+                             $request->get('spot_secretSpot'),
                              $request->files->get('image'));
       break;
 
@@ -143,8 +145,8 @@ class WebserviceController extends Controller
     }
 
     $repository = $this->getDoctrine()
-                         ->getManager()
-                         ->getRepository('InstaspotsUserBundle:User');
+                       ->getManager()
+                       ->getRepository('InstaspotsUserBundle:User');
 
     $listUsers = $repository->findByUsername($username);
 
@@ -286,7 +288,7 @@ class WebserviceController extends Controller
 
   private function getCurrentClientVersion( &$response )
   {
-    $response->addData('version', 'V0.0.2');
+    $response->addData('version', 'V0.0.3');
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -364,9 +366,10 @@ class WebserviceController extends Controller
                                    $longitude,
                                    $name,
                                    $description,
+                                   $secretSpot,
                                    UploadedFile $uploadedFile )
   {
-    $minimumClientVersion = 'V0.0.1';
+    $minimumClientVersion = 'V0.0.3';
 
     // Check for valid picture
     if(   $uploadedFile->isValid() == false
@@ -389,6 +392,7 @@ class WebserviceController extends Controller
     $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
+    $spot->setSecretSpot($secretSpot);
 
     // New picture
     $picture = new Picture();
@@ -534,6 +538,7 @@ class WebserviceController extends Controller
       $jSpot['description'] = $spot[0]['description'];
       $jSpot['latitude']    = $spot[0]['latitude'];
       $jSpot['longitude']   = $spot[0]['longitude'];
+      $jSpot['secretSpot']  = $spot[0]['secretSpot'];
       $jSpot['distance_km'] = (float)$spot['distance'];
 
       $picture1 = new Picture();

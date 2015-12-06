@@ -64,7 +64,7 @@ Item{
             nameFilters: [ "Image files (*.jpg *.JPG *.jpeg *.JPEG *.png *.PNG)" ]
 
             onAccepted: {
-                console.log("You chose: " + fileDialog.fileUrl);
+                hc_Logger.slot_info("You chose: " + fileDialog.fileUrl);
 
                 pictureSelected(fileDialog.fileUrl);
             }

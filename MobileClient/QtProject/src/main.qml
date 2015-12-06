@@ -11,7 +11,7 @@
 
 // Qt imports ------------------------------
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import QtPositioning 5.2
 
@@ -117,6 +117,18 @@ ApplicationWindow {
         onSignal_NewClientVersionAvailable:
         {
             messageDialog_NewClientVersionAvailable.visible = true;
+        }
+    }
+
+    // Message dialogs
+    MessageDialog {
+        id: messageDialog_Help
+
+        function show(title,
+                      message) {
+            messageDialog_Help.title = title
+            messageDialog_Help.text  = message;
+            messageDialog_Help.open();
         }
     }
 }

@@ -65,7 +65,7 @@ Item {
                 return;
 
             // TODO Cachare l'immagine
-            console.log("Download finished");
+            // console.log("Download finished");
         }
     }
 

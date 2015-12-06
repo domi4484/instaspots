@@ -36,6 +36,7 @@ public slots:
   bool    isNewSpot()   const;
   QString name()        const;
   QString description() const;
+  bool    secretSpot()  const;
 
   // Setters
   void setNewSpot(bool newSpot);
@@ -47,11 +48,13 @@ public slots:
                       qreal crop_side);
   void setName(const QString &title);
   void setDescription(const QString &description);
+  void setSecretSpot(bool secretSpot);
   void setPosition(float latitude,
                    float longitude);
   void setExistingSpotId(int spotId);
 
   bool execute();
+  void resetDefaults();
 
 signals:
 
@@ -63,17 +66,6 @@ private slots:
   void slot_CommandUploadPictureToSpot_Finished(const WebApiError &error);
 
 private:
-
-  static const QString C_NEW_SPOT;
-  static const QString C_PICTURE_TO_SPOT;
-
-  static const QString R_PARAM_ID_SPOT;
-  static const QString R_PARAM_LATITUDE;
-  static const QString R_PARAM_LONGITUDE;
-  static const QString R_PARAM_NAME;
-  static const QString R_PARAM_DESCRIPTION;
-
-  static const QString A_PARAM_SUCCESSFUL;
 
   QString m_LastErrorText;
 
@@ -87,6 +79,7 @@ private:
 
   QString m_Name;
   QString m_Description;
+  bool    m_SecretSpot;
 
   WebApiCommand m_WebApiCommand_UploadNewSpot;
   WebApiCommand m_WebApiCommand_UploadPictureToSpot;

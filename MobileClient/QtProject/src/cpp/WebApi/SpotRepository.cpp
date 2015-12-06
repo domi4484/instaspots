@@ -167,6 +167,7 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
       Spot *spot = new Spot(id,
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString(),
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString(),
+                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT).toBool(),
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble(),
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble(),
                             jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toDouble(),
@@ -180,6 +181,7 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
     {
       m_QMap_Spots.value(id)->setName       (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString());
       m_QMap_Spots.value(id)->setDescription(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString());
+      m_QMap_Spots.value(id)->setSecretSpot (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT).toBool());
       m_QMap_Spots.value(id)->setLatitude   (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble());
       m_QMap_Spots.value(id)->setLongitude  (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble());
       m_QMap_Spots.value(id)->setPictureUrl1(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());

@@ -15,6 +15,9 @@
 // Project includes ------------------------
 #include "WebApi.h"
 
+// Qt inlcudes -----------------------------
+#include <QApplication>
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 WebApiCommand::WebApiCommand(QObject *parent) :
@@ -111,7 +114,7 @@ void WebApiCommand::setAnswerType(WebApiCommand::ANSWER_TYPE type)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-WebApiError WebApiCommand::postRequest(const QList<QueryItem> &queryItems,
+WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
                                        QIODevice *device)
 {
   if(m_Running)
@@ -119,17 +122,20 @@ WebApiError WebApiCommand::postRequest(const QList<QueryItem> &queryItems,
     return WebApiError(WebApiError::COMMAND_ALREADY_RUNNING);
   }
 
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_APPLICATION_VERSION,
+                                    QApplication::applicationVersion()));
+
   m_Running = true;
 
   if(device == NULL)
   {
     WebApi::instance()->postRequest(this,
-                                    queryItems);
+                                    qList_QueryItems);
   }
   else
   {
     WebApi::instance()->multipartRequest(this,
-                                         queryItems,
+                                         qList_QueryItems,
                                          device);
   }
 

@@ -62,7 +62,7 @@ public:
 
   bool isRunning() { return m_Running; }
 
-  WebApiError postRequest(const QList<QueryItem> &queryItems = QList<QueryItem>(),
+  WebApiError postRequest(QList<QueryItem> &queryItems,
                           QIODevice *device = NULL);
 
   WebApiError error();

@@ -11,7 +11,7 @@
 
 // Qt imports ------------------------------
 import QtQuick 2.0
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 
 // Project qml imports ---------------------
@@ -54,7 +54,7 @@ Item{
         target: wa_PictureUploader
         onSignal_UploadFinished:
         {
-            if(wa_PictureUploader.isNewSpot() == false)
+            if(wa_PictureUploader.isNewSpot() === false)
             {
                 return;
             }
@@ -84,6 +84,7 @@ Item{
         width: parent.width / 1.1
         spacing: 5
 
+        // Spot name
         Text{
             text: qsTr("Spot name")
         }
@@ -93,6 +94,43 @@ Item{
             width: parent.width
         }
 
+        // Secret spot
+        Item{
+            anchors.left:  parent.left
+            anchors.right: parent.right
+
+            height: switch_SecretSpot.height
+
+            Text{
+                id: text_SecretSpot
+
+                anchors.left: parent.left
+
+                text: qsTr("Secret spot")
+            }
+
+            ToolButton{
+                anchors.left: text_SecretSpot.right
+                anchors.verticalCenter: text_SecretSpot.verticalCenter
+
+                iconSource: "qrc:/icon/icon/dialog-question.png"
+
+                onClicked: messageDialog_Help.show(qsTr("Secret spot"),
+                                                   qsTr("The location of a secret spot is not displayed for other users, until they upload a picture to the spot."))
+            }
+
+            Switch{
+                id: switch_SecretSpot
+
+                anchors.right: parent.right
+                anchors.verticalCenter: text_SecretSpot.verticalCenter
+
+                checked: false
+                onCheckedChanged: wa_PictureUploader.setSecretSpot(checked)
+            }
+        }
+
+        // Spot description
         Text{
             text: qsTr("Spot description")
         }

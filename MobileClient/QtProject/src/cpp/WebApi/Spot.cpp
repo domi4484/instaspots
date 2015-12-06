@@ -23,6 +23,7 @@
 Spot::Spot(int     id,
            QString name,
            QString description,
+           bool    secretSpot,
            qreal   latitude,
            qreal   longitude,
            qreal   distance_km,
@@ -33,6 +34,7 @@ Spot::Spot(int     id,
     m_Id          (id),
     m_Name        (name),
     m_Description (description),
+    m_SecretSpot  (secretSpot),
     m_Latitude    (latitude),
     m_Longitude   (longitude),
     m_Distance_km (distance_km),
@@ -57,6 +59,7 @@ Spot::Spot(QObject *parent)
       m_Id          (-1),
       m_Name        (""),
       m_Description (""),
+      m_SecretSpot  (false),
       m_Latitude    (0.0),
       m_Longitude   (0.0),
       m_Distance_km (0.0),
@@ -87,6 +90,8 @@ QVariant Spot::spotRole(Spot::SpotRoles role) const
   break;
   case RoleSpotDescription:
     return m_Description;
+  case RoleSpotSecretSpot:
+    return m_SecretSpot;
   break;
   case RoleSpotLatitude:
     return m_Latitude;
@@ -115,6 +120,7 @@ QHash<int, QByteArray> Spot::roleNames()
   roles[RoleSpotId]          = "role_SpotId";
   roles[RoleSpotName]        = "role_SpotName";
   roles[RoleSpotDescription] = "role_SpotDescription";
+  roles[RoleSpotSecretSpot]  = "role_SpotSecretSpot";
   roles[RoleSpotLatitude]    = "role_SpotLatitude";
   roles[RoleSpotLongitude]   = "role_SpotLongitude";
   roles[RoleSpotDistance]    = "role_SpotDistance";
@@ -135,11 +141,25 @@ QString Spot::distanceText() const
 
   if(m_Distance_km >= 2)
   {
-    return QString("%1 km").arg((int) m_Distance_km);
+    if(m_SecretSpot == false)
+    {
+      return QString("%1 km").arg((int) m_Distance_km);
+    }
+    else
+    {
+      return "??? km";
+    }
   }
   else
   {
-    return QString("%1 m").arg((int) (m_Distance_km*1000));
+    if(m_SecretSpot == false)
+    {
+      return QString("%1 m").arg((int) (m_Distance_km*1000));
+    }
+    else
+    {
+      return "??? m";
+    }
   }
 }
 

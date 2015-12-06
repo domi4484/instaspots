@@ -87,6 +87,8 @@ Item {
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
+
+            wa_PictureUploader.resetDefaults()
         }
     }
 
@@ -97,6 +99,8 @@ Item {
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
+
+            wa_PictureUploader.resetDefaults()
         }
     }
 
@@ -139,7 +143,8 @@ Item {
 
         initialItem: SourceSelection {
             id: page_SourceSelection
-            anchors.fill: parent
+            width : parent.width
+            height: parent.height
 
             onTakeCameraPicture: {
                 stackView.push(page_TakeCameraPicture)

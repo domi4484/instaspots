@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "../HelperClasses/Logger.h"
+#include "../WebApi/WebApi.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
@@ -22,40 +23,28 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-const QString PictureUploader::C_NEW_SPOT          ("uploadNewSpot");
-const QString PictureUploader::C_PICTURE_TO_SPOT   ("uploadPictureToSpot");
-
-const QString PictureUploader::R_PARAM_ID_SPOT     ("id_spot");
-const QString PictureUploader::R_PARAM_LATITUDE    ("latitude");
-const QString PictureUploader::R_PARAM_LONGITUDE   ("longitude");
-const QString PictureUploader::R_PARAM_NAME        ("name");
-const QString PictureUploader::R_PARAM_DESCRIPTION ("description");
-
-const QString PictureUploader::A_PARAM_SUCCESSFUL  ("successful");
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 PictureUploader::PictureUploader(QObject *parent) :
   QObject (parent),
   m_LastErrorText                    (),
-  m_Command                          (C_PICTURE_TO_SPOT),
+  m_Command                          (WebApi::C_UPLOAD_PICTURE_TO_SPOT),
   m_Pixmap                           (),
   m_Latitude                         (0),
   m_Longitude                        (0),
   m_SpotId                           (-1),
   m_Name                             (),
   m_Description                      (),
+  m_SecretSpot                       (false),
   m_WebApiCommand_UploadNewSpot      (this),
   m_WebApiCommand_UploadPictureToSpot(this)
 {
   m_WebApiCommand_UploadNewSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadNewSpot.setCommand(C_NEW_SPOT);
+  m_WebApiCommand_UploadNewSpot.setCommand(WebApi::C_UPLOAD_NEW_SPOT);
   connect(&m_WebApiCommand_UploadNewSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadNewSpot_Finished(const WebApiError &)));
 
   m_WebApiCommand_UploadPictureToSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadPictureToSpot.setCommand(C_PICTURE_TO_SPOT);
+  m_WebApiCommand_UploadPictureToSpot.setCommand(WebApi::C_UPLOAD_PICTURE_TO_SPOT);
   connect(&m_WebApiCommand_UploadPictureToSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadPictureToSpot_Finished(const WebApiError &)));
@@ -65,7 +54,7 @@ PictureUploader::PictureUploader(QObject *parent) :
 
 bool PictureUploader::isNewSpot() const
 {
-  return m_Command == C_NEW_SPOT;
+  return m_Command == WebApi::C_UPLOAD_NEW_SPOT;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -84,15 +73,22 @@ QString PictureUploader::description() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+bool PictureUploader::secretSpot() const
+{
+  return m_SecretSpot;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureUploader::setNewSpot(bool newSpot)
 {
   if(newSpot)
   {
-    m_Command = C_NEW_SPOT;
+    m_Command = WebApi::C_UPLOAD_NEW_SPOT;
   }
   else
   {
-    m_Command = C_PICTURE_TO_SPOT;
+    m_Command = WebApi::C_UPLOAD_PICTURE_TO_SPOT;
   }
 }
 
@@ -176,6 +172,13 @@ void PictureUploader::setDescription(const QString &description)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void PictureUploader::setSecretSpot(bool secretSpot)
+{
+  m_SecretSpot = secretSpot;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureUploader::setPosition(float latitude,
                                   float longitude)
 {
@@ -194,7 +197,7 @@ void PictureUploader::setExistingSpotId(int spotId)
 
 bool PictureUploader::execute()
 {
-  if(m_Command == C_NEW_SPOT)
+  if(m_Command == WebApi::C_UPLOAD_NEW_SPOT)
   {
     return uploadNewSpot();
   }
@@ -204,6 +207,18 @@ bool PictureUploader::execute()
   }
 
   return false;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureUploader::resetDefaults()
+{
+  m_Latitude    = 0;
+  m_Longitude   = 0;
+  m_SpotId      = -1;
+  m_Name        = "";
+  m_Description = "";
+  m_SecretSpot  = false;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -262,10 +277,11 @@ bool PictureUploader::uploadNewSpot()
   }
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(R_PARAM_LATITUDE,    QString::number(m_Latitude)));
-  qList_QueryItems.append(QueryItem(R_PARAM_LONGITUDE,   QString::number(m_Longitude)));
-  qList_QueryItems.append(QueryItem(R_PARAM_NAME,        m_Name));
-  qList_QueryItems.append(QueryItem(R_PARAM_DESCRIPTION, m_Description));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,    QString::number(m_Latitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE,   QString::number(m_Longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_NAME,        m_Name));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_DESCRIPTION, m_Description));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_SECRET_SPOT, QString::number(m_SecretSpot)));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
@@ -309,9 +325,9 @@ bool PictureUploader::uploadPictureToSpot()
   }
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(R_PARAM_ID_SPOT,   QString::number(m_SpotId)));
-  qList_QueryItems.append(QueryItem(R_PARAM_LATITUDE,  QString::number(m_Latitude)));
-  qList_QueryItems.append(QueryItem(R_PARAM_LONGITUDE, QString::number(m_Longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_SPOT_ID,   QString::number(m_SpotId)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,  QString::number(m_Latitude)));
+  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE, QString::number(m_Longitude)));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);

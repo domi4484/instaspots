@@ -104,6 +104,13 @@ public slots:
    void setLogLevel(LOG_LEVEL log_level);
    LOG_LEVEL getLogLevel();
 
+   void slot_error   (const QString &text);
+   void slot_warning (const QString &text);
+   void slot_info    (const QString &text);
+   void slot_trace   (const QString &text);
+   void slot_debug   (const QString &text);
+   void slot_verbose (const QString &text);
+
 private:
 
    static Logger *s_Logger;

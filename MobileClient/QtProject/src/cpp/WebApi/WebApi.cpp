@@ -46,11 +46,18 @@ const QString WebApi::C_CANREGISTER                ("canregister");
 const QString WebApi::C_GET_CURRENT_CLIENT_VERSION ("getCurrentClientVersion");
 const QString WebApi::C_GET_SPOTS_BY_DISTANCE      ("getSpotsByDistance");
 const QString WebApi::C_GET_SPOTS_BY_USER_ID       ("getSpotsByUserId");
+
 const QString WebApi::C_GET_PICTURES_BY_SPOT_ID    ("getPicturesBySpotId");
 const QString WebApi::C_GET_PICTURES_BY_USER_ID    ("getPicturesByUserId");
 const QString WebApi::C_GET_PICTURES_BY_NEWEST     ("getPicturesByNewest");
 
+const QString WebApi::C_UPLOAD_NEW_SPOT            ("uploadNewSpot");
+const QString WebApi::C_UPLOAD_PICTURE_TO_SPOT     ("uploadPictureToSpot");
+
+
 // Request parameters
+const QString WebApi::R_PARAM_APPLICATION_VERSION ("version");
+
 const QString WebApi::R_PARAM_USER_ID  ("id_user");
 const QString WebApi::R_PARAM_USERNAME ("username");
 const QString WebApi::R_PARAM_PASSWORD ("password");
@@ -62,6 +69,10 @@ const QString WebApi::R_PARAM_LATITUDE       ("latitude");
 const QString WebApi::R_PARAM_LONGITUDE      ("longitude");
 const QString WebApi::R_PARAM_MAX_DISTANCE_KM("maxDistance_km");
 
+const QString WebApi::R_PARAM_SECRET_SPOT("spot_secretSpot");
+
+const QString WebApi::R_PARAM_NAME        ("name");
+const QString WebApi::R_PARAM_DESCRIPTION ("description");
 
 // Answer parameters
 const QString WebApi::A_PARAM_AUTHENTICATION ("authentication");
@@ -73,6 +84,7 @@ const QString WebApi::A_ARRAY_SPOTS ("spots");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_ID            ("id");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_NAME          ("name");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION   ("description");
+const QString WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT   ("secretSpot");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE      ("latitude");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE     ("longitude");
 const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM   ("distance_km");
@@ -89,6 +101,7 @@ const QString WebApi::A_ARRAY_PICTURES_ELEMENT_NAME        ("name");
 const QString WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION ("description");
 const QString WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED     ("created");
 
+const QString WebApi::A_PARAM_SUCCESSFUL  ("successful");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

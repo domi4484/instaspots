@@ -53,6 +53,7 @@ public:
     }; // LATEST_PICTURES_ID
   }; // CONST
 
+  // Commands
   static const QString C_LOGIN;
   static const QString C_LOGOUT;
   static const QString C_REGISTER;
@@ -63,6 +64,12 @@ public:
   static const QString C_GET_PICTURES_BY_SPOT_ID;
   static const QString C_GET_PICTURES_BY_USER_ID;
   static const QString C_GET_PICTURES_BY_NEWEST;
+
+  static const QString C_UPLOAD_NEW_SPOT;
+  static const QString C_UPLOAD_PICTURE_TO_SPOT;
+
+  // Request parameters
+  static const QString R_PARAM_APPLICATION_VERSION;
 
   static const QString R_PARAM_USER_ID;
   static const QString R_PARAM_USERNAME;
@@ -75,6 +82,11 @@ public:
   static const QString R_PARAM_LONGITUDE;
   static const QString R_PARAM_MAX_DISTANCE_KM;
 
+  static const QString R_PARAM_NAME;
+  static const QString R_PARAM_DESCRIPTION;
+  static const QString R_PARAM_SECRET_SPOT;
+
+  // Answer parameters
   static const QString A_PARAM_AUTHENTICATION;
   static const QString A_PARAM_REGISTERED;
   static const QString A_PARAM_ID_USER;
@@ -84,6 +96,7 @@ public:
   static const QString A_ARRAY_SPOTS_ELEMENT_ID;
   static const QString A_ARRAY_SPOTS_ELEMENT_NAME;
   static const QString A_ARRAY_SPOTS_ELEMENT_DESCRIPTION;
+  static const QString A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT;
   static const QString A_ARRAY_SPOTS_ELEMENT_LATITUDE;
   static const QString A_ARRAY_SPOTS_ELEMENT_LONGITUDE;
   static const QString A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM;
@@ -100,6 +113,7 @@ public:
   static const QString A_ARRAY_PICTURES_ELEMENT_DESCRIPTION;
   static const QString A_ARRAY_PICTURES_ELEMENT_CREATED;
 
+  static const QString A_PARAM_SUCCESSFUL;
 
   static WebApi *instance();
   static void destroy();
