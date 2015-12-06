@@ -63,8 +63,8 @@ bool User::login()
 
   m_LastErrorText = "";
 
-  QString username       = m_Settings->value(Settings::USER_USERNAME, "").toString();
-  QString hashedPassword = m_Settings->value(Settings::USER_PASSWORD, "").toString();
+  QString username       = m_Settings->get_User_Username();
+  QString hashedPassword = m_Settings->get_User_Password();
 
   if(   username.isEmpty()
      || hashedPassword.isEmpty())
@@ -110,8 +110,8 @@ bool User::login(const QString &username,
 
 //  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
-  m_Settings->setValue(Settings::USER_USERNAME, username);
-  m_Settings->setValue(Settings::USER_PASSWORD, password);
+  m_Settings->set_User_Username(username);
+  m_Settings->set_User_Password(password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USERNAME, username));
@@ -135,8 +135,8 @@ bool User::logout()
 
   m_LastErrorText = "";
 
-  m_Settings->setValue(Settings::USER_USERNAME, QString());
-  m_Settings->setValue(Settings::USER_PASSWORD, QString());
+  // Reset password in settings
+  m_Settings->set_User_Password(QString());
   m_Settings->sync();
 
   emit signal_Username_changed();
@@ -187,8 +187,8 @@ bool User::registration(const QString &username,
 
 //  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
 
-  m_Settings->setValue(Settings::USER_USERNAME, username);
-  m_Settings->setValue(Settings::USER_PASSWORD, password);
+  m_Settings->set_User_Username(username);
+  m_Settings->set_User_Password(password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USERNAME, username));
@@ -209,7 +209,7 @@ bool User::registration(const QString &username,
 
 QString User::username()
 {
-    return m_Settings->value(Settings::USER_USERNAME, "").toString();
+    return m_Settings->get_User_Username();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -233,8 +233,8 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Login.resultParameter(WebApi::A_PARAM_AUTHENTICATION).toBool()
      == false)
   {
-    m_Settings->setValue(Settings::USER_USERNAME, QString());
-    m_Settings->setValue(Settings::USER_PASSWORD, QString());
+    // Reset password in settings
+    m_Settings->set_User_Password(QString());
     m_Settings->sync();
 
     m_Id = -1;

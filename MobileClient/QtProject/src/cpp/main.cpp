@@ -24,14 +24,16 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setOrganizationName("Red Coping Company");
-    app.setOrganizationDomain("spots.lowerclassclothing.com");
-    app.setApplicationName("Lowerspot");
-    app.setApplicationVersion("V0.0.3");
-
-    Logger::instanziate(Logger::LOG_VERBOSE);
+    app.setOrganizationName   ("Red Coping Company");
+    app.setOrganizationDomain ("spots.lowerclassclothing.com");
+    app.setApplicationName    ("Lowerspot");
+    app.setApplicationVersion ("V0.0.3");
 
     Settings settings;
+
+    Logger::instanziate(Logger::LOG_VERBOSE);
+    Logger::instance()->setLogLevel(settings.get_Logger_LogLevel());
+
     PlateformDetail   plateformDetail;
 
     ApplicationHelper applicationHelper(&settings,
@@ -50,8 +52,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("hc_PlateformDetail", &plateformDetail);
     engine.rootContext()->setContextProperty("hc_LocationManager", &locationManager);
     engine.rootContext()->setContextProperty("hc_PictureCacher",   &pictureCacher);
-
-    // TODO cercare setContextSingleton o qualcosa di simile
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
 
     engine.rootContext()->setContextProperty("wa_User",              &user           );
@@ -70,7 +70,11 @@ int main(int argc, char *argv[])
 
     int exitCode = app.exec();
 
-    settings.setValue(Settings::APPLICATION_LAST_VERSION, app.applicationVersion());
+    Logger::info("Application closing...");
+
+    // Set and save settings
+    settings.set_Application_LastVersion(app.applicationVersion());
+    settings.set_Logger_LogLevel(Logger::instance()->getLogLevel());
     settings.sync();
 
     Logger::destroy();

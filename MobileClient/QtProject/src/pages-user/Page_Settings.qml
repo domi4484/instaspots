@@ -105,6 +105,39 @@ Item{
             }
         }
 
+        // Logger
+        Item{
+            height: comboBox_LogLevel.height
+            width: parent.width
+            Text{
+                text: qsTr("Logger level")
+            }
+
+            ComboBox {
+                id: comboBox_LogLevel
+
+                anchors.right: parent.right
+
+                currentIndex: hc_Logger.getLogLevel()
+                model: ListModel {
+                    id: comboBox_LogLevel_Items
+                    ListElement { text: "Error";    level: 0 }
+                    ListElement { text: "Warning";  level: 1 }
+                    ListElement { text: "Info";     level: 2 }
+                    ListElement { text: "Trace";    level: 3 }
+                    ListElement { text: "Debug";    level: 4 }
+                    ListElement { text: "Verbose";  level: 5 }
+                }
+                onCurrentIndexChanged:
+                {
+                    // Set LogLevel
+                    hc_Logger.setLogLevel(comboBox_LogLevel_Items.get(currentIndex).level);
+                    return;
+                }
+            }
+        }
+
+        // Separator
         Rectangle{
             height: 2
             width: parent.width
@@ -129,34 +162,32 @@ Item{
         ComboBox {
             currentIndex: 0
             model: ListModel {
-                id: cbItems
+                id: comboBox_Locations_Items
                 ListElement { text: "GPS Location";                       latitude: 0;         longitude: 0        }
                 ListElement { text: "Custom Location";                    latitude: 0;         longitude: 0        }
                 ListElement { text: "Airolo - Camino";                    latitude: 46.527863; longitude: 8.599377 }
                 ListElement { text: "Airolo - Diga della Sella";          latitude: 46.558152; longitude: 8.595343 }
                 ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
-                ListElement { text: "Biasca - Manual pad";                latitude: 46.360764; longitude: 8.969275 }
-                ListElement { text: "Biasca - SPAI";                      latitude: 46.349831; longitude: 8.969629 }
                 ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
             }
             width: 200
             onCurrentIndexChanged:
             {
-                if(cbItems.get(currentIndex).text === "GPS Location")
+                if(comboBox_Locations_Items.get(currentIndex).text === "GPS Location")
                 {
                     // Request location update
                     hc_LocationManager.requestLocation();
                     return;
                 }
 
-                if(cbItems.get(currentIndex).text === "Custom Location")
+                if(comboBox_Locations_Items.get(currentIndex).text === "Custom Location")
                 {
                     dialog_CustomLocation.visible = true;
                     return;
                 }
 
-                hc_LocationManager.setFakePosition(cbItems.get(currentIndex).latitude,
-                                                   cbItems.get(currentIndex).longitude)
+                hc_LocationManager.setFakePosition(comboBox_Locations_Items.get(currentIndex).latitude,
+                                                   comboBox_Locations_Items.get(currentIndex).longitude)
             }
         }
     } // Column

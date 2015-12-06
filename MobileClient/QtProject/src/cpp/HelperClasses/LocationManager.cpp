@@ -48,8 +48,8 @@ LocationManager::LocationManager(Settings *settings,
 //            SLOT(slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error)));
 //  }
 
-  m_Latitude  = m_Settings->value(Settings::LOCATION_LAST_LATITUDE,  0.0).toDouble();
-  m_Longitude = m_Settings->value(Settings::LOCATION_LAST_LONGITUDE, 0.0).toDouble();
+  m_Latitude  = m_Settings->get_Location_LastLatitude();
+  m_Longitude = m_Settings->get_Location_LastLongitude();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -130,8 +130,8 @@ void LocationManager::slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInf
   m_Latitude  = geo_position_info.coordinate().latitude();
   m_Longitude = geo_position_info.coordinate().longitude();
 
-  m_Settings->setValue(Settings::LOCATION_LAST_LATITUDE,  m_Latitude);
-  m_Settings->setValue(Settings::LOCATION_LAST_LONGITUDE, m_Longitude);
+  m_Settings->set_Location_LastLatitude(m_Latitude);
+  m_Settings->set_Location_LastLongitude(m_Longitude);
 
   emit update(false);
 }

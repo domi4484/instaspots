@@ -37,13 +37,14 @@ public:
     */
    enum LOG_LEVEL
    {
-      LOG_ERROR    = -2,   //!< An (unrecoverable) error has occurred. User intervention is mandatory.
-      LOG_WARNING  = -1,   //!< An error has occurred, which does not stop the device from operation. User intervention is optional.
-      LOG_INFO     = 0,    //!< A normal operation event has occurred.
-      LOG_TRACE    = 1,    //!< A detailed operation event has occurred.
-      LOG_DEBUG    = 2,    //!< A more detailed operation event has occurred.
-      LOG_VERBOSE  = 3     //!< A verbose operation (i.e. device command, SQL) has occurred.
+      LOG_ERROR    = 0,   //!< An (unrecoverable) error has occurred. User intervention is mandatory.
+      LOG_WARNING  = 1,   //!< An error has occurred, which does not stop the device from operation. User intervention is optional.
+      LOG_INFO     = 2,    //!< A normal operation event has occurred.
+      LOG_TRACE    = 3,    //!< A detailed operation event has occurred.
+      LOG_DEBUG    = 4,    //!< A more detailed operation event has occurred.
+      LOG_VERBOSE  = 5     //!< A verbose operation (i.e. device command, SQL) has occurred.
    };
+   Q_ENUMS(LOG_LEVEL)
 
    explicit Logger(LOG_LEVEL logLevel,
                    QObject *parent = 0);
@@ -52,6 +53,7 @@ public:
    static void instanziate(LOG_LEVEL logLevel);
    static void destroy();
    static Logger *instance() { return s_Logger; }
+
 
    /*!
     * \brief Convert the given log level to a QString.
@@ -95,6 +97,12 @@ public:
     * \param text The message to log.
     */
    static void verbose (const QString &text);
+
+public slots:
+
+   // Log level
+   void setLogLevel(LOG_LEVEL log_level);
+   LOG_LEVEL getLogLevel();
 
 private:
 
