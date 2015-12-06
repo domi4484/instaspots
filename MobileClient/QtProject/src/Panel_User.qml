@@ -44,7 +44,10 @@ Item {
 
     Navigator{
         id: navigator
-        anchors.top: parent.top
+
+        anchors.left:  parent.left
+        anchors.right: parent.right
+        anchors.top:   parent.top
 
         title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
         backButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_BackButtonVisible     : false;
@@ -63,8 +66,12 @@ Item {
 
     StackView {
         id: stackView
-        anchors.top: navigator.bottom
+
+        anchors.left:   parent.left
+        anchors.right:  parent.right
+        anchors.top:    navigator.bottom
         anchors.bottom: parent.bottom
+
         // Implements back key navigation
         focus: true
         Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {

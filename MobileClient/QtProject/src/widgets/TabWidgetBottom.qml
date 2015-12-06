@@ -42,14 +42,17 @@ Item {
         }
     }
 
+    // Content
     Item {
         id: stack
-        width: tabWidgetBottom.width
-        anchors.top: tabWidgetBottom.top
-        anchors.bottom: header.top
 
+        anchors.left:   tabWidgetBottom.left
+        anchors.right:  tabWidgetBottom.right
+        anchors.top:    tabWidgetBottom.top
+        anchors.bottom: header.top
     }
 
+    // Tabs
     Row {
         id: header
 

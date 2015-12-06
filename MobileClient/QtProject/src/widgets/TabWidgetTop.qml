@@ -42,6 +42,7 @@ Item {
         }
     }
 
+    // Tabs
     Row {
         id: header
 
@@ -66,10 +67,13 @@ Item {
         }
     }
 
+    // Content
     Item {
         id: stack
-        width: tabWidgetTop.width
-        anchors.top: header.bottom
+
+        anchors.left:   tabWidgetTop.left
+        anchors.right:  tabWidgetTop.right
+        anchors.top:    header.bottom
         anchors.bottom: tabWidgetTop.bottom
     }
 }

@@ -124,18 +124,22 @@ Item {
 
     StackView {
         id: stackView
-        anchors.top: navigator.bottom
+
+        anchors.left:   parent.left
+        anchors.right:  parent.right
+        anchors.top:    navigator.bottom
         anchors.bottom: parent.bottom
+
         // Implements back key navigation
         focus: true
         Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
                              stackView.pop();
                              event.accepted = true;
                          }
+
         initialItem: SourceSelection {
             id: page_SourceSelection
-            width : parent.width
-            height: parent.height
+            anchors.fill: parent
 
             onTakeCameraPicture: {
                 stackView.push(page_TakeCameraPicture)

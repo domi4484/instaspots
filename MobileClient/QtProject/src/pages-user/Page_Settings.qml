@@ -165,7 +165,6 @@ Item{
                 id: comboBox_Locations_Items
                 ListElement { text: "GPS Location";                       latitude: 0;         longitude: 0        }
                 ListElement { text: "Custom Location";                    latitude: 0;         longitude: 0        }
-                ListElement { text: "Airolo - Camino";                    latitude: 46.527863; longitude: 8.599377 }
                 ListElement { text: "Airolo - Diga della Sella";          latitude: 46.558152; longitude: 8.595343 }
                 ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
                 ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
