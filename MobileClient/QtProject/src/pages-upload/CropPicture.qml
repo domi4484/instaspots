@@ -39,11 +39,20 @@ Item{
     property alias sourceSize: image.sourceSize
     property alias imageElement: originalImage
 
-    property real  displayAspectRatio: height / width
-    property bool  displayPortrait:    displayAspectRatio > 1.0
-    property bool  displayLandscape:   !displayPortrait
+    property int   transparentMargin      : 10
+    property real  displayAspectRatio     : height / width
+    property bool  displayPortrait        : displayAspectRatio > 1.0
+    property bool  displayLandscape       : !displayPortrait
+    property real  displayUsableSide      : displayPortrait  ? width - 2*transparentMargin : height - 2*transparentMargin
+    property int   displayUsablePositionX : displayLandscape ? (width - displayUsableSide)/2  : transparentMargin
+    property int   displayUsablePositionY : displayPortrait  ? (height - displayUsableSide)/2 : transparentMargin
 
-    property int   transparentMargin:  10
+    property real  imageAspectRatio   : sourceSize.height / sourceSize.width
+    property bool  imagePortrait      : imageAspectRatio > 1.0
+    property bool  imageLandscape     : !imagePortrait
+    property int   imageDisplayWidth  : imagePortrait  ? displayUsableSide : displayUsableSide / imageAspectRatio
+    property int   imageDisplayHeight : imageLandscape ? displayUsableSide : displayUsableSide * imageAspectRatio
+
 
     Image {
         id:originalImage
@@ -61,16 +70,15 @@ Item{
 
     Flickable {
         id: flick
-        width: parent.width
-        height: parent.height
-        contentWidth: minimumWidth
-        contentHeight: minimumHeight
 
-        property real aspectRatio: (image.sourceSize.width / image.sourceSize.height)
-        property bool imagePortrait: aspectRatio > 1.0
+        x: imagePortrait  ? displayUsablePositionX : 0
+        y: imageLandscape ? displayUsablePositionY : 0
 
-        property real minimumWidth:  imagePortrait ? height * aspectRatio : height
-        property real minimumHeight: imagePortrait ? height               : height * aspectRatio
+        width:  imagePortrait  ? displayUsableSide : parent.width
+        height: imageLandscape ? displayUsableSide : parent.height
+
+        contentWidth:  imagePortrait  ? imageDisplayWidth  : imageDisplayWidth  + 2 * displayUsablePositionX
+        contentHeight: imageLandscape ? imageDisplayHeight : imageDisplayHeight + 2 * displayUsablePositionY
 
         property real scaleFactor: image.sourceSize.width / minimumWidth;
 
@@ -80,13 +88,19 @@ Item{
 
         Image {
             id:image
-            width: flick.contentWidth
-            height: flick.contentHeight
+
+            x: imagePortrait  ? 0 : displayUsablePositionX
+            y: imageLandscape ? 0 : displayUsablePositionY
+
+            width:  imageDisplayWidth
+            height: imageDisplayHeight
+
+            fillMode: Image.Stretch
 
             MouseArea {
                 anchors.fill: parent
                 onDoubleClicked: {
-                    flick.contentWidth = flick.minimumWidth
+                    flick.contentWidth  = flick.minimumWidth
                     flick.contentHeight = flick.minimumHeight
                 }
             }
@@ -151,7 +165,7 @@ Item{
         anchors.right:  parent.right
         anchors.top:    parent.top
 
-        height: displayPortrait ? (parent.height - parent.width)/2 : transparentMargin
+        height: displayUsablePositionY
 
         color:   "gray"
         opacity: 0.5
@@ -163,7 +177,7 @@ Item{
         anchors.top:    rectangle_Semitransparent_Top.bottom
         anchors.bottom: parent.bottom
 
-        width: displayLandscape ? (parent.width - parent.height)/2 : transparentMargin
+        width: displayUsablePositionX
 
         color:   "gray"
         opacity: 0.5
@@ -175,7 +189,7 @@ Item{
         anchors.top:    rectangle_Semitransparent_Top.bottom
         anchors.bottom: parent.bottom
 
-        width: displayLandscape ? (parent.width - parent.height)/2 : transparentMargin
+        width: displayUsablePositionX
 
         color:   "gray"
         opacity: 0.5
@@ -187,7 +201,7 @@ Item{
         anchors.right:  rectangle_Semitransparent_Right.left
         anchors.bottom: parent.bottom
 
-        height: displayPortrait ? (parent.height - parent.width)/2 : transparentMargin
+        height: displayUsablePositionY
 
         color:   "gray"
         opacity: 0.5
