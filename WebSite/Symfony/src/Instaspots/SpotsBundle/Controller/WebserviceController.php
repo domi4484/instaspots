@@ -8,6 +8,7 @@ use Instaspots\SpotsBundle\Entity\Spot;
 use Instaspots\SpotsBundle\Entity\Picture;
 
 use Instaspots\SpotsBundle\Controller\Response;
+use Instaspots\SpotsBundle\Controller\ApplicationHelper;
 
 // Symfony imports -------------------------
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -288,7 +289,7 @@ class WebserviceController extends Controller
 
   private function getCurrentClientVersion( &$response )
   {
-    $response->addData('version', 'V0.0.3');
+    $response->addData('version', 'V0.0.2');
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -392,7 +393,11 @@ class WebserviceController extends Controller
     $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
-    $spot->setSecretSpot($secretSpot);
+
+    if(ApplicationHelper::compareVersions($response->getClientVersion(), 'V0.0.3') >= 0)
+    {
+      $spot->setSecretSpot($secretSpot);
+    }
 
     // New picture
     $picture = new Picture();

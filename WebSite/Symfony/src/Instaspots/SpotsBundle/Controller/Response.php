@@ -41,6 +41,12 @@ class Response
 
   public function setClientVersion($clientVersion)
   {
+    if(is_null($clientVersion))
+    {
+      $this->clientVersion = 'V0.0.0';
+      return;
+    }
+
     $this->clientVersion = $clientVersion;
   }
 
