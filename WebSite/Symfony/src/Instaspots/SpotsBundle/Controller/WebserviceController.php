@@ -40,7 +40,7 @@ class WebserviceController extends Controller
 
     $command = $request->get('command');
     $response->setCommand($command);
-    $response->setClientVersion($request->get('version'))
+    $response->setClientVersion($request->get('version'));
 
     if (strlen($command) == 0)
     {

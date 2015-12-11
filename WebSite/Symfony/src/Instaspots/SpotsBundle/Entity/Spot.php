@@ -227,7 +227,7 @@ class Spot
      * @param bool $secetSpot
      * @return Spot
      */
-    public function setDescription($secetSpot)
+    public function setSecretSpot($secetSpot)
     {
         $this->secetSpot = $secetSpot;
 
