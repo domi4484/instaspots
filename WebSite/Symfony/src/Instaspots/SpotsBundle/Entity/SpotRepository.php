@@ -20,32 +20,33 @@ class SpotRepository extends EntityRepository
     $rsm = new ResultSetMapping;
 
     $rsm->addEntityResult('InstaspotsSpotsBundle:Spot', 's');
-    $rsm->addFieldResult('s', 'id', 'id');
-    $rsm->addFieldResult('s', 'name', 'name');
+    $rsm->addFieldResult('s', 'id',          'id');
+    $rsm->addFieldResult('s', 'name',        'name');
     $rsm->addFieldResult('s', 'description', 'description');
-    $rsm->addFieldResult('s', 'latitude', 'latitude');
-    $rsm->addFieldResult('s', 'longitude', 'longitude');
-    
+    $rsm->addFieldResult('s', 'secretSpot',  'secretSpot');
+    $rsm->addFieldResult('s', 'latitude',    'latitude');
+    $rsm->addFieldResult('s', 'longitude',   'longitude');
+
     $rsm->addScalarResult('distance', 'distance');
-    
+
     $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p1', 's', 'picture1');
     $rsm->addFieldResult('p1', 'picture1_id', 'id');
     $rsm->addFieldResult('p1', 'created1', 'created');
-    
+
     $rsm->addJoinedEntityResult('InstaspotsSpotsBundle:Picture', 'p2', 's', 'picture2');
     $rsm->addFieldResult('p2', 'picture2_id', 'id');
     $rsm->addFieldResult('p2', 'created2', 'created');
-  
-    $sql = "SELECT s.id, s.name, s.description, s.latitude, s.longitude, 
+
+    $sql = "SELECT s.id, s.name, s.description, s.latitude, s.longitude, s.secretSpot,
             p1.id AS picture1_id, p1.created AS created1,
             p2.id AS picture2_id, p2.created AS created2,
-           ( 6378.137 * acos( cos( radians(?) ) * cos( radians( s.latitude ) ) * 
-           cos( radians( s.longitude ) - radians(?) ) + sin( radians(?) ) * 
-           sin( radians( s.latitude ) ) ) ) AS distance 
+           ( 6378.137 * acos( cos( radians(?) ) * cos( radians( s.latitude ) ) *
+           cos( radians( s.longitude ) - radians(?) ) + sin( radians(?) ) *
+           sin( radians( s.latitude ) ) ) ) AS distance
            FROM Spot s
            INNER JOIN Picture p1 ON s.picture1_id = p1.id
            INNER JOIN Picture p2 ON s.picture2_id = p2.id
-           GROUP BY s.id HAVING distance < ? 
+           GROUP BY s.id HAVING distance < ?
            ORDER BY distance";
 
     $query = $this->_em->createNativeQuery($sql, $rsm);

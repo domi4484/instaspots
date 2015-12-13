@@ -222,26 +222,26 @@ class Spot
     }
 
     /**
-     * Set secetSpot
+     * Set secretSpot
      *
-     * @param bool $secetSpot
+     * @param bool $secretSpot
      * @return Spot
      */
-    public function setSecretSpot($secetSpot)
+    public function setSecretSpot($secretSpot)
     {
-        $this->secetSpot = $secetSpot;
+        $this->$secretSpot = $secretSpot;
 
         return $this;
     }
 
     /**
-     * Get secetSpot
+     * Get secretSpot
      *
      * @return boolean
      */
-    public function getSecetSpot()
+    public function getSecretSpot()
     {
-        return $this->secetSpot;
+        return $this->secretSpot;
     }
 
     /**
@@ -476,7 +476,7 @@ class Spot
     $jSpot['description'] = $this->getDescription();
     $jSpot['latitude']    = $this->getLatitude();
     $jSpot['longitude']   = $this->getLongitude();
-    $jSpot['secretSpot']  = $this->getSecetSpot();
+    $jSpot['secretSpot']  = $this->getSecretSpot();
     $jSpot['distance_km'] = -1;
 
     $picture1 = $this->getPicture1();
