@@ -28,27 +28,35 @@ use FOS\UserBundle\Util\UserManipulator;
 
 class WebserviceController extends Controller
 {
+  private $CONST_DEBUG = false;
+
   public function webserviceAction(Request $request)
   {
     $response = new Response();
 
-    if ($request->isMethod('POST') == false)
+    if (   $request->isMethod('POST') == false
+        && $this->CONST_DEBUG         == false)
     {
       $response->setError('Not a post request');
       return new JsonResponse($response->toJson());
     }
 
-    $command = $request->get('command');
-    $response->setCommand($command);
-    $response->setClientVersion($request->get('version'));
+    $response->setCommand       ($request->get('command'));
+    $response->setClientVersion ($request->get('version'));
 
-    if (strlen($command) == 0)
+    if (strlen($response->getCommand()) == 0)
     {
       $response->setError('Empty command');
       return new JsonResponse($response->toJson());
     }
 
-    switch ($command)
+    if (strlen($response->getClientVersion()) == 0)
+    {
+      $response->setClientVersion('V0.0.0');
+      $response->setWarning('Empty version');
+    }
+
+    switch ($response->getCommand())
     {
       case "login":
         $this->login($response,
@@ -122,8 +130,7 @@ class WebserviceController extends Controller
 
       default:
       {
-        $command = $response->getCommand();
-        $response->setError("Unknown command: $command");
+        $response->setError("Unknown command: ".$response->getCommand());
       }
     }
 

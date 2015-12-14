@@ -80,11 +80,11 @@ Item{
         contentWidth:  imagePortrait  ? imageDisplayWidth  : imageDisplayWidth  + 2 * displayUsablePositionX
         contentHeight: imageLandscape ? imageDisplayHeight : imageDisplayHeight + 2 * displayUsablePositionY
 
-        property real scaleFactor: image.sourceSize.width / minimumWidth;
 
-        property real cropX: contentX * scaleFactor
-        property real cropY: contentY * scaleFactor
-        property real cropSide: width * scaleFactor
+        property real cropX: imagePortrait  ? 0 : contentX / displayUsableSide  * sourceSize.height//- displayUsablePositionX
+        property real cropY: imageLandscape ? 0 : contentY / displayAspectRatio //- displayUsablePositionY
+
+        property real cropSide: imagePortrait ? sourceSize.width : sourceSize.height
 
         Image {
             id:image

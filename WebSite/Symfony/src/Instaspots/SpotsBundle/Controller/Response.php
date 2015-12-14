@@ -10,7 +10,8 @@ class Response
 
   private $data = array();
 
-  private $error = '';
+  private $error   = '';
+  private $warning = '';
 
   //-----------------------------------------------------------------------------------------------------------------------------
   //-----------------------------------------------------------------------------------------------------------------------------
@@ -41,12 +42,6 @@ class Response
 
   public function setClientVersion($clientVersion)
   {
-    if(is_null($clientVersion))
-    {
-      $this->clientVersion = 'V0.0.0';
-      return;
-    }
-
     $this->clientVersion = $clientVersion;
   }
 
@@ -62,6 +57,13 @@ class Response
   public function setError($error)
   {
     $this->error = $error;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function setWarning($warning)
+  {
+    $this->warning = $warning;
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
@@ -85,6 +87,11 @@ class Response
   {
     $this->data['command']  = $this->command;
     $this->data['error']    = $this->error;
+
+    if (strlen($this->warning) != 0)
+    {
+      $this->data['warning'] = $this->warning;
+    }
 
     return $this->data;
   }
