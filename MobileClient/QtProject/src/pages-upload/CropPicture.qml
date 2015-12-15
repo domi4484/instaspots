@@ -81,8 +81,8 @@ Item{
         contentHeight: imageLandscape ? imageDisplayHeight : imageDisplayHeight + 2 * displayUsablePositionY
 
 
-        property real cropX: imagePortrait  ? 0 : contentX / displayUsableSide  * sourceSize.height//- displayUsablePositionX
-        property real cropY: imageLandscape ? 0 : contentY / displayAspectRatio //- displayUsablePositionY
+        property real cropX: imagePortrait  ? 0 : contentX / displayUsableSide * sourceSize.height
+        property real cropY: imageLandscape ? 0 : contentY / displayUsableSide * sourceSize.width
 
         property real cropSide: imagePortrait ? sourceSize.width : sourceSize.height
 
@@ -168,7 +168,7 @@ Item{
         height: displayUsablePositionY
 
         color:   "gray"
-        opacity: 0.5
+        opacity: 0.8
     }
     Rectangle{
         id: rectangle_Semitransparent_Left
@@ -180,7 +180,7 @@ Item{
         width: displayUsablePositionX
 
         color:   "gray"
-        opacity: 0.5
+        opacity: 0.8
     }
     Rectangle{
         id: rectangle_Semitransparent_Right
@@ -192,7 +192,7 @@ Item{
         width: displayUsablePositionX
 
         color:   "gray"
-        opacity: 0.5
+        opacity: 0.8
     }
     Rectangle{
         id: rectangle_Semitransparent_Bottom
@@ -204,7 +204,7 @@ Item{
         height: displayUsablePositionY
 
         color:   "gray"
-        opacity: 0.5
+        opacity: 0.8
     }
 
     Button {

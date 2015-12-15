@@ -156,8 +156,8 @@ void PictureUploader::setCropPicture(const QString &source_url,
 
   m_Pixmap = qPixmap.copy(crop_x,
                           crop_y,
-                          crop_x + crop_side,
-                          crop_y + crop_side);
+                          crop_side,
+                          crop_side);
   m_Pixmap = m_Pixmap.scaled(640, 640,
                              Qt::IgnoreAspectRatio,
                              Qt::SmoothTransformation);
