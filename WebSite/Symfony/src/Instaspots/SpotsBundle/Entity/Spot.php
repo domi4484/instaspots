@@ -229,7 +229,7 @@ class Spot
      */
     public function setSecretSpot($secretSpot)
     {
-        $this->$secretSpot = $secretSpot;
+        $this->secretSpot = $secretSpot;
 
         return $this;
     }
