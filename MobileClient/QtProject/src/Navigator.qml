@@ -22,7 +22,8 @@ Rectangle {
     width: parent.width
     color: (   mouseBack.pressed
             || mouseContinue.pressed
-            || mouseMenu.pressed      ) ? Qt.lighter("#7fb5be", 1.2) : "#7fb5be"
+            || mouseMenu.pressed      ) ? Qt.lighter(hc_Application.color_BackgroundNavigator(), 1.2)
+                                        : hc_Application.color_BackgroundNavigator()
 
     Text {
         id: text_Title

@@ -18,6 +18,8 @@
 
 // Qt includes -----------------------------
 #include <QGeoCoordinate>
+#include <QDesktopServices>
+#include <QUrl>
 
 LocationManager::LocationManager(Settings *settings,
                                  QObject *parent)
@@ -119,6 +121,24 @@ QString LocationManager::googleMapLocationPicture(int width,
                  .arg(m_Longitude)
                  .arg(width)
                  .arg(height);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void LocationManager::openLocationOnNativeMapsApp(double latitude,
+                                                  double longitude,
+                                                  const QString &label)
+{
+    QString url = QString("geo:%1,%2").arg(latitude)
+                                                    .arg(longitude);
+    if(label.isEmpty() == false)
+    {
+        url.append(QString("?q=%1,%2(%3)").arg(latitude)
+                                          .arg(longitude)
+                                          .arg(label));
+    }
+
+    QDesktopServices::openUrl(QUrl(url));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

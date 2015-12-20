@@ -17,10 +17,12 @@ Item {
 
     Rectangle {
         id: rectangle_Top
+
         anchors.top: parent.top
         width: parent.width
         height: 40
-        color: "#aaaaaa"
+
+        color: hc_Application.color_BackgroundTitleRectangle()
 
         // Username
         Text{

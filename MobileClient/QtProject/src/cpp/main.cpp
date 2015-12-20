@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("hc_LocationManager", &locationManager);
     engine.rootContext()->setContextProperty("hc_PictureCacher",   &pictureCacher);
     engine.rootContext()->setContextProperty("hc_Logger",          Logger::instance());
+    engine.rootContext()->setContextProperty("hc_Settings",        &settings);
 
     engine.rootContext()->setContextProperty("wa_User",              &user           );
     engine.rootContext()->setContextProperty("wa_PictureUploader",   &pictureUploader);

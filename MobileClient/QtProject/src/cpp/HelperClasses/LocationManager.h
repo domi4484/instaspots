@@ -48,6 +48,10 @@ public slots:
   QString googleMapLocationPicture(int width,
                                    int height);
 
+  void openLocationOnNativeMapsApp(double latitude,
+                                   double longitude,
+                                   const QString &label = "");
+
 private slots:
   void slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo geo_position_info);
   void slot_GeoPositionInfoSource_UpdateTimeout();

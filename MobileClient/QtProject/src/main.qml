@@ -10,7 +10,7 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.2
+import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import QtPositioning 5.2
@@ -38,17 +38,6 @@ ApplicationWindow {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
             }
-        }
-    }
-
-    MessageDialog{
-        id: messageDialog_NewClientVersionAvailable
-        title: qsTr('New version out!')
-        text: qsTr('There is a new Lowerspot app version available for download! Get it on the Lowerspot homepage for a better experience!')
-
-        onAccepted:
-        {
-            hc_Application.newerClientVersionAvailableGotIt();
         }
     }
 
@@ -116,19 +105,19 @@ ApplicationWindow {
         target: hc_Application
         onSignal_NewClientVersionAvailable:
         {
-            messageDialog_NewClientVersionAvailable.visible = true;
+            messageDialog_NewClientVersionAvailable.open();
         }
     }
 
-    // Message dialogs
-    MessageDialog {
-        id: messageDialog_Help
+    // Message dialogs ---------------------
+    MessageDialog{
+        id: messageDialog_NewClientVersionAvailable
+        title: qsTr('New version out!')
+        text: qsTr('There is a new Lowerspot app version available for download! Get it on the Lowerspot homepage for a better experience!')
 
-        function show(title,
-                      message) {
-            messageDialog_Help.title = title
-            messageDialog_Help.text  = message;
-            messageDialog_Help.open();
+        onAccepted:
+        {
+            hc_Application.newerClientVersionAvailableGotIt();
         }
     }
 }

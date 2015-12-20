@@ -51,6 +51,9 @@ Item{
             width: parent.width
             Text{
                 id: text_ApplicationVersion
+
+                anchors.left: parent.left
+
                 text: qsTr("Application version")
             }
 
@@ -63,7 +66,7 @@ Item{
         // Build timestamp
         Item{
             height: text_BuilTimestamp.height
-            width: parent.width
+            width:  parent.width
             Text{
                 id: text_BuilTimestamp
                 text: qsTr("Built on")
@@ -110,13 +113,20 @@ Item{
             height: comboBox_LogLevel.height
             width: parent.width
             Text{
+                id: text_LogLevel
+
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+
                 text: qsTr("Logger level")
             }
 
             ComboBox {
                 id: comboBox_LogLevel
 
-                anchors.right: parent.right
+                anchors.left:       text_LogLevel.right
+                anchors.right:      parent.right
+                anchors.leftMargin: 4
 
                 currentIndex: hc_Logger.getLogLevel()
                 model: ListModel {
@@ -135,6 +145,15 @@ Item{
                     return;
                 }
             }
+        }
+
+        // Reset got it
+        Button{
+            width: parent.width
+
+            text: qsTr("Reset \"Got it\" dialogs")
+
+            onClicked: hc_Settings.resetGotItSettings()
         }
 
         // Separator
@@ -159,37 +178,63 @@ Item{
             }
         }
 
-        ComboBox {
-            currentIndex: 0
-            model: ListModel {
-                id: comboBox_Locations_Items
-                ListElement { text: "GPS Location";                       latitude: 0;         longitude: 0        }
-                ListElement { text: "Custom Location";                    latitude: 0;         longitude: 0        }
-                ListElement { text: "Airolo - Diga della Sella";          latitude: 46.558152; longitude: 8.595343 }
-                ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
-                ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
+        Item{
+            height: button_ShowCurrentLocation.height
+            width: parent.width
+
+            ComboBox {
+                id: combobox_Locations
+
+                anchors.verticalCenter: parent.verticalCenter
+
+                currentIndex: 0
+                model: ListModel {
+                    id: comboBox_Locations_Items
+                    ListElement { text: "GPS Location";                       latitude: 0;         longitude: 0        }
+                    ListElement { text: "Custom Location";                    latitude: 0;         longitude: 0        }
+                    ListElement { text: "Airolo - Diga della Sella";          latitude: 46.558152; longitude: 8.595343 }
+                    ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
+                    ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
+                }
+                width: 200
+                onCurrentIndexChanged:
+                {
+                    if(comboBox_Locations_Items.get(currentIndex).text === "GPS Location")
+                    {
+                        // Request location update
+                        hc_LocationManager.requestLocation();
+                        return;
+                    }
+
+                    if(comboBox_Locations_Items.get(currentIndex).text === "Custom Location")
+                    {
+                        dialog_CustomLocation.visible = true;
+                        return;
+                    }
+
+                    hc_LocationManager.setFakePosition(comboBox_Locations_Items.get(currentIndex).latitude,
+                                                       comboBox_Locations_Items.get(currentIndex).longitude)
+                }
             }
-            width: 200
-            onCurrentIndexChanged:
-            {
-                if(comboBox_Locations_Items.get(currentIndex).text === "GPS Location")
-                {
-                    // Request location update
-                    hc_LocationManager.requestLocation();
-                    return;
-                }
 
-                if(comboBox_Locations_Items.get(currentIndex).text === "Custom Location")
-                {
-                    dialog_CustomLocation.visible = true;
-                    return;
-                }
+            Button {
+                id: button_ShowCurrentLocation
 
-                hc_LocationManager.setFakePosition(comboBox_Locations_Items.get(currentIndex).latitude,
-                                                   comboBox_Locations_Items.get(currentIndex).longitude)
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left:           combobox_Locations.right
+                anchors.right:          parent.right
+                anchors.leftMargin:     4
+
+                text: qsTr("Show current location");
+                onClicked:
+                {
+                    hc_LocationManager.openLocationOnNativeMapsApp(hc_LocationManager.latitude(),
+                                                                   hc_LocationManager.longitude())
+                }
             }
         }
     } // Column
+
     Button {
         id: button_Logout
         anchors.bottom: parent.bottom

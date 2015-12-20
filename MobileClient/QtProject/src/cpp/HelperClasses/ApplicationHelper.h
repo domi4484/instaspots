@@ -41,6 +41,7 @@ signals:
 
 public slots:
 
+  // Version
   QString version() const;
   int     compareVersions(const QString &version1,
                           const QString &version2) const;
@@ -49,11 +50,14 @@ public slots:
 
   QString buildTimestamp() const;
 
+  // Development mode
   bool developmentMode() const;
   void setDevelopmentMode(bool developmentMode);
 
   // Colors
-  QString color_TextLink() const { return "#265f8b"; }
+  QString color_BackgroundNavigator()      const { return "#7fb5be"; }
+  QString color_BackgroundTitleRectangle() const { return "#aaaaaa"; }
+  QString color_TextLink()                 const { return "#265f8b"; }
 
 private slots:
 

@@ -38,15 +38,25 @@ Item{
 
     MessageDialog{
         id: messageDialog_Error
+
         title: qsTr('Upload error')
     }
 
     MessageDialog{
         id: messageDialog_UploadSuccessful
+
         title: qsTr('Upload successfull')
-        text: qsTr('Spot succesfully uploaded')
+        text:  qsTr('Spot succesfully uploaded')
     }
 
+    MessageDialog {
+        id: messageDialog_Help
+
+        title: qsTr("Secret spot")
+        text:  qsTr("The location of a secret spot is not displayed to other users, until they upload a picture to the spot.")
+
+        onAccepted: hc_Settings.set_HelpGotIt_UploadNewPictureSecretSpot(true)
+    }
 
     // Connections -------------------------
 
@@ -110,19 +120,28 @@ Item{
             }
 
             ToolButton{
-                anchors.left: text_SecretSpot.right
+                anchors.left:           text_SecretSpot.right
                 anchors.verticalCenter: text_SecretSpot.verticalCenter
+                height: parent.height
+                width : height
 
-                iconSource: "qrc:/icon/icon/dialog-question.png"
+                visible: hc_Settings.get_HelpGotIt_UploadNewPictureSecretSpot() === false
 
-                onClicked: messageDialog_Help.show(qsTr("Secret spot"),
-                                                   qsTr("The location of a secret spot is not displayed for other users, until they upload a picture to the spot."))
+                Image {
+                    anchors.fill:    parent
+                    anchors.margins: 2
+
+                    smooth: true
+                    source: "qrc:/icon/icon/dialog-question.png"
+                }
+
+                onClicked: messageDialog_Help.open()
             }
 
             Switch{
                 id: switch_SecretSpot
 
-                anchors.right: parent.right
+                anchors.right:          parent.right
                 anchors.verticalCenter: text_SecretSpot.verticalCenter
 
                 checked: false
@@ -137,8 +156,9 @@ Item{
     }
     TextArea{
         id: textArea_Description
+
         width: parent.width / 1.1
-        anchors.top: column.bottom
+        anchors.top:    column.bottom
         anchors.bottom: button_UploadNewSpot.top
         anchors.bottomMargin: 5
         anchors.horizontalCenter: parent.horizontalCenter

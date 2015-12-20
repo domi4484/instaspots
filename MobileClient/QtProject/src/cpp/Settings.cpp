@@ -29,6 +29,9 @@ const QString Settings::USER_PASSWORD ("User_Password");
 const QString Settings::LOCATION_LAST_LATITUDE  ("Location_LastLatitude");
 const QString Settings::LOCATION_LAST_LONGITUDE ("Location_LastLongitude");
 
+// One Time Help settings
+const QString Settings::HELP_GOT_IT_UPLOAD_NEW_PICTURE_SECRET_SPOT ("HelpGotIt_UploadNewPictureSecretSpot");
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Settings::Settings(QObject *parent) :
@@ -139,7 +142,29 @@ double Settings::get_Location_LastLongitude()
 
 void Settings::set_Location_LastLongitude(double longitude)
 {
-  QSettings::setValue(LOCATION_LAST_LONGITUDE, longitude);
+    QSettings::setValue(LOCATION_LAST_LONGITUDE, longitude);
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool Settings::get_HelpGotIt_UploadNewPictureSecretSpot()
+{
+  return QSettings::value(HELP_GOT_IT_UPLOAD_NEW_PICTURE_SECRET_SPOT).toBool();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::set_HelpGotIt_UploadNewPictureSecretSpot(bool gotIt)
+{
+  QSettings::setValue(HELP_GOT_IT_UPLOAD_NEW_PICTURE_SECRET_SPOT, gotIt);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::resetGotItSettings()
+{
+  set_Application_NewerVersionAvailableGotIt(false);
+
+  set_HelpGotIt_UploadNewPictureSecretSpot(false);
+}
 
