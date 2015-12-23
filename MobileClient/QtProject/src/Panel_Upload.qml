@@ -87,6 +87,7 @@ Item {
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
+            panel_Home.tabWidget_CurrentTabReclicked();
 
             wa_PictureUploader.resetDefaults()
         }
@@ -99,6 +100,7 @@ Item {
         onUploadSuccessfull: {
             stackView.pop(page_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
+            panel_Home.tabWidget_CurrentTabReclicked();
 
             wa_PictureUploader.resetDefaults()
         }

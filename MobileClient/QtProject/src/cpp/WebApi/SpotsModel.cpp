@@ -13,6 +13,7 @@
 #include "SpotsModel.h"
 
 // Projects includes -----------------------
+#include "../HelperClasses/Logger.h"
 #include "Spot.h"
 #include "SpotRepository.h"
 
@@ -100,12 +101,18 @@ void SpotsModel::slot_SpotRepository_DataReady(int requestId,
     return;
 
   if(success == false)
+  {
+    Logger::error(QString("slot_SpotRepository_DataReady: success = %1").arg(success));
     return;
-  // TODO error handling?
+  }
 
-  beginInsertRows(QModelIndex() , 0, SpotRepository::instance()->getSpots(m_RequestId).size()-1);
+  QAbstractItemModel::beginResetModel();
+  m_QList_Spots.clear();
+  QAbstractItemModel::endResetModel();
+
+  QAbstractItemModel::beginInsertRows(QModelIndex() , 0, SpotRepository::instance()->getSpots(m_RequestId).size()-1);
   m_QList_Spots = SpotRepository::instance()->getSpots(m_RequestId);
-  endInsertRows();
+  QAbstractItemModel::endInsertRows();
 
   countChanged(m_QList_Spots.count());
 }

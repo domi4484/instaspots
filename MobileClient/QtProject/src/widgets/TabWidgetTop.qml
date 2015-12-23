@@ -61,7 +61,17 @@ Item {
                 checked: tabWidgetTop.current == index
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: tabWidgetTop.current = index
+                    onClicked:
+                    {
+                        // Re-Click
+                        if(tabWidgetTop.current === index)
+                        {
+                            stack.children[index].tabWidget_CurrentTabReclicked();
+                        }
+
+                        // Set current tab content
+                        tabWidgetTop.current = index;
+                    }
                 }
             }
         }

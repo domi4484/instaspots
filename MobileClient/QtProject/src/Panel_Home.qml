@@ -87,4 +87,12 @@ Item {
             }
         }
     }
+
+    function tabWidget_CurrentTabReclicked()
+    {
+        stackView.pop({item:      page_PicturesList,
+                       immediate: true});
+
+        page_PicturesList.model.getNewestSpots();
+    }
 }

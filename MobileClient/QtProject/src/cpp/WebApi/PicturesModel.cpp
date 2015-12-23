@@ -13,6 +13,7 @@
 #include "PicturesModel.h"
 
 // Projects includes -----------------------
+#include "../HelperClasses/Logger.h"
 #include "Picture.h"
 #include "PictureRepository.h"
 
@@ -106,12 +107,18 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
     return;
 
   if(success == false)
+  {
+    Logger::error(QString("slot_PictureRepository_DataReady: success = %1").arg(success));
     return;
-  // TODO error handling?
+  }
 
-  beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
+  QAbstractItemModel::beginResetModel();
+  m_QList_Pictures.clear();
+  QAbstractItemModel::endResetModel();
+
+  QAbstractItemModel::beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
   m_QList_Pictures = PictureRepository::instance()->getPictures(m_RequestId);
-  endInsertRows();
+  QAbstractItemModel::endInsertRows();
 
   countChanged(m_QList_Pictures.count());
 }
