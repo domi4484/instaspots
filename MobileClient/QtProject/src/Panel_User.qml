@@ -45,9 +45,9 @@ Item {
     Navigator{
         id: navigator
 
-        anchors.left:  parent.left
-        anchors.right: parent.right
-        anchors.top:   parent.top
+        anchors.top: parent.top
+        width:       parent.width
+        height:      40
 
         title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
         backButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_BackButtonVisible     : false;
