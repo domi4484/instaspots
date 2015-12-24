@@ -30,29 +30,6 @@ Picture::Picture(QObject *parent) :
 {
 }
 
-
-Picture::Picture(int id,
-                 int idUser,
-                 int idSpot,
-                 QString url,
-                 QString username,
-                 QString name,
-                 QString description,
-                 QDateTime created,
-                 QObject *parent) :
-  QObject(parent),
-  m_Id         (id),
-  m_IdUser     (idUser),
-  m_IdSpot     (idSpot),
-  m_Url            (url),
-  m_Username       (username),
-  m_SpotName       (name),
-  m_SpotDescription(description),
-  m_Created        (created),
-  m_WebApiCommand  (NULL)
-{
-}
-
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Picture::~Picture()

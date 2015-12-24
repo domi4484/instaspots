@@ -19,6 +19,7 @@
 // Qt includes -----------------------------
 #include <QGeoCoordinate>
 #include <QDesktopServices>
+#include <QPointF>
 #include <QUrl>
 
 LocationManager::LocationManager(Settings *settings,
@@ -68,7 +69,7 @@ void LocationManager::setFakePosition(double latitude,
 {
   m_Valid = true;
 
-  m_Latitude = latitude;
+  m_Latitude  = latitude;
   m_Longitude = longitude;
 
   emit update(false);
@@ -109,6 +110,17 @@ double LocationManager::latitude()
 double LocationManager::longitude()
 {
   return m_Longitude;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+qreal LocationManager::computeDistance(const QPointF &point1,
+                                       const QPointF &point2)
+{
+  QGeoCoordinate qGeoCoordinate1(point1.x(), point1.y());
+  QGeoCoordinate qGeoCoordinate2(point2.x(), point2.y());
+
+  return qGeoCoordinate1.distanceTo(qGeoCoordinate2) / 1000.0;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -187,3 +199,5 @@ void LocationManager::slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::E
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
+
+

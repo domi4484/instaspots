@@ -92,8 +92,30 @@ ApplicationWindow {
     // Positioning
     PositionSource {
         id: positionSource
-        onPositionChanged: hc_LocationManager.setFakePosition(position.coordinate.latitude,
-                                                              position.coordinate.longitude)
+        onPositionChanged:
+        {
+            if(positionSource.valid === false)
+            {
+                hc_Logger.slot_error("PositionSource invalid source");
+                return;
+            }
+
+            if(positionSource.sourceError !== PositionSource.NoError)
+            {
+                hc_Logger.slot_error("PositionSource source error: " + positionSource.sourceError);
+                return;
+            }
+
+            if(   position.latitudeValid  === false
+               || position.longitudeValid === false)
+            {
+                hc_Logger.slot_error("PositionSource invalid position");
+                return;
+            }
+
+            hc_LocationManager.setFakePosition(position.coordinate.latitude,
+                                               position.coordinate.longitude)
+        }
     }
 
     Connections{
@@ -113,7 +135,7 @@ ApplicationWindow {
     MessageDialog{
         id: messageDialog_NewClientVersionAvailable
         title: qsTr('New version out!')
-        text: qsTr('There is a new Lowerspot app version available for download! Get it on the Lowerspot homepage for a better experience!')
+        text: qsTr('There is a new Lowerspot app version available for download! Get it on lowerspot.com!')
 
         onAccepted:
         {

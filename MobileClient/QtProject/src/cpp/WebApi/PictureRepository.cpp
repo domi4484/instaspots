@@ -194,33 +194,27 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
   {
     QJsonObject jsonObject_Picture = jsonArray_Pictures.at(i).toObject();
 
-    int id = jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID).toInt();
+    int picture_id = jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID).toInt();
 
-    if(m_QMap_Pictures.keys().contains(id) == false)
+    Picture *picture = m_QMap_Pictures.value(picture_id, NULL);
+    if(picture == NULL)
     {
-      Picture *picture = new Picture(id,
-                                     jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_USER).toInt(),
-                                     jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInt(),
-                                     jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_URL).toString(),
-                                     jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME).toString(),
-                                     jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString(),
-                                     jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString(),
-                                     QDateTime::fromString(jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED).toString(),
-                                                           Qt::ISODate),
-                                     this);
-
-      m_QMap_Pictures.insert(picture->id(), picture);
-    }
-    else
-    {
-      m_QMap_Pictures.value(id)->setIdSpot          (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInt());
-      m_QMap_Pictures.value(id)->setUrl             (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_URL).toString());
-      m_QMap_Pictures.value(id)->setUsername        (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME).toString());
-      m_QMap_Pictures.value(id)->setSpotName        (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString());
-      m_QMap_Pictures.value(id)->setSpotDescription (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString());
+      picture = new Picture(this);
+      picture->setIdSpot(picture_id);
+      m_QMap_Pictures.insert(picture_id, picture);
     }
 
-    newPictures.append(m_QMap_Pictures.value(id));
+    picture->setIdUser          (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_USER).toInt());
+    picture->setIdSpot          (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInt());
+    picture->setUrl             (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_URL).toString());
+    picture->setUsername        (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME).toString());
+    picture->setSpotName        (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString());
+    picture->setSpotDescription (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString());
+    picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED).toString(),
+                                                       Qt::ISODate));
+
+    // Add to current request
+    newPictures.append(picture);
   }
 
   webApiCommand->deleteLater();

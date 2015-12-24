@@ -31,16 +31,6 @@ class Spot : public QObject
       RoleSpotPictureUrl2  = Qt::UserRole + 9
     };
 
-    explicit Spot(int     id,
-                  QString name,
-                  QString description,
-                  bool    secretSpot,
-                  qreal   latitude,
-                  qreal   longitude,
-                  qreal   distance_km,
-                  QString pictureUrl1,
-                  QString pictureUrl2,
-                  QObject *parent = 0);
     explicit Spot(QObject *parent = 0);
     ~Spot();
 
@@ -49,14 +39,25 @@ class Spot : public QObject
 
     QString distanceText() const;
 
-    void setName(const QString &name)               { m_Name        = name;        }
-    void setDescription(const QString &description) { m_Description = description; }
-    void setSecretSpot(bool secretSpot)             { m_SecretSpot  = secretSpot;  }
-    void setLatitude (qreal latitude)               { m_Latitude    = latitude;    }
-    void setLongitude(qreal longitude)              { m_Longitude   = longitude;   }
-    void setDistance (qreal distance)               { m_Distance_km = distance;    }
-    void setPictureUrl1(const QString &pictureUrl1) { m_PictureUrl1 = pictureUrl1; }
-    void setPictureUrl2(const QString &pictureUrl2) { m_PictureUrl2 = pictureUrl2; }
+    void setId          (int id)                     { m_Id          = id;          }
+    void setName        (const QString &name)        { m_Name        = name;        }
+    void setDescription (const QString &description) { m_Description = description; }
+    void setSecretSpot  (bool secretSpot)            { m_SecretSpot  = secretSpot;  }
+    void setLatitude    (qreal latitude)             { m_Latitude    = latitude;    }
+    void setLongitude   (qreal longitude)            { m_Longitude   = longitude;   }
+    void setDistance    (qreal distance)             { m_Distance_km = distance;    }
+    void setPictureUrl1 (const QString &pictureUrl1) { m_PictureUrl1 = pictureUrl1; }
+    void setPictureUrl2 (const QString &pictureUrl2) { m_PictureUrl2 = pictureUrl2; }
+
+    int     id          () const { return m_Id;          }
+    QString name        () const { return m_Name;        }
+    QString description () const { return m_Description; }
+    bool    secretSpot  () const { return m_SecretSpot;  }
+    qreal   latitude    () const { return m_Latitude;    }
+    qreal   longitude   () const { return m_Longitude;   }
+    qreal   distance    () const { return m_Distance_km; }
+    QString pictureUrl1 () const { return m_PictureUrl1; }
+    QString pictureUrl2 () const { return m_PictureUrl2; }
 
   private:
 

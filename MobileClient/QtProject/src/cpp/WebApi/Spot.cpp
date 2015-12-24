@@ -20,40 +20,6 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Spot::Spot(int     id,
-           QString name,
-           QString description,
-           bool    secretSpot,
-           qreal   latitude,
-           qreal   longitude,
-           qreal   distance_km,
-           QString pictureUrl1,
-           QString pictureUrl2,
-           QObject *parent)
-  : QObject(parent),
-    m_Id          (id),
-    m_Name        (name),
-    m_Description (description),
-    m_SecretSpot  (secretSpot),
-    m_Latitude    (latitude),
-    m_Longitude   (longitude),
-    m_Distance_km (distance_km),
-    m_PictureUrl1 (pictureUrl1),
-    m_PictureUrl2 (pictureUrl2)
-{
-  if(m_PictureUrl1.isEmpty() == false)
-  {
-    m_PictureUrl1 = m_PictureUrl1;
-  }
-
-  if(m_PictureUrl2.isEmpty() == false)
-  {
-    m_PictureUrl2 = m_PictureUrl2;
-  }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 Spot::Spot(QObject *parent)
     : QObject(parent),
       m_Id          (-1),
@@ -62,7 +28,7 @@ Spot::Spot(QObject *parent)
       m_SecretSpot  (false),
       m_Latitude    (0.0),
       m_Longitude   (0.0),
-      m_Distance_km (0.0),
+      m_Distance_km (-1),
       m_PictureUrl1 (""),
       m_PictureUrl2 ("")
 {

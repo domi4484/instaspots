@@ -45,6 +45,9 @@ public slots:
   double latitude();
   double longitude();
 
+  qreal computeDistance(const QPointF &point1,
+                        const QPointF &point2);
+
   QString googleMapLocationPicture(int width,
                                    int height);
 

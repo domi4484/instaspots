@@ -66,7 +66,10 @@ Item {
                         // Re-Click
                         if(tabWidgetTop.current === index)
                         {
-                            stack.children[index].tabWidget_CurrentTabReclicked();
+                            if(stack.children[index].tabWidget_CurrentTabReclicked != null)
+                            {
+                                stack.children[index].tabWidget_CurrentTabReclicked();
+                            }
                         }
 
                         // Set current tab content

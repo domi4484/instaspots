@@ -41,13 +41,6 @@ public:
   };
 
   explicit Picture(QObject *parent = 0);
-  explicit Picture(int id,
-                   int idUser,
-                   int idSpot, QString url, QString username,
-                   QString name,
-                   QString description,
-                   QDateTime created,
-                   QObject *parent = 0);
   ~Picture();
   Picture &operator=(const Picture &other);
 
@@ -61,11 +54,13 @@ public:
   QDateTime created() const { return m_Created; }
   QString createdText() const;
 
-  void setIdSpot          (int idSpot)                     {m_IdSpot = idSpot;}
-  void setUrl             (const QString &url)             {m_Url = url;}
-  void setUsername        (const QString &username)        {m_Username = username;}
-  void setSpotName        (const QString &spotName)        {m_SpotName = spotName;}
-  void setSpotDescription (const QString &spotDescription) {m_SpotDescription = spotDescription;}
+  void setIdUser          (int idUser)                     { m_IdUser          = idUser;          }
+  void setIdSpot          (int idSpot)                     { m_IdSpot          = idSpot;          }
+  void setUrl             (const QString &url)             { m_Url             = url;             }
+  void setUsername        (const QString &username)        { m_Username        = username;        }
+  void setSpotName        (const QString &spotName)        { m_SpotName        = spotName;        }
+  void setSpotDescription (const QString &spotDescription) { m_SpotDescription = spotDescription; }
+  void setCreated         (const QDateTime &created)       { m_Created         = created;         }
 
 signals:
 

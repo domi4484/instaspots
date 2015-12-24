@@ -20,6 +20,7 @@
 #include <QMap>
 
 // Forward declarations --------------------
+class LocationManager;
 class Spot;
 
 class SpotRepository : public QObject
@@ -29,10 +30,11 @@ class SpotRepository : public QObject
 
 public:
 
-  explicit SpotRepository(QObject *parent = 0);
+  explicit SpotRepository(LocationManager *locationManager,
+                          QObject *parent = 0);
   ~SpotRepository();
 
-  static void instanziate();
+  static void instanziate(LocationManager *locationManager);
   static void destroy();
 
   static SpotRepository *instance() { return s_SpotRepository; }
@@ -65,6 +67,9 @@ private:
   static const char* PROPERTY_REQUEST_ID;
 
   static SpotRepository *s_SpotRepository;
+
+  // Link to LocationManager
+  LocationManager *m_LocationManager;
 
   int m_RequestId;
 

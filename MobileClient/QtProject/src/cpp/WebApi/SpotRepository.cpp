@@ -13,6 +13,7 @@
 #include "SpotRepository.h"
 
 // Project includes ------------------------
+#include "../HelperClasses/LocationManager.h"
 #include "Spot.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
@@ -20,6 +21,7 @@
 // Qt includes -----------------------------
 #include <QDebug>
 #include <QJsonArray>
+#include <QPointF>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -31,8 +33,10 @@ SpotRepository *SpotRepository::s_SpotRepository = NULL;
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-SpotRepository::SpotRepository(QObject *parent) 
+SpotRepository::SpotRepository(LocationManager *locationManger,
+                               QObject *parent)
   : QObject(parent),
+    m_LocationManager(locationManger),
     m_RequestId(0),
     m_QMap_Spots(),
     m_QMap_Results()
@@ -52,7 +56,7 @@ SpotRepository::~SpotRepository()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void SpotRepository::instanziate()
+void SpotRepository::instanziate(LocationManager *locationManager)
 {
     if(s_SpotRepository != NULL)
     {
@@ -60,8 +64,7 @@ void SpotRepository::instanziate()
       return;
     }
 
-    s_SpotRepository = new SpotRepository();
-
+    s_SpotRepository = new SpotRepository(locationManager);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -160,42 +163,36 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
   {
     QJsonObject jsonObject_Spot = jsonArray_Spots.at(i).toObject();
 
-    int id = jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_ID).toInt();
+    int spot_id = jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_ID).toInt();
 
-    if(m_QMap_Spots.keys().contains(id) == false)
+    Spot *spot = m_QMap_Spots.value(spot_id, NULL);
+    if(spot == NULL)
     {
-      Spot *spot = new Spot(id,
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT).toBool(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toDouble(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString(),
-                            jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString(),
-                            this);
-
-      m_QMap_Spots.insert(id, spot);
-    }
-	else
-    {
-      m_QMap_Spots.value(id)->setName       (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString());
-      m_QMap_Spots.value(id)->setDescription(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString());
-      m_QMap_Spots.value(id)->setSecretSpot (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT).toBool());
-      m_QMap_Spots.value(id)->setLatitude   (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble());
-      m_QMap_Spots.value(id)->setLongitude  (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble());
-      m_QMap_Spots.value(id)->setPictureUrl1(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());
-      m_QMap_Spots.value(id)->setPictureUrl2(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
-
-      // Set dinstance only if it was really computed
-      double distance = jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM).toDouble();
-      if(distance > 0)
-      {
-        m_QMap_Spots.value(id)->setDistance(distance);
-      }
+      spot = new Spot(this);
+      spot->setId(spot_id);
+      m_QMap_Spots.insert(spot_id, spot);
     }
 
-    newSpots.append(m_QMap_Spots.value(id));
+    spot->setName       (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString());
+    spot->setDescription(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString());
+    spot->setSecretSpot (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT).toBool());
+    spot->setLatitude   (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble());
+    spot->setLongitude  (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble());
+    spot->setPictureUrl1(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());
+    spot->setPictureUrl2(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
+
+    // Set dinstance if available, compute it or leave it empty
+    if(m_LocationManager->isValid())
+    {
+      qreal computedDistance = m_LocationManager->computeDistance(QPointF(m_LocationManager->latitude(),
+                                                                          m_LocationManager->longitude()),
+                                                                  QPointF(spot->latitude(),
+                                                                          spot->longitude()));
+      spot->setDistance(computedDistance);
+    }
+
+    // Add to current request
+    newSpots.append(m_QMap_Spots.value(spot_id));
   }
 
   webApiCommand->deleteLater();

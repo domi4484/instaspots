@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     PictureCacher     pictureCacher;
 
     PictureRepository::instanziate();
-    SpotRepository::instanziate();
+    SpotRepository::instanziate(&locationManager);
 
     User user(&settings);
     PictureUploader pictureUploader;
