@@ -35,6 +35,8 @@ public:
 
   public slots:
 
+    Picture *first();
+
     void getNewestSpots();
 
     void getBy_PictureId(int id);

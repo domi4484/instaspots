@@ -63,7 +63,17 @@ QVariant PicturesModel::data(const QModelIndex &index,
 
 QHash<int, QByteArray> PicturesModel::roleNames() const
 {
-    return Picture::roleNames();
+  return Picture::roleNames();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Picture *PicturesModel::first()
+{
+  if(m_QList_Pictures.isEmpty())
+    return NULL;
+
+  return m_QList_Pictures.first();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

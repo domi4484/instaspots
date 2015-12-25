@@ -171,10 +171,12 @@ Item {
         if(wa_User.isConnected() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/pages-user/Page_SignIn.qml");
-            stackView.push( {item: page_SignIn,
-                             immediate: true,
-                             replace: false,
-                             properties:{stackView : stackView}} );
+            stackView.push( {
+                               item       : page_SignIn,
+                               immediate  : true,
+                               replace    : false,
+                               properties : { stackView : stackView }
+                             } );
             return;
         }
     }

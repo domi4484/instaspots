@@ -35,8 +35,10 @@ Item {
         userId: wa_User.id
 
         // Navigation properties
-        navigation_Title:             wa_User.username
-        navigation_MenuButtonVisible: true
+        navigation_Title:                 wa_User.username
+        navigation_BackButtonVisible:     false
+        navigation_ContinueButtonVisible: false
+        navigation_MenuButtonVisible:     true
     }
 
 

@@ -47,12 +47,12 @@ public:
   QVariant pictureRole(PictureRoles role) const;
   static QHash<int, QByteArray> roleNames();
 
-  int id() const { return m_Id; }
-  QString username()        const { return m_Username;        }
-  QString spotName()        const { return m_SpotName;        }
-  QString spotDescription() const { return m_SpotDescription; }
+  int       id() const { return m_Id; }
+  QString   username()        const { return m_Username;        }
+  QString   spotName()        const { return m_SpotName;        }
+  QString   spotDescription() const { return m_SpotDescription; }
   QDateTime created() const { return m_Created; }
-  QString createdText() const;
+  QString   createdText() const;
 
   void setIdUser          (int idUser)                     { m_IdUser          = idUser;          }
   void setIdSpot          (int idSpot)                     { m_IdSpot          = idSpot;          }

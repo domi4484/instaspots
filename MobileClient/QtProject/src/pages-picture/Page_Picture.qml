@@ -38,7 +38,7 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 picturesModel.first().role_SpotName
+    property string navigation_Title:                 picturesModel.first().spotName()
     property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
