@@ -31,7 +31,7 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 qsTr("Pictures")
+    property string navigation_Title:                 ""
     property bool   navigation_BackButtonVisible:     false
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false

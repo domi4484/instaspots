@@ -32,7 +32,8 @@ Item{
 
     // Signals -----------------------------
 
-    signal pictureClicked(int pictureId)
+    signal pictureClicked(int    pictureId,
+                          string spotName)
 
 
     // Gui ---------------------------------
@@ -64,7 +65,8 @@ Item{
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        component_PicturesGrid.pictureClicked(role_PictureId);
+                        component_PicturesGrid.pictureClicked(role_PictureId,
+                                                              role_SpotName);
                     }
                 }
             }

@@ -38,7 +38,7 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 picturesModel.first().spotName()
+    property string navigation_Title:                 ""
     property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
@@ -73,6 +73,7 @@ Item{
                 stackView.push( {
                                    item       : Qt.resolvedUrl("qrc:/pages-spot/Page_Spot.qml"),
                                    properties : {
+                                                  navigation_Title : role_SpotName,
                                                   stackView        : stackView,
                                                   spotId           : role_SpotId
                                                 }

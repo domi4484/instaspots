@@ -33,7 +33,7 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 picturesModel.data(picturesModel.index(0), role_SpotName)
+    property string navigation_Title:                 ""
     property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
@@ -57,6 +57,7 @@ Item{
             stackView.push( { item: Qt.resolvedUrl("qrc:/pages-picture/Page_Picture.qml"),
                               properties : {
                                               stackView                    : stackView,
+                                              navigation_Title             : page_Spot.navigation_Title,
                                               navigation_BackButtonVisible : true
                                            } });
             stackView.currentItem.model.getBy_PictureId(pictureId);

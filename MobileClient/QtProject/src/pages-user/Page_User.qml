@@ -36,7 +36,7 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 "-"
+    property string navigation_Title:                 ""
     property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
@@ -75,7 +75,7 @@ Item{
                     stackView.push( { item: Qt.resolvedUrl("qrc:/pages-picture/Page_Picture.qml"),
                                       properties : {
                                                       stackView                    : stackView,
-                                                      navigation_Title             : navigation_Title,
+                                                      navigation_Title             : spotName,
                                                       navigation_BackButtonVisible : true
                                                    } });
                     stackView.currentItem.model.getBy_PictureId(pictureId);

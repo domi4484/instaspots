@@ -54,6 +54,7 @@ public:
   QDateTime created() const { return m_Created; }
   QString   createdText() const;
 
+  void setId              (int id)                         { m_Id              = id;              }
   void setIdUser          (int idUser)                     { m_IdUser          = idUser;          }
   void setIdSpot          (int idSpot)                     { m_IdSpot          = idSpot;          }
   void setUrl             (const QString &url)             { m_Url             = url;             }

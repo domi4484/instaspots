@@ -200,7 +200,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
     if(picture == NULL)
     {
       picture = new Picture(this);
-      picture->setIdSpot(picture_id);
+      picture->setId(picture_id);
       m_QMap_Pictures.insert(picture_id, picture);
     }
 

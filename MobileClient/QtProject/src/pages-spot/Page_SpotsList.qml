@@ -22,7 +22,7 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 qsTr("Pictures")
+    property string navigation_Title:                 ""
     property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
@@ -35,7 +35,9 @@ Item{
 
     // Signals -----------------------------
 
-    signal spotClicked(int spotId, string spotName, string spotDescription)
+    signal spotClicked(int    spotId,
+                       string spotName,
+                       string spotDescription)
 
 
     // Gui ---------------------------------
@@ -46,7 +48,9 @@ Item{
         delegate: SpotOverviewDelegate{
 
             onSpotClicked: {
-                page_SpotsList.spotClicked(role_SpotId, role_SpotName, role_SpotDescription);
+                page_SpotsList.spotClicked(role_SpotId,
+                                           role_SpotName,
+                                           role_SpotDescription);
             }
         }
     }
