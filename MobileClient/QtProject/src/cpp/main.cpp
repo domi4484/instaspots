@@ -24,8 +24,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setOrganizationName   ("Red Coping Company");
-    app.setOrganizationDomain ("spots.lowerclassclothing.com");
+    app.setOrganizationName   ("Lowerspot");
+    app.setOrganizationDomain ("lowerspot.com");
     app.setApplicationName    ("Lowerspot");
     app.setApplicationVersion ("V0.0.3");
 
