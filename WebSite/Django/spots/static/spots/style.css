@@ -1,0 +1,24 @@
+li a {
+    color: green;
+}
+
+.nav_title
+{
+  flo: middle;
+  ver
+  width: 640px;
+  color: white;
+  background-color: cyan;
+  border: 1px solid black;
+}
+
+.nav_download
+{
+  float: right;
+}
+
+body {
+    background-image: url("images/background.png");
+    background-repeat: no-repeat;
+    background-position: center 100;
+}
