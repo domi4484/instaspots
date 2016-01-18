@@ -52,7 +52,7 @@ QString PlateformDetail::name()
     return "Android";
   break;
   case OS_IOS:
-    return "IOs";
+    return "iOS";
   break;
   case OS_WINPHONE:
     return "Windows phone";

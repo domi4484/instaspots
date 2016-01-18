@@ -126,9 +126,13 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
   m_QList_Pictures.clear();
   QAbstractItemModel::endResetModel();
 
-  QAbstractItemModel::beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
-  m_QList_Pictures = PictureRepository::instance()->getPictures(m_RequestId);
-  QAbstractItemModel::endInsertRows();
+  int newCount = PictureRepository::instance()->getPictures(m_RequestId).size();
+  if(newCount > 0)
+  {
+    QAbstractItemModel::beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
+    m_QList_Pictures = PictureRepository::instance()->getPictures(m_RequestId);
+    QAbstractItemModel::endInsertRows();
+  }
 
   countChanged(m_QList_Pictures.count());
 }

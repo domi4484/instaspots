@@ -141,16 +141,18 @@ void LocationManager::openLocationOnNativeMapsApp(double latitude,
                                                   double longitude,
                                                   const QString &label)
 {
-    QString url = QString("geo:%1,%2").arg(latitude)
-                                                    .arg(longitude);
-    if(label.isEmpty() == false)
-    {
-        url.append(QString("?q=%1,%2(%3)").arg(latitude)
-                                          .arg(longitude)
-                                          .arg(label));
-    }
+  QString url = QString("geo:%1,%2").arg(latitude)
+                                    .arg(longitude);
+  if(label.isEmpty() == false)
+  {
+    url.append(QString("?q=%1,%2(%3)").arg(latitude)
+                                      .arg(longitude)
+                                      .arg(label));
+  }
 
-    QDesktopServices::openUrl(QUrl(url));
+  if(QDesktopServices::openUrl(QUrl(url)) == false)
+    Logger::error(QString("%1: Failed to open url '%2'").arg(QString(__FUNCTION__))
+                                                        .arg(url));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

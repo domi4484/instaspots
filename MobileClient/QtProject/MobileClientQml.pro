@@ -1,8 +1,8 @@
 #-------------------------------------------------
 #
-# Project InstaSpots
+# Project Lowerspot
 #
-# (C) 2014 Damiano Lombardi
+# (C) 2014-2016 Damiano Lombardi
 #
 #-------------------------------------------------
 
@@ -20,6 +20,17 @@ DESTDIR = bin
 QT += qml quick widgets positioning multimedia
 
 CONFIG   += console debug
+
+# Android specific
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+# iOS specific
+ios {
+    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
+
+    ios_icon.files = $$files($$PWD/ios/icons/AppIcon*.png)
+    QMAKE_BUNDLE_DATA += ios_icon
+}
 
 SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/Picture.cpp \
@@ -95,4 +106,3 @@ DISTFILES += \
     android/gradlew \
     ../../Documentation/My_Skate_Map_stralciata.kml
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
