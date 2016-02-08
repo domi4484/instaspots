@@ -14,7 +14,7 @@
 
 // Project includes ------------------------
 #include "WebApi.h"
-#include "../Settings.h"
+#include "../Settings/Settings.h"
 #include "../HelperClasses/Logger.h"
 
 //-----------------------------------------------------------------------------------------------------------------------------

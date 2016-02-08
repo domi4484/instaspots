@@ -31,11 +31,15 @@ public:
   explicit PlateformDetail(QObject *parent = 0);
   ~PlateformDetail();
 
+  OS getOS() const;
+
 signals:
 
 public slots:
 
   bool isMobile();
+  bool isIOS();
+
   QString name();
 
 private:

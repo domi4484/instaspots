@@ -18,12 +18,14 @@
 
 // Forward declarations --------------------
 class Settings;
+class PlateformDetail;
 
 class LocationManager : public QObject
 {
   Q_OBJECT
 public:
   explicit LocationManager(Settings *settings,
+                           PlateformDetail *plateformDetail,
                            QObject *parent = 0);
   ~LocationManager();
 
@@ -63,6 +65,9 @@ private:
 
   // Link to Settings
   Settings *m_Settings;
+
+  // Link to PlateformDetail
+  PlateformDetail *m_PlateformDetail;
 
 //  QGeoPositionInfoSource *m_GeoPositionInfoSource;
 

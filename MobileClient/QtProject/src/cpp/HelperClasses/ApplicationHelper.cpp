@@ -15,7 +15,7 @@
 // Project includes ------------------------
 #include "Logger.h"
 #include "PlateformDetail.h"
-#include "../Settings.h"
+#include "../Settings/Settings.h"
 #include "../WebApi/WebApi.h"
 
 // Qt includes -----------------------------

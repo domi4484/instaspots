@@ -13,7 +13,8 @@
 #include "LocationManager.h"
 
 // Project includes ------------------------
-#include "../Settings.h"
+#include "../Settings/Settings.h"
+#include "PlateformDetail.h"
 #include "Logger.h"
 
 // Qt includes -----------------------------
@@ -23,9 +24,11 @@
 #include <QUrl>
 
 LocationManager::LocationManager(Settings *settings,
+                                 PlateformDetail *plateformDetail,
                                  QObject *parent)
   : QObject(parent),
     m_Settings(settings),
+    m_PlateformDetail(plateformDetail),
 //    m_GeoPositionInfoSource(NULL),
     m_Valid(false),
     m_Latitude(0.0),
@@ -143,12 +146,22 @@ void LocationManager::openLocationOnNativeMapsApp(double latitude,
 {
   QString url = QString("geo:%1,%2").arg(latitude)
                                     .arg(longitude);
+
+
+  if(m_PlateformDetail->isIOS())
+  {
+    url = QString("http://maps.google.com/maps/@%1,%2").arg(latitude)
+                                                       .arg(longitude);
+  }
+
   if(label.isEmpty() == false)
   {
     url.append(QString("?q=%1,%2(%3)").arg(latitude)
                                       .arg(longitude)
                                       .arg(label));
   }
+
+  Logger::trace(QString("LocationManager::openLocationOnNativeMapsApp url: %1").arg(url));
 
   if(QDesktopServices::openUrl(QUrl(url)) == false)
     Logger::error(QString("%1: Failed to open url '%2'").arg(QString(__FUNCTION__))

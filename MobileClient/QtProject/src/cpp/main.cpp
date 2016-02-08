@@ -1,6 +1,6 @@
 
 // Project includes ------------------------
-#include "Settings.h"
+#include "Settings/Settings.h"
 #include "HelperClasses/ApplicationHelper.h"
 #include "HelperClasses/Logger.h"
 #include "HelperClasses/PlateformDetail.h"
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName   ("Lowerspot");
     app.setOrganizationDomain ("lowerspot.com");
     app.setApplicationName    ("Lowerspot");
-    app.setApplicationVersion ("V0.0.3");
+    app.setApplicationVersion ("V0.0.4");
 
     // Command line arguments
     QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
@@ -58,7 +58,8 @@ int main(int argc, char *argv[])
                                         &plateformDetail);
     applicationHelper.setDevelopmentMode(qMap_Arguments.value(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE).toBool());
 
-    LocationManager   locationManager(&settings);
+    LocationManager   locationManager(&settings,
+                                      &plateformDetail);
     PictureCacher     pictureCacher;
 
     PictureRepository::instanziate();
