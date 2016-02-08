@@ -32,6 +32,12 @@ ios {
     QMAKE_BUNDLE_DATA += ios_icon
 }
 
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
+
+# Default rules for deployment.
+include(deployment.pri)
+
 SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/Picture.cpp \
     src/cpp/WebApi/QueryItem.cpp \
@@ -52,14 +58,6 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/PictureRepository.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
     src/cpp/WebApi/SpotsModel.cpp
-
-RESOURCES += src/qml.qrc
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Default rules for deployment.
-include(deployment.pri)
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
@@ -82,7 +80,55 @@ HEADERS += \
     src/cpp/WebApi/PicturesModel.h \
     src/cpp/WebApi/SpotsModel.h
 
+RESOURCES += src/qml.qrc
+
 DISTFILES += \
+    src/qml/main.qml \
+    src/qml/Navigator.qml \
+    src/qml/Panel_Splash.qml \
+    src/qml/Panel_Home.qml \
+    src/qml/Panel_NearbySpots.qml \
+    src/qml/Panel_Upload.qml \
+    src/qml/Panel_User.qml \
+    src/qml/SpotViewDelegate.qml \
+    src/qml/declarative-camera/CameraListButton.qml \
+    src/qml/declarative-camera/CameraListPopup.qml \
+    src/qml/declarative-camera/CameraPropertyButton.qml \
+    src/qml/declarative-camera/CameraPropertyPopup.qml \
+    src/qml/declarative-camera/CameraUi.qml \
+    src/qml/declarative-camera/FocusButton.qml \
+    src/qml/declarative-camera/PhotoCaptureControls.qml \
+    src/qml/declarative-camera/PhotoPreview.qml \
+    src/qml/declarative-camera/Popup.qml \
+    src/qml/declarative-camera/VideoPreview.qml \
+    src/qml/pages-picture/Page_PicturesList.qml \
+    src/qml/pages-spot/Page_Spot.qml \
+    src/qml/pages-spot/Page_SpotsList.qml \
+    src/qml/pages-upload/AddNewSpot.qml \
+    src/qml/pages-upload/LocationCheck.qml \
+    src/qml/pages-upload/NearbySpotSelection.qml \
+    src/qml/pages-upload/SourceSelection.qml \
+    src/qml/pages-upload/Page_AddToExistingSpot.qml \
+    src/qml/pages-upload/CropPicture.qml \
+    src/qml/pages-user/Page_Login.qml \
+    src/qml/pages-user/Page_Register.qml \
+    src/qml/pages-user/Page_Settings.qml \
+    src/qml/pages-user/Page_SignIn.qml \
+    src/qml/pages-user/Page_User.qml \
+    src/qml/views/SpotOverviewDelegate.qml \
+    src/qml/widgets/CachedPicture.qml \
+    src/qml/widgets/TabButton.qml \
+    src/qml/widgets/TabWidgetBottom.qml \
+    src/qml/widgets/TabWidgetTop.qml \
+    src/qml/pages-picture/Page_Picture.qml \
+    src/qml/component/Component_PicturesGrid.qml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
     ../../WebSite/Symfony/app/config/config_dev.yml \
     ../../WebSite/Symfony/app/config/parameters.yml \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/WebserviceController.php \
@@ -97,12 +143,5 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/routing.yml \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml \
     ../../WebSite/Symfony/src/Instaspots/UserBundle/Entity/User.php \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/AndroidManifest.xml \
-    android/gradlew.bat \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
     ../../Documentation/My_Skate_Map_stralciata.kml
 

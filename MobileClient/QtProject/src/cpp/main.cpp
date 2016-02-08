@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
 
 
-    engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
 
     int exitCode = app.exec();
 
