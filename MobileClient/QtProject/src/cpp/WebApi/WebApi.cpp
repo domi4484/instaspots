@@ -29,7 +29,8 @@
 //-----------------------------------------------------------------------------------------------------------------------------
 
 // Location of the web service
-const QString WebApi::URL_DEVELOPMENT ("http://localhost/Symfony/web/app_dev.php/webservice");
+//const QString WebApi::URL_DEVELOPMENT ("http://localhost/Symfony/web/app_dev.php/webservice");
+const QString WebApi::URL_DEVELOPMENT ("http://127.0.0.1:8000/webservice/webservice/");
 const QString WebApi::URL_PRODUCTION  ("http://spots.lowerclassclothing.com/web/webservice");
 
 
@@ -299,8 +300,9 @@ void WebApi::slot_QNetworkReply_finished()
   // Network error
   if ( replyNetworkError != QNetworkReply::NoError )
   {   
-    Logger::error(QString("Network error %1 (%2)").arg(replyNetworkError)
-                                                  .arg(replyNetworkErrorString));
+    Logger::error(QString("Network error %1 (%2). Request: '%3'").arg(replyNetworkError)
+                                                                 .arg(replyNetworkErrorString)
+                                                                 .arg(command->requestString()));
     command->setResult(WebApiError(WebApiError::NETWORK),
                        QJsonObject());
     return;

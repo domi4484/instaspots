@@ -65,8 +65,10 @@ public:
   WebApiError postRequest(QList<QueryItem> &queryItems,
                           QIODevice *device = NULL);
 
-  WebApiError error();
-  QString errorString();
+  QString requestString() const;
+
+  WebApiError error() const;
+  QString errorString() const;
 
 signals:
 
@@ -78,8 +80,9 @@ public slots:
 
 private:
 
-  QString     m_Command;
-  ANSWER_TYPE m_AnswerType;
+  QString          m_Command;
+  ANSWER_TYPE      m_AnswerType;
+  QList<QueryItem> m_QList_QueryItems;
 
   bool m_Running;
 

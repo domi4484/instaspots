@@ -122,8 +122,10 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
     return WebApiError(WebApiError::COMMAND_ALREADY_RUNNING);
   }
 
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_APPLICATION_VERSION,
-                                    QApplication::applicationVersion()));
+  m_QList_QueryItems.clear();
+  m_QList_QueryItems.append(qList_QueryItems);
+  m_QList_QueryItems.append(QueryItem(WebApi::R_PARAM_APPLICATION_VERSION,
+                                      QApplication::applicationVersion()));
 
   m_Running = true;
 
@@ -144,14 +146,32 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-WebApiError WebApiCommand::error()
+QString WebApiCommand::requestString() const
+{
+  QStringList requestString;
+  requestString << "Command: " << m_Command << " ";
+  requestString << "Items: {";
+
+  foreach(QueryItem item, m_QList_QueryItems)
+  {
+      requestString << "(" << item.first() << ";" << item.second() << ")";
+  }
+
+  requestString << "}";
+
+  return requestString.join("");
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApiError WebApiCommand::error() const
 {
     return m_Error;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString WebApiCommand::errorString()
+QString WebApiCommand::errorString() const
 {
     return m_Error.text();
 }

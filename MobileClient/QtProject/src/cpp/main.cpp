@@ -17,9 +17,20 @@
 
 // Qt includes -----------------------------
 #include <QApplication>
+#include <QMap>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtQml>
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+const QString CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE("developmentMode");
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QMap<QString, QVariant> parseCommandLineArguments();
+
+//-----------------------------------------------------------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
 {
@@ -27,17 +38,26 @@ int main(int argc, char *argv[])
     app.setOrganizationName   ("Lowerspot");
     app.setOrganizationDomain ("lowerspot.com");
     app.setApplicationName    ("Lowerspot");
-    app.setApplicationVersion ("V0.0.4");
+    app.setApplicationVersion ("V0.0.3");
 
+    // Command line arguments
+    QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
+
+    // Settings
     Settings settings;
 
+    // Logger
     Logger::instanziate(Logger::LOG_VERBOSE);
     Logger::instance()->setLogLevel(settings.get_Logger_LogLevel());
 
+    // Plateform detail
     PlateformDetail   plateformDetail;
 
+    // Application helper
     ApplicationHelper applicationHelper(&settings,
                                         &plateformDetail);
+    applicationHelper.setDevelopmentMode(qMap_Arguments.value(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE).toBool());
+
     LocationManager   locationManager(&settings);
     PictureCacher     pictureCacher;
 
@@ -83,4 +103,27 @@ int main(int argc, char *argv[])
     PictureRepository::destroy();
 
     return exitCode;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QMap<QString, QVariant> parseCommandLineArguments()
+{
+    QCommandLineParser qCommandLineParser;
+    qCommandLineParser.setApplicationDescription(QApplication::applicationName());
+    qCommandLineParser.addHelpOption();
+    qCommandLineParser.addVersionOption();
+
+    // Development mode
+    QCommandLineOption qCommandLineOption_development(QStringList() << "d" << "development",
+                                                      "Run in development mode.");
+    qCommandLineParser.addOption(qCommandLineOption_development);
+
+    qCommandLineParser.process(QApplication::arguments());
+
+    QMap<QString, QVariant> qMap_Arguments;
+
+    qMap_Arguments.insert(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE, qCommandLineParser.isSet(qCommandLineOption_development));
+
+    return qMap_Arguments;
 }
