@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName   ("Lowerspot");
     app.setOrganizationDomain ("lowerspot.com");
     app.setApplicationName    ("Lowerspot");
-    app.setApplicationVersion ("V0.0.3");
+    app.setApplicationVersion ("V0.0.4");
 
     Settings settings;
 
