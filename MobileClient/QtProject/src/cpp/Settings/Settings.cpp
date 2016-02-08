@@ -12,6 +12,9 @@
 // Files includes --------------------------
 #include "Settings.h"
 
+// Project includes ------------------------
+#include "Secret.h"
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 // Application settings
@@ -35,9 +38,10 @@ const QString Settings::HELP_GOT_IT_UPLOAD_NEW_PICTURE_SECRET_SPOT ("HelpGotIt_U
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Settings::Settings(QObject *parent) :
-  QSettings(parent)
+  QSettings(parent),
+  m_SimpleCrypt()
 {
-
+  m_SimpleCrypt.setKey(CONST_SECRETKEY);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -107,14 +111,18 @@ void Settings::set_User_Username(const QString &username)
 
 QString Settings::get_User_Password()
 {
-  return QSettings::value(USER_PASSWORD, "").toString();
+  QString encryptedPassword = QSettings::value(USER_PASSWORD, "").toString();
+
+  return m_SimpleCrypt.decryptToString(encryptedPassword);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void Settings::set_User_Password(const QString &password)
 {
-  QSettings::setValue(USER_PASSWORD, password);
+  QString encryptedPassword = m_SimpleCrypt.encryptToString(password);
+
+  QSettings::setValue(USER_PASSWORD, encryptedPassword);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

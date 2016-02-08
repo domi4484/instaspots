@@ -53,11 +53,12 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/HelperClasses/LocationManager.cpp \
     src/cpp/HelperClasses/PictureCacher.cpp \
     src/cpp/HelperClasses/ApplicationHelper.cpp \
-    src/cpp/Settings.cpp \
+    src/cpp/Settings/Settings.cpp \
     src/cpp/WebApi/SpotRepository.cpp \
     src/cpp/WebApi/PictureRepository.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
-    src/cpp/WebApi/SpotsModel.cpp
+    src/cpp/WebApi/SpotsModel.cpp \
+    src/cpp/External/SimpleCrypt.cpp
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
@@ -74,11 +75,13 @@ HEADERS += \
     src/cpp/HelperClasses/LocationManager.h \
     src/cpp/HelperClasses/PictureCacher.h \
     src/cpp/HelperClasses/ApplicationHelper.h \
-    src/cpp/Settings.h \
+    src/cpp/Settings/Settings.h \
+    src/cpp/Settings/Secret.h \
     src/cpp/WebApi/SpotRepository.h \
     src/cpp/WebApi/PictureRepository.h \
     src/cpp/WebApi/PicturesModel.h \
-    src/cpp/WebApi/SpotsModel.h
+    src/cpp/WebApi/SpotsModel.h \
+    src/cpp/External/SimpleCrypt.h
 
 RESOURCES += src/qml.qrc
 

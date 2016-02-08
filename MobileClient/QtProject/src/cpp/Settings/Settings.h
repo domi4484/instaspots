@@ -13,7 +13,10 @@
 #define SETTINGS_H
 
 // Project includes ------------------------
-#include "HelperClasses/Logger.h"
+#include "../HelperClasses/Logger.h"
+
+// External includes -----------------------
+#include "../External/SimpleCrypt.h"
 
 // Qt includes -----------------------------
 #include <QSettings>
@@ -76,6 +79,10 @@ public slots:
 
   // Special functions
   void resetGotItSettings();
+
+private:
+
+  SimpleCrypt m_SimpleCrypt;
 };
 
 #endif // SETTINGS_H
