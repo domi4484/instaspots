@@ -32,7 +32,9 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
     m_PlateformDetail(plateformDetail),
     m_CurrentClientVersion(),
     m_WebApiCommand_GetCurrentClientVersion(this),
-    m_DevelopmentMode(false)
+    m_DevelopmentMode(false),
+    m_QTime_Startup(),
+    m_StartupTime_ms(0)
 {
   // Log application version
   Logger::info(QString("%1 %2 built on %3 for %4 plateform").arg(QApplication::applicationName())
@@ -205,6 +207,28 @@ void ApplicationHelper::setDevelopmentMode(bool developmentMode)
   }
 
   emit signal_DevelopmentMode_Changed(developmentMode);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::startupTimerStart()
+{
+  m_QTime_Startup.start();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::startupTimerStop()
+{
+  m_StartupTime_ms = m_QTime_Startup.elapsed();
+  Logger::info(QString("Application started in %1 ms").arg(m_StartupTime_ms));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+long ApplicationHelper::startupTime_ms()
+{
+    return m_StartupTime_ms;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

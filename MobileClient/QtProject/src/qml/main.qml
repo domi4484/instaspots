@@ -42,6 +42,8 @@ ApplicationWindow {
     }
 
     Component.onCompleted:{
+        hc_Application.startupTimerStop();
+
         if(hc_PlateformDetail.isMobile() === false)
         {
             applicationWindow.menuBar = menubar;

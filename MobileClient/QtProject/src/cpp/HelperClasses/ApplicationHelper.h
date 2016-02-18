@@ -18,6 +18,7 @@
 
 // Qt includes -----------------------------
 #include <QObject>
+#include <QTime>
 
 // Forward declarations --------------------
 class Settings;
@@ -54,6 +55,11 @@ public slots:
   bool developmentMode() const;
   void setDevelopmentMode(bool developmentMode);
 
+  // Startup timer
+  void startupTimerStart();
+  void startupTimerStop();
+  long startupTime_ms();
+
   // Colors
   QString color_BackgroundNavigator()      const { return "#7fb5be"; }
   QString color_BackgroundTitleRectangle() const { return "#aaaaaa"; }
@@ -71,10 +77,16 @@ private:
   // Link to PlateformDetail
   PlateformDetail *m_PlateformDetail;
 
+  // Version
   QString       m_CurrentClientVersion;
   WebApiCommand m_WebApiCommand_GetCurrentClientVersion;
 
+  // Development mode
   bool m_DevelopmentMode;
+
+  // Startup timer
+  QTime m_QTime_Startup;
+  int   m_StartupTime_ms;
 };
 
 #endif // APPLICATIONHELPER_H

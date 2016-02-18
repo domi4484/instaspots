@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
     ApplicationHelper applicationHelper(&settings,
                                         &plateformDetail);
     applicationHelper.setDevelopmentMode(qMap_Arguments.value(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE).toBool());
+    applicationHelper.startupTimerStart();
 
     LocationManager   locationManager(&settings,
                                       &plateformDetail);

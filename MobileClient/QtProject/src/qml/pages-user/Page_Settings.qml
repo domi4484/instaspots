@@ -36,6 +36,14 @@ Item{
         }
     }
 
+    // Slots -------------------------------
+    onVisibleChanged: {
+        if(visible == false)
+            return;
+
+        text_StartupTime.text = hc_Application.startupTime_ms() + " ms";
+    }
+
     // Gui ---------------------------------
     Column{
         id: column
@@ -73,6 +81,7 @@ Item{
             }
 
             Text{
+                id: text_BuildTimestamp
                 anchors.right: parent.right
                 text: hc_Application.buildTimestamp()
             }
@@ -89,6 +98,21 @@ Item{
             Text{
                 anchors.right: parent.right
                 text: hc_PlateformDetail.name()
+            }
+        }
+
+        // Startup time
+        Item{
+            height: text_ApplicationVersion.height
+            width: parent.width
+            Text{
+                text: qsTr("Startup time")
+            }
+
+            Text{
+                id: text_StartupTime
+                anchors.right: parent.right
+                text: hc_Application.startupTime_ms() + " ms"
             }
         }
 
