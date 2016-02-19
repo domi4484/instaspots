@@ -36,14 +36,6 @@ Item{
         }
     }
 
-    // Slots -------------------------------
-    onVisibleChanged: {
-        if(visible == false)
-            return;
-
-        text_StartupTime.text = hc_Application.startupTime_ms() + " ms";
-    }
-
     // Gui ---------------------------------
     Column{
         id: column

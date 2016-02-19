@@ -62,7 +62,7 @@ Item {
         }
 
         onMenuClicked: {
-            stackView.push(page_Settings);
+            stackView.push(Qt.resolvedUrl("qrc:/qml/pages-user/Page_Settings.qml"));
         }
     }
 
