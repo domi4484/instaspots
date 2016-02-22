@@ -37,6 +37,7 @@ public:
   // User settings
   static const QString USER_USERNAME;
   static const QString USER_PASSWORD;
+  static const QString USER_LOGGED_IN;
 
   // Location settings
   static const QString LOCATION_LAST_LATITUDE;
@@ -66,6 +67,8 @@ public slots:
   void    set_User_Username (const QString &username);
   QString get_User_Password ();
   void    set_User_Password (const QString &password);
+  bool    get_User_LoggedIn ();
+  void    set_User_LoggedIn (bool loggedIn);
 
   // Location settings
   double  get_Location_LastLatitude ();

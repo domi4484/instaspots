@@ -25,8 +25,9 @@ const QString Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT ("Application
 const QString Settings::LOGGER_LOG_LEVEL ("Logger_LogLevel");
 
 // User settings
-const QString Settings::USER_USERNAME ("User_Username");
-const QString Settings::USER_PASSWORD ("User_Password");
+const QString Settings::USER_USERNAME  ("User_Username");
+const QString Settings::USER_PASSWORD  ("User_Password");
+const QString Settings::USER_LOGGED_IN ("User_LoggedIn");
 
 // Location settings
 const QString Settings::LOCATION_LAST_LATITUDE  ("Location_LastLatitude");
@@ -113,6 +114,9 @@ QString Settings::get_User_Password()
 {
   QString encryptedPassword = QSettings::value(USER_PASSWORD, "").toString();
 
+  if(encryptedPassword.isEmpty())
+    return QString();
+
   return m_SimpleCrypt.decryptToString(encryptedPassword);
 }
 
@@ -123,6 +127,20 @@ void Settings::set_User_Password(const QString &password)
   QString encryptedPassword = m_SimpleCrypt.encryptToString(password);
 
   QSettings::setValue(USER_PASSWORD, encryptedPassword);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool Settings::get_User_LoggedIn()
+{
+  return QSettings::value(USER_LOGGED_IN, false).toBool();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::set_User_LoggedIn(bool loggedIn)
+{
+  QSettings::setValue(USER_LOGGED_IN, loggedIn);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

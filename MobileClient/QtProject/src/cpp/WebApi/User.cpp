@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      02.12.2014                                        *
@@ -108,8 +108,6 @@ bool User::login(const QString &username,
       return false;
   }
 
-//  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
-
   m_Settings->set_User_Username(username);
   m_Settings->set_User_Password(password);
 
@@ -185,8 +183,6 @@ bool User::registration(const QString &username,
      return false;
   }
 
-//  QString hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha512).toHex();
-
   m_Settings->set_User_Username(username);
   m_Settings->set_User_Password(password);
 
@@ -234,6 +230,7 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
      == false)
   {
     // Reset password in settings
+    m_Settings->set_User_LoggedIn(false);
     m_Settings->set_User_Password(QString());
     m_Settings->sync();
 
@@ -248,6 +245,7 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
 
   m_Id = m_WebApiCommand_Login.resultParameter(WebApi::A_PARAM_ID_USER).toInt();
 
+  m_Settings->set_User_LoggedIn(true);
   m_Settings->sync();
   emit signal_LoginSuccessfull(true);
   emit signal_Username_changed();
@@ -264,6 +262,8 @@ void User::slot_CommandLogout_Finished(const WebApiError &error)
   }
 
   m_Id = -1;
+  m_Settings->set_User_LoggedIn(false);
+  m_Settings->sync();
   emit signal_Logout();
   return;
 }
@@ -284,7 +284,8 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_REGISTERED).toBool()
      == false)
   {
-    m_Settings->setValue(Settings::USER_PASSWORD, QString());
+    m_Settings->set_User_Password(QString());
+    m_Settings->set_User_LoggedIn(false);
     m_Settings->sync();
 
     m_LastErrorText = m_WebApiCommand_Register.resultParameter(WebApi::CONST::GENERAL_PARAMS::ERROR).toString();
@@ -296,7 +297,8 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_AUTHENTICATION).toBool()
      == false)
   {
-    m_Settings->setValue(Settings::USER_PASSWORD, QString());
+    m_Settings->set_User_Password(QString());
+    m_Settings->set_User_LoggedIn(false);
     m_Settings->sync();
 
     m_Id = -1;
@@ -308,6 +310,7 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
   // User id
   m_Id = m_WebApiCommand_Register.resultParameter(WebApi::A_PARAM_ID_USER).toInt();
 
+  m_Settings->set_User_LoggedIn(true);
   m_Settings->sync();
   emit signal_RegistrationSuccessfull(true);
   emit signal_LoginSuccessfull(true);
