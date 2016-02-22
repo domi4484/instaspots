@@ -30,9 +30,7 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
-    // Signals -----------------------------
-
-    signal locationAccepted()
+    // Slots -------------------------------
 
     onVisibleChanged: {
         if(visible == false)
@@ -100,7 +98,8 @@ Item{
 
             wa_PictureUploader.setPosition(hc_LocationManager.latitude(),
                                            hc_LocationManager.longitude());
-            locationAccepted();
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/NearbySpotSelection.qml"),
+                            properties:{stackView        : stackView}});
         }
     }
 

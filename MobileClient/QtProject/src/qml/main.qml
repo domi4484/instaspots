@@ -54,39 +54,23 @@ ApplicationWindow {
 
         // Check newer version
         hc_Application.checkCurrentClientVersion();
+
+        // Push the application main gui
+        stackView.push({item: Qt.resolvedUrl("qrc:/qml/TabWidgetBottom_Main.qml")});
     }
 
     // Gui ---------------------------------
-    TabWidgetBottom {
-        id: tabWidget_Main
+    StackView {
+        id: stackView
+
         anchors.fill: parent
 
-        Panel_Home {
-            id: panel_Home
-            anchors.fill: parent
-            property string tabWidget_ButtonText: ""
-            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/folder-home.png"
-        }
+        initialItem: Image {
+            id: image_Splash
+            width : parent.width
+            height: parent.height
 
-        Panel_NearbySpots {
-            id: panel_NearbySpots
-            anchors.fill: parent
-            property string tabWidget_ButtonText: ""
-            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/find-location.png"
-        }
-
-        Panel_Upload {
-            id: panel_Upload
-            anchors.fill: parent
-            property string tabWidget_ButtonText: ""
-            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/camera-photo.png"
-        }
-
-        Panel_User {
-            id: panel_User
-            anchors.fill: parent
-            property string tabWidget_ButtonText: ""
-            property string tabWidget_ButtonIconSource: "qrc:/icon/icon/im-user-offline.png"
+            source: "qrc:/icon/icon/splash.png"
         }
     }
 

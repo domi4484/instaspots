@@ -41,68 +41,10 @@ Item {
 
                 onImageSaved: {
                     wa_PictureUploader.setCameraPictureFilePath(path);
-                    stackView.push(page_LocationCheck);
+                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+                                    properties:{stackView        : stackView}});
                 }
             }
-        }
-    }
-
-    CropPicture{
-        id: page_CropPicture
-
-        onCropFinished: {
-            wa_PictureUploader.setCropPicture(source,
-                                              cropX,
-                                              cropY,
-                                              cropSide);
-            stackView.push(page_LocationCheck);
-        }
-    }
-
-    LocationCheck{
-       id: page_LocationCheck
-
-       onLocationAccepted: {
-           stackView.push(page_NearbySpotSelection);
-       }
-    }
-
-    NearbySpotSelection{
-        id: page_NearbySpotSelection
-        visible: false
-
-        onAddNewSpot: {
-            stackView.push(page_AddNewSpot)
-        }
-
-        onAddToExistingSpot: {
-            stackView.push(page_AddToExistingSpot);
-        }
-    }
-
-    AddNewSpot{
-        id: page_AddNewSpot
-        visible: false
-
-        onUploadSuccessfull: {
-            stackView.pop(page_SourceSelection);
-            tabWidget_Main.setCurrentItem(panel_Home);
-            panel_Home.tabWidget_CurrentTabReclicked();
-
-            wa_PictureUploader.resetDefaults()
-        }
-    }
-
-    Page_AddToExistingSpot{
-        id: page_AddToExistingSpot
-        visible: false
-
-        onUploadSuccessfull: {
-            stackView.pop(page_SourceSelection);
-            tabWidget_Main.setCurrentItem(panel_Home);
-            panel_Home.tabWidget_CurrentTabReclicked();
-
-            wa_PictureUploader.resetDefaults()
         }
     }
 
@@ -155,8 +97,9 @@ Item {
                 stackView.push(page_TakeCameraPicture)
             }
             onPictureSelected: {
-                page_CropPicture.source = imageUrl;
-                stackView.push(page_CropPicture);
+                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+                                properties:{stackView        : stackView,
+                                            source           : imageUrl}});
             }
         }
     }

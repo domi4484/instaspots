@@ -37,12 +37,6 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
-    // Signals -----------------------------
-
-    signal addNewSpot()
-    signal addToExistingSpot()
-
-
     // Connections -------------------------
 
     onVisibleChanged: {
@@ -74,7 +68,9 @@ Item{
 
         onClicked:{
             wa_PictureUploader.setNewSpot(true);
-            addNewSpot();
+
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/AddNewSpot.qml"),
+                                                  properties:{stackView        : stackView}});
         }
     }
 
@@ -88,7 +84,9 @@ Item{
             wa_PictureUploader.setExistingSpotId(spotId);
             wa_PictureUploader.setName(spotName);
             wa_PictureUploader.setDescription(spotDescription);
-            addToExistingSpot();
+
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Page_AddToExistingSpot.qml"),
+                                                 properties:{stackView        : stackView}});
         }
     }
 }

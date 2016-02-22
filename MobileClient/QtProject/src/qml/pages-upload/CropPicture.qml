@@ -217,7 +217,12 @@ Item{
         text: qsTr("Crop")
 
         onClicked: {
-            cropFinished();
+            wa_PictureUploader.setCropPicture(source,
+                                              cropX,
+                                              cropY,
+                                              cropSide);
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+                            properties:{stackView        : stackView}});
         }
     }
 }

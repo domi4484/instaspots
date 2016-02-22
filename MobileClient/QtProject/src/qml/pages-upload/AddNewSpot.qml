@@ -29,11 +29,6 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
-    // Signals -----------------------------
-
-    signal uploadSuccessfull()
-
-
     // Message boxes -----------------------
 
     MessageDialog{
@@ -79,7 +74,12 @@ Item{
             }
 
             messageDialog_UploadSuccessful.visible = true;
-            uploadSuccessfull();
+
+            stackView.pop(page_SourceSelection);
+            tabWidget_Main.setCurrentItem(panel_Home);
+            panel_Home.tabWidget_CurrentTabReclicked();
+
+            wa_PictureUploader.resetDefaults()
         }
     }
 

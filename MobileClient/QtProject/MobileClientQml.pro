@@ -94,6 +94,7 @@ DISTFILES += \
     src/qml/Panel_Upload.qml \
     src/qml/Panel_User.qml \
     src/qml/SpotViewDelegate.qml \
+    src/qml/TabWidgetBottom_Main.qml \
     src/qml/declarative-camera/CameraListButton.qml \
     src/qml/declarative-camera/CameraListPopup.qml \
     src/qml/declarative-camera/CameraPropertyButton.qml \
