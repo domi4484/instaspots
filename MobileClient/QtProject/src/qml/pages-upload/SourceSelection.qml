@@ -62,6 +62,7 @@ Item{
             id: fileDialog
             title: "Please choose a picture"
             nameFilters: [ "Image files (*.jpg *.JPG *.jpeg *.JPEG *.png *.PNG)" ]
+            folder: shortcuts.pictures
 
             onAccepted: {
                 hc_Logger.slot_info("You chose: " + fileDialog.fileUrl);

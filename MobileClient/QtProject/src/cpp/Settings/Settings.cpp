@@ -70,7 +70,7 @@ void Settings::set_Application_LastVersion(const QString &lastVersion)
 
 bool Settings::get_Application_NewerVersionAvailableGotIt()
 {
-  return QSettings::value(APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT, false).toBool();
+  return QSettings::value(APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT, true).toBool();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
