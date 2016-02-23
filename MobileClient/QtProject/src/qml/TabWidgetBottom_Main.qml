@@ -17,7 +17,8 @@ import "qrc:/qml/widgets"
 // Gui -------------------------------------
 TabWidgetBottom {
     id: tabWidget_Main
-    anchors.fill: parent
+    width : parent.width
+    height: parent.height
 
     Panel_Home {
         id: panel_Home

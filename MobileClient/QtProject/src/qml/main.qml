@@ -26,6 +26,13 @@ ApplicationWindow {
     width: 340
     height: 500
 
+    // Signals -----------------------------
+
+    signal pushMainGui
+
+
+    // Slots -------------------------------
+
     Component.onCompleted:{
         hc_Application.startupTimerStop();
 
@@ -36,8 +43,22 @@ ApplicationWindow {
         hc_Application.checkCurrentClientVersion();
 
         // Push the application main gui
-        stackView.push({item: Qt.resolvedUrl("qrc:/qml/TabWidgetBottom_Main.qml")});
+        pushMainGui();
     }
+
+    Connections{
+        target: hc_Application
+        onSignal_NewClientVersionAvailable:
+        {
+            messageDialog_NewClientVersionAvailable.open();
+        }
+    }
+
+    // Push the application main gui
+    onPushMainGui: stackView.push({immediate : true,
+                                   replace   : true,
+                                   item      : Qt.resolvedUrl("qrc:/qml/TabWidgetBottom_Main.qml")});
+
 
     // Gui ---------------------------------
     StackView {
@@ -54,14 +75,6 @@ ApplicationWindow {
         }
     }
 
-
-    Connections{
-        target: hc_Application
-        onSignal_NewClientVersionAvailable:
-        {
-            messageDialog_NewClientVersionAvailable.open();
-        }
-    }
 
     // Message dialogs ---------------------
     MessageDialog{
