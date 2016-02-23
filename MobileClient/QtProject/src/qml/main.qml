@@ -26,28 +26,8 @@ ApplicationWindow {
     width: 340
     height: 500
 
-    MenuBar {
-        id: menubar
-        Menu {
-            title: qsTr("File")
-            MenuItem {
-                text: qsTr("Logout")
-                onTriggered: wa_User.logout();
-            }
-            MenuItem {
-                text: qsTr("Exit")
-                onTriggered: Qt.quit();
-            }
-        }
-    }
-
     Component.onCompleted:{
         hc_Application.startupTimerStop();
-
-        if(hc_PlateformDetail.isMobile() === false)
-        {
-            applicationWindow.menuBar = menubar;
-        }
 
         // Try to login
         wa_User.login();
@@ -74,6 +54,26 @@ ApplicationWindow {
         }
     }
 
+
+    Connections{
+        target: hc_Application
+        onSignal_NewClientVersionAvailable:
+        {
+            messageDialog_NewClientVersionAvailable.open();
+        }
+    }
+
+    // Message dialogs ---------------------
+    MessageDialog{
+        id: messageDialog_NewClientVersionAvailable
+        title: qsTr('New version out!')
+        text: qsTr('There is a new Lowerspot app version available for download! Get it on lowerclassclothing.com!')
+
+        onAccepted:
+        {
+            hc_Application.newerClientVersionAvailableGotIt();
+        }
+    }
 
     // Positioning
     PositionSource {
@@ -107,25 +107,5 @@ ApplicationWindow {
     Connections{
         target: hc_LocationManager
         onSignal_RequestLocation: positionSource.update()
-    }
-
-    Connections{
-        target: hc_Application
-        onSignal_NewClientVersionAvailable:
-        {
-            messageDialog_NewClientVersionAvailable.open();
-        }
-    }
-
-    // Message dialogs ---------------------
-    MessageDialog{
-        id: messageDialog_NewClientVersionAvailable
-        title: qsTr('New version out!')
-        text: qsTr('There is a new Lowerspot app version available for download! Get it on lowerclassclothing.com!')
-
-        onAccepted:
-        {
-            hc_Application.newerClientVersionAvailableGotIt();
-        }
     }
 }
