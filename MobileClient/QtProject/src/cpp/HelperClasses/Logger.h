@@ -32,6 +32,12 @@ class Logger : public QObject
   Q_OBJECT
 public:
 
+  class _CONST
+  {
+  public:
+    static const int MAX_LOG_LINES;
+  };
+
    /*!
     * \brief The LOG_LEVEL enum denotes the severity level of a log message.
     */
@@ -53,6 +59,8 @@ public:
    static void instanziate(LOG_LEVEL logLevel);
    static void destroy();
    static Logger *instance() { return s_Logger; }
+
+   QStringList getLogEntries() const { return m_QStringList_LogEntries; }
 
 
    /*!
@@ -118,6 +126,8 @@ private:
    static QMutex *const s_Mutex;
 
    LOG_LEVEL     m_LogLevel;
+
+   QStringList m_QStringList_LogEntries;
 
    void write (LOG_LEVEL log_level, const QString &text);
 };

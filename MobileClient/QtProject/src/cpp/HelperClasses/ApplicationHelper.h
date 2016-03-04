@@ -55,6 +55,10 @@ public slots:
   bool developmentMode() const;
   void setDevelopmentMode(bool developmentMode);
 
+  // Problem reporting
+  bool reportProblem(const QString &problemDescription,
+                     bool attachTraces);
+
   // Startup timer
   void startupTimerStart();
   void startupTimerStop();
@@ -68,6 +72,7 @@ public slots:
 private slots:
 
   void slot_CommandGetCurrentClientVersion_Finished(const WebApiError &error);
+  void slot_CommandReportProblem_Finished(const WebApiError &error);
 
 private:
 
@@ -83,6 +88,9 @@ private:
 
   // Development mode
   bool m_DevelopmentMode;
+
+  // Report problem
+  WebApiCommand m_WebApiCommand_ReportProblem;
 
   // Startup timer
   QTime m_QTime_Startup;

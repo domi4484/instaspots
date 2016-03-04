@@ -33,6 +33,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
     m_CurrentClientVersion(),
     m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false),
+    m_WebApiCommand_ReportProblem(this),
     m_QTime_Startup(),
     m_StartupTime_ms(0)
 {
@@ -54,6 +55,14 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
   connect(&m_WebApiCommand_GetCurrentClientVersion,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandGetCurrentClientVersion_Finished(const WebApiError &)));
+
+
+  m_WebApiCommand_ReportProblem.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_ReportProblem.setCommand(WebApi::C_REPORT_PROBLEM);
+
+  connect(&m_WebApiCommand_ReportProblem,
+          SIGNAL(signal_Finished(const WebApiError &)),
+          SLOT(slot_CommandReportProblem_Finished(const WebApiError &)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -211,6 +220,29 @@ void ApplicationHelper::setDevelopmentMode(bool developmentMode)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+bool ApplicationHelper::reportProblem(const QString &problemDescription,
+                                      bool attachTraces)
+{
+  QList<QueryItem> qList_QueryItems;
+  qList_QueryItems.append(QueryItem(WebApi::R_PROBLEM_DESCRIPTION, problemDescription));
+
+  if(attachTraces)
+  {
+    qList_QueryItems.append(QueryItem(WebApi::R_TRACES, Logger::instance()->getLogEntries().join("\n")));
+  }
+
+  WebApiError error = m_WebApiCommand_ReportProblem.postRequest(qList_QueryItems);
+  if(error.type() != WebApiError::NONE)
+  {
+    Logger::error(QString("ApplicationHelper::checkForNewerVersion: %1").arg(error.text()));
+    return false;
+  }
+
+  return true;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void ApplicationHelper::startupTimerStart()
 {
   m_QTime_Startup.start();
@@ -249,6 +281,17 @@ void ApplicationHelper::slot_CommandGetCurrentClientVersion_Finished(const WebAp
   }
 
   emit signal_NewClientVersionAvailable();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::slot_CommandReportProblem_Finished(const WebApiError &error)
+{
+  if(error.type() != WebApiError::NONE)
+  {
+    Logger::error(QString("ApplicationHelper::slot_CommandReportProblem_Finished: %1").arg(error.text()));
+    return;
+  }
 }
 
 

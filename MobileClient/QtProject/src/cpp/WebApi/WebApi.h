@@ -58,6 +58,7 @@ public:
   static const QString C_LOGOUT;
   static const QString C_REGISTER;
   static const QString C_CANREGISTER;
+  static const QString C_REPORT_PROBLEM;
   static const QString C_GET_CURRENT_CLIENT_VERSION;
   static const QString C_GET_SPOTS_BY_DISTANCE;
   static const QString C_GET_SPOTS_BY_USER_ID;
@@ -69,6 +70,9 @@ public:
   static const QString C_UPLOAD_PICTURE_TO_SPOT;
 
   // Request parameters
+  static const QString R_PROBLEM_DESCRIPTION;
+  static const QString R_TRACES;
+
   static const QString R_PARAM_APPLICATION_VERSION;
 
   static const QString R_PARAM_USER_ID;

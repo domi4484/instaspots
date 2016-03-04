@@ -163,6 +163,15 @@ Item{
             }
         }
 
+        // Report bug
+        Button{
+            width: parent.width
+
+            text: qsTr("Report a problem")
+
+            onClicked: stackView.push(Qt.resolvedUrl("qrc:/qml/pages-user/Page_Settings_ReportProblem.qml"));
+        }
+
         // Reset got it
         Button{
             width: parent.width

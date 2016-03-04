@@ -44,6 +44,7 @@ const QString WebApi::C_LOGIN                      ("login");
 const QString WebApi::C_LOGOUT                     ("logout");
 const QString WebApi::C_REGISTER                   ("register");
 const QString WebApi::C_CANREGISTER                ("canregister");
+const QString WebApi::C_REPORT_PROBLEM             ("reportProblem");
 const QString WebApi::C_GET_CURRENT_CLIENT_VERSION ("getCurrentClientVersion");
 const QString WebApi::C_GET_SPOTS_BY_DISTANCE      ("getSpotsByDistance");
 const QString WebApi::C_GET_SPOTS_BY_USER_ID       ("getSpotsByUserId");
@@ -57,6 +58,9 @@ const QString WebApi::C_UPLOAD_PICTURE_TO_SPOT     ("uploadPictureToSpot");
 
 
 // Request parameters
+const QString WebApi::R_PROBLEM_DESCRIPTION ("problemDescription");
+const QString WebApi::R_TRACES              ("traces");
+
 const QString WebApi::R_PARAM_APPLICATION_VERSION ("version");
 
 const QString WebApi::R_PARAM_USER_ID  ("id_user");

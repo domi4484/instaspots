@@ -18,6 +18,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+const int Logger::_CONST::MAX_LOG_LINES(1000);
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 Logger *Logger::s_Logger = NULL;
 QMutex *const Logger::s_Mutex = new QMutex;
 
@@ -26,7 +30,8 @@ QMutex *const Logger::s_Mutex = new QMutex;
 Logger::Logger(LOG_LEVEL logLevel,
                QObject *parent) :
   QObject(parent),
-  m_LogLevel(qMax (LOG_INFO, logLevel))
+  m_LogLevel(qMax (LOG_INFO, logLevel)),
+  m_QStringList_LogEntries()
 {
 }
 
@@ -193,7 +198,15 @@ void Logger::write (LOG_LEVEL log_level,
       QString txt = text;
       txt.remove("\n");
 
-      qDebug() << QString("%1").arg((prefix + txt).toUtf8().data());
+      QString logText(prefix + txt);
+
+      m_QStringList_LogEntries.prepend(logText);
+      while(m_QStringList_LogEntries.size() >= _CONST::MAX_LOG_LINES)
+      {
+         m_QStringList_LogEntries.removeLast();
+      }
+
+      qDebug() << logText;
    }
 }
 
