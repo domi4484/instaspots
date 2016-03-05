@@ -26,6 +26,10 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 // FOS imports -----------------------------
 use FOS\UserBundle\Util\UserManipulator;
 
+// Php imports -----------------------------
+use SoapClient;
+use SoapFault;
+
 class WebserviceController extends Controller
 {
   private $CONST_DEBUG = false;
@@ -78,6 +82,12 @@ class WebserviceController extends Controller
                         $request->get('username'),
                         $request->get('password'),
                         $request->get('email'   ));
+      break;
+
+      case "reportProblem":
+        $this->reportProblem($response,
+                             $request->get('reportTitle'),
+                             $request->get('reportContent'));
       break;
 
       case "getCurrentClientVersion":
@@ -230,6 +240,36 @@ class WebserviceController extends Controller
                  $password);
 
     $response->addData('registered', true);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function reportProblem( &$response,
+                                   $reportTitle,
+                                   $reportContent )
+  {
+    $minimumClientVersion = 'V0.0.4';
+
+    // Create new bug report in mantis database
+    $soapClient = new SoapClient("http://mantis.lowerclassclothing.com/api/soap/mantisconnect.php?wsdl");
+    $username = 'client';
+    $password = '4qpSLQxy';
+    $issue = array (
+                    'category'    =>"General",
+                    'summary'     => "### Report title ### ".$reportTitle,
+                    'description' => "### Report content ###\n".$reportContent,
+                    'project'     =>array('id'=>1)
+                    );
+
+    try
+    {
+      $soapClient->mc_issue_add($username, $password, $issue);
+    }
+    catch (SoapFault $exception)
+    {
+      $response->setError($exception->getMessage());
+      return;
+    }
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -58,8 +58,8 @@ const QString WebApi::C_UPLOAD_PICTURE_TO_SPOT     ("uploadPictureToSpot");
 
 
 // Request parameters
-const QString WebApi::R_PROBLEM_DESCRIPTION ("problemDescription");
-const QString WebApi::R_TRACES              ("traces");
+const QString WebApi::R_REPORT_TITLE   ("reportTitle");
+const QString WebApi::R_REPORT_CONTENT ("reportContent");
 
 const QString WebApi::R_PARAM_APPLICATION_VERSION ("version");
 

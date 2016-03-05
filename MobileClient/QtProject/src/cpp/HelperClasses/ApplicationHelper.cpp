@@ -223,18 +223,30 @@ void ApplicationHelper::setDevelopmentMode(bool developmentMode)
 bool ApplicationHelper::reportProblem(const QString &problemDescription,
                                       bool attachTraces)
 {
-  QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PROBLEM_DESCRIPTION, problemDescription));
+  QStringList qStringList_ReportContent;
+
+  qStringList_ReportContent << QString("Version: ------ %1")  .arg(version());
+  qStringList_ReportContent << QString("Built on: ------ %1")  .arg(buildTimestamp());
+  qStringList_ReportContent << QString("Plateform: ---- %1")  .arg(m_PlateformDetail->name());
+  qStringList_ReportContent << QString("Startup time: - %1ms").arg(startupTime_ms());
 
   if(attachTraces)
   {
-    qList_QueryItems.append(QueryItem(WebApi::R_TRACES, Logger::instance()->getLogEntries().join("\n")));
+    qStringList_ReportContent << QString("Log lines:");
+    qStringList_ReportContent << Logger::instance()->getLogEntries().join("\n");
   }
+
+
+  QList<QueryItem> qList_QueryItems;
+  qList_QueryItems.append(QueryItem(WebApi::R_REPORT_TITLE,   problemDescription));
+  qList_QueryItems.append(QueryItem(WebApi::R_REPORT_CONTENT, qStringList_ReportContent.join("\n")));
+
 
   WebApiError error = m_WebApiCommand_ReportProblem.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
-    Logger::error(QString("ApplicationHelper::checkForNewerVersion: %1").arg(error.text()));
+    Logger::error(QString("%1: %2").arg(__FUNCTION__)
+                                   .arg(error.text()));
     return false;
   }
 

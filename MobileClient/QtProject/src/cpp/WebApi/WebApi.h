@@ -70,8 +70,8 @@ public:
   static const QString C_UPLOAD_PICTURE_TO_SPOT;
 
   // Request parameters
-  static const QString R_PROBLEM_DESCRIPTION;
-  static const QString R_TRACES;
+  static const QString R_REPORT_TITLE;
+  static const QString R_REPORT_CONTENT;
 
   static const QString R_PARAM_APPLICATION_VERSION;
 
