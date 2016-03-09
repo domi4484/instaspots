@@ -44,80 +44,75 @@ public:
       static const QString COMMAND;
       static const QString ERROR;
     };
-
-    class GET_PICTURES
-    {
-    public:
-      static const QString COMMAND;
-      static const QString A_ARRAY_ID;
-    }; // LATEST_PICTURES_ID
   }; // CONST
 
   // Commands
-  static const QString C_LOGIN;
-  static const QString C_LOGOUT;
-  static const QString C_REGISTER;
-  static const QString C_CANREGISTER;
-  static const QString C_REPORT_PROBLEM;
-  static const QString C_GET_CURRENT_CLIENT_VERSION;
-  static const QString C_GET_SPOTS_BY_DISTANCE;
-  static const QString C_GET_SPOTS_BY_USER_ID;
-  static const QString C_GET_PICTURES_BY_SPOT_ID;
-  static const QString C_GET_PICTURES_BY_USER_ID;
-  static const QString C_GET_PICTURES_BY_NEWEST;
+  class COMMAND
+  {
+  public:
+    static const QString LOGIN;
+    static const QString LOGOUT;
+    static const QString CANREGISTER;
+    static const QString REGISTER;
 
-  static const QString C_UPLOAD_NEW_SPOT;
-  static const QString C_UPLOAD_PICTURE_TO_SPOT;
+    static const QString REPORT_PROBLEM;
+    static const QString GET_CURRENT_CLIENT_VERSION;
 
-  // Request parameters
-  static const QString R_REPORT_TITLE;
-  static const QString R_REPORT_CONTENT;
+    static const QString UPLOAD_PICTURE_TO_SPOT;
+    static const QString UPLOAD_NEW_SPOT;
 
-  static const QString R_PARAM_APPLICATION_VERSION;
+    static const QString GET_PICTURES_BY_NEWEST;
+    static const QString GET_PICTURES_BY_SPOT_ID;
+    static const QString GET_PICTURES_BY_USER_ID;
+    static const QString GET_SPOTS_BY_DISTANCE;
+    static const QString GET_SPOTS_BY_USER_ID;
+  }; // COMMAND
 
-  static const QString R_PARAM_USER_ID;
-  static const QString R_PARAM_USERNAME;
-  static const QString R_PARAM_PASSWORD;
-  static const QString R_PARAM_EMAIL;
+  // Paramters
+  class PARAMETER
+  {
+  public:
+    static const QString USER_USER_ID;
+    static const QString USER_USERNAME;
+    static const QString USER_PASSWORD;
+    static const QString USER_EMAIL;
+    static const QString USER_AUTHENTICATED;
+    static const QString USER_REGISTERED;
 
-  static const QString R_PARAM_SPOT_ID;
+    static const QString REPORT_TITLE;
+    static const QString REPORT_CONTENT;
 
-  static const QString R_PARAM_LATITUDE;
-  static const QString R_PARAM_LONGITUDE;
-  static const QString R_PARAM_MAX_DISTANCE_KM;
+    static const QString APPLICATION_VERSION;
+    static const QString PARAM_SUCCESSFUL;
 
-  static const QString R_PARAM_NAME;
-  static const QString R_PARAM_DESCRIPTION;
-  static const QString R_PARAM_SECRET_SPOT;
+    static const QString SPOT_LIST;
+    static const QString SPOT_SPOT_ID;
+    static const QString SPOT_NAME;
+    static const QString SPOT_DESCRIPTION;
+    static const QString SPOT_SECRET_SPOT;
+    static const QString SPOT_LATITUDE;
+    static const QString SPOT_LONGITUDE;
+    static const QString SPOT_DISTANCE_KM;
+    static const QString SPOT_PICTURE_PICTURE_ID_1;
+    static const QString SPOT_PICTURE_PICTURE_ID_2;
+    static const QString SPOT_PICTURE_URL_1;
+    static const QString SPOT_PICTURE_URL_2;
 
-  // Answer parameters
-  static const QString A_PARAM_AUTHENTICATION;
-  static const QString A_PARAM_REGISTERED;
-  static const QString A_PARAM_ID_USER;
-  static const QString A_PARAM_VERSION;
+    static const QString PICTURE_LIST;
+    static const QString PICTURE_PICTURE_ID;
+    static const QString PICTURE_LATITUDE;
+    static const QString PICTURE_LONGITUDE;
+    static const QString PICTURE_URL;
+    static const QString PICTURE_CREATED;
+    static const QString PICTURE_SPOT_ID;
+    static const QString PICTURE_SPOT_NAME;
+    static const QString PICTURE_SPOT_DESCRIPTION;
+    static const QString PICTURE_SPOT_SCORE;
+    static const QString PICTURE_USER_ID;
+    static const QString PICTURE_USER_USERNAME;
 
-  static const QString A_ARRAY_SPOTS;
-  static const QString A_ARRAY_SPOTS_ELEMENT_ID;
-  static const QString A_ARRAY_SPOTS_ELEMENT_NAME;
-  static const QString A_ARRAY_SPOTS_ELEMENT_DESCRIPTION;
-  static const QString A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT;
-  static const QString A_ARRAY_SPOTS_ELEMENT_LATITUDE;
-  static const QString A_ARRAY_SPOTS_ELEMENT_LONGITUDE;
-  static const QString A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM;
-  static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1;
-  static const QString A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2;
-
-  static const QString A_ARRAY_PICTURES;
-  static const QString A_ARRAY_PICTURES_ELEMENT_ID;
-  static const QString A_ARRAY_PICTURES_ELEMENT_ID_USER;
-  static const QString A_ARRAY_PICTURES_ELEMENT_ID_SPOT;
-  static const QString A_ARRAY_PICTURES_ELEMENT_URL;
-  static const QString A_ARRAY_PICTURES_ELEMENT_USERNAME;
-  static const QString A_ARRAY_PICTURES_ELEMENT_NAME;
-  static const QString A_ARRAY_PICTURES_ELEMENT_DESCRIPTION;
-  static const QString A_ARRAY_PICTURES_ELEMENT_CREATED;
-
-  static const QString A_PARAM_SUCCESSFUL;
+    static const QString A_PARAM_SUCCESSFUL;
+  }; // PARAMETER
 
   static WebApi *instance();
   static void destroy();

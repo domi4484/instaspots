@@ -50,7 +50,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
   }
 
   m_WebApiCommand_GetCurrentClientVersion.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_GetCurrentClientVersion.setCommand(WebApi::C_GET_CURRENT_CLIENT_VERSION);
+  m_WebApiCommand_GetCurrentClientVersion.setCommand(WebApi::COMMAND::GET_CURRENT_CLIENT_VERSION);
 
   connect(&m_WebApiCommand_GetCurrentClientVersion,
           SIGNAL(signal_Finished(const WebApiError &)),
@@ -58,7 +58,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
 
 
   m_WebApiCommand_ReportProblem.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_ReportProblem.setCommand(WebApi::C_REPORT_PROBLEM);
+  m_WebApiCommand_ReportProblem.setCommand(WebApi::COMMAND::REPORT_PROBLEM);
 
   connect(&m_WebApiCommand_ReportProblem,
           SIGNAL(signal_Finished(const WebApiError &)),
@@ -238,8 +238,8 @@ bool ApplicationHelper::reportProblem(const QString &problemDescription,
 
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_REPORT_TITLE,   problemDescription));
-  qList_QueryItems.append(QueryItem(WebApi::R_REPORT_CONTENT, qStringList_ReportContent.join("\n")));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::REPORT_TITLE,   problemDescription));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::REPORT_CONTENT, qStringList_ReportContent.join("\n")));
 
 
   WebApiError error = m_WebApiCommand_ReportProblem.postRequest(qList_QueryItems);
@@ -285,7 +285,7 @@ void ApplicationHelper::slot_CommandGetCurrentClientVersion_Finished(const WebAp
     return;
   }
 
-  m_CurrentClientVersion = m_WebApiCommand_GetCurrentClientVersion.resultParameter(WebApi::A_PARAM_VERSION).toString();
+  m_CurrentClientVersion = m_WebApiCommand_GetCurrentClientVersion.resultParameter(WebApi::PARAMETER::APPLICATION_VERSION).toString();
 
   if(compareVersions(version(), m_CurrentClientVersion) >= 0)
   {

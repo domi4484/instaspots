@@ -48,6 +48,8 @@ class Spot : public QObject
     void setDistance    (qreal distance)             { m_Distance_km = distance;    }
     void setPictureUrl1 (const QString &pictureUrl1) { m_PictureUrl1 = pictureUrl1; }
     void setPictureUrl2 (const QString &pictureUrl2) { m_PictureUrl2 = pictureUrl2; }
+    void setPictureId1  (int pictureId)              { m_PictureId1  = pictureId;   }
+    void setPictureId2  (int pictureId)              { m_PictureId2  = pictureId;   }
 
     int     id          () const { return m_Id;          }
     QString name        () const { return m_Name;        }
@@ -58,6 +60,8 @@ class Spot : public QObject
     qreal   distance    () const { return m_Distance_km; }
     QString pictureUrl1 () const { return m_PictureUrl1; }
     QString pictureUrl2 () const { return m_PictureUrl2; }
+    int     pictureId1  () const { return m_PictureId1;  }
+    int     pictureId2  () const { return m_PictureId2;  }
 
   private:
 
@@ -70,6 +74,8 @@ class Spot : public QObject
     qreal   m_Distance_km;
     QString m_PictureUrl1;
     QString m_PictureUrl2;
+    int     m_PictureId1;
+    int     m_PictureId2;
 };
 
 #endif // SPOT_H

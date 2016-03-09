@@ -2,6 +2,10 @@
 
 namespace Instaspots\SpotsBundle\Entity;
 
+// Project imports -------------------------
+use Instaspots\SpotsBundle\Controller\ParameterSet;
+
+// Doctrine imports ------------------------
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -280,19 +284,19 @@ class Picture
    public function toJson()
     {
       $jPicture = array();
-      $jPicture['id']          = $this->getId();
-      $jPicture['latitude']    = $this->getLatitude();
-      $jPicture['longitude'  ] = $this->getLongitude();
-      $jPicture['created']     = $this->getCreatedISOText();
-      $jPicture['url']         = $this->getUrl();
+      $jPicture[ParameterSet::PICTURE_PICTURE_ID] = $this->getId();
+      $jPicture[ParameterSet::PICTURE_LATITUDE  ] = $this->getLatitude();
+      $jPicture[ParameterSet::PICTURE_LONGITUDE ] = $this->getLongitude();
+      $jPicture[ParameterSet::PICTURE_URL       ] = $this->getUrl();
+      $jPicture[ParameterSet::PICTURE_CREATED   ] = $this->getCreatedISOText();
 
-      $jPicture['id_spot'    ] = $this->getSpot()->getId();
-      $jPicture['name'       ] = $this->getSpot()->getName();
-      $jPicture['description'] = $this->getSpot()->getDescription();
-      $jPicture['score'      ] = $this->getSpot()->getScore();
+      $jPicture[ParameterSet::PICTURE_SPOT_ID         ] = $this->getSpot()->getId();
+      $jPicture[ParameterSet::PICTURE_SPOT_NAME       ] = $this->getSpot()->getName();
+      $jPicture[ParameterSet::PICTURE_SPOT_DESCRIPTION] = $this->getSpot()->getDescription();
+      $jPicture[ParameterSet::PICTURE_SPOT_SCORE      ] = $this->getSpot()->getScore();
 
-      $jPicture['id_user']  = $this->getUser()->getId();
-      $jPicture['username'] = $this->getUser()->getUsername();
+      $jPicture[ParameterSet::PICTURE_USER_ID      ] = $this->getUser()->getId();
+      $jPicture[ParameterSet::PICTURE_USER_USERNAME] = $this->getUser()->getUsername();
 
       return $jPicture;
     }

@@ -117,12 +117,12 @@ void PictureRepository::getBy_SpotId(int requestId,
                                      int spotId)
 {
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_SPOT_ID,  QString::number(spotId)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SPOT_ID,  QString::number(spotId)));
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_SPOT_ID);
+  webApiCommand->setCommand(WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -138,12 +138,12 @@ void PictureRepository::getBy_UserId(int requestId,
                                      int userId)
 {
    QList<QueryItem> qList_QueryItems;
-   qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USER_ID,  QString::number(userId)));
+   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USER_ID,  QString::number(userId)));
 
    // TODO check post return type
    WebApiCommand *webApiCommand = new WebApiCommand(this);
    webApiCommand->setAnswerType(WebApiCommand::JSON);
-   webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_USER_ID);
+   webApiCommand->setCommand(WebApi::COMMAND::GET_PICTURES_BY_USER_ID);
 
    webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -162,7 +162,7 @@ void PictureRepository::getBy_Newest(int requestId)
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::C_GET_PICTURES_BY_NEWEST);
+  webApiCommand->setCommand(WebApi::COMMAND::GET_PICTURES_BY_NEWEST);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -189,12 +189,12 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
   }
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
-  QJsonArray jsonArray_Pictures = webApiCommand->resultArray(WebApi::A_ARRAY_PICTURES);
+  QJsonArray jsonArray_Pictures = webApiCommand->resultArray(WebApi::PARAMETER::PICTURE_LIST);
   for(int i = 0; i < jsonArray_Pictures.size(); i++)
   {
     QJsonObject jsonObject_Picture = jsonArray_Pictures.at(i).toObject();
 
-    int picture_id = jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID).toInt();
+    int picture_id = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_PICTURE_ID).toInt();
 
     Picture *picture = m_QMap_Pictures.value(picture_id, NULL);
     if(picture == NULL)
@@ -204,13 +204,13 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
       m_QMap_Pictures.insert(picture_id, picture);
     }
 
-    picture->setIdUser          (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_USER).toInt());
-    picture->setIdSpot          (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT).toInt());
-    picture->setUrl             (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_URL).toString());
-    picture->setUsername        (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME).toString());
-    picture->setSpotName        (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_NAME).toString());
-    picture->setSpotDescription (jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION).toString());
-    picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED).toString(),
+    picture->setUrl             (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString());
+    picture->setIdSpot          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_ID).toInt());
+    picture->setSpotName        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_NAME).toString());
+    picture->setSpotDescription (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION).toString());
+    picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
+    picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());
+    picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_CREATED).toString(),
                                                        Qt::ISODate));
 
     // Add to current request

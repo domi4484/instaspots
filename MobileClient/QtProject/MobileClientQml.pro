@@ -152,5 +152,6 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/CommandSet.php \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/NewsController.php \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/Response.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ParameterSet.php
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ParameterSet.php \
+    ../../WebSite/Test/webserviceTest.sh
 

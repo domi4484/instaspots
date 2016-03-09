@@ -2,6 +2,10 @@
 
 namespace Instaspots\SpotsBundle\Entity;
 
+// Project imports -------------------------
+use Instaspots\SpotsBundle\Controller\ParameterSet;
+
+// Doctrine imports ------------------------
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -471,28 +475,28 @@ class Spot
   {
     $jSpot = array();
 
-    $jSpot['id']          = $this->getId();
-    $jSpot['name']        = $this->getName();
-    $jSpot['description'] = $this->getDescription();
-    $jSpot['latitude']    = $this->getLatitude();
-    $jSpot['longitude']   = $this->getLongitude();
-    $jSpot['secretSpot']  = $this->getSecretSpot();
-    $jSpot['distance_km'] = -1;
+    $jSpot[ParameterSet::SPOT_SPOT_ID    ] = $this->getId();
+    $jSpot[ParameterSet::SPOT_NAME       ] = $this->getName();
+    $jSpot[ParameterSet::SPOT_DESCRIPTION] = $this->getDescription();
+    $jSpot[ParameterSet::SPOT_SECRET_SPOT] = $this->getSecretSpot();
+    $jSpot[ParameterSet::SPOT_LATITUDE   ] = $this->getLatitude();
+    $jSpot[ParameterSet::SPOT_LONGITUDE  ] = $this->getLongitude();
+    $jSpot[ParameterSet::SPOT_DISTANCE_KM] = -1;
 
     $picture1 = $this->getPicture1();
-    $jSpot['pictureId1']  = $picture1->getId();
-    $jSpot['pictureUrl1'] = $picture1->getUrl();
+    $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_1] = $picture1->getId();
+    $jSpot[ParameterSet::SPOT_PICTURE_URL_1       ] = $picture1->getUrl();
 
     $picture2 = $this->getPicture2();
     if($picture2->getId() != $picture1->getId())
     {
-      $jSpot['pictureId2']  = $picture2->getId();
-      $jSpot['pictureUrl2'] = $picture2->getUrl();
+      $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_2] = $picture2->getId();
+      $jSpot[ParameterSet::SPOT_PICTURE_URL_2       ] = $picture2->getUrl();
     }
     else
     {
-      $jSpot['pictureId2']  = -1;
-      $jSpot['pictureUrl2'] = '';
+      $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_2]  = -1;
+      $jSpot[ParameterSet::SPOT_PICTURE_URL_2       ] = '';
     }
 
     return $jSpot;

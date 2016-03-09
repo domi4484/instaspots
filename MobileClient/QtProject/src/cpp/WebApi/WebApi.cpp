@@ -40,73 +40,65 @@ const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
 const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
 
 // Commands
-const QString WebApi::C_LOGIN                      ("login");
-const QString WebApi::C_LOGOUT                     ("logout");
-const QString WebApi::C_REGISTER                   ("register");
-const QString WebApi::C_CANREGISTER                ("canregister");
-const QString WebApi::C_REPORT_PROBLEM             ("reportProblem");
-const QString WebApi::C_GET_CURRENT_CLIENT_VERSION ("getCurrentClientVersion");
-const QString WebApi::C_GET_SPOTS_BY_DISTANCE      ("getSpotsByDistance");
-const QString WebApi::C_GET_SPOTS_BY_USER_ID       ("getSpotsByUserId");
+const QString WebApi::COMMAND::LOGIN       = "login";
+const QString WebApi::COMMAND::LOGOUT      = "logout";
+const QString WebApi::COMMAND::CANREGISTER = "canregister";
+const QString WebApi::COMMAND::REGISTER    = "register";
 
-const QString WebApi::C_GET_PICTURES_BY_SPOT_ID    ("getPicturesBySpotId");
-const QString WebApi::C_GET_PICTURES_BY_USER_ID    ("getPicturesByUserId");
-const QString WebApi::C_GET_PICTURES_BY_NEWEST     ("getPicturesByNewest");
+const QString WebApi::COMMAND::REPORT_PROBLEM             = "reportProblem";
+const QString WebApi::COMMAND::GET_CURRENT_CLIENT_VERSION = "getCurrentClientVersion";
 
-const QString WebApi::C_UPLOAD_NEW_SPOT            ("uploadNewSpot");
-const QString WebApi::C_UPLOAD_PICTURE_TO_SPOT     ("uploadPictureToSpot");
+const QString WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT = "uploadPictureToSpot";
+const QString WebApi::COMMAND::UPLOAD_NEW_SPOT        = "uploadNewSpot";
+
+const QString WebApi::COMMAND::GET_PICTURES_BY_NEWEST  = "getPicturesByNewest";
+const QString WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID = "getPicturesBySpotId";
+const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
+const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
+const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
 
 
-// Request parameters
-const QString WebApi::R_REPORT_TITLE   ("reportTitle");
-const QString WebApi::R_REPORT_CONTENT ("reportContent");
+// Parameters
+const QString WebApi::PARAMETER::USER_USER_ID       = "user_userId";
+const QString WebApi::PARAMETER::USER_USERNAME      = "user_username";
+const QString WebApi::PARAMETER::USER_PASSWORD      = "user_password";
+const QString WebApi::PARAMETER::USER_EMAIL         = "user_email";
+const QString WebApi::PARAMETER::USER_AUTHENTICATED = "user_authenticated";
+const QString WebApi::PARAMETER::USER_REGISTERED    = "user_registered";
 
-const QString WebApi::R_PARAM_APPLICATION_VERSION ("version");
+const QString WebApi::PARAMETER::REPORT_TITLE   = "reportTitle";
+const QString WebApi::PARAMETER::REPORT_CONTENT = "reportContent";
 
-const QString WebApi::R_PARAM_USER_ID  ("id_user");
-const QString WebApi::R_PARAM_USERNAME ("username");
-const QString WebApi::R_PARAM_PASSWORD ("password");
-const QString WebApi::R_PARAM_EMAIL    ("email");
+const QString WebApi::PARAMETER::APPLICATION_VERSION = "application_version";
+const QString WebApi::PARAMETER::PARAM_SUCCESSFUL    = "successful";
 
-const QString WebApi::R_PARAM_SPOT_ID ("id_spot");
+const QString WebApi::PARAMETER::SPOT_LIST                 = "spot_list";
+const QString WebApi::PARAMETER::SPOT_SPOT_ID              = "spot_spotId";
+const QString WebApi::PARAMETER::SPOT_NAME                 = "spot_name";
+const QString WebApi::PARAMETER::SPOT_DESCRIPTION          = "spot_description";
+const QString WebApi::PARAMETER::SPOT_SECRET_SPOT          = "spot_secretSpot";
+const QString WebApi::PARAMETER::SPOT_LATITUDE             = "spot_latitude";
+const QString WebApi::PARAMETER::SPOT_LONGITUDE            = "spot_longitude";
+const QString WebApi::PARAMETER::SPOT_DISTANCE_KM          = "spot_DistanceKm";
+const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 = "spot_picture_pictureId_1";
+const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 = "spot_picture_pictureId_2";
+const QString WebApi::PARAMETER::SPOT_PICTURE_URL_1        = "spot_picture_url_1";
+const QString WebApi::PARAMETER::SPOT_PICTURE_URL_2        = "spot_picture_url_2";
 
-const QString WebApi::R_PARAM_LATITUDE       ("latitude");
-const QString WebApi::R_PARAM_LONGITUDE      ("longitude");
-const QString WebApi::R_PARAM_MAX_DISTANCE_KM("maxDistance_km");
+const QString WebApi::PARAMETER::PICTURE_LIST             = "picture_list";
+const QString WebApi::PARAMETER::PICTURE_PICTURE_ID       = "picture_pictureId";
+const QString WebApi::PARAMETER::PICTURE_LATITUDE         = "picture_latitude";
+const QString WebApi::PARAMETER::PICTURE_LONGITUDE        = "picture_longitude";
+const QString WebApi::PARAMETER::PICTURE_URL              = "picture_url";
+const QString WebApi::PARAMETER::PICTURE_CREATED          = "picture_created";
+const QString WebApi::PARAMETER::PICTURE_SPOT_ID          = "picture_spot_spotId";
+const QString WebApi::PARAMETER::PICTURE_SPOT_NAME        = "picture_spot_name";
+const QString WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION = "picture_spot_description";
+const QString WebApi::PARAMETER::PICTURE_SPOT_SCORE       = "picture_spot_score";
+const QString WebApi::PARAMETER::PICTURE_USER_ID          = "picture_user_userId";
+const QString WebApi::PARAMETER::PICTURE_USER_USERNAME    = "picture_user_username";
 
-const QString WebApi::R_PARAM_SECRET_SPOT("spot_secretSpot");
-
-const QString WebApi::R_PARAM_NAME        ("name");
-const QString WebApi::R_PARAM_DESCRIPTION ("description");
-
-// Answer parameters
-const QString WebApi::A_PARAM_AUTHENTICATION ("authentication");
-const QString WebApi::A_PARAM_REGISTERED     ("registered");
-const QString WebApi::A_PARAM_ID_USER        ("id_user");
-const QString WebApi::A_PARAM_VERSION        ("version");
-
-const QString WebApi::A_ARRAY_SPOTS ("spots");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_ID            ("id");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_NAME          ("name");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION   ("description");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT   ("secretSpot");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE      ("latitude");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE     ("longitude");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_DISTANCE_KM   ("distance_km");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1 ("pictureUrl1");
-const QString WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2 ("pictureUrl2");
-
-const QString WebApi::A_ARRAY_PICTURES ("pictures");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_ID          ("id");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_ID_USER     ("id_user");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_ID_SPOT     ("id_spot");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_URL         ("url");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_USERNAME    ("username");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_NAME        ("name");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_DESCRIPTION ("description");
-const QString WebApi::A_ARRAY_PICTURES_ELEMENT_CREATED     ("created");
-
-const QString WebApi::A_PARAM_SUCCESSFUL  ("successful");
+const QString WebApi::PARAMETER::A_PARAM_SUCCESSFUL  ("successful");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

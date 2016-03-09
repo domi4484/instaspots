@@ -26,7 +26,7 @@
 PictureUploader::PictureUploader(QObject *parent) :
   QObject (parent),
   m_LastErrorText                    (),
-  m_Command                          (WebApi::C_UPLOAD_PICTURE_TO_SPOT),
+  m_Command                          (WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT),
   m_Pixmap                           (),
   m_Latitude                         (0),
   m_Longitude                        (0),
@@ -38,13 +38,13 @@ PictureUploader::PictureUploader(QObject *parent) :
   m_WebApiCommand_UploadPictureToSpot(this)
 {
   m_WebApiCommand_UploadNewSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadNewSpot.setCommand(WebApi::C_UPLOAD_NEW_SPOT);
+  m_WebApiCommand_UploadNewSpot.setCommand(WebApi::COMMAND::UPLOAD_NEW_SPOT);
   connect(&m_WebApiCommand_UploadNewSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadNewSpot_Finished(const WebApiError &)));
 
   m_WebApiCommand_UploadPictureToSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadPictureToSpot.setCommand(WebApi::C_UPLOAD_PICTURE_TO_SPOT);
+  m_WebApiCommand_UploadPictureToSpot.setCommand(WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT);
   connect(&m_WebApiCommand_UploadPictureToSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadPictureToSpot_Finished(const WebApiError &)));
@@ -54,7 +54,7 @@ PictureUploader::PictureUploader(QObject *parent) :
 
 bool PictureUploader::isNewSpot() const
 {
-  return m_Command == WebApi::C_UPLOAD_NEW_SPOT;
+  return m_Command == WebApi::COMMAND::UPLOAD_NEW_SPOT;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -84,11 +84,11 @@ void PictureUploader::setNewSpot(bool newSpot)
 {
   if(newSpot)
   {
-    m_Command = WebApi::C_UPLOAD_NEW_SPOT;
+    m_Command = WebApi::COMMAND::UPLOAD_NEW_SPOT;
   }
   else
   {
-    m_Command = WebApi::C_UPLOAD_PICTURE_TO_SPOT;
+    m_Command = WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT;
   }
 }
 
@@ -204,7 +204,7 @@ void PictureUploader::setExistingSpotId(int spotId)
 
 bool PictureUploader::execute()
 {
-  if(m_Command == WebApi::C_UPLOAD_NEW_SPOT)
+  if(m_Command == WebApi::COMMAND::UPLOAD_NEW_SPOT)
   {
     return uploadNewSpot();
   }
@@ -284,11 +284,11 @@ bool PictureUploader::uploadNewSpot()
   }
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,    QString::number(m_Latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE,   QString::number(m_Longitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_NAME,        m_Name));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_DESCRIPTION, m_Description));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_SECRET_SPOT, QString::number(m_SecretSpot)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_NAME,        m_Name));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DESCRIPTION, m_Description));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SECRET_SPOT, QString::number(m_SecretSpot)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(m_Latitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_Longitude)));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
@@ -332,9 +332,9 @@ bool PictureUploader::uploadPictureToSpot()
   }
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_SPOT_ID,   QString::number(m_SpotId)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,  QString::number(m_Latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE, QString::number(m_Longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_SPOT_ID,   QString::number(m_SpotId)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LATITUDE,  QString::number(m_Latitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_Longitude)));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);

@@ -7,8 +7,10 @@ use Instaspots\UserBundle\Entity\User;
 use Instaspots\SpotsBundle\Entity\Spot;
 use Instaspots\SpotsBundle\Entity\Picture;
 
+// Project imports -------------------------
 use Instaspots\SpotsBundle\Controller\ApplicationHelper;
 use Instaspots\SpotsBundle\Controller\CommandSet;
+use Instaspots\SpotsBundle\Controller\ParameterSet;
 use Instaspots\SpotsBundle\Controller\Response;
 
 // Symfony imports -------------------------
@@ -67,9 +69,7 @@ class WebserviceController extends Controller
     switch ($response->getCommand())
     {
       case CommandSet::LOGIN:
-        $this->login($response,
-                     $request->get('username'),
-                     $request->get('password'));
+        $this->login($request, $response);
       break;
 
       case CommandSet::LOGOUT:
@@ -77,21 +77,15 @@ class WebserviceController extends Controller
       break;
 
       case CommandSet::CANREGISTER:
-        $this->canregister($response,
-                           $request->get('username'));
+        $this->canregister($request, $response);
       break;
 
       case CommandSet::REGISTER:
-        $this->register($response,
-                        $request->get('username'),
-                        $request->get('password'),
-                        $request->get('email'   ));
+        $this->register($request, $response);
       break;
 
       case CommandSet::REPORT_PROBLEM:
-        $this->reportProblem($response,
-                             $request->get('reportTitle'),
-                             $request->get('reportContent'));
+        $this->reportProblem($request, $response);
       break;
 
       case CommandSet::GET_CURRENT_CLIENT_VERSION:
@@ -99,43 +93,31 @@ class WebserviceController extends Controller
       break;
 
       case CommandSet::UPLOAD_PICTURE_TO_SPOT:
-        $this->uploadPictureToSpot($response,
-                                   $request->get('id_spot'  ),
-                                   $request->get('latitude' ),
-                                   $request->get('longitude'),
-                                   $request->files->get('image'));
+        $this->uploadPictureToSpot($request, $response);
       break;
 
       case CommandSet::UPLOAD_NEW_SPOT:
-        $this->uploadNewSpot($request,
-                             $response);
+        $this->uploadNewSpot($request, $response);
       break;
-
 
       case CommandSet::GET_PICTURES_BY_NEWEST:
         $this->getPicturesByNewest($response);
       break;
 
       case CommandSet::GET_PICTURES_BY_SPOT_ID:
-        $this->getPicturesBySpotId($response,
-                                   $request->get('id_spot'));
+        $this->getPicturesBySpotId($request, $response);
       break;
 
       case CommandSet::GET_PICTURES_BY_USER_ID:
-        $this->getPicturesByUserId($response,
-                                   $request->get('id_user'));
+        $this->getPicturesByUserId($request, $response);
       break;
 
       case CommandSet::GET_SPOTS_BY_DISTANCE:
-        $this->getSpotsByDistance($response,
-                                  $request->get('latitude' ),
-                                  $request->get('longitude'),
-                                  $request->get('maxDistance_km'));
+        $this->getSpotsByDistance($request, $response);
       break;
 
       case CommandSet::GET_SPOTS_BY_USER_ID:
-        $this->getSpotsByUserId($response,
-                                $request->get('id_user'));
+        $this->getSpotsByUserId($request, $response);
       break;
 
       default:
@@ -150,10 +132,72 @@ class WebserviceController extends Controller
 //-----------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function canregister( &$response,
-                                 $username )
+  /**
+   * Login
+   *
+   * @param \Request  $request
+   * @param \Response $response
+   * @return WebserviceController
+   */
+  private function login($request, &$response)
   {
     $minimumClientVersion = 'V0.0.1';
+
+    $username = $request->get(ParameterSet::USER_USERNAME);
+    $password = $request->get(ParameterSet::USER_PASSWORD);
+
+    $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsUserBundle:User');
+
+    $listUsers = $repository->findBy(array('username' => $username));
+
+    if(empty($listUsers))
+    {
+      $response->addData(ParameterSet::USER_AUTHENTICATED, false);
+      return;
+    }
+    $user = current($listUsers);
+
+    $factory = $this->get('security.encoder_factory');
+    $encoder = $factory->getEncoder($user);
+
+    // Creo il token
+    $token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
+    $this->get("security.context")->setToken($token); //now the user is logged in
+
+    //now dispatch the login event
+    $request = $this->get("request");
+    $event = new InteractiveLoginEvent($request, $token);
+    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+
+    $validPassword = $encoder->isPasswordValid($user->getPassword(),
+                                               $password,
+                                               $user->getSalt());
+
+    $response->addData(ParameterSet::USER_USER_ID,       $user->getId());
+    $response->addData(ParameterSet::USER_AUTHENTICATED, $validPassword);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function logout()
+  {
+    $minimumClientVersion = 'V0.0.1';
+
+  // TODO
+    //$_SESSION = array();
+    //session_destroy();
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function canregister($request, &$response )
+  {
+    $minimumClientVersion = 'V0.0.1';
+
+    // Get parameters
+    $username = $request->get(ParameterSet::USER_USERNAME);
 
     // check if username is not empty
     if (strlen($username) == 0)
@@ -170,21 +214,23 @@ class WebserviceController extends Controller
 
     if(empty($listUsers) == false)
     {
-      $response->addData('canregister', false);
+      $response->addData(ParameterSet::USER_REGISTERED, true);
       return;
     }
 
-    $response->addData('canregister', true);
+    $response->addData(ParameterSet::USER_REGISTERED, false);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function register( &$response,
-                              $username,
-                              $password,
-                              $email )
+  private function register($request, &$response)
   {
     $minimumClientVersion = 'V0.0.1';
+
+    // Get parameters
+    $username = $request->get(ParameterSet::USER_USERNAME);
+    $password = $request->get(ParameterSet::USER_PASSWORD);
+    $email    = $request->get(ParameterSet::USER_EMAIL);
 
     // check if username is not empty
     if (strlen($username) == 0)
@@ -214,12 +260,11 @@ class WebserviceController extends Controller
     }
 
     // check if user was already registered
-    $this->canregister($response,
-                       $username);
+    $this->canregister($request, $response);
 
-    if($response->getData('canregister') == false)
+    if($response->getData(ParameterSet::USER_REGISTERED) == true)
     {
-      $response->addData('registered', false);
+      $response->addData(ParameterSet::USER_REGISTERED, false);
       return;
     }
 
@@ -235,20 +280,20 @@ class WebserviceController extends Controller
                          $superadmin);
 
     // Login the new user
-    $this->login($response,
-                 $username,
-                 $password);
+    $this->login($request, $response);
 
-    $response->addData('registered', true);
+    $response->addData(ParameterSet::USER_REGISTERED, true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function reportProblem( &$response,
-                                   $reportTitle,
-                                   $reportContent )
+  private function reportProblem($request, &$response)
   {
     $minimumClientVersion = 'V0.0.4';
+
+    // Get parameters
+    $reportTitle   = $request->get(ParameterSet::REPORT_TITLE);
+    $reportContent = $request->get(ParameterSet::REPORT_CONTENT);
 
     // Create new bug report in mantis database
     $soapClient = new SoapClient("http://mantis.lowerclassclothing.com/api/soap/mantisconnect.php?wsdl");
@@ -274,80 +319,22 @@ class WebserviceController extends Controller
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  /**
-   * Login
-   *
-   * @param \Response $response
-   * @param \String   $username
-   * @param \String   $password
-   * @return WebserviceController
-   */
-  private function login( &$response,
-                           $username,
-                           $password )
+  private function getCurrentClientVersion(&$response)
   {
-    $minimumClientVersion = 'V0.0.1';
-
-    $repository = $this->getDoctrine()
-                         ->getManager()
-                         ->getRepository('InstaspotsUserBundle:User');
-
-    $listUsers = $repository->findBy(array('username' => $username));
-
-    if(empty($listUsers))
-    {
-      $response->addData('authentication', false);
-      return;
-    }
-    $user = current($listUsers);
-
-    $factory = $this->get('security.encoder_factory');
-    $encoder = $factory->getEncoder($user);
-
-    // Creo il token
-    $token = new UsernamePasswordToken($user, null, "your_firewall_name", $user->getRoles());
-    $this->get("security.context")->setToken($token); //now the user is logged in
-
-    //now dispatch the login event
-    $request = $this->get("request");
-    $event = new InteractiveLoginEvent($request, $token);
-    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-
-    $validPassword = $encoder->isPasswordValid($user->getPassword(),
-                                               $password,
-                                               $user->getSalt());
-
-    $response->addData('id_user',        $user->getId());
-    $response->addData('authentication', $validPassword);
+    $response->addData(ParameterSet::APPLICATION_VERSION, 'V0.0.3');
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function logout()
+  private function uploadPictureToSpot($request, &$response)
   {
     $minimumClientVersion = 'V0.0.1';
 
-  // TODO
-    //$_SESSION = array();
-    //session_destroy();
-  }
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-  private function getCurrentClientVersion( &$response )
-  {
-    $response->addData('version', 'V0.0.3');
-  }
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-  private function uploadPictureToSpot( &$response,
-                                         $spotId,
-                                         $latitude,
-                                         $longitude,
-                                         UploadedFile $uploadedFile )
-  {
-    $minimumClientVersion = 'V0.0.1';
+    // Get parameters
+    $spotId       = $request->get(ParameterSet::PICTURE_SPOT_ID);
+    $latitude     = $request->get(ParameterSet::PICTURE_LATITUDE);
+    $longitude    = $request->get(ParameterSet::PICTURE_LONGITUDE);
+    $uploadedFile = $request->files->get('image');
 
     // Get current user
     $user = $this->getUser();
@@ -426,17 +413,16 @@ class WebserviceController extends Controller
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function uploadNewSpot(  $request,
-                                  &$response )
+  private function uploadNewSpot($request, &$response)
   {
     $minimumClientVersion = 'V0.0.3';
     
     // Get parameters
-    $latitude    = $request->get('latitude');
-    $longitude   = $request->get('longitude');
-    $name        = $request->get('name');
-    $description = $request->get('description');
-    $secretSpot  = $request->get('spot_secretSpot');
+    $name         = $request->get(ParameterSet::SPOT_NAME);
+    $description  = $request->get(ParameterSet::SPOT_DESCRIPTION);
+    $secretSpot   = $request->get(ParameterSet::SPOT_SECRET_SPOT);
+    $latitude     = $request->get(ParameterSet::SPOT_LATITUDE);
+    $longitude    = $request->get(ParameterSet::SPOT_LONGITUDE);
     $uploadedFile = $request->files->get('image');
     
     // Get current user
@@ -528,7 +514,7 @@ class WebserviceController extends Controller
 
   //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getPicturesByNewest( &$response )
+  private function getPicturesByNewest(&$response)
   {
     $minimumClientVersion = 'V0.0.1';
 
@@ -542,15 +528,17 @@ class WebserviceController extends Controller
       $jPictures[] = $picture->toJson();
     }
 
-    $response->addData('pictures', $jPictures);
+    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getPicturesBySpotId( &$response,
-                                         $spotId)
+  private function getPicturesBySpotId($request, &$response)
   {
     $minimumClientVersion = 'V0.0.2';
+
+    // Get parameters
+    $spotId = $request->get(ParameterSet::SPOT_SPOT_ID);
 
     // Get spot
     $em = $this->getDoctrine()->getManager();
@@ -569,15 +557,17 @@ class WebserviceController extends Controller
       $jPictures[] = $picture->toJson();
     }
 
-    $response->addData('pictures', $jPictures);
+    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getPicturesByUserId( &$response,
-                                          $userId )
+  private function getPicturesByUserId($request, &$response)
   {
     $minimumClientVersion = 'V0.0.2';
+
+    // Get parameters
+    $userId = $request->get(ParameterSet::USER_USER_ID);
 
     // Get user
     $em = $this->getDoctrine()->getManager();
@@ -601,17 +591,19 @@ class WebserviceController extends Controller
       $jPictures[] = $picture->toJson();
     }
 
-    $response->addData('pictures', $jPictures);
+    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getSpotsByDistance( &$response,
-                                        $latitude,
-                                        $longitude,
-                                        $maxDistance_km )
+  private function getSpotsByDistance($request, &$response)
   {
     $minimumClientVersion = 'V0.0.2';
+
+    // Get parameters
+    $latitude       = $request->get(ParameterSet::SPOT_LATITUDE);
+    $longitude      = $request->get(ParameterSet::SPOT_LONGITUDE);
+    $maxDistance_km = $request->get(ParameterSet::SPOT_DISTANCE_KM);
 
     $repository = $this->getDoctrine()
                          ->getManager()
@@ -625,20 +617,20 @@ class WebserviceController extends Controller
     {
       $jSpot = array();
 
-      $jSpot['id']          = $spot[0]['id'];
-      $jSpot['name']        = $spot[0]['name'];
-      $jSpot['description'] = $spot[0]['description'];
-      $jSpot['latitude']    = $spot[0]['latitude'];
-      $jSpot['longitude']   = $spot[0]['longitude'];
-      $jSpot['secretSpot']  = $spot[0]['secretSpot'];
-      $jSpot['distance_km'] = (float)$spot['distance'];
+      $jSpot[ParameterSet::SPOT_SPOT_ID    ] = $spot[0]['id'];
+      $jSpot[ParameterSet::SPOT_NAME       ] = $spot[0]['name'];
+      $jSpot[ParameterSet::SPOT_DESCRIPTION] = $spot[0]['description'];
+      $jSpot[ParameterSet::SPOT_SECRET_SPOT] = $spot[0]['secretSpot'];
+      $jSpot[ParameterSet::SPOT_LATITUDE   ] = $spot[0]['latitude'];
+      $jSpot[ParameterSet::SPOT_LONGITUDE  ] = $spot[0]['longitude'];
+      $jSpot[ParameterSet::SPOT_DISTANCE_KM] = (float)$spot['distance'];
 
       $picture1 = new Picture();
       $picture1->setId     ($spot[0]['picture1']['id']);
       $picture1->setCreated($spot[0]['picture1']['created']);
 
-      $jSpot['pictureId1']  = $picture1->getId();
-      $jSpot['pictureUrl1'] = $picture1->getUrl();
+      $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_1] = $picture1->getId();
+      $jSpot[ParameterSet::SPOT_PICTURE_URL_1       ] = $picture1->getUrl();
 
       $picture2 = new Picture();
       $picture2->setId     ($spot[0]['picture2']['id']);
@@ -646,27 +638,29 @@ class WebserviceController extends Controller
 
       if($picture2->getId() != $picture1->getId())
       {
-        $jSpot['pictureId2']  = $picture2->getId();
-        $jSpot['pictureUrl2'] = $picture2->getUrl();
+        $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_2] = $picture2->getId();
+        $jSpot[ParameterSet::SPOT_PICTURE_URL_2       ] = $picture2->getUrl();
       }
       else
       {
-        $jSpot['pictureId2']  = -1;
-        $jSpot['pictureUrl2'] = '';
+        $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_2] = -1;
+        $jSpot[ParameterSet::SPOT_PICTURE_URL_2       ] = '';
       }
 
       $jSpots[] = $jSpot;
     }
 
-    $response->addData('spots', $jSpots);
+    $response->addData(ParameterSet::SPOT_LIST, $jSpots);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function getSpotsByUserId( &$response,
-                                      $userId )
+  private function getSpotsByUserId($request, &$response)
   {
     $minimumClientVersion = 'V0.0.2';
+
+    // Get parameters
+    $userId = $request->get(ParameterSet::USER_USER_ID);
 
     // Get user
     $em = $this->getDoctrine()->getManager();
@@ -679,10 +673,21 @@ class WebserviceController extends Controller
       return;
     }
 
+    // Get pictures
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $pictureList = $pictureRepository->findByUser($user,
+                                                  array('created' => 'DESC'));
+
     // Get spots
-    $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
-    $spotList = $spotRepository->findByUser($user,
-                                               array('modified' => 'DESC'));
+    $spotList = array();
+    foreach($pictureList as &$picture)
+    {
+      $spot = $picture->getSpot();
+      if(in_array($spot, $spotList) == false)
+      {
+        $spotList[]=$spot;
+      }
+    }
 
     $jSpots = array();
     foreach($spotList as &$spot)
@@ -690,7 +695,7 @@ class WebserviceController extends Controller
       $jSpots[] = $spot->toJson();
     }
 
-    $response->addData('spots', $jSpots);
+    $response->addData(ParameterSet::SPOT_LIST, $jSpots);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

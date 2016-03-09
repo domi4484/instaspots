@@ -124,7 +124,7 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
 
   m_QList_QueryItems.clear();
   m_QList_QueryItems.append(qList_QueryItems);
-  m_QList_QueryItems.append(QueryItem(WebApi::R_PARAM_APPLICATION_VERSION,
+  m_QList_QueryItems.append(QueryItem(WebApi::PARAMETER::APPLICATION_VERSION,
                                       QApplication::applicationVersion()));
 
   m_Running = true;

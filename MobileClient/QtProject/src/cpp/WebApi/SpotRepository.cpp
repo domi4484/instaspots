@@ -103,14 +103,14 @@ void SpotRepository::getBy_Distance(int requestId,
                                     double maxDistance_km)
 {
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LATITUDE,        QString::number(latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_LONGITUDE,       QString::number(longitude)));
-  qList_QueryItems.append(QueryItem(WebApi::R_PARAM_MAX_DISTANCE_KM, QString::number(maxDistance_km)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(latitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DISTANCE_KM, QString::number(maxDistance_km)));
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::C_GET_SPOTS_BY_DISTANCE);
+  webApiCommand->setCommand(WebApi::COMMAND::GET_SPOTS_BY_DISTANCE);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -126,12 +126,12 @@ void SpotRepository::getBy_UserId(int requestId,
                                   int userId)
 {
     QList<QueryItem> qList_QueryItems;
-    qList_QueryItems.append(QueryItem(WebApi::R_PARAM_USER_ID,  QString::number(userId)));
+    qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USER_ID,  QString::number(userId)));
 
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
     webApiCommand->setAnswerType(WebApiCommand::JSON);
-    webApiCommand->setCommand(WebApi::C_GET_SPOTS_BY_USER_ID);
+    webApiCommand->setCommand(WebApi::COMMAND::GET_SPOTS_BY_USER_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -158,12 +158,12 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
   }
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
-  QJsonArray jsonArray_Spots = webApiCommand->resultArray(WebApi::A_ARRAY_SPOTS);
+  QJsonArray jsonArray_Spots = webApiCommand->resultArray(WebApi::PARAMETER::SPOT_LIST);
   for(int i = 0; i < jsonArray_Spots.size(); i++)
   {
     QJsonObject jsonObject_Spot = jsonArray_Spots.at(i).toObject();
 
-    int spot_id = jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_ID).toInt();
+    int spot_id = jsonObject_Spot.value(WebApi::PARAMETER::SPOT_SPOT_ID).toInt();
 
     Spot *spot = m_QMap_Spots.value(spot_id, NULL);
     if(spot == NULL)
@@ -173,13 +173,15 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
       m_QMap_Spots.insert(spot_id, spot);
     }
 
-    spot->setName       (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_NAME).toString());
-    spot->setDescription(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_DESCRIPTION).toString());
-    spot->setSecretSpot (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_SECRET_SPOT).toBool());
-    spot->setLatitude   (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LATITUDE).toDouble());
-    spot->setLongitude  (jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_LONGITUDE).toDouble());
-    spot->setPictureUrl1(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_1).toString());
-    spot->setPictureUrl2(jsonObject_Spot.value(WebApi::A_ARRAY_SPOTS_ELEMENT_PICTURE_URL_2).toString());
+    spot->setName       (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_NAME                 ).toString());
+    spot->setDescription(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_DESCRIPTION          ).toString());
+    spot->setSecretSpot (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_SECRET_SPOT          ).toBool());
+    spot->setLatitude   (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_LATITUDE             ).toDouble());
+    spot->setLongitude  (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_LONGITUDE            ).toDouble());
+    spot->setPictureUrl1(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_URL_1        ).toString());
+    spot->setPictureUrl2(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_URL_2        ).toString());
+    spot->setPictureId1 (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 ).toInt());
+    spot->setPictureId2 (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 ).toInt());
 
     // Set dinstance if available, compute it or leave it empty
     if(m_LocationManager->isValid())
