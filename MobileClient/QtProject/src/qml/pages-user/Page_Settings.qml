@@ -220,6 +220,7 @@ Item{
                     ListElement { text: "Airolo - Diga della Sella";          latitude: 46.558152; longitude: 8.595343 }
                     ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
                     ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
+                    ListElement { text: "Vaduz";                              latitude: 47.151319; longitude: 9.505557 }
                 }
                 width: 200
                 onCurrentIndexChanged:

@@ -147,5 +147,10 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/routing.yml \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml \
     ../../WebSite/Symfony/src/Instaspots/UserBundle/Entity/User.php \
-    ../../Documentation/My_Skate_Map_stralciata.kml
+    ../../Documentation/My_Skate_Map_stralciata.kml \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ApplicationHelper.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/CommandSet.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/NewsController.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/Response.php \
+    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ParameterSet.php
 

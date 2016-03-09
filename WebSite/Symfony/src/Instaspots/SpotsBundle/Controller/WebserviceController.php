@@ -7,8 +7,9 @@ use Instaspots\UserBundle\Entity\User;
 use Instaspots\SpotsBundle\Entity\Spot;
 use Instaspots\SpotsBundle\Entity\Picture;
 
-use Instaspots\SpotsBundle\Controller\Response;
 use Instaspots\SpotsBundle\Controller\ApplicationHelper;
+use Instaspots\SpotsBundle\Controller\CommandSet;
+use Instaspots\SpotsBundle\Controller\Response;
 
 // Symfony imports -------------------------
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,6 +23,9 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
+// Doctrine imports ------------------------
+use Doctrine\DBAL\DBALException;
 
 // FOS imports -----------------------------
 use FOS\UserBundle\Util\UserManipulator;
@@ -62,39 +66,39 @@ class WebserviceController extends Controller
 
     switch ($response->getCommand())
     {
-      case "login":
+      case CommandSet::LOGIN:
         $this->login($response,
                      $request->get('username'),
                      $request->get('password'));
       break;
 
-      case "logout":
+      case CommandSet::LOGOUT:
         $this->logout();
       break;
 
-      case "canregister":
+      case CommandSet::CANREGISTER:
         $this->canregister($response,
                            $request->get('username'));
       break;
 
-      case "register":
+      case CommandSet::REGISTER:
         $this->register($response,
                         $request->get('username'),
                         $request->get('password'),
                         $request->get('email'   ));
       break;
 
-      case "reportProblem":
+      case CommandSet::REPORT_PROBLEM:
         $this->reportProblem($response,
                              $request->get('reportTitle'),
                              $request->get('reportContent'));
       break;
 
-      case "getCurrentClientVersion":
+      case CommandSet::GET_CURRENT_CLIENT_VERSION:
         $this->getCurrentClientVersion($response);
       break;
 
-      case "uploadPictureToSpot":
+      case CommandSet::UPLOAD_PICTURE_TO_SPOT:
         $this->uploadPictureToSpot($response,
                                    $request->get('id_spot'  ),
                                    $request->get('latitude' ),
@@ -102,38 +106,34 @@ class WebserviceController extends Controller
                                    $request->files->get('image'));
       break;
 
-      case "uploadNewSpot":
-        $this->uploadNewSpot($response,
-                             $request->get('latitude'   ),
-                             $request->get('longitude'  ),
-                             $request->get('name'       ),
-                             $request->get('description'),
-                             $request->get('spot_secretSpot'),
-                             $request->files->get('image'));
+      case CommandSet::UPLOAD_NEW_SPOT:
+        $this->uploadNewSpot($request,
+                             $response);
       break;
 
-      case "getPicturesByNewest":
+
+      case CommandSet::GET_PICTURES_BY_NEWEST:
         $this->getPicturesByNewest($response);
       break;
 
-      case "getPicturesBySpotId":
+      case CommandSet::GET_PICTURES_BY_SPOT_ID:
         $this->getPicturesBySpotId($response,
                                    $request->get('id_spot'));
       break;
 
-      case "getPicturesByUserId":
+      case CommandSet::GET_PICTURES_BY_USER_ID:
         $this->getPicturesByUserId($response,
                                    $request->get('id_user'));
       break;
 
-      case "getSpotsByDistance":
+      case CommandSet::GET_SPOTS_BY_DISTANCE:
         $this->getSpotsByDistance($response,
                                   $request->get('latitude' ),
                                   $request->get('longitude'),
                                   $request->get('maxDistance_km'));
       break;
 
-      case "getSpotsByUserId":
+      case CommandSet::GET_SPOTS_BY_USER_ID:
         $this->getSpotsByUserId($response,
                                 $request->get('id_user'));
       break;
@@ -349,19 +349,28 @@ class WebserviceController extends Controller
   {
     $minimumClientVersion = 'V0.0.1';
 
-    // Check for valid picture
-    if(   $uploadedFile->isValid() == false
-       || $uploadedFile->getMimeType() != 'image/jpeg')
-    {
-      $response->setError('Invalid file received');
-      return;
-    }
-
     // Get current user
     $user = $this->getUser();
     if($user == null)
     {
       $response->setError('Authentication required');
+      return;
+    }
+
+    // Check location
+    if(   $latitude  == 0
+       || $longitude == 0)
+    {
+      $response->setError('Invalid location');
+      return;
+    }
+
+    // Check for valid picture
+    if(   $uploadedFile == null
+       || $uploadedFile->isValid() == false
+       || $uploadedFile->getMimeType() != 'image/jpeg')
+    {
+      $response->setError('Invalid file received');
       return;
     }
 
@@ -396,7 +405,15 @@ class WebserviceController extends Controller
     }
 
     // Flush
-    $em->flush();
+    try
+    {
+      $em->flush();
+    }
+    catch (DBALException $e)
+    {
+      $response->setError("Flush exception ".$e->getMessage());
+      return;
+    }
 
     // Move the temporarily stored file to a convenient location
     $movedFile = $uploadedFile->move($destinationDirectory, $picture->getId().'.jpg');
@@ -409,29 +426,48 @@ class WebserviceController extends Controller
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function uploadNewSpot( &$response,
-                                   $latitude,
-                                   $longitude,
-                                   $name,
-                                   $description,
-                                   $secretSpot,
-                                   UploadedFile $uploadedFile )
+  private function uploadNewSpot(  $request,
+                                  &$response )
   {
     $minimumClientVersion = 'V0.0.3';
-
-    // Check for valid picture
-    if(   $uploadedFile->isValid() == false
-       || $uploadedFile->getMimeType() != 'image/jpeg')
-    {
-      $response->setError('Invalid file received');
-      return;
-    }
-
+    
+    // Get parameters
+    $latitude    = $request->get('latitude');
+    $longitude   = $request->get('longitude');
+    $name        = $request->get('name');
+    $description = $request->get('description');
+    $secretSpot  = $request->get('spot_secretSpot');
+    $uploadedFile = $request->files->get('image');
+    
     // Get current user
     $user = $this->getUser();
     if($user == null)
     {
       $response->setError('Authentication required');
+      return;
+    }
+    
+    // Check location
+    if(   $latitude  == 0
+       || $longitude == 0)
+    {
+      $response->setError('Invalid location');
+      return;
+    }
+    
+    // Check for valid name
+    if(strlen($name) == 0)
+    {
+      $response->setError('Invalid spot name');
+      return;    
+    }
+    
+    // Check for valid picture
+    if(   $uploadedFile == null
+       || $uploadedFile->isValid() == false
+       || $uploadedFile->getMimeType() != 'image/jpeg')
+    {
+      $response->setError('Invalid file received');
       return;
     }
 
@@ -440,11 +476,7 @@ class WebserviceController extends Controller
     $spot->setName($name);
     $spot->setUser($user);
     $spot->setDescription($description);
-
-    if(ApplicationHelper::compareVersions($response->getClientVersion(), 'V0.0.3') >= 0)
-    {
-      $spot->setSecretSpot($secretSpot);
-    }
+    $spot->setSecretSpot($secretSpot);
 
     // New picture
     $picture = new Picture();
@@ -475,7 +507,15 @@ class WebserviceController extends Controller
     }
 
     // Flush
-    $em->flush();
+    try
+    {
+      $em->flush();
+    }
+    catch (DBALException $e)
+    {
+      $response->setError("Flush exception ".$e->getMessage());
+      return;
+    }
 
     // Move the temporarily stored file to a convenient location
     $movedFile = $uploadedFile->move($destinationDirectory, $picture->getId().'.jpg');

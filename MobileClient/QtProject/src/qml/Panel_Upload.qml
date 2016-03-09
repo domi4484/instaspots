@@ -97,7 +97,7 @@ Item {
                 stackView.push(page_TakeCameraPicture)
             }
             onPictureSelected: {
-                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/CropPicture.qml"),
                                 properties:{stackView        : stackView,
                                             source           : imageUrl}});
             }
