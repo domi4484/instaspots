@@ -321,7 +321,7 @@ class WebserviceController extends Controller
 
   private function getCurrentClientVersion(&$response)
   {
-    $response->addData(ParameterSet::APPLICATION_VERSION, 'V0.0.3');
+    $response->addData(ParameterSet::APPLICATION_VERSION, 'V0.0.4');
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
