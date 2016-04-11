@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName   ("Lowerspot");
     app.setOrganizationDomain ("lowerspot.com");
     app.setApplicationName    ("Lowerspot");
-    app.setApplicationVersion ("V0.0.4");
+    app.setApplicationVersion ("V0.0.5");
 
     // High dpi
     app.setAttribute(Qt::AA_EnableHighDpiScaling);

@@ -108,6 +108,7 @@ DISTFILES += \
     src/qml/pages-picture/Page_PicturesList.qml \
     src/qml/pages-spot/Page_Spot.qml \
     src/qml/pages-spot/Page_SpotsList.qml \
+    src/qml/pages-spot/Page_SpotsMap.qml \
     src/qml/pages-upload/AddNewSpot.qml \
     src/qml/pages-upload/LocationCheck.qml \
     src/qml/pages-upload/NearbySpotSelection.qml \

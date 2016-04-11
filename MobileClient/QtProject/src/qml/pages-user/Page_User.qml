@@ -103,6 +103,27 @@ Item{
                 }
             }
         }
+
+        Item {
+            id: tab_Map
+            anchors.fill: parent
+
+            // Tab widget properties
+            property string tabWidget_ButtonText: qsTr("Map")
+            property string tabWidget_ButtonIconSource: ""
+
+            Page_SpotsMap {
+                anchors.fill: parent
+                model: spotsModel
+                onSpotClicked: {
+                    stackView.push( { item       : Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
+                                      properties : { navigation_Title             : spotName,
+                                                     navigation_BackButtonVisible : true,
+                                                     stackView                    : stackView,
+                                                     spotId                       : spotId} });
+                }
+            }
+        }
     }
 
 

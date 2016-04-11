@@ -39,7 +39,6 @@ Item{
                        string spotName,
                        string spotDescription)
 
-
     // Gui ---------------------------------
 
     ListView {
