@@ -10,10 +10,11 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.0
+import QtQuick          2.5
 import QtQuick.Controls 1.2
-import QtQuick.Dialogs 1.2
-import QtPositioning 5.2
+import QtQuick.Dialogs  1.2
+import QtPositioning    5.5
+import QtLocation       5.6
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
@@ -36,8 +37,11 @@ Item{
         if(visible == false)
             return;
 
-        image_GoogleMapImage.source = hc_LocationManager.googleMapLocationPicture(image_GoogleMapImage.width,
-                                                                                  image_GoogleMapImage.height);
+        mapQuickItem_CurrentLocation.coordinate.latitude  = hc_LocationManager.latitude()
+        mapQuickItem_CurrentLocation.coordinate.longitude = hc_LocationManager.longitude()
+
+        mapQuickItem_SpotLocation.coordinate.latitude  = hc_LocationManager.latitude()
+        mapQuickItem_SpotLocation.coordinate.longitude = hc_LocationManager.longitude()
     }
 
     Connections {
@@ -50,36 +54,82 @@ Item{
             if(timeout)
                 return;
 
-            image_GoogleMapImage.source = hc_LocationManager.googleMapLocationPicture(image_GoogleMapImage.width,
-                                                                                      image_GoogleMapImage.height);
+            mapQuickItem_CurrentLocation.coordinate.latitude  = hc_LocationManager.latitude()
+            mapQuickItem_CurrentLocation.coordinate.longitude = hc_LocationManager.longitude()
         }
     }
 
+    // Map properties
+
+    Plugin {
+        id: myPlugin
+        name: "osm"
+        //specify plugin parameters if necessary
+        //PluginParameter {...}
+        //PluginParameter {...}
+        //...
+    }
 
     // Gui ---------------------------------
 
-    Image{
-        id: image_GoogleMapImage
-        width: parent.width
-        height: parent.height
-        anchors.top: parent.top
-    }
+    Map {
+        id: map
+        anchors.fill: parent
 
-    Button{
-        id: button_UpdateLocation
-        text: qsTr("Update location")
+        plugin: myPlugin;
+        center.latitude: hc_LocationManager.latitude()
+        center.longitude: hc_LocationManager.longitude()
+        zoomLevel: 6
 
-        width: parent.width / 1.1
-        anchors.top: parent.top
-        anchors.topMargin: 5
-        anchors.horizontalCenter: parent.horizontalCenter
+        MapQuickItem {
+          id: mapQuickItem_CurrentLocation
 
-        onClicked:
-        {
-            // Request location update
-            hc_LocationManager.requestLocation();
+          anchorPoint.x: image_CurrentLocation.width *0.5
+          anchorPoint.y: image_CurrentLocation.height*0.5
+
+          sourceItem:Image {
+
+              id: image_CurrentLocation;
+              width:  18
+              height: 18
+
+              SequentialAnimation {
+                  loops: Animation.Infinite
+                  running: true
+                  OpacityAnimator {
+                      target: image_CurrentLocation;
+                      from: 1;
+                      to:   0.2;
+                      duration: 1500
+                  }
+                  OpacityAnimator {
+                      target: image_CurrentLocation;
+                      from: 0.2;
+                      to:   1;
+                      duration: 1500
+                  }
+              }
+
+              source: "qrc:/icon/icon/Wheel-29x29.png"
+          }
+        }
+
+        MapQuickItem {
+          id: mapQuickItem_SpotLocation
+
+          anchorPoint.x: image_SpotLocation.width *0.5
+          anchorPoint.y: image_SpotLocation.height
+
+          sourceItem:Image {
+
+              id: image_SpotLocation;
+              width:  40
+              height: 40
+              source: "qrc:/icon/icon/find-location.png"
+          }
         }
     }
+
 
     Button{
         id: button_Continue

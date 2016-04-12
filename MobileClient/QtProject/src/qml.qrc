@@ -52,5 +52,6 @@
         <file>icon/menu.png</file>
         <file>icon/splash.png</file>
         <file>icon/dialog-question.png</file>
+        <file>icon/Wheel-29x29.png</file>
     </qresource>
 </RCC>

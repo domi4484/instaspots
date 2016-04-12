@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      11.04.2016                                        *
@@ -10,7 +10,7 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.0
+import QtQuick 2.5
 import QtPositioning 5.5
 import QtLocation 5.6
 
@@ -55,15 +55,50 @@ Item {
         anchors.fill: parent
 
         plugin: myPlugin;
-        center.latitude: hc_LocationManager.latitude()
+        center.latitude:  hc_LocationManager.latitude()
         center.longitude: hc_LocationManager.longitude()
         zoomLevel: 6
+
+        MapQuickItem {
+          id: mapQuickItem_CurrentLocation
+
+          coordinate.latitude:  hc_LocationManager.latitude()
+          coordinate.longitude: hc_LocationManager.longitude()
+
+          anchorPoint.x: image_CurrentLocation.width *0.5
+          anchorPoint.y: image_CurrentLocation.height*0.5
+
+          sourceItem:Image {
+
+              id: image_CurrentLocation;
+              width:  18
+              height: 18
+
+              SequentialAnimation {
+                  loops: Animation.Infinite
+                  running: true
+                  OpacityAnimator {
+                      target: image_CurrentLocation;
+                      from: 1;
+                      to:   0.2;
+                      duration: 1500
+                  }
+                  OpacityAnimator {
+                      target: image_CurrentLocation;
+                      from: 0.2;
+                      to:   1;
+                      duration: 1500
+                  }
+              }
+
+              source: "qrc:/icon/icon/Wheel-29x29.png"
+          }
+        }
 
         MapItemView {
             id: mapItemView
 
             delegate: MapQuickItem {
-              //  coordinate: place.location.coordinate
 
                 coordinate.latitude: role_SpotLatitude
                 coordinate.longitude:  role_SpotLongitude
@@ -72,6 +107,9 @@ Item {
                 anchorPoint.y: image.height
 
                 sourceItem: Column {
+
+                    visible: !role_SpotSecretSpot
+
                     Image {
                         id: image;
                         width:  40
@@ -87,10 +125,11 @@ Item {
                             }
                         }
                     }
-                  //  Text {
-                  //      text: role_SpotName;
-                  //      font.bold: false
-                  //  }
+                    Text {
+                        text: role_SpotName;
+                        font.bold: true
+                        visible: map.zoomLevel > 16
+                    }
                 }
             }
         }

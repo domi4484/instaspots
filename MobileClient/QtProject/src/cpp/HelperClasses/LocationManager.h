@@ -50,9 +50,6 @@ public slots:
   qreal computeDistance(const QPointF &point1,
                         const QPointF &point2);
 
-  QString googleMapLocationPicture(int width,
-                                   int height);
-
   void openLocationOnNativeMapsApp(double latitude,
                                    double longitude,
                                    const QString &label = "");
