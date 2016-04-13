@@ -77,9 +77,9 @@ Item{
         anchors.fill: parent
 
         plugin: myPlugin;
-        center.latitude: hc_LocationManager.latitude()
+        center.latitude:  hc_LocationManager.latitude()
         center.longitude: hc_LocationManager.longitude()
-        zoomLevel: 6
+        zoomLevel: 18
 
         MapQuickItem {
           id: mapQuickItem_CurrentLocation

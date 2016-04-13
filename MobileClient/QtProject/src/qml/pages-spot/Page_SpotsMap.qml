@@ -42,10 +42,6 @@ Item {
     Plugin {
         id: myPlugin
         name: "osm"
-        //specify plugin parameters if necessary
-        //PluginParameter {...}
-        //PluginParameter {...}
-        //...
     }
 
     // Gui ---------------------------------
@@ -128,7 +124,7 @@ Item {
                     Text {
                         text: role_SpotName;
                         font.bold: true
-                        visible: map.zoomLevel > 16
+                        visible: map.zoomLevel > 15
                     }
                 }
             }
