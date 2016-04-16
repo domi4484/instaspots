@@ -21,6 +21,9 @@ QT += qml quick widgets positioning multimedia
 
 CONFIG   += console debug
 
+# Hight dpi support
+QT_AUTO_SCREEN_SCALE_FACTOR=1
+
 # Android specific
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
@@ -127,6 +130,7 @@ DISTFILES += \
     src/qml/widgets/TabWidgetTop.qml \
     src/qml/pages-picture/Page_Picture.qml \
     src/qml/component/Component_PicturesGrid.qml \
+    src/qml/component/Component_CurrentLocationIndicator.qml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/gradlew.bat \

@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion ("V0.0.5");
 
     // High dpi
-    app.setAttribute(Qt::AA_EnableHighDpiScaling);
+    //app.setAttribute(Qt::AA_EnableHighDpiScaling);
 
     // Command line arguments
     QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();

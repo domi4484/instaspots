@@ -42,6 +42,7 @@
         <file>qml/TabWidgetBottom_Main.qml</file>
         <file>qml/pages-user/Page_Settings_ReportProblem.qml</file>
         <file>qml/pages-spot/Page_SpotsMap.qml</file>
+        <file>qml/component/Component_CurrentLocationIndicator.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

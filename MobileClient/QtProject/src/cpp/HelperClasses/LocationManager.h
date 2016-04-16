@@ -23,6 +23,9 @@ class PlateformDetail;
 class LocationManager : public QObject
 {
   Q_OBJECT
+
+  Q_PROPERTY(QGeoCoordinate coordinate  READ coordinate  NOTIFY signal_Coordinate_changed )
+
 public:
   explicit LocationManager(Settings *settings,
                            PlateformDetail *plateformDetail,
@@ -35,6 +38,8 @@ signals:
 
   void signal_RequestLocation();
 
+  void signal_Coordinate_changed();
+
 public slots:
 
   void setFakePosition(double latitude,
@@ -46,6 +51,8 @@ public slots:
 
   double latitude();
   double longitude();
+
+  QGeoCoordinate coordinate();
 
   qreal computeDistance(const QPointF &point1,
                         const QPointF &point2);
@@ -72,6 +79,8 @@ private:
 
   double m_Latitude;
   double m_Longitude;
+
+  QGeoCoordinate m_QGeoCoordinate;
 
 };
 
