@@ -101,6 +101,7 @@ int main(int argc, char *argv[])
     // Set and save settings
     settings.set_Application_LastVersion(app.applicationVersion());
     settings.set_Logger_LogLevel(Logger::instance()->getLogLevel());
+    settings.set_Location_LastCoordinate(locationManager.coordinate());
     settings.sync();
 
     Logger::destroy();

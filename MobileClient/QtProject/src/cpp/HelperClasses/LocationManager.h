@@ -77,11 +77,7 @@ private:
 
   bool m_Valid;
 
-  double m_Latitude;
-  double m_Longitude;
-
   QGeoCoordinate m_QGeoCoordinate;
-
 };
 
 #endif // LOCATIONMANAGER_H

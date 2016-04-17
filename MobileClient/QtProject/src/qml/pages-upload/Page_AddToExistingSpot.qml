@@ -39,6 +39,12 @@ Item{
 
     // Connections -------------------------
 
+
+    Component.onCompleted: {
+        text_SpotName.text    = wa_PictureUploader.name();
+        text_Description.text = wa_PictureUploader.description();
+    }
+
     Connections{
         target: wa_PictureUploader
         onSignal_UploadFinished:
@@ -63,14 +69,6 @@ Item{
             panel_Home.tabWidget_CurrentTabReclicked();
 
             wa_PictureUploader.resetDefaults()
-        }
-    }
-
-    onVisibleChanged: {
-        if(visible)
-        {
-            text_SpotName.text = wa_PictureUploader.name();
-            text_Description.text = wa_PictureUploader.description();
         }
     }
 

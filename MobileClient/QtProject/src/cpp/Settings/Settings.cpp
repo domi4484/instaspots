@@ -140,35 +140,23 @@ bool Settings::get_User_LoggedIn()
 
 void Settings::set_User_LoggedIn(bool loggedIn)
 {
-  QSettings::setValue(USER_LOGGED_IN, loggedIn);
+    QSettings::setValue(USER_LOGGED_IN, loggedIn);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-double Settings::get_Location_LastLatitude()
+QGeoCoordinate Settings::get_Location_LastCoordinate() const
 {
-  return QSettings::value(LOCATION_LAST_LATITUDE, 0.0).toDouble();
+  return QGeoCoordinate(QSettings::value(LOCATION_LAST_LATITUDE,  0.0).toDouble(),
+                        QSettings::value(LOCATION_LAST_LONGITUDE, 0.0).toDouble());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::set_Location_LastLatitude(double latitude)
+void Settings::set_Location_LastCoordinate(const QGeoCoordinate &coordinate)
 {
-  QSettings::setValue(LOCATION_LAST_LATITUDE, latitude);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-double Settings::get_Location_LastLongitude()
-{
-  return QSettings::value(LOCATION_LAST_LONGITUDE, 0.0).toDouble();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Settings::set_Location_LastLongitude(double longitude)
-{
-    QSettings::setValue(LOCATION_LAST_LONGITUDE, longitude);
+  QSettings::setValue(LOCATION_LAST_LATITUDE,  coordinate.latitude());
+  QSettings::setValue(LOCATION_LAST_LONGITUDE, coordinate.longitude());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

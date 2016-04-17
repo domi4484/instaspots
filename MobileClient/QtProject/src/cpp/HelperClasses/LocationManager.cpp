@@ -31,8 +31,7 @@ LocationManager::LocationManager(Settings *settings,
     m_PlateformDetail(plateformDetail),
 //    m_GeoPositionInfoSource(NULL),
     m_Valid(false),
-    m_Latitude(0.0),
-    m_Longitude(0.0)
+    m_QGeoCoordinate()
 {
 //  m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
 
@@ -54,15 +53,13 @@ LocationManager::LocationManager(Settings *settings,
 //            SLOT(slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error)));
 //  }
 
-  m_Latitude  = m_Settings->get_Location_LastLatitude();
-  m_Longitude = m_Settings->get_Location_LastLongitude();
+  m_QGeoCoordinate = m_Settings->get_Location_LastCoordinate();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 LocationManager::~LocationManager()
 {
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -72,8 +69,8 @@ void LocationManager::setFakePosition(double latitude,
 {
   m_Valid = true;
 
-  m_Latitude  = latitude;
-  m_Longitude = longitude;
+  m_QGeoCoordinate.setLatitude (latitude);
+  m_QGeoCoordinate.setLongitude(longitude);
 
   emit update(false);
   emit signal_Coordinate_changed();
@@ -106,22 +103,21 @@ bool LocationManager::isValid()
 
 double LocationManager::latitude()
 {
-  return m_Latitude;
+  return m_QGeoCoordinate.latitude();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 double LocationManager::longitude()
 {
-  return m_Longitude;
+  return m_QGeoCoordinate.longitude();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 QGeoCoordinate LocationManager::coordinate()
 {
-  return QGeoCoordinate(m_Latitude,
-                        m_Longitude);
+  return m_QGeoCoordinate;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -171,11 +167,7 @@ void LocationManager::slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInf
 {
   m_Valid = true;
 
-  m_Latitude  = geo_position_info.coordinate().latitude();
-  m_Longitude = geo_position_info.coordinate().longitude();
-
-  m_Settings->set_Location_LastLatitude(m_Latitude);
-  m_Settings->set_Location_LastLongitude(m_Longitude);
+  m_QGeoCoordinate = geo_position_info.coordinate();
 
   emit signal_Coordinate_changed();
 }

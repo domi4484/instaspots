@@ -19,6 +19,7 @@
 #include "../External/SimpleCrypt.h"
 
 // Qt includes -----------------------------
+#include <QGeoCoordinate>
 #include <QSettings>
 
 class Settings : public QSettings
@@ -71,10 +72,8 @@ public slots:
   void    set_User_LoggedIn (bool loggedIn);
 
   // Location settings
-  double  get_Location_LastLatitude ();
-  void    set_Location_LastLatitude (double latitude);
-  double  get_Location_LastLongitude ();
-  void    set_Location_LastLongitude (double longitude);
+  QGeoCoordinate  get_Location_LastCoordinate () const;
+  void            set_Location_LastCoordinate (const QGeoCoordinate &coordinate);
 
   // One time help settings
   bool get_HelpGotIt_UploadNewPictureSecretSpot();
