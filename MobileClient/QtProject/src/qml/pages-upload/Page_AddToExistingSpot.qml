@@ -36,12 +36,6 @@ Item{
         title: qsTr('Upload error')
     }
 
-    MessageDialog{
-        id: messageDialog_UploadSuccessful
-        title: qsTr('Upload successfull')
-        text: qsTr('Picture succesfully uploaded')
-    }
-
 
     // Connections -------------------------
 
@@ -63,8 +57,7 @@ Item{
                 return;
             }
 
-            messageDialog_UploadSuccessful.visible = true;
-
+            // Change view to Home
             stackView.pop(page_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
             panel_Home.tabWidget_CurrentTabReclicked();
