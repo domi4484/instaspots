@@ -26,21 +26,11 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 qsTr("Location")
+    property string navigation_Title:                 qsTr("Spot location")
     property bool   navigation_BackButtonVisible:     true
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
 
-
-    // Slots -------------------------------
-
-    onVisibleChanged: {
-        if(visible == false)
-            return;
-
-        mapQuickItem_SpotLocation.coordinate.latitude  = hc_LocationManager.latitude()
-        mapQuickItem_SpotLocation.coordinate.longitude = hc_LocationManager.longitude()
-    }
 
     // Map properties
 
@@ -56,9 +46,21 @@ Item{
         anchors.fill: parent
 
         plugin: myPlugin;
-        center.latitude:  hc_LocationManager.latitude()
-        center.longitude: hc_LocationManager.longitude()
         zoomLevel: 18
+
+        Component.onCompleted: {
+            center = hc_LocationManager.coordinate
+
+            mapQuickItem_SpotLocation.coordinate.latitude  = hc_LocationManager.latitude()
+            mapQuickItem_SpotLocation.coordinate.longitude = hc_LocationManager.longitude()
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                mapQuickItem_SpotLocation.coordinate = map.toCoordinate(Qt.point(mouseX, mouseY), false);
+            }
+        }
 
         Component_CurrentLocationIndicator {
         }
@@ -90,24 +92,9 @@ Item{
         anchors.horizontalCenter: parent.horizontalCenter
 
         onClicked: {
-            if(hc_LocationManager.isValid() === false)
-            {
-                messageDialog_LocationError.visible = true;
-            }
-
-            wa_PictureUploader.setPosition(hc_LocationManager.latitude(),
-                                           hc_LocationManager.longitude());
+            wa_PictureUploader.coordinate = mapQuickItem_SpotLocation.coordinate;
             stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/NearbySpotSelection.qml"),
                             properties:{stackView        : stackView}});
         }
-    }
-
-
-    // Message boxes -----------------------
-
-    MessageDialog{
-        id: messageDialog_LocationError
-        title: qsTr('Location error')
-        text: qsTr('Can\'t determine your current location in a precise way.')
     }
 }

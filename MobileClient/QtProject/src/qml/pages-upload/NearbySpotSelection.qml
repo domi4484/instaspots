@@ -37,22 +37,6 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
-    // Connections -------------------------
-
-    onVisibleChanged: {
-        if(visible == false)
-        {
-            return;
-        }
-
-        console.log("nearbySpotModel.setLocation")
-
-        spotsModel.setLocation(hc_LocationManager.latitude(),
-                               hc_LocationManager.longitude(),
-                               4);
-    }
-
-
     // Gui ---------------------------------
 
     Button{
@@ -79,6 +63,13 @@ Item{
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
         model: spotsModel
+
+        Component.onCompleted: {
+            spotsModel.setLocation(wa_PictureUploader.coordinate.latitude,
+                                   wa_PictureUploader.coordinate.longitude,
+                                   2);
+        }
+
         onSpotClicked: {
             wa_PictureUploader.setNewSpot(false);
             wa_PictureUploader.setExistingSpotId(spotId);

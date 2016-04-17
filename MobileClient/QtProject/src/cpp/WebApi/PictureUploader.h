@@ -17,6 +17,7 @@
 #include "WebApiCommand.h"
 
 // Qt includes -----------------------------
+#include <QGeoCoordinate>
 #include <QPixmap>
 
 class PictureUploader : public QObject
@@ -24,9 +25,17 @@ class PictureUploader : public QObject
 
   Q_OBJECT
 
+  Q_PROPERTY(QGeoCoordinate coordinate  READ coordinate WRITE setCoordinate NOTIFY signal_Coordinate_changed )
+
 public:
 
   explicit PictureUploader(QObject *parent = 0);
+  virtual ~PictureUploader();
+
+  QGeoCoordinate coordinate() const;
+
+  void setCoordinate(const QGeoCoordinate &coordinate);
+
 
 public slots:
 
@@ -49,8 +58,6 @@ public slots:
   void setName(const QString &title);
   void setDescription(const QString &description);
   void setSecretSpot(bool secretSpot);
-  void setPosition(float latitude,
-                   float longitude);
   void setExistingSpotId(int spotId);
 
   bool execute();
@@ -59,6 +66,8 @@ public slots:
 signals:
 
   void signal_UploadFinished(bool success);
+
+  void signal_Coordinate_changed();
 
 private slots:
 
@@ -72,8 +81,7 @@ private:
   QString m_Command;
   QPixmap m_Pixmap;
 
-  float   m_Latitude;
-  float   m_Longitude;
+  QGeoCoordinate m_QGeoCoordinate;
 
   int m_SpotId;
 

@@ -28,8 +28,7 @@ PictureUploader::PictureUploader(QObject *parent) :
   m_LastErrorText                    (),
   m_Command                          (WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT),
   m_Pixmap                           (),
-  m_Latitude                         (0),
-  m_Longitude                        (0),
+  m_QGeoCoordinate                   (),
   m_SpotId                           (-1),
   m_Name                             (),
   m_Description                      (),
@@ -48,6 +47,27 @@ PictureUploader::PictureUploader(QObject *parent) :
   connect(&m_WebApiCommand_UploadPictureToSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadPictureToSpot_Finished(const WebApiError &)));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+PictureUploader::~PictureUploader()
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QGeoCoordinate PictureUploader::coordinate() const
+{
+    return m_QGeoCoordinate;
+}
+
+void PictureUploader::setCoordinate(const QGeoCoordinate &coordinate)
+{
+  m_QGeoCoordinate = coordinate;
+
+  emit signal_Coordinate_changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -186,15 +206,6 @@ void PictureUploader::setSecretSpot(bool secretSpot)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PictureUploader::setPosition(float latitude,
-                                  float longitude)
-{
-  m_Latitude = latitude;
-  m_Longitude = longitude;
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void PictureUploader::setExistingSpotId(int spotId)
 {
   m_SpotId = spotId;
@@ -220,12 +231,14 @@ bool PictureUploader::execute()
 
 void PictureUploader::resetDefaults()
 {
-  m_Latitude    = 0;
-  m_Longitude   = 0;
+  m_QGeoCoordinate.setLatitude (0.0);
+  m_QGeoCoordinate.setLongitude(0.0);
   m_SpotId      = -1;
   m_Name        = "";
   m_Description = "";
   m_SecretSpot  = false;
+
+  emit signal_Coordinate_changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -287,8 +300,8 @@ bool PictureUploader::uploadNewSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_NAME,        m_Name));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DESCRIPTION, m_Description));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SECRET_SPOT, QString::number(m_SecretSpot)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(m_Latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_Longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(m_QGeoCoordinate.latitude())));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_QGeoCoordinate.longitude())));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
@@ -333,8 +346,8 @@ bool PictureUploader::uploadPictureToSpot()
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_SPOT_ID,   QString::number(m_SpotId)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LATITUDE,  QString::number(m_Latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_Longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LATITUDE,  QString::number(m_QGeoCoordinate.latitude())));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_QGeoCoordinate.longitude())));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
