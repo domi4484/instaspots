@@ -69,12 +69,12 @@ Item {
         }
     }
 
-    Rectangle {
-        anchors.fill: parent
+//    Rectangle {
+//        anchors.fill: parent
 
-        radius: 2
-        color: "transparent"
-        border.width: 1
-        border.color: "white"
-    }
+//        radius: 2
+//        color: "transparent"
+//        border.width: 1
+//        border.color: "white"
+//    }
 }

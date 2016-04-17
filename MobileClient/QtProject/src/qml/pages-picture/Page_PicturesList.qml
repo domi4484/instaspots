@@ -56,6 +56,7 @@ Item{
         id: listView
         anchors.fill: parent
         model: picturesModel
+
         delegate: SpotViewDelegate{
 
             onUserClicked: {

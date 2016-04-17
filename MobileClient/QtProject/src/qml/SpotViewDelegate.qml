@@ -6,11 +6,13 @@ import QtQuick.Controls 1.0
 // Project qml imports ---------------------
 import "qrc:/qml/widgets"
 
-Item {
+Rectangle {
     id: root
     width: parent.width
     height:   rectangle_Top.height
             + image_Picture.height
+            + 15
+
 
     signal userClicked
     signal spotClicked
@@ -19,16 +21,15 @@ Item {
         id: rectangle_Top
 
         anchors.top: parent.top
-        width: parent.width
-        height: 40
+        width: parent.width - 8
+        x: 4
 
-        color: hc_Application.color_BackgroundTitleRectangle()
+        height: text_Username.height * 2
 
         // Username
         Text{
             id: text_Username
             width: parent.width / 2
-            height: parent.height / 2
 
             text:      role_UserUsername
             color:     hc_Application.color_TextLink()
@@ -47,7 +48,7 @@ Item {
             anchors.top: parent.top
             anchors.left: text_Username.right
             width: text_Username.width
-            height: text_Username.height
+
             horizontalAlignment: Text.AlignRight
 
             text: role_PictureCreated
@@ -58,16 +59,25 @@ Item {
             id: text_SpotName
             anchors.top: text_Username.bottom
             width: parent.width
-            height: text_Username.height
+
             horizontalAlignment: Text.AlignHCenter
 
-            text: role_SpotName
+            text:  role_SpotName
+            color: hc_Application.color_TextLink()
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    spotClicked();
+                }
+            }
         }
     }
 
     // Picture
     CachedPicture {
         id: image_Picture
+
         anchors.top: rectangle_Top.bottom
         width: parent.width
         height: width
