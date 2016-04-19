@@ -1,6 +1,7 @@
 
 // Qt imports ------------------------------
 import QtQuick 2.0
+import QtQuick.Window 2.0
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
@@ -61,7 +62,8 @@ Item {
         Repeater {
             model: stack.children.length
             delegate: TabButton {
-                width: tabWidgetBottom.width / stack.children.length; height: 36
+                width: tabWidgetBottom.width / stack.children.length;
+                height: 30 * hc_Application.dip
                 iconSource: stack.children[index].tabWidget_ButtonIconSource
                 buttonText: stack.children[index].tabWidget_ButtonText
 

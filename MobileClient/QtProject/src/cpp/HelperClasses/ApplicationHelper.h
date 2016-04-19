@@ -28,17 +28,25 @@ class ApplicationHelper : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(double dip READ dip WRITE setDip NOTIFY signal_Dip_Changed)
+
 public:
   explicit ApplicationHelper(Settings *settings,
                              PlateformDetail *plateformDetail,
                              QObject *parent = 0);
   ~ApplicationHelper();
 
+  int dip();
+
+  void setDip(int dip);
+
 signals:
 
   void signal_NewClientVersionAvailable();
 
   void signal_DevelopmentMode_Changed(bool developmentMode);
+
+  void signal_Dip_Changed();
 
 public slots:
 

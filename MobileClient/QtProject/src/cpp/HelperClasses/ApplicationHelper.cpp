@@ -19,9 +19,10 @@
 #include "../WebApi/WebApi.h"
 
 // Qt includes -----------------------------
-#include <QDebug>
 #include <QApplication>
+#include <QDebug>
 #include <QRegularExpression>
+#include <QScreen>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -42,6 +43,9 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
                                                             .arg(version())
                                                             .arg(buildTimestamp())
                                                             .arg(m_PlateformDetail->name()));
+
+  // Log phisical dpi
+  Logger::info(QString::number(QApplication::screens().at(0)->physicalDotsPerInch()));
 
   // Check if newer version was installed
   if(m_Settings->get_Application_LastVersion() != QApplication::applicationVersion())
@@ -70,6 +74,17 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
 ApplicationHelper::~ApplicationHelper()
 {
 
+}
+
+int ApplicationHelper::dip()
+{
+  return QApplication::screens().at(0)->physicalDotsPerInch() / 108.0;
+}
+
+void ApplicationHelper::setDip(int dip)
+{
+
+  emit signal_Dip_Changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

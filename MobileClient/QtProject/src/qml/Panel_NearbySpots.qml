@@ -67,7 +67,6 @@ Item {
 
         anchors.top: parent.top
         width:       parent.width
-        height:      40
 
         title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
         backButtonVisible     : stackView.depth > 1
