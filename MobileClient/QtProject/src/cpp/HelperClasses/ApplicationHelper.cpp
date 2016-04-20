@@ -46,9 +46,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
                                                             .arg(buildTimestamp())
                                                             .arg(m_PlateformDetail->name()));
 
-  // Log phisical dpi
-  Logger::info(QString::number(QApplication::screens().at(0)->physicalDotsPerInch()));
-
+  // Dip scale factor
   double dipNorm;
   switch(m_PlateformDetail->getOS())
   {
@@ -65,10 +63,12 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
       dipNorm = 160.0;
     break;
   }
-
   QScreen *screen = qApp->primaryScreen();
-//  setDip(screen->physicalDotsPerInch() / screen->devicePixelRatio() / dipNorm);
-  setDip(screen->physicalDotsPerInch() / 108.0);
+  //double dip = screen->physicalDotsPerInch() / screen->devicePixelRatio() / dipNorm;
+  double dip = screen->physicalDotsPerInch() / 108.0;
+  if(dip <= 1.0)
+    dip = 1.0;
+  setDip(dip);
 
   // Check if newer version was installed
   if(m_Settings->get_Application_LastVersion() != QApplication::applicationVersion())
