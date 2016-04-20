@@ -16,7 +16,7 @@
 
 PlateformDetail::PlateformDetail(QObject *parent) :
   QObject(parent),
-  m_Os(OS_OTHER)
+  m_Os(OS_DESKTOP)
 {
 #ifdef Q_OS_ANDROID
   m_Os = OS_ANDROID;
@@ -47,7 +47,7 @@ PlateformDetail::OS PlateformDetail::getOS() const
 
 bool PlateformDetail::isMobile()
 {
-  return m_Os != OS_OTHER;
+  return m_Os != OS_DESKTOP;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ QString PlateformDetail::name()
   case OS_WINPHONE:
     return "Windows phone";
   break;
-  case OS_OTHER:
+  case OS_DESKTOP:
     return "Desktop";
   break;
   }

@@ -90,6 +90,9 @@ private:
   // Link to PlateformDetail
   PlateformDetail *m_PlateformDetail;
 
+  // Dip Scale Factor
+  double m_DipScaleFactor;
+
   // Version
   QString       m_CurrentClientVersion;
   WebApiCommand m_WebApiCommand_GetCurrentClientVersion;

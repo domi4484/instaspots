@@ -26,11 +26,13 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *plateformDetail,
+ApplicationHelper::ApplicationHelper(Settings *settings,
+                                     PlateformDetail *plateformDetail,
                                      QObject *parent)
   : QObject(parent),
     m_Settings(settings),
     m_PlateformDetail(plateformDetail),
+    m_DipScaleFactor(),
     m_CurrentClientVersion(),
     m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false),
@@ -46,6 +48,27 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
 
   // Log phisical dpi
   Logger::info(QString::number(QApplication::screens().at(0)->physicalDotsPerInch()));
+
+  double dipNorm;
+  switch(m_PlateformDetail->getOS())
+  {
+    case PlateformDetail::OS_DESKTOP:
+      dipNorm = 96.0;
+    break;
+    case PlateformDetail::OS_ANDROID:
+      dipNorm = 160.0;
+    break;
+    case PlateformDetail::OS_IOS:
+      dipNorm = 160.0;
+    break;
+    case PlateformDetail::OS_WINPHONE:
+      dipNorm = 160.0;
+    break;
+  }
+
+  QScreen *screen = qApp->primaryScreen();
+//  setDip(screen->physicalDotsPerInch() / screen->devicePixelRatio() / dipNorm);
+  setDip(screen->physicalDotsPerInch() / 108.0);
 
   // Check if newer version was installed
   if(m_Settings->get_Application_LastVersion() != QApplication::applicationVersion())
@@ -76,13 +99,18 @@ ApplicationHelper::~ApplicationHelper()
 
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
 int ApplicationHelper::dip()
 {
-  return QApplication::screens().at(0)->physicalDotsPerInch() / 108.0;
+  return m_DipScaleFactor;
 }
 
-void ApplicationHelper::setDip(int dip)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::setDip(int dipScaleFactor)
 {
+  m_DipScaleFactor = dipScaleFactor;
 
   emit signal_Dip_Changed();
 }

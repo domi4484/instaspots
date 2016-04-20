@@ -16,7 +16,6 @@ Rectangle {
     signal continueClicked
     signal menuClicked
 
-    height: text_Title.height * 2
     z: 2 // so flickable doesn't draw on top
 
 

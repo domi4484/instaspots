@@ -25,7 +25,7 @@ public:
     OS_ANDROID,
     OS_IOS,
     OS_WINPHONE,
-    OS_OTHER
+    OS_DESKTOP
   };
 
   explicit PlateformDetail(QObject *parent = 0);

@@ -48,6 +48,7 @@ Item {
         id: navigator
 
         anchors.top: parent.top
+        height:      30 * hc_Application.dip
         width:       parent.width
 
         title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
