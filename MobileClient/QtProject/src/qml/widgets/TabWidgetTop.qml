@@ -51,7 +51,8 @@ Item {
         Repeater {
             model: stack.children.length
             delegate: TabButton {
-                width: tabWidgetTop.width / stack.children.length; height: 36
+                width:  tabWidgetTop.width / stack.children.length;
+                height: 30 * hc_Application.dip
                 iconSource: stack.children[index].tabWidget_ButtonIconSource
                 buttonText: stack.children[index].tabWidget_ButtonText
 

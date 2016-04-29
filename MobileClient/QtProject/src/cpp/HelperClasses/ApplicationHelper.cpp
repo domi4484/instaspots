@@ -19,17 +19,20 @@
 #include "../WebApi/WebApi.h"
 
 // Qt includes -----------------------------
-#include <QDebug>
 #include <QApplication>
+#include <QDebug>
 #include <QRegularExpression>
+#include <QScreen>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *plateformDetail,
+ApplicationHelper::ApplicationHelper(Settings *settings,
+                                     PlateformDetail *plateformDetail,
                                      QObject *parent)
   : QObject(parent),
     m_Settings(settings),
     m_PlateformDetail(plateformDetail),
+    m_DipScaleFactor(),
     m_CurrentClientVersion(),
     m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false),
@@ -42,6 +45,30 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
                                                             .arg(version())
                                                             .arg(buildTimestamp())
                                                             .arg(m_PlateformDetail->name()));
+
+  // Dip scale factor
+  double dipNorm;
+  switch(m_PlateformDetail->getOS())
+  {
+    case PlateformDetail::OS_DESKTOP:
+      dipNorm = 96.0;
+    break;
+    case PlateformDetail::OS_ANDROID:
+      dipNorm = 160.0;
+    break;
+    case PlateformDetail::OS_IOS:
+      dipNorm = 160.0;
+    break;
+    case PlateformDetail::OS_WINPHONE:
+      dipNorm = 160.0;
+    break;
+  }
+  QScreen *screen = qApp->primaryScreen();
+  //double dip = screen->physicalDotsPerInch() / screen->devicePixelRatio() / dipNorm;
+  double dip = screen->physicalDotsPerInch() / 108.0;
+  if(dip <= 1.0)
+    dip = 1.0;
+  setDip(dip);
 
   // Check if newer version was installed
   if(m_Settings->get_Application_LastVersion() != QApplication::applicationVersion())
@@ -70,6 +97,22 @@ ApplicationHelper::ApplicationHelper(Settings *settings, PlateformDetail *platef
 ApplicationHelper::~ApplicationHelper()
 {
 
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int ApplicationHelper::dip()
+{
+  return m_DipScaleFactor;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::setDip(int dipScaleFactor)
+{
+  m_DipScaleFactor = dipScaleFactor;
+
+  emit signal_Dip_Changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

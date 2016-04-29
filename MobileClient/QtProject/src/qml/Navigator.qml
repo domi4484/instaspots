@@ -18,6 +18,7 @@ Rectangle {
 
     z: 2 // so flickable doesn't draw on top
 
+
     color: (   mouseBack.pressed
             || mouseContinue.pressed
             || mouseMenu.pressed      ) ? Qt.lighter(hc_Application.color_BackgroundNavigator(), 1.2)

@@ -28,8 +28,8 @@ Item {
         id: navigator
 
         anchors.top: parent.top
+        height:      30 * hc_Application.dip
         width:       parent.width
-        height:      40
 
         title                 : (stackView.currentItem != null) ? stackView.currentItem.navigation_Title                 : "";
         backButtonVisible     : stackView.depth > 1
