@@ -21,7 +21,7 @@ QT += qml quick widgets positioning multimedia
 
 CONFIG   += console debug
 
-# Hight dpi support
+# Hight dpi support off
 QT_AUTO_SCREEN_SCALE_FACTOR=1
 
 # Android specific
@@ -61,7 +61,8 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/PictureRepository.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
     src/cpp/WebApi/SpotsModel.cpp \
-    src/cpp/External/SimpleCrypt.cpp
+    src/cpp/External/SimpleCrypt.cpp \
+    src/cpp/HelperClasses/Application.cpp
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
@@ -84,7 +85,8 @@ HEADERS += \
     src/cpp/WebApi/PictureRepository.h \
     src/cpp/WebApi/PicturesModel.h \
     src/cpp/WebApi/SpotsModel.h \
-    src/cpp/External/SimpleCrypt.h
+    src/cpp/External/SimpleCrypt.h \
+    src/cpp/HelperClasses/Application.h
 
 RESOURCES += src/qml.qrc
 

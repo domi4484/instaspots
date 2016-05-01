@@ -31,7 +31,7 @@
 // Location of the web service
 //const QString WebApi::URL_DEVELOPMENT ("http://localhost/Symfony/web/app_dev.php/webservice");
 const QString WebApi::URL_DEVELOPMENT ("http://127.0.0.1:8000/webservice/webservice/");
-const QString WebApi::URL_PRODUCTION  ("http://spots.lowerclassclothing.com/web/webservice");
+const QString WebApi::URL_PRODUCTION  ("https://lowerspot.com/web/webservice");
 
 
 const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");

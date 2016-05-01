@@ -6,7 +6,7 @@
 #
 
 # Webservice URL
-WEBSERVICE_URL='http://spots.lowerclassclothing.com/web/webservice'
+WEBSERVICE_URL='http://lowerspot.com/web/webservice'
 
 # Post command
 POST_COMMAND="http --session mySession -f POST $WEBSERVICE_URL"

@@ -241,7 +241,7 @@ class Picture
 
     public function getUrl()
     {
-      return sprintf('http://spots.lowerclassclothing.com/web/pictures/%s/%s.jpg',
+      return sprintf('https://lowerspot.com/web/pictures/%s/%s.jpg',
                      $this->created->format('Y/m/d'),
                      $this->id);
     }

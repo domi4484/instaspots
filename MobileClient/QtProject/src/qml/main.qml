@@ -80,7 +80,7 @@ ApplicationWindow {
     MessageDialog{
         id: messageDialog_NewClientVersionAvailable
         title: qsTr('New version out!')
-        text: qsTr('There is a new Lowerspot app version available for download! Get it on lowerclassclothing.com!')
+        text: qsTr('There is a new Lowerspot app version available for download! Get it on lowerspot.com!')
 
         onAccepted:
         {

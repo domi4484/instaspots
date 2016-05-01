@@ -301,8 +301,8 @@ class WebserviceController extends Controller
     $password = '4qpSLQxy';
     $issue = array (
                     'category'    =>"General",
-                    'summary'     => "### Report title ### ".$reportTitle,
-                    'description' => "### Report content ###\n".$reportContent,
+                    'summary'     => "### ".$reportTitle,
+                    'description' => $reportTitle."\n\n### Report content ###\n".$reportContent,
                     'project'     =>array('id'=>1)
                     );
 

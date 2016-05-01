@@ -25,7 +25,7 @@ class NewsController extends Controller
   {
     $listPlatforms = array(
       array('title' => 'Android', 'link' => 'link'),
-      array('title' => 'Source',  'link' => 'https://github.com/domi4484/instaspots')
+      array('title' => 'Source',  'link' => 'https://github.com/domi4484/lowerspot')
     );
 
     return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig',
