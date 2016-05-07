@@ -42,6 +42,7 @@ signals:
 
 public slots:
 
+  void setFakePosition(const QGeoCoordinate &qGeoCoordinate);
   void setFakePosition(double latitude,
                        double longitude);
 
@@ -73,7 +74,7 @@ private:
   // Link to PlateformDetail
   PlateformDetail *m_PlateformDetail;
 
-//  QGeoPositionInfoSource *m_GeoPositionInfoSource;
+  QGeoPositionInfoSource *m_GeoPositionInfoSource;
 
   bool m_Valid;
 

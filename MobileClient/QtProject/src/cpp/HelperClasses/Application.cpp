@@ -106,9 +106,13 @@ Application::Application(int argc, char *argv[]) :
   qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
   qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
 
-  Logger::info("Load main.qml...");
-  m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
+  QObject::connect(m_QQmlApplicationEngine,
+                   SIGNAL(objectCreated(QObject*,QUrl)),
+                   SLOT(slot_QmlApplicationEngine_objectCreated(QObject*,QUrl)));
 
+  QTimer::singleShot(0.0,
+                     this,
+                     SLOT(slot_LoadQml()));
 
 }
 
@@ -136,6 +140,27 @@ Application::~Application()
   Logger::destroy();
   SpotRepository::destroy();
   PictureRepository::destroy();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::slot_LoadQml()
+{
+  Logger::info("Load main.qml...");
+  m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
+{
+  m_ApplicationHelper->startupTimerStop();
+
+  // Try to login
+  m_User->login();
+
+  // Check newer version
+  m_ApplicationHelper->checkCurrentClientVersion();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

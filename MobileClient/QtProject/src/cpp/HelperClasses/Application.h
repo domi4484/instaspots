@@ -14,6 +14,7 @@
 
 // Qt includes -----------------------------
 #include <QApplication>
+#include <QUrl>
 
 // Forward declarations --------------------
 class Settings;
@@ -33,6 +34,11 @@ public:
   explicit Application(int argc,
                        char *argv[]);
   ~Application();
+
+private slots:
+
+  void slot_LoadQml();
+  void slot_QmlApplicationEngine_objectCreated(QObject*, QUrl);
 
 private:
 

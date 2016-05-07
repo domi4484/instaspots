@@ -217,29 +217,28 @@ Item{
                     id: comboBox_Locations_Items
                     ListElement { text: "GPS Location";                       latitude: 0;         longitude: 0        }
                     ListElement { text: "Custom Location";                    latitude: 0;         longitude: 0        }
-                    ListElement { text: "Airolo - Diga della Sella";          latitude: 46.558152; longitude: 8.595343 }
                     ListElement { text: "Airolo - Tre scalini banca";         latitude: 46.528897; longitude: 8.611414 }
                     ListElement { text: "Näfels";                             latitude: 47.107661; longitude: 9.064581 }
-                    ListElement { text: "Vaduz";                              latitude: 47.151319; longitude: 9.505557 }
                 }
                 width: 200
-                onCurrentIndexChanged:
+                onActivated:
                 {
-                    if(comboBox_Locations_Items.get(currentIndex).text === "GPS Location")
+                    if(comboBox_Locations_Items.get(index).text === "GPS Location")
                     {
                         // Request location update
+                        console.log("Page_Settings");
                         hc_LocationManager.requestLocation();
                         return;
                     }
 
-                    if(comboBox_Locations_Items.get(currentIndex).text === "Custom Location")
+                    if(comboBox_Locations_Items.get(index).text === "Custom Location")
                     {
                         dialog_CustomLocation.visible = true;
                         return;
                     }
 
-                    hc_LocationManager.setFakePosition(comboBox_Locations_Items.get(currentIndex).latitude,
-                                                       comboBox_Locations_Items.get(currentIndex).longitude)
+                    hc_LocationManager.setFakePosition(comboBox_Locations_Items.get(index).latitude,
+                                                       comboBox_Locations_Items.get(index).longitude)
                 }
             }
 

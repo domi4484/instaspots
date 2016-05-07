@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      28.01.2015                                        *
@@ -23,43 +23,61 @@
 #include <QPointF>
 #include <QUrl>
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
 LocationManager::LocationManager(Settings *settings,
                                  PlateformDetail *plateformDetail,
                                  QObject *parent)
   : QObject(parent),
     m_Settings(settings),
     m_PlateformDetail(plateformDetail),
-//    m_GeoPositionInfoSource(NULL),
+    m_GeoPositionInfoSource(NULL),
     m_Valid(false),
     m_QGeoCoordinate()
 {
-//  m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
 
-//  if (m_GeoPositionInfoSource == NULL)
-//  {
-//    Logger::warning(tr("Invalid GeoPositionInfoSource"));
-//  }
-//  else
-//  {
-//    m_GeoPositionInfoSource->setUpdateInterval(3000);
-//    connect(m_GeoPositionInfoSource,
-//            SIGNAL(positionUpdated(QGeoPositionInfo)),
-//            SLOT(slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo)));
-//    connect(m_GeoPositionInfoSource,
-//            SIGNAL(updateTimeout()),
-//            SLOT(slot_GeoPositionInfoSource_UpdateTimeout()));
-//    connect(m_GeoPositionInfoSource,
-//            SIGNAL(error(QGeoPositionInfoSource::Error)),
-//            SLOT(slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error)));
-//  }
+  // Set position from last position
+  setFakePosition(m_Settings->get_Location_LastCoordinate());
 
-  m_QGeoCoordinate = m_Settings->get_Location_LastCoordinate();
+
+  m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
+
+  if (m_GeoPositionInfoSource == NULL)
+  {
+    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+  }
+  else
+  {
+    m_GeoPositionInfoSource->setUpdateInterval(3000);
+    connect(m_GeoPositionInfoSource,
+            SIGNAL(positionUpdated(QGeoPositionInfo)),
+            SLOT(slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo)));
+    connect(m_GeoPositionInfoSource,
+            SIGNAL(updateTimeout()),
+            SLOT(slot_GeoPositionInfoSource_UpdateTimeout()));
+    connect(m_GeoPositionInfoSource,
+            SIGNAL(error(QGeoPositionInfoSource::Error)),
+            SLOT(slot_GeoPositionInfoSource_error(QGeoPositionInfoSource::Error)));
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 LocationManager::~LocationManager()
 {
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void LocationManager::setFakePosition(const QGeoCoordinate &qGeoCoordinate)
+{
+  m_Valid = true;
+
+  m_QGeoCoordinate = qGeoCoordinate;
+
+  emit update(false);
+  emit signal_Coordinate_changed();
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -80,16 +98,18 @@ void LocationManager::setFakePosition(double latitude,
 
 void LocationManager::requestLocation()
 {
-  emit signal_RequestLocation();
+//  emit signal_RequestLocation();
 
-//  if(m_GeoPositionInfoSource == NULL)
-//  {
-//    Logger::warning(tr("Invalid GeoPositionInfoSource"));
-//    return;
-//  }
+  Logger::info(__FUNCTION__);
 
-//  Logger::debug(tr("LocationManager::requestLocation()"));
-//  m_GeoPositionInfoSource->requestUpdate();
+  if(m_GeoPositionInfoSource == NULL)
+  {
+    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    return;
+  }
+
+  Logger::debug(__FUNCTION__);
+  m_GeoPositionInfoSource->requestUpdate();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

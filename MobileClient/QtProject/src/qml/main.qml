@@ -34,13 +34,6 @@ ApplicationWindow {
     // Slots -------------------------------
 
     Component.onCompleted:{
-        hc_Application.startupTimerStop();
-
-        // Try to login
-        wa_User.login();
-
-        // Check newer version
-        hc_Application.checkCurrentClientVersion();
 
         // Push the application main gui
         pushMainGui();
@@ -88,7 +81,7 @@ ApplicationWindow {
         }
     }
 
-    // Positioning
+/*    // Positioning
     PositionSource {
         id: positionSource
         onPositionChanged:
@@ -115,7 +108,7 @@ ApplicationWindow {
             hc_LocationManager.setFakePosition(position.coordinate.latitude,
                                                position.coordinate.longitude)
         }
-    }
+    }*/
 
     Connections{
         target: hc_LocationManager
