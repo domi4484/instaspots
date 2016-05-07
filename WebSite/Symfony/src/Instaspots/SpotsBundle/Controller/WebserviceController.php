@@ -321,7 +321,7 @@ class WebserviceController extends Controller
 
   private function getCurrentClientVersion(&$response)
   {
-    $response->addData(ParameterSet::APPLICATION_VERSION, 'V0.0.4');
+    $response->addData(ParameterSet::APPLICATION_VERSION, 'V0.0.6');
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -416,7 +416,7 @@ class WebserviceController extends Controller
   private function uploadNewSpot($request, &$response)
   {
     $minimumClientVersion = 'V0.0.3';
-    
+
     // Get parameters
     $name         = $request->get(ParameterSet::SPOT_NAME);
     $description  = $request->get(ParameterSet::SPOT_DESCRIPTION);
@@ -424,7 +424,7 @@ class WebserviceController extends Controller
     $latitude     = $request->get(ParameterSet::SPOT_LATITUDE);
     $longitude    = $request->get(ParameterSet::SPOT_LONGITUDE);
     $uploadedFile = $request->files->get('image');
-    
+
     // Get current user
     $user = $this->getUser();
     if($user == null)
@@ -432,7 +432,7 @@ class WebserviceController extends Controller
       $response->setError('Authentication required');
       return;
     }
-    
+
     // Check location
     if(   $latitude  == 0
        || $longitude == 0)
@@ -440,14 +440,14 @@ class WebserviceController extends Controller
       $response->setError('Invalid location');
       return;
     }
-    
+
     // Check for valid name
     if(strlen($name) == 0)
     {
       $response->setError('Invalid spot name');
-      return;    
+      return;
     }
-    
+
     // Check for valid picture
     if(   $uploadedFile == null
        || $uploadedFile->isValid() == false

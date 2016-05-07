@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% block title %}Instaspots{% endblock %}</title>
+  <title>{% block title %}Lowerspot{% endblock %}</title>
 
   {% block stylesheets %}
     {# On charge le CSS de bootstrap depuis le site directement #}
@@ -13,33 +13,50 @@
 </head>
 
 <body>
-  <div class="container">
-    <div id="header" class="jumbotron">
-      <h1>Instaspots</h1>
-      <p>
-        <a class="btn btn-primary btn-lg" href="{{ path('instaspots_spots_home') }}">News</a>
-        <a class="btn btn-primary btn-lg" href="{{ path('instaspots_spots_download') }}">Download</a>
-      </p>
-    </div>
 
-    <div class="row">
-      <div id="content" class="col-md-9">
-        {% block body %}
-        {% endblock %}
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ path('instaspots_spots_home') }}">Lowerspot</a>
       </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ path('instaspots_spots_home') }}">News</a></li>
+          <li><a href="{{ path('instaspots_spots_download') }}">Download</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://lowerclassclothing.com/" target="_blank">Lowerclass</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="row">
+    <div id="content" class="col-md-9">
+      {% block body %}
+      {% endblock %}
     </div>
-
-    <hr>
-
-    <footer>
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        Connected as <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> - <a href="{{ path('fos_user_security_logout') }}">Logout</a>
-      {% else %}
-        <a href="{{ path('fos_user_security_login') }}">Login</a> - <a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a>
-      {% endif %}
-      <p>The red coping company © {{ 'now'|date('Y') }}.</p>
-    </footer>
   </div>
+
+  <hr>
+
+  <footer>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+      Connected as <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> - <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ path('fos_user_security_login') }}">Login</a> - <a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a>
+    {% endif %}
+    <p>The red coping company © {{ 'now'|date('Y') }}.</p>
+  </footer>
 
   {% block javascripts %}
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
