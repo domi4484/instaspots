@@ -42,8 +42,6 @@ Item{
 
         title: qsTr("Secret spot")
         text:  qsTr("The location of a secret spot is not displayed to other users, until they upload a picture to the spot.")
-
-        onAccepted: hc_Settings.set_HelpGotIt_UploadNewPictureSecretSpot(true)
     }
 
     // Connections -------------------------
@@ -116,8 +114,6 @@ Item{
                 anchors.verticalCenter: text_SecretSpot.verticalCenter
                 height: parent.height
                 width : height
-
-                visible: hc_Settings.get_HelpGotIt_UploadNewPictureSecretSpot() === false
 
                 Image {
                     anchors.fill:    parent

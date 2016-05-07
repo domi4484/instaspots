@@ -1,12 +1,12 @@
 {% extends "InstaspotsSpotsBundle::layout.html.twig" %}
 
 {% block title %}
-  Home - {{ parent() }}
+   {{ parent() }} - News
 {% endblock %}
 
 {% block ocplatform_body %}
 
-  <h2>Latest spots</h2>
+  <h2>News</h2>
 
   <ul>
     {% for picture in listPictures %}
