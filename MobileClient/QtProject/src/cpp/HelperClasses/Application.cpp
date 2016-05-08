@@ -157,10 +157,17 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
   m_ApplicationHelper->startupTimerStop();
 
   // Try to login
-  m_User->login();
+  if(m_User->login() == false)
+  {
+    Logger::error(m_User->lastErrorText());
+    return;
+  }
 
   // Check newer version
-  m_ApplicationHelper->checkCurrentClientVersion();
+  if(m_ApplicationHelper->checkCurrentClientVersion() == false)
+  {
+    return;
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

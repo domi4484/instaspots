@@ -43,16 +43,18 @@
         <file>qml/pages-user/Page_Settings_ReportProblem.qml</file>
         <file>qml/pages-spot/Page_SpotsMap.qml</file>
         <file>qml/component/Component_CurrentLocationIndicator.qml</file>
+        <file>qml/component/Component_Dialog.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>
         <file>icon/folder-home.png</file>
-        <file>icon/im-user-offline.png</file>
-        <file>icon/BackArrow.png</file>
         <file>icon/camera-photo.png</file>
-        <file>icon/menu.png</file>
         <file>icon/splash.png</file>
         <file>icon/dialog-question.png</file>
         <file>icon/Wheel-29x29.png</file>
+        <file>icon/avatar-default.png</file>
+        <file>icon/go-previous.png</file>
+        <file>icon/view-more.png</file>
+        <file>icon/go-next.png</file>
     </qresource>
 </RCC>

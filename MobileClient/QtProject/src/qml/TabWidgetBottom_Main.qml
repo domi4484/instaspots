@@ -45,7 +45,7 @@ TabWidgetBottom {
         id: panel_User
         anchors.fill: parent
         property string tabWidget_ButtonText: ""
-        property string tabWidget_ButtonIconSource: "qrc:/icon/icon/im-user-offline.png"
+        property string tabWidget_ButtonIconSource: "qrc:/icon/icon/avatar-default.png"
     }
 }
 

@@ -100,8 +100,6 @@ void LocationManager::requestLocation()
 {
 //  emit signal_RequestLocation();
 
-  Logger::info(__FUNCTION__);
-
   if(m_GeoPositionInfoSource == NULL)
   {
     Logger::warning(tr("Invalid GeoPositionInfoSource"));

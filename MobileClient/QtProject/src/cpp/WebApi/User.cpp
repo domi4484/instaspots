@@ -63,7 +63,7 @@ bool User::login()
 
   m_LastErrorText = "";
 
-  QString username       = m_Settings->get_User_Username();
+  QString username = m_Settings->get_User_Username();
   QString password = m_Settings->get_User_Password();
 
   if(   username.isEmpty()

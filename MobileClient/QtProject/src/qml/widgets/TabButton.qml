@@ -39,17 +39,17 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: 1
 
-        fillMode: Image.PreserveAspectFit
-        smooth: true
+        fillMode:     Image.PreserveAspectFit
+        smooth:       true
         antialiasing: true
-        source: iconSource
+        source:       iconSource
     }
 
     Text {
         id: rectangle_Text
         width: parent.width
-        anchors.top: rectangle_LineTop.bottom
-        anchors.bottom: rectangle_LineBottom.top
+        anchors.top:     rectangle_LineTop.bottom
+        anchors.bottom:  rectangle_LineBottom.top
         anchors.margins: 1
 
         horizontalAlignment: Text.AlignHCenter

@@ -43,7 +43,8 @@ Rectangle {
 
         visible:  backButtonVisible
         fillMode: Image.PreserveAspectFit
-        source:   "qrc:/icon/icon/BackArrow.png"
+        smooth:   true
+        source:   "qrc:/icon/icon/go-previous.png"
         MouseArea {
             id: mouseBack
             anchors.fill: parent
@@ -57,12 +58,13 @@ Rectangle {
         id: image_Menu
         anchors.verticalCenter: parent.verticalCenter
         anchors.right:          image_Continue.left
-        height:                 parent.height
+        height:                 parent.height - 6 * hc_Application.dip
         width:                  parent.height * visible
 
         visible:  menuButtonVisible
         fillMode: Image.PreserveAspectFit
-        source:   "qrc:/icon/icon/menu.png"
+        smooth:   true
+        source:   "qrc:/icon/icon/view-more.png"
         MouseArea {
             id: mouseMenu
             anchors.fill: parent
@@ -81,7 +83,8 @@ Rectangle {
 
         visible:  continueButtonVisible
         fillMode: Image.PreserveAspectFit
-        source:   "qrc:/icon/icon/BackArrow.png"
+        smooth:   true
+        source:   "qrc:/icon/icon/go-next.png"
         rotation: 180
         MouseArea {
             id: mouseContinue
