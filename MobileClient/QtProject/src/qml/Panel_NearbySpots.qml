@@ -29,7 +29,7 @@ Item {
     // Signals -----------------------------
     Connections {
         target: hc_LocationManager
-        onUpdate:
+        onSignal_Coordinate_changed:
         {
             if(visible == false)
                 return;

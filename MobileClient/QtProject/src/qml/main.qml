@@ -108,10 +108,10 @@ ApplicationWindow {
             hc_LocationManager.setFakePosition(position.coordinate.latitude,
                                                position.coordinate.longitude)
         }
-    }*/
+    }
 
     Connections{
         target: hc_LocationManager
         onSignal_RequestLocation: positionSource.update()
-    }
+    }*/
 }

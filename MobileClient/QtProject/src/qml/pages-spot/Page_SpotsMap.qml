@@ -54,9 +54,18 @@ Item {
         anchors.fill: parent
 
         plugin: myPlugin;
-        center.latitude:  hc_LocationManager.latitude()
-        center.longitude: hc_LocationManager.longitude()
         zoomLevel: 8
+
+        Component.onCompleted: {
+            center = hc_LocationManager.coordinate
+        }
+
+        onVisibleChanged: {
+            if(visible === false)
+                return;
+
+            center = hc_LocationManager.coordinate;
+        }
 
         Component_CurrentLocationIndicator {
         }
@@ -66,7 +75,7 @@ Item {
 
             delegate: MapQuickItem {
 
-                coordinate.latitude: role_SpotLatitude
+                coordinate.latitude:   role_SpotLatitude
                 coordinate.longitude:  role_SpotLongitude
 
                 anchorPoint.x: image.width * 0.5

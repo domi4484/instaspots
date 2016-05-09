@@ -51,8 +51,14 @@ Item{
         Component.onCompleted: {
             center = hc_LocationManager.coordinate
 
-            mapQuickItem_SpotLocation.coordinate.latitude  = hc_LocationManager.latitude()
-            mapQuickItem_SpotLocation.coordinate.longitude = hc_LocationManager.longitude()
+            mapQuickItem_SpotLocation.coordinate = hc_LocationManager.coordinate
+        }
+
+        onVisibleChanged: {
+            if(visible === false)
+                return;
+
+            center = hc_LocationManager.coordinate
         }
 
         MouseArea {

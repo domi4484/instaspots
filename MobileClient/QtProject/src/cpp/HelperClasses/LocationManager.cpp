@@ -75,7 +75,6 @@ void LocationManager::setFakePosition(const QGeoCoordinate &qGeoCoordinate)
 
   m_QGeoCoordinate = qGeoCoordinate;
 
-  emit update(false);
   emit signal_Coordinate_changed();
 
 }
@@ -90,7 +89,6 @@ void LocationManager::setFakePosition(double latitude,
   m_QGeoCoordinate.setLatitude (latitude);
   m_QGeoCoordinate.setLongitude(longitude);
 
-  emit update(false);
   emit signal_Coordinate_changed();
 }
 
@@ -195,8 +193,6 @@ void LocationManager::slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInf
 void LocationManager::slot_GeoPositionInfoSource_UpdateTimeout()
 {
   Logger::warning(QString("LocationManager updateTimeout"));
-
-  emit update(true);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

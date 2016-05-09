@@ -104,7 +104,7 @@ Item{
 
         onClicked: {
             if(hc_Application.reportProblem(textArea_ProblemDescription.text,
-                                         switch_AttachTraces.checked)
+                                            switch_AttachTraces.checked)
                     === false)
             {
                 messageDialog.title   = qsTr("Report error");

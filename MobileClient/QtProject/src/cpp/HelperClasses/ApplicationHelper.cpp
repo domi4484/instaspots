@@ -101,7 +101,7 @@ ApplicationHelper::~ApplicationHelper()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int ApplicationHelper::dip()
+int ApplicationHelper::dip() const
 {
   return m_DipScaleFactor;
 }
@@ -113,6 +113,22 @@ void ApplicationHelper::setDip(int dipScaleFactor)
   m_DipScaleFactor = dipScaleFactor;
 
   emit signal_Dip_Changed();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString ApplicationHelper::lastErrorText() const
+{
+  return m_LastErrorText;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void ApplicationHelper::setLastErrorText(const QString &errorText)
+{
+  m_LastErrorText = errorText;
+
+  emit signal_LastErrorText_Changed();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -288,8 +304,9 @@ bool ApplicationHelper::reportProblem(const QString &problemDescription,
   WebApiError error = m_WebApiCommand_ReportProblem.postRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
-    Logger::error(QString("%1: %2").arg(__FUNCTION__)
-                                   .arg(error.text()));
+    setLastErrorText(QString("%1: %2").arg(__FUNCTION__)
+                                      .arg(error.text()));
+    Logger::error(lastErrorText());
     return false;
   }
 

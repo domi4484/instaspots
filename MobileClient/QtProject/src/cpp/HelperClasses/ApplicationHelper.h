@@ -28,7 +28,8 @@ class ApplicationHelper : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(double dip READ dip WRITE setDip NOTIFY signal_Dip_Changed)
+  Q_PROPERTY(double  dip           READ dip           WRITE setDip           NOTIFY signal_Dip_Changed          )
+  Q_PROPERTY(QString lastErrorText READ lastErrorText WRITE setLastErrorText NOTIFY signal_LastErrorText_Changed)
 
 public:
   explicit ApplicationHelper(Settings *settings,
@@ -36,9 +37,11 @@ public:
                              QObject *parent = 0);
   ~ApplicationHelper();
 
-  int dip();
-
+  int dip() const;
   void setDip(int dip);
+
+  QString lastErrorText() const;
+  void setLastErrorText(const QString &errorText);
 
 signals:
 
@@ -47,6 +50,7 @@ signals:
   void signal_DevelopmentMode_Changed(bool developmentMode);
 
   void signal_Dip_Changed();
+  void signal_LastErrorText_Changed();
 
 public slots:
 
@@ -106,6 +110,9 @@ private:
   // Startup timer
   QTime m_QTime_Startup;
   int   m_StartupTime_ms;
+
+  // Last error text
+  QString m_LastErrorText;
 };
 
 #endif // APPLICATIONHELPER_H

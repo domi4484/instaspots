@@ -30,7 +30,7 @@ Item{
     // Signals -----------------------------
     Connections {
         target: hc_LocationManager
-        onUpdate:
+        onSignal_Coordinate_changed:
         {
             text_CurrentPosition.text = qsTr("Lat: %1 Lon: %2").arg(hc_LocationManager.latitude()).arg(hc_LocationManager.longitude())
         }
@@ -154,7 +154,7 @@ Item{
                     ListElement { text: "Debug";    level: 4 }
                     ListElement { text: "Verbose";  level: 5 }
                 }
-                onCurrentIndexChanged:
+                onActivated:
                 {
                     // Set LogLevel
                     hc_Logger.setLogLevel(comboBox_LogLevel_Items.get(currentIndex).level);

@@ -34,8 +34,6 @@ public:
 
 signals:
 
-  void update(bool timeout);
-
   void signal_RequestLocation();
 
   void signal_Coordinate_changed();
