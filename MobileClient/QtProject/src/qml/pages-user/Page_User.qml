@@ -112,15 +112,25 @@ Item{
             property string tabWidget_ButtonText: qsTr("Map")
             property string tabWidget_ButtonIconSource: ""
 
+            function tabWidget_CurrentTabClicked()
+            {
+                page_SpotsMap.map_center = hc_LocationManager.coordinate;
+            }
+
             Page_SpotsMap {
+                id: page_SpotsMap
+
                 anchors.fill: parent
                 model: spotsModel
                 onSpotClicked: {
                     stackView.push( { item       : Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
-                                      properties : { navigation_Title             : spotName,
+                                      properties : {
+                                                     navigation_Title             : spotName,
                                                      navigation_BackButtonVisible : true,
                                                      stackView                    : stackView,
-                                                     spotId                       : spotId} });
+                                                     spotId                       : spotId
+                                                   }
+                                    } );
                 }
             }
         }

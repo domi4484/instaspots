@@ -32,6 +32,8 @@ Item {
 
     property alias model: mapItemView.model
 
+    property alias map_center: map.center
+
 
     // Signals -----------------------------
 
@@ -58,13 +60,6 @@ Item {
 
         Component.onCompleted: {
             center = hc_LocationManager.coordinate
-        }
-
-        onVisibleChanged: {
-            if(visible === false)
-                return;
-
-            center = hc_LocationManager.coordinate;
         }
 
         Component_CurrentLocationIndicator {
