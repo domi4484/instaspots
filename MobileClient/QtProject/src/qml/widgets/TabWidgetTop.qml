@@ -64,10 +64,16 @@ Item {
                     anchors.fill: parent
                     onClicked:
                     {
+                        // Click
+                        if(stack.children[index].tabWidget_CurrentTabClicked != null)
+                        {
+                            stack.children[index].tabWidget_CurrentTabClicked();
+                        }
+
                         // Re-Click
                         if(tabWidgetTop.current === index)
                         {
-                            if(stack.children[index].tabWidget_CurrentTabReclicked != null)
+                            if(stack.children[index].tabWidget_CurrentTabReclicked != null)32
                             {
                                 stack.children[index].tabWidget_CurrentTabReclicked();
                             }

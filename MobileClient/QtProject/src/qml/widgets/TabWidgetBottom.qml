@@ -75,6 +75,12 @@ Item {
                     anchors.fill: parent
                     onClicked:
                     {
+                        // Click
+                        if(stack.children[index].tabWidget_CurrentTabClicked != null)
+                        {
+                            stack.children[index].tabWidget_CurrentTabClicked();
+                        }
+
                         // Re-Click
                         if(tabWidgetBottom.current === index)
                         {
