@@ -56,5 +56,6 @@
         <file>icon/go-previous.png</file>
         <file>icon/view-more.png</file>
         <file>icon/go-next.png</file>
+        <file>icon/object-rotate-right.png</file>
     </qresource>
 </RCC>

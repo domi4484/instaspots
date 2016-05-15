@@ -22,10 +22,11 @@ Item{
 
     // Navigation properties ---------------
 
-    property string navigation_Title:                 qsTr("Crop")
-    property bool   navigation_BackButtonVisible:     true
-    property bool   navigation_ContinueButtonVisible: false
-    property bool   navigation_MenuButtonVisible:     false
+    property string navigation_Title:                  qsTr("Edit")
+    property bool   navigation_BackButtonVisible:      true
+    property bool   navigation_ContinueButtonVisible:  true
+    property bool   navigation_MenuButtonVisible:      false
+    property string navigator_customButtonRightSource: "qrc:/icon/icon/object-rotate-right.png"
 
 
     // Properties --------------------------
@@ -37,7 +38,6 @@ Item{
     property alias cropSide: flick.cropSide
 
     property alias sourceSize: image.sourceSize
-    property alias imageElement: originalImage
 
     property int   transparentMargin      : 10
     property real  displayAspectRatio     : height / width
@@ -52,13 +52,6 @@ Item{
     property bool  imageLandscape     : !imagePortrait
     property int   imageDisplayWidth  : imagePortrait  ? displayUsableSide : displayUsableSide / imageAspectRatio
     property int   imageDisplayHeight : imageLandscape ? displayUsableSide : displayUsableSide * imageAspectRatio
-
-
-    Image {
-        id:originalImage
-        visible: false
-        source: cropPicture.source
-    }
 
 
     // Signals -----------------------------
@@ -95,6 +88,7 @@ Item{
             width:  imageDisplayWidth
             height: imageDisplayHeight
 
+            cache:    false
             fillMode: Image.Stretch
 
             MouseArea {
@@ -224,6 +218,27 @@ Item{
             stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
                             properties:{stackView        : stackView}});
         }
+    }
+
+    function navigator_ContinueButtonClicked()
+    {
+        wa_PictureUploader.setCropPicture(source,
+                                          cropX,
+                                          cropY,
+                                          cropSide,
+                                          image.rotation);
+        stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+                        properties:{stackView        : stackView}});
+    }
+
+    function navigator_CustomButtonRightClicked()
+    {
+        var newSource = wa_PictureUploader.rotatePicture(source, 90);
+
+        // Workaround to make the picture reload
+        source = "qrc:/icon/icon/Wheel-29x29.png";
+
+        source = newSource;
     }
 }
 

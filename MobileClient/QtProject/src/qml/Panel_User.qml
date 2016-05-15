@@ -61,8 +61,20 @@ Item {
                 stackView.pop();
         }
 
+        onContinueClicked: {
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_ContinueButtonClicked != null)
+                stackView.currentItem.navigator_ContinueButtonClicked();
+        }
+
         onMenuClicked: {
-            stackView.push(Qt.resolvedUrl("qrc:/qml/pages-user/Page_Settings.qml"));
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_MenuButtonClicked != null)
+                stackView.currentItem.navigator_MenuButtonClicked();
         }
     }
 

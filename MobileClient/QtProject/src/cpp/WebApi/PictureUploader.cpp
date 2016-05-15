@@ -213,6 +213,41 @@ void PictureUploader::setExistingSpotId(int spotId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString PictureUploader::rotatePicture(const QString &source_url,
+                                       int angle)
+{
+  Logger::info(source_url);
+  QString localFilename = QUrl(source_url).toLocalFile();
+  Logger::info(localFilename);
+
+  QPixmap qPixmap(localFilename);
+  if(qPixmap.isNull())
+  {
+    Logger::error("Invalid QPixmap");
+    return QString();
+  }
+
+  QMatrix qMatrix_Rotation;
+  qMatrix_Rotation.rotate(angle);
+  qPixmap = qPixmap.transformed(qMatrix_Rotation);
+
+//  if(localFilename.endsWith("-rotated.jpg"))
+  {
+    qPixmap.save(localFilename);
+    return source_url;
+  }
+
+  QString newFilename = localFilename;
+  newFilename = newFilename.replace(".jpg", "-rotated.jpg");
+  qPixmap.save(newFilename);
+
+  QString newUrl = source_url;
+  newUrl.replace(".jpg", "-rotated.jpg");
+  return newUrl;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 bool PictureUploader::execute()
 {
   if(m_Command == WebApi::COMMAND::UPLOAD_NEW_SPOT)

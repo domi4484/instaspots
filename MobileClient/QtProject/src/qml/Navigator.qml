@@ -6,23 +6,30 @@ import QtQuick.Controls 1.1
 Rectangle {
     id: navigator
 
+    property alias title: text_Title.text
+
     property bool backButtonVisible: true
     property bool continueButtonVisible: false
     property bool menuButtonVisible: false
 
-    property alias title: text_Title.text
+    property string customButtonLeftSource  : ""
+    property string customButtonRightSource : ""
 
     signal previousPage
+    signal customButtonLeftClicked
+    signal customButtonRightClicked
     signal continueClicked
     signal menuClicked
 
     z: 2 // so flickable doesn't draw on top
 
 
-    color: (   mouseBack.pressed
-            || mouseContinue.pressed
-            || mouseMenu.pressed      ) ? Qt.lighter(hc_Application.color_BackgroundNavigator(), 1.2)
-                                        : hc_Application.color_BackgroundNavigator()
+    color: (   mouseArea_Back.pressed
+            || mouseArea_CustomLeft.pressed
+            || mouseArea_CustomRight.pressed
+            || mouseArea_Menu.pressed
+            || mouseArea_Continue.pressed      ) ? Qt.lighter(hc_Application.color_BackgroundNavigator(), 1.2)
+                                                 : hc_Application.color_BackgroundNavigator()
 
     Text {
         id: text_Title
@@ -46,10 +53,50 @@ Rectangle {
         smooth:   true
         source:   "qrc:/icon/icon/go-previous.png"
         MouseArea {
-            id: mouseBack
+            id: mouseArea_Back
             anchors.fill: parent
             onClicked: {
                 backPressed();
+            }
+        }
+    }
+
+    Image {
+        id: image_CustomLeft
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right:          image_Back.right
+        height:                 parent.height
+        width:                  parent.height * visible
+
+        visible:  customButtonLeftSource != ""
+        fillMode: Image.PreserveAspectFit
+        smooth:   true
+        source:   customButtonLeftSource
+        MouseArea {
+            id: mouseArea_CustomLeft
+            anchors.fill: parent
+            onClicked: {
+                customButtonLeftClicked();
+            }
+        }
+    }
+
+    Image {
+        id: image_CustomRight
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right:          image_Menu.left
+        height:                 parent.height
+        width:                  parent.height * visible
+
+        visible:  customButtonRightSource != ""
+        fillMode: Image.PreserveAspectFit
+        smooth:   true
+        source:   customButtonRightSource
+        MouseArea {
+            id: mouseArea_CustomRight
+            anchors.fill: parent
+            onClicked: {
+                customButtonRightClicked();
             }
         }
     }
@@ -66,7 +113,7 @@ Rectangle {
         smooth:   true
         source:   "qrc:/icon/icon/view-more.png"
         MouseArea {
-            id: mouseMenu
+            id: mouseArea_Menu
             anchors.fill: parent
             onClicked: {
                 menuClicked();
@@ -85,9 +132,8 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
         smooth:   true
         source:   "qrc:/icon/icon/go-next.png"
-        rotation: 180
         MouseArea {
-            id: mouseContinue
+            id: mouseArea_Continue
             anchors.fill: parent
             onClicked: {
                 continueClicked();

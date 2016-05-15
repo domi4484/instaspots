@@ -144,4 +144,9 @@ Item{
         picturesModel.getBy_UserId(userId);
         spotsModel.setUserId(userId);
     }
+
+    function navigator_MenuButtonClicked()
+    {
+        stackView.push(Qt.resolvedUrl("qrc:/qml/pages-user/Page_Settings.qml"));
+    }
 }

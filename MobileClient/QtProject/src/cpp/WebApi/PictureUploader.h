@@ -60,6 +60,9 @@ public slots:
   void setSecretSpot(bool secretSpot);
   void setExistingSpotId(int spotId);
 
+  QString rotatePicture(const QString &source_url,
+                        int angle);
+
   bool execute();
   void resetDefaults();
 

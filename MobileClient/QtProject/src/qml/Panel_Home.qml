@@ -42,7 +42,19 @@ Item {
         }
 
         onContinueClicked: {
-            stackView.currentItem.continueClicked();
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_ContinueButtonClicked != null)
+                stackView.currentItem.navigator_ContinueButtonClicked();
+        }
+
+        onMenuClicked: {
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_MenuButtonClicked != null)
+                stackView.currentItem.navigator_MenuButtonClicked();
         }
     }
 

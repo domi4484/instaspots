@@ -41,8 +41,9 @@ Item {
 
                 onImageSaved: {
                     wa_PictureUploader.setCameraPictureFilePath(path);
-                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
-                                    properties:{stackView        : stackView}});
+                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/CropPicture.qml"),
+                                    properties:{stackView        : stackView,
+                                                source           : path}});
                 }
             }
         }
@@ -63,13 +64,44 @@ Item {
         continueButtonVisible : (stackView.currentItem != null) ? stackView.currentItem.navigation_ContinueButtonVisible : false;
         menuButtonVisible     : (stackView.currentItem != null) ? stackView.currentItem.navigation_MenuButtonVisible     : false;
 
+        customButtonLeftSource  : (stackView.currentItem != null) ? (stackView.currentItem.navigator_customButtonLeftSource != null)  ? stackView.currentItem.navigator_customButtonLeftSource  : "" : "";
+        customButtonRightSource : (stackView.currentItem != null) ? (stackView.currentItem.navigator_customButtonRightSource != null) ? stackView.currentItem.navigator_customButtonRightSource : "" : "";
+
         onPreviousPage: {
             if(stackView.depth > 1)
                 stackView.pop();
         }
 
         onContinueClicked: {
-            stackView.currentItem.continueClicked();
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_ContinueButtonClicked != null)
+                stackView.currentItem.navigator_ContinueButtonClicked();
+        }
+
+        onMenuClicked: {
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_MenuButtonClicked != null)
+                stackView.currentItem.navigator_MenuButtonClicked();
+        }
+
+        onCustomButtonLeftClicked: {
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_CustomButtonLeftClicked != null)
+                stackView.currentItem.navigator_CustomButtonLeftClicked();
+        }
+
+        onCustomButtonRightClicked: {
+            if(stackView.currentItem == null)
+                return;
+
+            if(stackView.currentItem.navigator_CustomButtonRightClicked != null)
+                stackView.currentItem.navigator_CustomButtonRightClicked();
         }
     }
 
