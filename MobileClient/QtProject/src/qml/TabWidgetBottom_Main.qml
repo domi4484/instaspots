@@ -15,35 +15,50 @@ import "qrc:/qml/widgets"
 
 
 // Gui -------------------------------------
-TabWidgetBottom {
+TabWidget {
     id: tabWidget_Main
-    width : parent.width
-    height: parent.height
 
-    Panel_Home {
+    height: parent.height
+    width:  parent.width
+
+    tabWidget_TabsOnTheBottom : true
+
+    TabWidgetDynamicTab {
         id: panel_Home
         anchors.fill: parent
+
+        tabWidgetDynamicTab_ContentSourceUrl: "qrc:/qml/Panel_Home.qml"
+
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/folder-home.png"
     }
 
-    Panel_NearbySpots {
+    TabWidgetDynamicTab {
         id: panel_NearbySpots
         anchors.fill: parent
+
+        tabWidgetDynamicTab_ContentSourceUrl: "qrc:/qml/Panel_NearbySpots.qml"
+
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/find-location.png"
     }
 
-    Panel_Upload {
+    TabWidgetDynamicTab {
         id: panel_Upload
         anchors.fill: parent
+
+        tabWidgetDynamicTab_ContentSourceUrl: "qrc:/qml/Panel_Upload.qml"
+
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/camera-photo.png"
     }
 
-    Panel_User {
+    TabWidgetDynamicTab {
         id: panel_User
         anchors.fill: parent
+
+        tabWidgetDynamicTab_ContentSourceUrl: "qrc:/qml/Panel_User.qml"
+
         property string tabWidget_ButtonText: ""
         property string tabWidget_ButtonIconSource: "qrc:/icon/icon/avatar-default.png"
     }

@@ -35,8 +35,7 @@
         <file>qml/views/SpotOverviewDelegate.qml</file>
         <file>qml/widgets/CachedPicture.qml</file>
         <file>qml/widgets/TabButton.qml</file>
-        <file>qml/widgets/TabWidgetBottom.qml</file>
-        <file>qml/widgets/TabWidgetTop.qml</file>
+        <file>qml/widgets/TabWidget.qml</file>
         <file>qml/pages-picture/Page_Picture.qml</file>
         <file>qml/component/Component_PicturesGrid.qml</file>
         <file>qml/TabWidgetBottom_Main.qml</file>
@@ -44,6 +43,7 @@
         <file>qml/pages-spot/Page_SpotsMap.qml</file>
         <file>qml/component/Component_CurrentLocationIndicator.qml</file>
         <file>qml/component/Component_Dialog.qml</file>
+        <file>qml/widgets/TabWidgetDynamicTab.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

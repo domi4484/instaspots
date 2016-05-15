@@ -8,7 +8,7 @@ import "qrc:/qml/"
 import "qrc:/qml/widgets"
 
 Item {
-    id: tabWidgetBottom
+    id: tabWidget
 
     // Properties --------------------------
 
@@ -20,8 +20,20 @@ Item {
 
     property int current: 0
 
+    property bool tabWidget_TabsOnTheBottom : false
+
     onCurrentChanged: setOpacities()
-    Component.onCompleted: setOpacities()
+    Component.onCompleted: {
+        if(stack.children[current].tabWidget_IsDynamicTab !== null)
+        {
+            if(stack.children[current].tabWidgetDynamicTab_IsLoaded === false)
+            {
+                stack.children[current].tabWidgetDynamicTab_Load();
+            }
+        }
+
+        setOpacities()
+    }
 
     function setCurrentItem(item)
     {
@@ -43,38 +55,50 @@ Item {
         }
     }
 
-    // Content
+
     Item {
         id: stack
 
-        anchors.left:   tabWidgetBottom.left
-        anchors.right:  tabWidgetBottom.right
-        anchors.top:    tabWidgetBottom.top
-        anchors.bottom: header.top
-    }
+        height: tabWidget.height - header.height
+        width : parent.width
+
+        anchors.top: tabWidget_TabsOnTheBottom ? tabWidget.top : header.bottom
+    } // stack
 
     // Tabs
     Row {
         id: header
 
-        anchors.bottom: tabWidgetBottom.bottom
+        height: 30 * hc_Application.dip
+        width:  parent.width
+
+        anchors.top : tabWidget_TabsOnTheBottom ? stack.bottom : tabWidget.top
 
         Repeater {
             model: stack.children.length
             delegate: TabButton {
-                width: tabWidgetBottom.width / stack.children.length;
                 height: 30 * hc_Application.dip
+                width:  parent.width / stack.children.length;
                 iconSource: stack.children[index].tabWidget_ButtonIconSource
                 buttonText: stack.children[index].tabWidget_ButtonText
 
                 lineTopVisible:    true
                 lineBottomVisible: false
 
-                checked: tabWidgetBottom.current == index
+                checked: tabWidget.current == index
                 MouseArea {
                     anchors.fill: parent
                     onClicked:
                     {
+                        // Children to load dinamically?
+                        if(stack.children[index].tabWidget_IsDynamicTab !== null)
+                        {
+                            if(stack.children[index].tabWidgetDynamicTab_IsLoaded === false)
+                            {
+                                stack.children[index].tabWidgetDynamicTab_Load();
+                            }
+                        }
+
                         // Click
                         if(stack.children[index].tabWidget_CurrentTabClicked != null)
                         {
@@ -82,7 +106,7 @@ Item {
                         }
 
                         // Re-Click
-                        if(tabWidgetBottom.current === index)
+                        if(tabWidget.current === index)
                         {
                             if(stack.children[index].tabWidget_CurrentTabReclicked != null)
                             {
@@ -91,10 +115,10 @@ Item {
                         }
 
                         // Set current tab content
-                        tabWidgetBottom.current = index;
+                        tabWidget.current = index;
                     }
                 }
             }
         }
-    }
+    } // header
 }

@@ -128,8 +128,7 @@ DISTFILES += \
     src/qml/views/SpotOverviewDelegate.qml \
     src/qml/widgets/CachedPicture.qml \
     src/qml/widgets/TabButton.qml \
-    src/qml/widgets/TabWidgetBottom.qml \
-    src/qml/widgets/TabWidgetTop.qml \
+    src/qml/widgets/TabWidget.qml \
     src/qml/pages-picture/Page_Picture.qml \
     src/qml/component/Component_PicturesGrid.qml \
     src/qml/component/Component_CurrentLocationIndicator.qml \

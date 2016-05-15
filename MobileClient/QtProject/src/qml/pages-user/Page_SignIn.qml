@@ -55,7 +55,7 @@ Item{
 
     // Gui ---------------------------------
 
-    TabWidgetTop {
+    TabWidget {
         id: tabWidget
         width: parent.width
         height: parent.height
