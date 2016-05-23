@@ -29,7 +29,7 @@ Rectangle {
         height : 3
         anchors.top: parent.top
 
-        color: "#7fb5be"
+        color:   "#7fb5be"
     }
 
     Image {

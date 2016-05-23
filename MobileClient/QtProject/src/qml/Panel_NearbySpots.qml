@@ -34,11 +34,6 @@ Item {
             if(visible == false)
                 return;
 
-            if(timeout)
-            {
-                // TODO display message cacca
-            }
-
             spotsModel.setLocation(hc_LocationManager.latitude(),
                                    hc_LocationManager.longitude(),
                                    150);
@@ -48,7 +43,10 @@ Item {
     // Slots -------------------------------
     onVisibleChanged: {
         if(visible == false)
+        {
+            hc_LocationManager.stopUdates();
             return;
+        }
 
         // Set current location (also if outdated)
         spotsModel.setLocation(hc_LocationManager.latitude(),
@@ -56,7 +54,7 @@ Item {
                                150);
 
         // Request location update
-        hc_LocationManager.requestLocation();
+        hc_LocationManager.startUpdates();
     }
 
 

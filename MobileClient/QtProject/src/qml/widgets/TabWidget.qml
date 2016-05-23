@@ -82,8 +82,8 @@ Item {
                 iconSource: stack.children[index].tabWidget_ButtonIconSource
                 buttonText: stack.children[index].tabWidget_ButtonText
 
-                lineTopVisible:    true
-                lineBottomVisible: false
+                lineTopVisible:     tabWidget_TabsOnTheBottom
+                lineBottomVisible: !tabWidget_TabsOnTheBottom
 
                 checked: tabWidget.currentIndex == index
                 MouseArea {

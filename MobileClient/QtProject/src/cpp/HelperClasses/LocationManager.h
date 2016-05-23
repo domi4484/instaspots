@@ -44,7 +44,8 @@ public slots:
   void setFakePosition(double latitude,
                        double longitude);
 
-  void requestLocation();
+  void startUpdates();
+  void stopUdates();
 
   bool isValid();
 
@@ -73,6 +74,7 @@ private:
   PlateformDetail *m_PlateformDetail;
 
   QGeoPositionInfoSource *m_GeoPositionInfoSource;
+  int                     m_GeoPositionInfoSource_UpdatesCount;
 
   bool m_Valid;
 

@@ -17,6 +17,7 @@
 #include "../WebApi/WebApiCommand.h"
 
 // Qt includes -----------------------------
+#include <QColor>
 #include <QObject>
 #include <QTime>
 
@@ -80,6 +81,7 @@ public slots:
   QString color_BackgroundNavigator()      const { return "#7fb5be"; }
   QString color_BackgroundTitleRectangle() const { return "#aaaaaa"; }
   QString color_TextLink()                 const { return "#265f8b"; }
+  QString color_TextLink_Pressed()         const { return QColor(color_TextLink()).lighter().name(); }
 
 private slots:
 

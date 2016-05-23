@@ -22,6 +22,7 @@
 #include <QDesktopServices>
 #include <QPointF>
 #include <QUrl>
+#include <QTimer>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -32,6 +33,7 @@ LocationManager::LocationManager(Settings *settings,
     m_Settings(settings),
     m_PlateformDetail(plateformDetail),
     m_GeoPositionInfoSource(NULL),
+    m_GeoPositionInfoSource_UpdatesCount(0),
     m_Valid(false),
     m_QGeoCoordinate()
 {
@@ -49,6 +51,10 @@ LocationManager::LocationManager(Settings *settings,
   else
   {
     m_GeoPositionInfoSource->setUpdateInterval(3000);
+
+    // Set position from last position
+    setFakePosition(m_GeoPositionInfoSource->lastKnownPosition().coordinate());
+
     connect(m_GeoPositionInfoSource,
             SIGNAL(positionUpdated(QGeoPositionInfo)),
             SLOT(slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo)));
@@ -94,18 +100,43 @@ void LocationManager::setFakePosition(double latitude,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void LocationManager::requestLocation()
+void LocationManager::startUpdates()
 {
-//  emit signal_RequestLocation();
-
+  Logger::debug(__FUNCTION__);
   if(m_GeoPositionInfoSource == NULL)
   {
     Logger::warning(tr("Invalid GeoPositionInfoSource"));
     return;
   }
 
+  if(m_GeoPositionInfoSource_UpdatesCount == 0)
+  {
+      QTimer::singleShot(0,
+                         m_GeoPositionInfoSource,
+                         SLOT(startUpdates()));
+  }
+
+  m_GeoPositionInfoSource_UpdatesCount++;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void LocationManager::stopUdates()
+{
   Logger::debug(__FUNCTION__);
-  m_GeoPositionInfoSource->requestUpdate();
+  if(m_GeoPositionInfoSource == NULL)
+  {
+    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    return;
+  }
+
+  if(m_GeoPositionInfoSource_UpdatesCount > 0)
+  {
+    m_GeoPositionInfoSource_UpdatesCount--;
+  }
+
+  if(m_GeoPositionInfoSource_UpdatesCount == 0)
+      m_GeoPositionInfoSource->stopUpdates();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

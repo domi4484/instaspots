@@ -127,6 +127,7 @@ DISTFILES += \
     src/qml/pages-user/Page_User.qml \
     src/qml/views/SpotOverviewDelegate.qml \
     src/qml/widgets/CachedPicture.qml \
+    src/qml/widgets/Link.qml \
     src/qml/widgets/TabButton.qml \
     src/qml/widgets/TabWidget.qml \
     src/qml/widgets/TabWidgetDynamicTab.qml \

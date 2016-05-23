@@ -21,12 +21,14 @@
 
 int main(int argc, char *argv[])
 {
-    Application application(argc,
-                            argv);
+    Application *application = new Application(argc,
+                                               argv);
 
     Logger::info("Application exec.");
-    int exitCode = application.exec();
+    int exitCode = application->exec();
     Logger::info("Application closing...");
+
+    delete application;
 
     return exitCode;
 }

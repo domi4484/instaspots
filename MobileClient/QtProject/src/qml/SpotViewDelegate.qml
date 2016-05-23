@@ -24,30 +24,25 @@ Rectangle {
         width: parent.width - 8
         x: 4
 
-        height: text_Username.height * 2
+        height: link_Username.height * 2
 
         // Username
-        Text{
-            id: text_Username
+        Link{
+            id: link_Username
             width: parent.width / 2
 
-            text:      role_UserUsername
-            color:     hc_Application.color_TextLink()
-            font.bold: true
+            text: role_UserUsername
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    userClicked();
-                }
+            onClicked: {
+                userClicked();
             }
         }
 
         // Time
         Text {
             anchors.top: parent.top
-            anchors.left: text_Username.right
-            width: text_Username.width
+            anchors.left: link_Username.right
+            width: link_Username.width
 
             horizontalAlignment: Text.AlignRight
 
@@ -55,21 +50,17 @@ Rectangle {
         }
 
         // Title
-        Text {
-            id: text_SpotName
-            anchors.top: text_Username.bottom
+        Link {
+            id: link_SpotName
+            anchors.top: link_Username.bottom
             width: parent.width
 
             horizontalAlignment: Text.AlignHCenter
 
             text:  role_SpotName
-            color: hc_Application.color_TextLink()
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    spotClicked();
-                }
+            onClicked: {
+                spotClicked();
             }
         }
     }

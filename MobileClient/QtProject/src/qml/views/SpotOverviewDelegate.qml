@@ -29,11 +29,10 @@ Rectangle {
     Rectangle {
         id: rectangle_Top
 
-        anchors.top:         parent.top
-        anchors.leftMargin:  2
-        anchors.rightMargin: 2
-        width:  parent.width
-        height: text_SpotName.height
+        anchors.top: parent.top
+        width: parent.width - 8
+        x: 4
+        height: text_SpotName.height *2
 
         MouseArea {
             anchors.fill: parent
@@ -48,15 +47,18 @@ Rectangle {
 
             width: parent.width / 2
 
+            anchors.centerIn: parent
+
             color:     hc_Application.color_TextLink()
             text:      role_SpotName
             font.bold: true
+            horizontalAlignment: Text.AlignHCenter
         }
 
 
         // Distance
-        Text{
-            id: text_SpotDistance
+        Link{
+            id: link_SpotDistance
 
             anchors.right: parent.right
             width: parent.width / 2
@@ -65,22 +67,16 @@ Rectangle {
             horizontalAlignment: Text.AlignRight
             text:      role_SpotDistance
 
-            color:     hc_Application.color_TextLink()
-            font.bold: true
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if(role_SpotSecretSpot === false)
-                    {
-                        hc_LocationManager.openLocationOnNativeMapsApp(role_SpotLatitude,
-                                                                       role_SpotLongitude,
-                                                                       role_SpotName);
-                    }
-                    else
-                    {
-                        messageDialog_SecretSpotClicked.open();
-                    }
+            onClicked: {
+                if(role_SpotSecretSpot === false)
+                {
+                    hc_LocationManager.openLocationOnNativeMapsApp(role_SpotLatitude,
+                                                                   role_SpotLongitude,
+                                                                   role_SpotName);
+                }
+                else
+                {
+                    messageDialog_SecretSpotClicked.open();
                 }
             }
         }

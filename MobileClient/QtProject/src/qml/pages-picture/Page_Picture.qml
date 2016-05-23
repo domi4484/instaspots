@@ -70,16 +70,16 @@ Item{
                                                 }
                                 } );
             }
-            onSpotClicked: {
-                stackView.push( {
-                                   item       : Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
-                                   properties : {
-                                                  navigation_Title : role_SpotName,
-                                                  stackView        : stackView,
-                                                  spotId           : role_SpotId
-                                                }
-                                } );
-            }
+//            onSpotClicked: {
+//                stackView.push( {
+//                                   item       : Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
+//                                   properties : {
+//                                                  navigation_Title : role_SpotName,
+//                                                  stackView        : stackView,
+//                                                  spotId           : role_SpotId
+//                                                }
+//                                } );
+//            }
         }
     }
 }

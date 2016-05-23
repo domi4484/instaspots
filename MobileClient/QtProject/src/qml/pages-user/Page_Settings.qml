@@ -227,7 +227,6 @@ Item{
                     {
                         // Request location update
                         console.log("Page_Settings");
-                        hc_LocationManager.requestLocation();
                         return;
                     }
 
