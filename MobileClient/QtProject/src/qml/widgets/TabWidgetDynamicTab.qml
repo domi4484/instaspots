@@ -30,4 +30,20 @@ Item {
         loader.source = tabWidgetDynamicTab_ContentSourceUrl;
         tabWidgetDynamicTab_IsLoaded = true;
     }
+
+    function tabWidget_CurrentTabClicked()
+    {
+        if(loader.item.tabWidget_CurrentTabClicked != null)
+        {
+            loader.item.tabWidget_CurrentTabClicked();
+        }
+    }
+
+    function tabWidget_CurrentTabReclicked()
+    {
+        if(loader.item.tabWidget_CurrentTabReclicked != null)
+        {
+            loader.item.tabWidget_CurrentTabReclicked();
+        }
+    }
 }

@@ -18,17 +18,17 @@ Item {
     // documentation for details on default properties.
     default property alias content: stack.children
 
-    property int current: 0
+    property int currentIndex: 0
 
     property bool tabWidget_TabsOnTheBottom : false
 
-    onCurrentChanged: setOpacities()
+    onCurrentIndexChanged: setOpacities()
     Component.onCompleted: {
-        if(stack.children[current].tabWidget_IsDynamicTab !== null)
+        if(stack.children[currentIndex].tabWidget_IsDynamicTab !== null)
         {
-            if(stack.children[current].tabWidgetDynamicTab_IsLoaded === false)
+            if(stack.children[currentIndex].tabWidgetDynamicTab_IsLoaded === false)
             {
-                stack.children[current].tabWidgetDynamicTab_Load();
+                stack.children[currentIndex].tabWidgetDynamicTab_Load();
             }
         }
 
@@ -40,7 +40,7 @@ Item {
         for (var i = 0; i < stack.children.length; ++i) {
             if(stack.children[i] === item)
             {
-                current = i;
+                currentIndex = i;
                 return;
             }
         }
@@ -49,9 +49,9 @@ Item {
     function setOpacities()
     {
         for (var i = 0; i < stack.children.length; ++i) {
-            stack.children[i].opacity = (i == current ? 1 : 0)
-            stack.children[i].enabled = (i == current)
-            stack.children[i].visible = (i == current)
+            stack.children[i].opacity = (i == currentIndex ? 1 : 0)
+            stack.children[i].enabled = (i == currentIndex)
+            stack.children[i].visible = (i == currentIndex)
         }
     }
 
@@ -85,7 +85,7 @@ Item {
                 lineTopVisible:    true
                 lineBottomVisible: false
 
-                checked: tabWidget.current == index
+                checked: tabWidget.currentIndex == index
                 MouseArea {
                     anchors.fill: parent
                     onClicked:
@@ -106,7 +106,7 @@ Item {
                         }
 
                         // Re-Click
-                        if(tabWidget.current === index)
+                        if(tabWidget.currentIndex === index)
                         {
                             if(stack.children[index].tabWidget_CurrentTabReclicked != null)
                             {
@@ -115,7 +115,7 @@ Item {
                         }
 
                         // Set current tab content
-                        tabWidget.current = index;
+                        tabWidget.currentIndex = index;
                     }
                 }
             }
