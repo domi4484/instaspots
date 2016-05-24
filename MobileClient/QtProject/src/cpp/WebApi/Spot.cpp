@@ -26,8 +26,7 @@ Spot::Spot(QObject *parent)
       m_Name        (""),
       m_Description (""),
       m_SecretSpot  (false),
-      m_Latitude    (0.0),
-      m_Longitude   (0.0),
+      m_Coordinate  (0.0, 0.0),
       m_Distance_km (-1),
       m_PictureUrl1 (""),
       m_PictureUrl2 ("")
@@ -60,10 +59,10 @@ QVariant Spot::spotRole(Spot::SpotRoles role) const
     return m_SecretSpot;
   break;
   case RoleSpotLatitude:
-    return m_Latitude;
+    return m_Coordinate.latitude();
   break;
   case RoleSpotLongitude:
-    return m_Longitude;
+    return m_Coordinate.longitude();
   break;
   case RoleSpotDistance:
     return distanceText();

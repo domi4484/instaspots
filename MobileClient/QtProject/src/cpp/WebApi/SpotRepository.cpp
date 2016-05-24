@@ -92,7 +92,23 @@ int SpotRepository::getNewRequestId()
 
 QList<Spot *> SpotRepository::getSpots(int requestId)
 {
-  return m_QMap_Results.value(requestId);
+    return m_QMap_Results.value(requestId);
+}
+
+Spot *SpotRepository::getBy_SpotId(int spotId)
+{
+  if(spotId < 0)
+      return NULL;
+
+  Spot *spot = m_QMap_Spots.value(spotId, NULL);
+  if(spot == NULL)
+  {
+    spot = new Spot(this);
+    spot->setId(spotId);
+    m_QMap_Spots.insert(spotId, spot);
+  }
+
+  return spot;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

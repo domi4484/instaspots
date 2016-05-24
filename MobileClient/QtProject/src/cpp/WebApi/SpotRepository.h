@@ -45,6 +45,8 @@ public slots:
 
   QList<Spot *> getSpots(int requestId);
 
+  Spot *getBy_SpotId(int spotId);
+
   void getBy_Distance(int requestId,
                       double latitude,
                       double longitude,

@@ -41,7 +41,6 @@ LocationManager::LocationManager(Settings *settings,
   // Set position from last position
   setFakePosition(m_Settings->get_Location_LastCoordinate());
 
-
   m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
 
   if (m_GeoPositionInfoSource == NULL)
@@ -51,9 +50,6 @@ LocationManager::LocationManager(Settings *settings,
   else
   {
     m_GeoPositionInfoSource->setUpdateInterval(3000);
-
-    // Set position from last position
-    setFakePosition(m_GeoPositionInfoSource->lastKnownPosition().coordinate());
 
     connect(m_GeoPositionInfoSource,
             SIGNAL(positionUpdated(QGeoPositionInfo)),
