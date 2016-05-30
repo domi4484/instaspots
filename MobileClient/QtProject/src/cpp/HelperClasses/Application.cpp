@@ -113,19 +113,12 @@ Application::Application(int argc, char *argv[]) :
   QTimer::singleShot(0.0,
                      this,
                      SLOT(slot_LoadQml()));
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Application::~Application()
 {
-  // Set and save settings
-  m_Settings->set_Application_LastVersion(QApplication::applicationVersion());
-  m_Settings->set_Logger_LogLevel(Logger::instance()->getLogLevel());
-  m_Settings->set_Location_LastCoordinate(m_LocationManager->coordinate());
-  m_Settings->sync();
-
   // Delete objects
   delete m_QQmlApplicationEngine;
   delete m_PictureUploader;
@@ -144,10 +137,40 @@ Application::~Application()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Application::slot_QApplication_applicationStateChanged(Qt::ApplicationState applicationState)
+{
+  if(applicationState == Qt::ApplicationSuspended)
+  {
+    Logger::info("Application suspended.");
+
+    saveSettings();
+  }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::slot_QApplication_aboutToQuit()
+{
+  Logger::info("Application closing...");
+
+  saveSettings();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Application::slot_LoadQml()
 {
   Logger::info("Load main.qml...");
   m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
+
+  QObject::connect(this,
+                   SIGNAL(applicationStateChanged(Qt::ApplicationState)),
+                   this,
+                   SLOT(slot_QApplication_applicationStateChanged(Qt::ApplicationState)));
+  QObject::connect(this,
+                   SIGNAL(aboutToQuit()),
+                   this,
+                   SLOT(slot_QApplication_aboutToQuit()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -191,4 +214,15 @@ QMap<QString, QVariant> Application::parseCommandLineArguments()
   qMap_Arguments.insert(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE, qCommandLineParser.isSet(qCommandLineOption_development));
 
   return qMap_Arguments;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::saveSettings()
+{
+  // Set and save settings
+  m_Settings->set_Application_LastVersion(QApplication::applicationVersion());
+  m_Settings->set_Logger_LogLevel(Logger::instance()->getLogLevel());
+  m_Settings->set_Location_LastCoordinate(m_LocationManager->coordinate());
+  m_Settings->sync();
 }

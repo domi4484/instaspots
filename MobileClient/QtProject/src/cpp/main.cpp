@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 
     Logger::info("Application exec.");
     int exitCode = application->exec();
-    Logger::info("Application closing...");
 
     delete application;
 
