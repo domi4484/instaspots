@@ -40,12 +40,17 @@ Item{
 
     GridView{
         id: gridView_Pictures
-        anchors.fill: parent
 
-        cellWidth: parent.width / 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:  parent.width + 2
+        height: parent.height
+
+        cellWidth:  width / 2
         cellHeight: cellWidth
 
         delegate: component_Picture
+
+
     }
 
 
@@ -55,12 +60,16 @@ Item{
         id: component_Picture
 
         Item {
-            width: gridView_Pictures.cellWidth
+            width:  gridView_Pictures.cellWidth
             height: gridView_Pictures.cellHeight
 
             CachedPicture {
                 id: image_Picture
-                anchors.fill: parent
+
+                anchors.centerIn: parent
+                width:  parent.width  - 2
+                height: parent.height - 2
+
                 sourceUrl: role_PictureUrl
                 MouseArea {
                     anchors.fill: parent
