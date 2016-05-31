@@ -116,6 +116,8 @@ Item{
             messageDialog.title   = qsTr("Problem reported");
             messageDialog.text    = qsTr("Thank you for reporting.");
             messageDialog.visible = true;
+
+            textArea_ProblemDescription.text = "";
         }
     }
 }
