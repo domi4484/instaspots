@@ -24,7 +24,8 @@ class NewsController extends Controller
   public function downloadAction()
   {
     $listPlatforms = array(
-      array('title' => 'Android', 'link' => 'link'),
+      array('title' => 'Android', 'link' => 'downloads/android/Lowerspot_V0-0-7.apk'),
+      array('title' => 'Android', 'link' => 'downloads/android/Lowerspot_V0-0-6.apk'),
       array('title' => 'Source',  'link' => 'https://github.com/domi4484/lowerspot')
     );
 
