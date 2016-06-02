@@ -39,7 +39,6 @@ private slots:
 
   void slot_QApplication_applicationStateChanged(Qt::ApplicationState applicationState);
   void slot_QApplication_aboutToQuit();
-  void slot_LoadQml();
   void slot_QmlApplicationEngine_objectCreated(QObject*, QUrl);
 
 private:

@@ -106,13 +106,21 @@ Application::Application(int argc, char *argv[]) :
   qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
   qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
 
+  QObject::connect(this,
+                   SIGNAL(applicationStateChanged(Qt::ApplicationState)),
+                   this,
+                   SLOT(slot_QApplication_applicationStateChanged(Qt::ApplicationState)));
+  QObject::connect(this,
+                   SIGNAL(aboutToQuit()),
+                   this,
+                   SLOT(slot_QApplication_aboutToQuit()));
+
   QObject::connect(m_QQmlApplicationEngine,
                    SIGNAL(objectCreated(QObject*,QUrl)),
                    SLOT(slot_QmlApplicationEngine_objectCreated(QObject*,QUrl)));
 
-  QTimer::singleShot(0.0,
-                     this,
-                     SLOT(slot_LoadQml()));
+  Logger::info("Load main.qml...");
+  m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -154,23 +162,6 @@ void Application::slot_QApplication_aboutToQuit()
   Logger::info("Application closing...");
 
   saveSettings();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Application::slot_LoadQml()
-{
-  Logger::info("Load main.qml...");
-  m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
-
-  QObject::connect(this,
-                   SIGNAL(applicationStateChanged(Qt::ApplicationState)),
-                   this,
-                   SLOT(slot_QApplication_applicationStateChanged(Qt::ApplicationState)));
-  QObject::connect(this,
-                   SIGNAL(aboutToQuit()),
-                   this,
-                   SLOT(slot_QApplication_aboutToQuit()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
