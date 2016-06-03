@@ -8,16 +8,20 @@
 
   <h2>Download</h2>
 
+  <h3>Android</h3>
   <ul>
-    {% for platform in listPlatforms %}
       <li>
-        <a href="{{ platform.link }}">
-          {{ platform.title }}
+        <a href="https://lowerspot.com/web/downloads/android/Lowerspot_V0-0-7.apk">Lowerspot_V0-0-7.apk
         </a>
       </li>
-    {% else %}
-      <li>Pas (encore !) d'annonces</li>
-    {% endfor %}
+  </ul>
+  
+  <h3>Source code</h3>
+  <ul>
+      <li>
+        <a href="https://github.com/domi4484/lowerspot" target="_blank">Github repository
+        </a>
+      </li>
   </ul>
 
 {% endblock %}

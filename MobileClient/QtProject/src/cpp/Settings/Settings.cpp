@@ -147,8 +147,8 @@ void Settings::set_User_LoggedIn(bool loggedIn)
 
 QGeoCoordinate Settings::get_Location_LastCoordinate() const
 {
-  return QGeoCoordinate(QSettings::value(LOCATION_LAST_LATITUDE,  0.0).toDouble(),
-                        QSettings::value(LOCATION_LAST_LONGITUDE, 0.0).toDouble());
+  return QGeoCoordinate(QSettings::value(LOCATION_LAST_LATITUDE,  46.528742).toDouble(),
+                        QSettings::value(LOCATION_LAST_LONGITUDE, 8.624216 ).toDouble());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

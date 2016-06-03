@@ -23,14 +23,7 @@ class NewsController extends Controller
 
   public function downloadAction()
   {
-    $listPlatforms = array(
-      array('title' => 'Android', 'link' => 'downloads/android/Lowerspot_V0-0-7.apk'),
-      array('title' => 'Android', 'link' => 'downloads/android/Lowerspot_V0-0-6.apk'),
-      array('title' => 'Source',  'link' => 'https://github.com/domi4484/lowerspot')
-    );
-
-    return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig',
-                         array('listPlatforms' => $listPlatforms));
+    return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig');
   }
 
   public function viewAction($id)

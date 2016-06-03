@@ -46,7 +46,7 @@ Item{
         anchors.fill: parent
 
         plugin: myPlugin;
-        zoomLevel: 18
+        zoomLevel: 17
 
         Component.onCompleted: {
             center = hc_LocationManager.coordinate
