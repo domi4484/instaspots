@@ -136,20 +136,6 @@ Item{
                 onCheckedChanged: wa_PictureUploader.setSecretSpot(checked)
             }
         }
-
-        // Spot description
-        Text{
-            text: qsTr("Spot description")
-        }
-    }
-    TextArea{
-        id: textArea_Description
-
-        width: parent.width / 1.1
-        anchors.top:    column.bottom
-        anchors.bottom: button_UploadNewSpot.top
-        anchors.bottomMargin: 5
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Button{
@@ -163,7 +149,7 @@ Item{
 
         onClicked: {
             wa_PictureUploader.setName(textField_SpotName.text);
-            wa_PictureUploader.setDescription(textArea_Description.text);
+            wa_PictureUploader.setDescription("");
             if(wa_PictureUploader.execute() === false)
             {
                 messageDialog_Error.text = wa_PictureUploader.lastErrorText();
