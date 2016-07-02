@@ -34,13 +34,27 @@ Item {
             if(visible == false)
                 return;
 
-            spotsModel.setLocation(hc_LocationManager.latitude(),
-                                   hc_LocationManager.longitude(),
-                                   150);
+            if(   page_SpotsList.listView_Moving === false
+               && page_SpotsList.listView_YPosition <= 20)
+              spotsModel.updateLocation(hc_LocationManager.coordinate);
+        }
+    }
+
+    Connections {
+        target: page_SpotsList
+        onSignal_listView_atYBeginning:
+        {
+            spotsModel.updateLocation(hc_LocationManager.coordinate);
         }
     }
 
     // Slots -------------------------------
+    Component.onCompleted: {
+        // Set current location (also if outdated)
+        spotsModel.getBy_Distance(hc_LocationManager.coordinate,
+                                  150);
+    }
+
     onVisibleChanged: {
         if(visible == false)
         {
@@ -49,9 +63,7 @@ Item {
         }
 
         // Set current location (also if outdated)
-        spotsModel.setLocation(hc_LocationManager.latitude(),
-                               hc_LocationManager.longitude(),
-                               150);
+        spotsModel.updateLocation(hc_LocationManager.coordinate);
 
         // Request location update
         hc_LocationManager.startUpdates();
@@ -109,6 +121,8 @@ Item {
                              event.accepted = true;
                          }
         initialItem: Page_SpotsList {
+            id: page_SpotsList
+
             width : parent.width
             height: parent.height
 

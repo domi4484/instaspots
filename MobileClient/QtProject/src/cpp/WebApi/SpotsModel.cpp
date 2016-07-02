@@ -22,10 +22,16 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+const double SpotsModel::_CONST::MIN_DISTANCE_BETWEEN_UPDATES_KM (0.005);
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 SpotsModel::SpotsModel(QObject *parent) :
     QAbstractListModel(parent),
     m_QList_Spots(),
-    m_RequestId(0)
+    m_RequestId(0),
+    m_QGeoCoordinate_Location(),
+    m_MaxDistance_km(0)
 {
     m_RequestId = SpotRepository::instance()->getNewRequestId();
 
@@ -84,12 +90,31 @@ void SpotsModel::setUserId(int id)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void SpotsModel::setLocation(double latitude, double longitude, double maxDistance_km)
+void SpotsModel::getBy_Distance(const QGeoCoordinate &coordinate,
+                                double maxDistance_km)
 {
-    SpotRepository::instance()->getBy_Distance(m_RequestId,
-                                               latitude,
-                                               longitude,
-                                               maxDistance_km);
+  m_QGeoCoordinate_Location = coordinate;
+  m_MaxDistance_km          = maxDistance_km;
+
+  SpotRepository::instance()->getBy_Distance(m_RequestId,
+                                             m_QGeoCoordinate_Location.latitude(),
+                                             m_QGeoCoordinate_Location.longitude(),
+                                             maxDistance_km);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotsModel::updateLocation(const QGeoCoordinate &coordinate)
+{
+  if(m_QGeoCoordinate_Location.distanceTo(coordinate) < _CONST::MIN_DISTANCE_BETWEEN_UPDATES_KM * 1000.0)
+    return;
+
+  m_QGeoCoordinate_Location = coordinate;
+
+  SpotRepository::instance()->getBy_Distance(m_RequestId,
+                                             m_QGeoCoordinate_Location.latitude(),
+                                             m_QGeoCoordinate_Location.longitude(),
+                                             m_MaxDistance_km);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

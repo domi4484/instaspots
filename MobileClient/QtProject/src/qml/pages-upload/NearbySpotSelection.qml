@@ -37,6 +37,20 @@ Item{
     property bool   navigation_MenuButtonVisible:     false
 
 
+    // Signals -----------------------------
+
+    Connections {
+        target: hc_LocationManager
+        onSignal_Coordinate_changed:
+        {
+            if(visible == false)
+                return;
+
+            spotsModel.updateLocation(hc_LocationManager.coordinate);
+        }
+    }
+
+
     // Gui ---------------------------------
 
     Button{
@@ -65,9 +79,8 @@ Item{
         model: spotsModel
 
         Component.onCompleted: {
-            spotsModel.setLocation(wa_PictureUploader.coordinate.latitude,
-                                   wa_PictureUploader.coordinate.longitude,
-                                   2);
+            spotsModel.getBy_Distance(wa_PictureUploader.coordinate,
+                                      2);
         }
 
         onSpotClicked: {

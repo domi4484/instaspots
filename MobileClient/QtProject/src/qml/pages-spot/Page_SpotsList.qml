@@ -31,6 +31,8 @@ Item{
     // Bind properties ---------------------
 
     property alias model: listView.model
+    property alias listView_YPosition   : listView.contentY
+    property alias listView_Moving      : listView.moving
 
 
     // Signals -----------------------------
@@ -38,6 +40,8 @@ Item{
     signal spotClicked(int    spotId,
                        string spotName,
                        string spotDescription)
+
+    signal signal_listView_atYBeginning()
 
     // Gui ---------------------------------
 
@@ -51,6 +55,14 @@ Item{
                                            role_SpotName,
                                            role_SpotDescription);
             }
+        }
+
+        onAtYBeginningChanged:
+        {
+            if(atYBeginning === false)
+                return;
+
+            signal_listView_atYBeginning();
         }
     }
 }
