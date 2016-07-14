@@ -14,6 +14,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import QtPositioning 5.2
+import QtLocation    5.6
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
@@ -81,37 +82,12 @@ ApplicationWindow {
         }
     }
 
-/*    // Positioning
-    PositionSource {
-        id: positionSource
-        onPositionChanged:
-        {
-            if(positionSource.valid === false)
-            {
-                hc_Logger.slot_error("PositionSource invalid source");
-                return;
-            }
 
-            if(positionSource.sourceError !== PositionSource.NoError)
-            {
-                hc_Logger.slot_error("PositionSource source error: " + positionSource.sourceError);
-                return;
-            }
 
-            if(   position.latitudeValid  === false
-               || position.longitudeValid === false)
-            {
-                hc_Logger.slot_error("PositionSource invalid position");
-                return;
-            }
-
-            hc_LocationManager.setFakePosition(position.coordinate.latitude,
-                                               position.coordinate.longitude)
-        }
+    Plugin {
+        id: plugin_MapBox
+        name: "mapbox"
+        PluginParameter { name: "mapbox.access_token"; value: hc_LocationManager.mapboxAccessToken() }
+        PluginParameter { name: "mapbox.map_id";       value: "mapbox.streets" }
     }
-
-    Connections{
-        target: hc_LocationManager
-        onSignal_RequestLocation: positionSource.update()
-    }*/
 }

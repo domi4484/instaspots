@@ -42,7 +42,7 @@ Settings::Settings(QObject *parent) :
   QSettings(parent),
   m_SimpleCrypt()
 {
-  m_SimpleCrypt.setKey(CONST_SECRETKEY);
+  m_SimpleCrypt.setKey(CONST_SETTINGS_SECRETKEY);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "../Settings/Settings.h"
+#include "../Settings/Secret.h"
 #include "PlateformDetail.h"
 #include "Logger.h"
 
@@ -161,6 +162,13 @@ double LocationManager::longitude()
 QGeoCoordinate LocationManager::coordinate()
 {
   return m_QGeoCoordinate;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QByteArray LocationManager::mapboxAccessToken() const
+{
+  return CONST_MAPBOX_ACCESSTOKEN.toLatin1();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

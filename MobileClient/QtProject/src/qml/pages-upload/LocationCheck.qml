@@ -31,21 +31,13 @@ Item{
     property bool   navigation_ContinueButtonVisible: false
     property bool   navigation_MenuButtonVisible:     false
 
-
-    // Map properties
-
-    Plugin {
-        id: myPlugin
-        name: "osm"
-    }
-
     // Gui ---------------------------------
 
     Map {
         id: map
         anchors.fill: parent
 
-        plugin: myPlugin;
+        plugin: plugin_MapBox;
         zoomLevel: 17
 
         Component.onCompleted: {

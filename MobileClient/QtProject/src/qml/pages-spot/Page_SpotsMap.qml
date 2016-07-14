@@ -42,21 +42,13 @@ Item {
                        string spotDescription)
 
 
-    // Map properties
-
-    Plugin {
-        id: myPlugin
-        name: "osm"
-        PluginParameter { name: "osm.useragent"; value: "My great Qt OSM application" }
-    }
-
     // Gui ---------------------------------
 
     Map {
         id: map
         anchors.fill: parent
 
-        plugin: myPlugin;
+        plugin: plugin_MapBox;
         zoomLevel: 8
 
         Component.onCompleted: {

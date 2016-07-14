@@ -16,6 +16,7 @@
 #include <QObject>
 #include <QGeoPositionInfoSource>
 
+
 // Forward declarations --------------------
 class Settings;
 class PlateformDetail;
@@ -24,7 +25,7 @@ class LocationManager : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(QGeoCoordinate coordinate  READ coordinate  NOTIFY signal_Coordinate_changed )
+  Q_PROPERTY(QGeoCoordinate coordinate        READ coordinate  NOTIFY signal_Coordinate_changed )
 
 public:
   explicit LocationManager(Settings *settings,
@@ -53,6 +54,8 @@ public slots:
   double longitude();
 
   QGeoCoordinate coordinate();
+
+  QByteArray mapboxAccessToken() const;
 
   qreal computeDistance(const QPointF &point1,
                         const QPointF &point2);
