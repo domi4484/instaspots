@@ -24,11 +24,6 @@ import "qrc:/qml/pages-spot/"
 Item{
     id: nearbySpotSelection
 
-    SpotsModel{
-        id: spotsModel
-    }
-
-
     // Navigation properties ---------------
 
     property string navigation_Title:                 qsTr("Spot selection")
@@ -46,7 +41,7 @@ Item{
             if(visible == false)
                 return;
 
-            spotsModel.updateLocation(hc_LocationManager.coordinate);
+            spotsModel_NearbySpotSelection.updateLocation(hc_LocationManager.coordinate);
         }
     }
 
@@ -76,12 +71,7 @@ Item{
         width: parent.width
         anchors.top: button_AddNewSpot.bottom
         anchors.bottom: parent.bottom
-        model: spotsModel
-
-        Component.onCompleted: {
-            spotsModel.getBy_Distance(wa_PictureUploader.coordinate,
-                                      2);
-        }
+        model: spotsModel_NearbySpotSelection
 
         onSpotClicked: {
             wa_PictureUploader.setNewSpot(false);

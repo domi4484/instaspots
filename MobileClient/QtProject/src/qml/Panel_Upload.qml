@@ -15,11 +15,18 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 import QtMultimedia 5.4
 
+// Project c++ imports ---------------------
+import SpotsModel 1.0
+
 // Project qml imports ---------------------
 import "qrc:/qml/declarative-camera"
 import "qrc:/qml/pages-upload"
 
 Item {
+
+    SpotsModel{
+        id: spotsModel_NearbySpotSelection
+    }
 
 
     // Pages -------------------------------
@@ -141,8 +148,12 @@ Item {
 
     onVisibleChanged: {
         if(visible == false)
+        {
+            hc_LocationManager.stopUdates();
             return;
+        }
 
+        // Is user logged in?
         if(wa_User.isConnected() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/qml/pages-user/Page_SignIn.qml");
@@ -154,5 +165,12 @@ Item {
                              } );
             return;
         }
+
+        // Set current location (also if outdated)
+        spotsModel_NearbySpotSelection.getBy_Distance(hc_LocationManager.coordinate,
+                                                      2);
+
+        // Request location update
+        hc_LocationManager.startUpdates();
     }
 }

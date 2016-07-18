@@ -87,7 +87,8 @@ ApplicationWindow {
     Plugin {
         id: plugin_MapBox
         name: "mapbox"
-        PluginParameter { name: "mapbox.access_token"; value: hc_LocationManager.mapboxAccessToken() }
-        PluginParameter { name: "mapbox.map_id";       value: "mapbox.streets" }
+     //   PluginParameter { name: "mapbox.access_token"; value: co_MapBoxAccessToken }
+        PluginParameter { name: "mapbox.access_token"; value: "pk.eyJ1IjoiZG9taTQ0ODQiLCJhIjoiY2lxbWliZWp1MDAyNGkzbWF6Z243cDVzaCJ9.7YhZjI_5rduDr_S4bn07FA" }
+        PluginParameter { name: "mapbox.map_id";       value: "mapbox.streets"     }
     }
 }

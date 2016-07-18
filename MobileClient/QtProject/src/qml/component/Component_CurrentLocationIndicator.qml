@@ -34,14 +34,14 @@ MapQuickItem {
             OpacityAnimator {
                 target: image_CurrentLocation;
                 from: 1;
-                to:   0.2;
-                duration: 1500
+                to:   0.6;
+                duration: 900
             }
             OpacityAnimator {
                 target: image_CurrentLocation;
-                from: 0.2;
+                from: 0.6;
                 to:   1;
-                duration: 1500
+                duration: 900
             }
         }
 

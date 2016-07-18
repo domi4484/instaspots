@@ -44,6 +44,8 @@ Item{
             center = hc_LocationManager.coordinate
 
             mapQuickItem_SpotLocation.coordinate = hc_LocationManager.coordinate
+
+            spotsModel_NearbySpotSelection.updateLocation(hc_LocationManager.coordinate);
         }
 
         onVisibleChanged: {
@@ -56,7 +58,11 @@ Item{
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                // Set cursor location
                 mapQuickItem_SpotLocation.coordinate = map.toCoordinate(Qt.point(mouseX, mouseY), false);
+
+                // Update the nearby spot model
+                spotsModel_NearbySpotSelection.updateLocation(mapQuickItem_SpotLocation.coordinate);
             }
         }
 

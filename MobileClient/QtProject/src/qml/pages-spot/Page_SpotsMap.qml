@@ -75,8 +75,8 @@ Item {
 
                     Image {
                         id: image;
-                        width:  40
-                        height: 40
+                        width:  Math.min(5 * map.zoomLevel, 40)  // default 40px at zoomLevel 8
+                        height: Math.min(5 * map.zoomLevel, 40)
                         source: "qrc:/icon/icon/find-location.png"
 
                         MouseArea {
