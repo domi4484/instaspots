@@ -122,6 +122,8 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
     return;
   }
 
+  if(m_QList_Pictures != PictureRepository::instance()->getPictures(m_RequestId))
+  {
   QAbstractItemModel::beginResetModel();
   m_QList_Pictures.clear();
   QAbstractItemModel::endResetModel();
@@ -135,6 +137,7 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
   }
 
   countChanged(m_QList_Pictures.count());
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

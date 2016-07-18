@@ -106,5 +106,6 @@ Item {
                        immediate: true});
 
         page_PicturesList.model.getNewestSpots();
+        page_PicturesList.listView_positionViewAtBeginning();
     }
 }

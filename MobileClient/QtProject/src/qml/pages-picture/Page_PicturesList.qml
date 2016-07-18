@@ -50,6 +50,13 @@ Item{
     signal spotClicked(int spotId, string spotName)
 
 
+    // Methods -----------------------------
+
+    function listView_positionViewAtBeginning()
+    {
+        listView.positionViewAtBeginning();
+    }
+
     // Gui ---------------------------------
 
     ListView {

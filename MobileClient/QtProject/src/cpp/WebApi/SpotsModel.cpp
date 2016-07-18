@@ -131,19 +131,21 @@ void SpotsModel::slot_SpotRepository_DataReady(int requestId,
     return;
   }
 
-  QAbstractItemModel::beginResetModel();
-  m_QList_Spots.clear();
-  QAbstractItemModel::endResetModel();
-
-  int newCount =SpotRepository::instance()->getSpots(m_RequestId).size();
-  if(newCount > 0)
+  if(m_QList_Spots != SpotRepository::instance()->getSpots(m_RequestId))
   {
-    QAbstractItemModel::beginInsertRows(QModelIndex() , 0, SpotRepository::instance()->getSpots(m_RequestId).size()-1);
-    m_QList_Spots = SpotRepository::instance()->getSpots(m_RequestId);
-    QAbstractItemModel::endInsertRows();
+    QAbstractItemModel::beginResetModel();
+    m_QList_Spots.clear();
+    QAbstractItemModel::endResetModel();
+
+    int newCount =SpotRepository::instance()->getSpots(m_RequestId).size();
+    if(newCount > 0)
+    {
+      QAbstractItemModel::beginInsertRows(QModelIndex() , 0, SpotRepository::instance()->getSpots(m_RequestId).size()-1);
+      m_QList_Spots = SpotRepository::instance()->getSpots(m_RequestId);
+      QAbstractItemModel::endInsertRows();
+    }
+    countChanged(m_QList_Spots.count());
   }
-    
-  countChanged(m_QList_Spots.count());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

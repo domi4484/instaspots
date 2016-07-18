@@ -30,7 +30,7 @@ Item{
 
     // Bind properties ---------------------
 
-    property alias model: listView.model
+    property alias model                : listView.model
     property alias listView_YPosition   : listView.contentY
     property alias listView_Moving      : listView.moving
 

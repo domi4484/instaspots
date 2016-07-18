@@ -95,6 +95,8 @@ QList<Spot *> SpotRepository::getSpots(int requestId)
     return m_QMap_Results.value(requestId);
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
 Spot *SpotRepository::getBy_SpotId(int spotId)
 {
   if(spotId < 0)
