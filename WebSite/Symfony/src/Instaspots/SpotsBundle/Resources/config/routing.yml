@@ -7,10 +7,14 @@ instaspots_spots_home:
     path:     /
     defaults: { _controller: InstaspotsSpotsBundle:News:index }
 
+instaspots_spots_news:
+    path:     /
+    defaults: { _controller: InstaspotsSpotsBundle:News:news }
+
 instaspots_spots_download:
     path:     /download
     defaults: { _controller: InstaspotsSpotsBundle:News:download }
-    
+
 instaspots_spots_view:
     path:     /advert/{id}
     defaults: { _controller: InstaspotsSpotsBundle:News:view }
@@ -18,4 +22,3 @@ instaspots_spots_view:
 instaspots_spots_add:
     path:     /add
     defaults: { _controller: InstaspotsSpotsBundle:News:add }
-

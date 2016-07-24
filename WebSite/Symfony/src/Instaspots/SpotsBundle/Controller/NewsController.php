@@ -11,20 +11,31 @@ class NewsController extends Controller
 {
   public function indexAction()
   {
+    return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig');
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function newsAction()
+  {
     $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('InstaspotsSpotsBundle:Picture');
 
     $pictures = $repository->getPicturesByNewest();
 
-    return $this->render('InstaspotsSpotsBundle:Advert:index.html.twig',
+    return $this->render('InstaspotsSpotsBundle:Advert:news.html.twig',
                          array('listPictures' => $pictures));
   }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
 
   public function downloadAction()
   {
     return $this->render('InstaspotsSpotsBundle:Advert:download.html.twig');
   }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
 
   public function viewAction($id)
   {
@@ -40,6 +51,8 @@ class NewsController extends Controller
 
     return new Response("Affichage de l'annonce d'id : ".$spot->getName());
   }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
 
   public function menuAction($limit)
   {

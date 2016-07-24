@@ -1,28 +1,17 @@
 {% extends "InstaspotsSpotsBundle::layout.html.twig" %}
 
 {% block title %}
-   {{ parent() }} - News
+   {{ parent() }}
 {% endblock %}
 
 {% block ocplatform_body %}
 
-  <h2>News</h2>
+  <h2>Lowerspot</h2>
 
-  <ul>
-    {% for picture in listPictures %}
+  <p>Lowerspot is an application to keep track of your skate spots and search for new ones. The app has a “Secret Spot” feature that permit publishing a spot without revealing its precise position. This is tough to push the contact with local skaters when visiting a foreign city. Contact damiano@lowerspot.com for any question or suggestion. Download on http://lowerspot.com/download</p>
 
-      <div class="panel panel-default">
-        <div class="panel-heading"><a href="{{ path('instaspots_spots_view', {'id': picture.spot.id}) }}">
-          {{ picture.spot.name }}
-        </a> by {{ picture.user.username }}, the {{ picture.created|date('d/m/Y') }}</div>
-        <div class="panel-body">
-          <img src="{{ picture.getUrl }}" alt="{{ picture.spot.name }}" style="width:640px;height:640px;">
-        </div>
-      </div>
+  <h3>News</h3>
 
-    {% else %}
-      <li>No spots found</li>
-    {% endfor %}
-  </ul>
+  <p>The application starts on the News view. There you can see the last spots that were uploaded on Lowerspot, with no regard of location, uploading user or spot type.</p>
 
 {% endblock %}
