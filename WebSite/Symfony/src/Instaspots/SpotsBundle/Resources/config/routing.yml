@@ -8,7 +8,7 @@ instaspots_spots_home:
     defaults: { _controller: InstaspotsSpotsBundle:News:index }
 
 instaspots_spots_news:
-    path:     /
+    path:     /news
     defaults: { _controller: InstaspotsSpotsBundle:News:news }
 
 instaspots_spots_download:
