@@ -82,6 +82,13 @@ ApplicationWindow {
         }
     }
 
+    // Message dialogs ---------------------
+    MessageDialog{
+        id: messageDialog_SecretSpotClicked
+        title: qsTr('Secret spot')
+        text: qsTr('The precise location of a secret spot is not displayed. To find the spot try to ask some local skaters.')
+    }
+
 
 
     Plugin {

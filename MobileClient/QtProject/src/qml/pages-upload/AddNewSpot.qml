@@ -16,6 +16,7 @@ import QtQuick.Dialogs 1.2
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
+import "qrc:/qml/component/"
 
 Item{
     id: addNewSpot
@@ -95,47 +96,55 @@ Item{
         }
 
         // Secret spot
-        Item{
+        Component_TagSwitch{
             anchors.left:  parent.left
             anchors.right: parent.right
 
-            height: switch_SecretSpot.height
+            text: qsTr("Secret spot")
+            helpButtonVisible: true
 
-            Text{
-                id: text_SecretSpot
-
-                anchors.left: parent.left
-
-                text: qsTr("Secret spot")
-            }
-
-            ToolButton{
-                anchors.left:           text_SecretSpot.right
-                anchors.verticalCenter: text_SecretSpot.verticalCenter
-                height: parent.height
-                width : height
-
-                Image {
-                    anchors.fill:    parent
-                    anchors.margins: 2
-
-                    smooth: true
-                    source: "qrc:/icon/icon/dialog-question.png"
-                }
-
-                onClicked: messageDialog_Help.open()
-            }
-
-            Switch{
-                id: switch_SecretSpot
-
-                anchors.right:          parent.right
-                anchors.verticalCenter: text_SecretSpot.verticalCenter
-
-                checked: false
-                onCheckedChanged: wa_PictureUploader.setSecretSpot(checked)
-            }
+            onCheckedChanged:   wa_PictureUploader.setSecretSpot(checked)
+            onHelpButtonClicked: messageDialog_Help.open()
         }
+
+        // Skatepark
+        Component_TagSwitch{
+            anchors.left:  parent.left
+            anchors.right: parent.right
+
+            text: qsTr("Skatepark")
+        }
+
+        // Street
+        Component_TagSwitch{
+            anchors.left:  parent.left
+            anchors.right: parent.right
+
+            text: qsTr("Street")
+        }
+
+        // Miniramp
+        Component_TagSwitch{
+            anchors.left:  parent.left
+            anchors.right: parent.right
+
+            text: qsTr("Miniramp")
+        }
+
+        // Bowl
+        Component_TagSwitch{
+            anchors.left:  parent.left
+            anchors.right: parent.right
+
+            text: qsTr("Bowl")
+        }
+
+        // Transition: Categorie Bowl, miniramp, vert, microramp, quarter, wallride
+        // Categoria rail Handrail, flatrail
+        // Ledge curb
+        // Stairs
+        // Bank
+
     }
 
     Button{

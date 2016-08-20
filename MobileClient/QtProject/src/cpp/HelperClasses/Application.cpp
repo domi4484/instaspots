@@ -18,6 +18,7 @@
 #include "PlateformDetail.h"
 #include "LocationManager.h"
 #include "PictureCacher.h"
+#include "UltraQmlAccessManagerFactory.h"
 #include "../Settings/Settings.h"
 #include "../WebApi/SpotRepository.h"
 #include "../WebApi/SpotsModel.h"
@@ -54,7 +55,7 @@ Application::Application(int argc, char *argv[]) :
   QApplication::setOrganizationName   ("Lowerspot");
   QApplication::setOrganizationDomain ("lowerspot.com");
   QApplication::setApplicationName    ("Lowerspot");
-  QApplication::setApplicationVersion ("V0.0.7");
+  QApplication::setApplicationVersion ("V0.0.8");
 
   // Command line arguments
   QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
@@ -87,7 +88,15 @@ Application::Application(int argc, char *argv[]) :
                     this);
   m_PictureUploader = new PictureUploader(this);
 
+  // Custom network access factory
+  m_UltraQmlAccessManagerFactory  = new UltraQmlAccessManagerFactory();
+
+  // QML Engine
   m_QQmlApplicationEngine = new QQmlApplicationEngine();
+
+  m_QQmlApplicationEngine->setNetworkAccessManagerFactory(m_UltraQmlAccessManagerFactory);
+
+
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Application",       m_ApplicationHelper);
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_PlateformDetail",   m_PlateformDetail);
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_LocationManager",   m_LocationManager);

@@ -93,11 +93,11 @@ Item{
             horizontalAlignment: Text.AlignRight
 
             onClicked: {
-                if(role_SpotSecretSpot === false)
+                if(spot.secretSpot === false)
                 {
-                    hc_LocationManager.openLocationOnNativeMapsApp(role_SpotLatitude,
-                                                                   role_SpotLongitude,
-                                                                   role_SpotName);
+                    hc_LocationManager.openLocationOnNativeMapsApp(spot.latitude,
+                                                                   spot.longitude,
+                                                                   spot.name);
                 }
                 else
                 {

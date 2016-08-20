@@ -62,7 +62,9 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
     src/cpp/WebApi/SpotsModel.cpp \
     src/cpp/External/SimpleCrypt.cpp \
-    src/cpp/HelperClasses/Application.cpp
+    src/cpp/HelperClasses/Application.cpp \
+    src/cpp/HelperClasses/UltraQmlAccessManagerFactory.cpp \
+    src/cpp/HelperClasses/UltraNetworkAccessManager.cpp
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
@@ -86,7 +88,9 @@ HEADERS += \
     src/cpp/WebApi/PicturesModel.h \
     src/cpp/WebApi/SpotsModel.h \
     src/cpp/External/SimpleCrypt.h \
-    src/cpp/HelperClasses/Application.h
+    src/cpp/HelperClasses/Application.h \
+    src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
+    src/cpp/HelperClasses/UltraNetworkAccessManager.h
 
 RESOURCES += src/qml.qrc
 
@@ -132,8 +136,10 @@ DISTFILES += \
     src/qml/widgets/TabWidget.qml \
     src/qml/widgets/TabWidgetDynamicTab.qml \
     src/qml/pages-picture/Page_Picture.qml \
-    src/qml/component/Component_PicturesGrid.qml \
+    src/qml/component/Component_Dialog.qml \
     src/qml/component/Component_CurrentLocationIndicator.qml \
+    src/qml/component/Component_PicturesGrid.qml \
+    src/qml/component/Component_TagSwitch.qml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/gradlew.bat \

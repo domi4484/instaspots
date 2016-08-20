@@ -109,7 +109,7 @@ WebApi *WebApi::s_Instance(NULL);
 WebApi::WebApi() :
   QObject(),
   m_Url(URL_PRODUCTION),
-  m_QNetworkAccessManager(),
+  m_UltraNetworkAccessManager(),
   m_CommandsIdCounter(0),
   m_RunningCommands()
 {
@@ -353,7 +353,14 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
   int commandId = m_CommandsIdCounter++;
   m_RunningCommands.insert(commandId, abstractCommand);
 
+  // Network request
   QNetworkRequest request(m_Url);
+
+  // Ignore ssl certificate
+  QSslConfiguration conf = request.sslConfiguration();
+  conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+  request.setSslConfiguration(conf);
+
   request.setHeader(QNetworkRequest::ContentTypeHeader,
                     "application/x-www-form-urlencoded");
 
@@ -364,7 +371,7 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
     params.addQueryItem(item.first(), item.second());
   }
 
-  QNetworkReply *reply = m_QNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
+  QNetworkReply *reply = m_UltraNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
   connect(reply,
           SIGNAL(finished()),
@@ -414,9 +421,15 @@ void WebApi::multipartRequest(WebApiCommand *abstractCommand,
 
   multiPart->append(imagePart);
 
+  // Network request
   QNetworkRequest request(m_Url);
 
-  QNetworkReply *reply = m_QNetworkAccessManager.post(request, multiPart);
+  // Ignore ssl certificate
+  QSslConfiguration conf = request.sslConfiguration();
+  conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+  request.setSslConfiguration(conf);
+
+  QNetworkReply *reply = m_UltraNetworkAccessManager.post(request, multiPart);
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
 
   multiPart->setParent(reply); // delete the multiPart with the reply
@@ -434,9 +447,15 @@ void WebApi::downloadRequest(WebApiCommand *abstractCommand,
   int commandId = m_CommandsIdCounter++;
   m_RunningCommands.insert(commandId, abstractCommand);
 
+  // Network request
   QNetworkRequest request(url);
 
-  QNetworkReply *reply = m_QNetworkAccessManager.get(request);
+  // Ignore ssl certificate
+  QSslConfiguration conf = request.sslConfiguration();
+  conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+  request.setSslConfiguration(conf);
+
+  QNetworkReply *reply = m_UltraNetworkAccessManager.get(request);
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
 
   connect(reply,

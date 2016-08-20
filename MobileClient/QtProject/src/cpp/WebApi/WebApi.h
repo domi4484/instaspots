@@ -20,10 +20,10 @@
 
 // Project includes ------------------------
 #include "QueryItem.h"
+#include "../HelperClasses/UltraNetworkAccessManager.h"
 
 // Forward declarations --------------------
 class WebApiCommand;
-class QNetworkAccessManager;
 class QFile;
 
 class WebApi : public QObject
@@ -147,7 +147,7 @@ private:
 
   QUrl m_Url;
 
-  QNetworkAccessManager m_QNetworkAccessManager;
+  UltraNetworkAccessManager m_UltraNetworkAccessManager;
 
   unsigned int m_CommandsIdCounter;
   QMap<unsigned int, WebApiCommand *> m_RunningCommands;

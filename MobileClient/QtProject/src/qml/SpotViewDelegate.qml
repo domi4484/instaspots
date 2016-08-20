@@ -59,9 +59,7 @@ Rectangle {
 
             text:  role_SpotName
 
-            onClicked: {
-                spotClicked();
-            }
+            onClicked: spotClicked()
         }
     }
 

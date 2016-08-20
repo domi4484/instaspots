@@ -84,7 +84,7 @@ void Settings::set_Application_NewerVersionAvailableGotIt(bool newerVersionAvail
 
 Logger::LOG_LEVEL Settings::get_Logger_LogLevel()
 {
-  return (Logger::LOG_LEVEL) QSettings::value(LOGGER_LOG_LEVEL, Logger::LOG_INFO).toInt();
+  return (Logger::LOG_LEVEL) QSettings::value(LOGGER_LOG_LEVEL, Logger::LOG_DEBUG).toInt();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
