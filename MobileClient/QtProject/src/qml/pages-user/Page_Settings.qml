@@ -157,7 +157,7 @@ Item{
                 onActivated:
                 {
                     // Set LogLevel
-                    hc_Logger.setLogLevel(comboBox_LogLevel_Items.get(currentIndex).level);
+                    hc_Logger.setLogLevel(comboBox_LogLevel_Items.get(index).level);
                     return;
                 }
             }

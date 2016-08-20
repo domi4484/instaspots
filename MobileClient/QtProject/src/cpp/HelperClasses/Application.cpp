@@ -65,7 +65,7 @@ Application::Application(int argc, char *argv[]) :
   m_Settings = new Settings(this);
 
   // Logger
-  Logger::instanziate(Logger::LOG_VERBOSE);
+  Logger::instanziate(Logger::LOG_DEBUG);
   Logger::instance()->setLogLevel(m_Settings->get_Logger_LogLevel());
 
   // Plateform detail

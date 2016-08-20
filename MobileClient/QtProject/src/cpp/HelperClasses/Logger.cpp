@@ -30,7 +30,7 @@ QMutex *const Logger::s_Mutex = new QMutex;
 Logger::Logger(LOG_LEVEL logLevel,
                QObject *parent) :
   QObject(parent),
-  m_LogLevel(qMax (LOG_INFO, logLevel)),
+  m_LogLevel(logLevel),
   m_QStringList_LogEntries()
 {
 }
