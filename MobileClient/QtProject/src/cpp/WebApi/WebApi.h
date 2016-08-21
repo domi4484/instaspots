@@ -66,6 +66,8 @@ public:
     static const QString GET_PICTURES_BY_USER_ID;
     static const QString GET_SPOTS_BY_DISTANCE;
     static const QString GET_SPOTS_BY_USER_ID;
+
+    static const QString REMOVE_PICTURE;
   }; // COMMAND
 
   // Paramters

@@ -46,6 +46,7 @@
         <file>qml/widgets/TabWidgetDynamicTab.qml</file>
         <file>qml/widgets/Link.qml</file>
         <file>qml/component/Component_TagSwitch.qml</file>
+        <file>qml/component/Component_ListSelectionDialog.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

@@ -138,6 +138,7 @@ DISTFILES += \
     src/qml/pages-picture/Page_Picture.qml \
     src/qml/component/Component_Dialog.qml \
     src/qml/component/Component_CurrentLocationIndicator.qml \
+    src/qml/component/Component_ListSelectionDialog.qml \
     src/qml/component/Component_PicturesGrid.qml \
     src/qml/component/Component_TagSwitch.qml \
     android/gradle/wrapper/gradle-wrapper.jar \

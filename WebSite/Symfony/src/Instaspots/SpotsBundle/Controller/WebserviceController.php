@@ -120,6 +120,10 @@ class WebserviceController extends Controller
         $this->getSpotsByUserId($request, $response);
       break;
 
+      case CommandSet::REMOVE_PICTURE:
+        $this->removePicture($request, $response);
+      break;
+
       default:
       {
         $response->setError("Unknown command: ".$response->getCommand());
@@ -408,6 +412,20 @@ class WebserviceController extends Controller
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
 
+    // Add score to user
+    $user->setReputation($user->getReputation() + 10);
+
+    // Flush
+    try
+    {
+      $em->flush();
+    }
+    catch (DBALException $e)
+    {
+      $response->setError("Flush exception ".$e->getMessage());
+      return;
+    }
+
     $response->addData('successful', true);
   }
 
@@ -508,6 +526,20 @@ class WebserviceController extends Controller
 
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
+
+    // Add score to user
+    $user->setReputation($user->getReputation() + 20);
+
+    // Flush
+    try
+    {
+      $em->flush();
+    }
+    catch (DBALException $e)
+    {
+      $response->setError("Flush exception ".$e->getMessage());
+      return;
+    }
 
     $response->addData('successful', true);
   }
@@ -696,6 +728,40 @@ class WebserviceController extends Controller
     }
 
     $response->addData(ParameterSet::SPOT_LIST, $jSpots);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function removePicture($request, &$response)
+  {
+    $minimumClientVersion = 'V0.0.9';
+
+    // Get parameters
+    $pictureId = $request->get(ParameterSet::PICTURE_PICTURE_ID);
+
+    // Get picture
+    $em = $this->getDoctrine()->getManager();
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $picture = $pictureRepository->findOneById($pictureId);
+
+    // Get current user
+    $user = $this->getUser();
+    if($user == null)
+    {
+      $response->setError('Authentication required');
+      return;
+    }
+
+    // Check if picture belong to user TODO or superuser
+    if($picture->getUser() != $user)
+    {
+      $response->setError('User with id \''.$user->getId().'\' can not remove picture from user \''.$picture->getUser()->getId().'\'');
+      return;
+    }
+
+    // Remove the picture
+    $em->remove($picture);
+    $em->flush();
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

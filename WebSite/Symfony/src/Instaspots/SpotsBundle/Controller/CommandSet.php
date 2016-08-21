@@ -20,4 +20,6 @@ class CommandSet
   const GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
   const GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
   const GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
+
+  const REMOVE_PICTURE = "removePicture";
 }

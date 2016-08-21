@@ -6,7 +6,7 @@ import QtQuick.Controls 1.0
 // Project qml imports ---------------------
 import "qrc:/qml/widgets"
 
-Rectangle {
+Item {
     id: root
     width: parent.width
     height:   rectangle_Top.height
@@ -16,50 +16,62 @@ Rectangle {
 
     signal userClicked
     signal spotClicked
+    signal optionsClicked
 
     Rectangle {
         id: rectangle_Top
 
         anchors.top: parent.top
-        width: parent.width - 8
-        x: 4
+        width: parent.width
 
         height: link_Username.height * 2
-
-        // Username
-        Link{
-            id: link_Username
-            width: parent.width / 2
-
-            text: role_UserUsername
-
-            onClicked: {
-                userClicked();
-            }
-        }
-
-        // Time
-        Text {
-            anchors.top: parent.top
-            anchors.left: link_Username.right
-            width: link_Username.width
-
-            horizontalAlignment: Text.AlignRight
-
-            text: role_PictureCreated
-        }
 
         // Title
         Link {
             id: link_SpotName
-            anchors.top: link_Username.bottom
-            width: parent.width
+            anchors.fill: parent
 
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment:   Text.AlignVCenter
 
             text:  role_SpotName
 
             onClicked: spotClicked()
+        }
+
+        // Username
+        Link{
+            id: link_Username
+
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width / 2
+
+            verticalAlignment: Text.AlignTop
+
+            text: role_UserUsername
+
+            onClicked: userClicked()
+        }
+
+        // Options
+        ToolButton {
+            id: toolButton_Options
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+
+            height: parent.height
+            width:  parent.height
+
+            Image {
+                anchors.fill:    parent
+                anchors.margins: 2
+
+                smooth: true
+                source: "qrc:/icon/icon/view-more.png"
+            }
+
+            onClicked: optionsClicked()
         }
     }
 
@@ -75,9 +87,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                spotClicked();
-            }
+            onClicked: spotClicked()
         }
     }
 }

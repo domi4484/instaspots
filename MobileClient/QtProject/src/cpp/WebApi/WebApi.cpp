@@ -57,6 +57,7 @@ const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
 const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
 const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
 
+const QString WebApi::COMMAND::REMOVE_PICTURE = "removePicture";
 
 // Parameters
 const QString WebApi::PARAMETER::USER_USER_ID       = "user_userId";
