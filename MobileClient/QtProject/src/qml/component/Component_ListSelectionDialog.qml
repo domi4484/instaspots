@@ -11,10 +11,16 @@
 
 // Qt imports ------------------------------
 import QtQuick 2.0
+import QtQuick.Controls 1.3
+
+// Project qml imports ---------------------
+import "qrc:/qml/widgets/"
 
 Item{
 
-     id: component_ListSelectionDialog
+     id: component_ListSelectionDialog     
+
+     default property alias content: column_Content.children
 
      anchors.fill: parent
 
@@ -25,7 +31,8 @@ Item{
      property alias showDialog: showDialog.running
      property alias hideDialog: hideDialog.running
 
-     property alias model: listView_Dialog.model
+
+//     property alias model: listView_Dialog.model
 
      PropertyAnimation { id: showDialog; target: component_ListSelectionDialog; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InQuad}
      PropertyAnimation { id: hideDialog; target: component_ListSelectionDialog; property: "opacity"; to: 0; duration: 500; easing.type: Easing.OutQuad}
@@ -52,55 +59,60 @@ Item{
 
          anchors.centerIn: parent
 
-         height: listView_Dialog.height + 4
-         width: parent.width - 20
+         height: column_Content.children.length * 30 *hc_Application.dip + 4 * hc_Application.dip
+         width: parent.width - 20 * hc_Application.dip
 
-         radius: 10
+         radius: 10 * hc_Application.dip
          color: "white"
 
-         ListView{
-             id: listView_Dialog
 
-             width: parent.width
-             height:model.count*(itemHeight+spacing)
 
-             property int itemHeight: 30
+         Column {
+             id: column_Content
 
-             spacing: 4
-             interactive: false
-             anchors.top: rectangle_Dialog.top
-             anchors.topMargin: 4
-             onModelChanged: {
-                 listView_Dialog.height = listView_Dialog.model.count*(itemHeight+spacing)
-             }
-
-             delegate: Rectangle{
-                 id: listitem
-                 width: parent.width - 20
-                 height: listView_Dialog.itemHeight
-                 radius: 10
-                 anchors.horizontalCenter: parent.horizontalCenter
-                 color: mouseArea_Delegate.pressed ? Qt.lighter(hc_Application.color_BackgroundNavigator(), 1.2)
-                                                   : hc_Application.color_BackgroundNavigator()
-
-                 Text {
-                     id: listitemText
-                     text: itemText
-                     anchors.centerIn: parent
-                     font.pixelSize: 14
-                     color: "white"
-                 }
-
-                 MouseArea{
-                    id: mouseArea_Delegate
-                    anchors.fill: parent
-                    onClicked: {
-                        component_ListSelectionDialog.itemClicked(itemText, index)
-                        component_ListSelectionDialog.hideDialog = true
-                    }
-                 }
-             }
+             anchors.fill: parent
          }
+
+
+
+
+
+
+
+
+
+
+//         ListView{
+//             id: listView_Dialog
+
+//             width: parent.width
+//             height:model.count*(itemHeight+spacing)
+
+//             property int itemHeight: 30 * hc_Application.dip
+
+//             spacing: 4 * hc_Application.dip
+//             interactive: false
+//             anchors.top: rectangle_Dialog.top
+//             anchors.topMargin: 4 * hc_Application.dip
+//             onModelChanged: {
+//                 listView_Dialog.height = listView_Dialog.model.count*(itemHeight+spacing)
+//             }
+
+//             delegate: Link{
+//                 id: listitem
+//                 width: parent.width
+//                 height: listView_Dialog.itemHeight
+
+//                 text: itemText
+//                 horizontalAlignment: Text.AlignHCenter
+//                 verticalAlignment:   Text.AlignVCenter
+
+//                 onClicked: {
+//                     component_ListSelectionDialog.itemClicked(itemText, index)
+//                     component_ListSelectionDialog.hideDialog = true
+//                 }
+//             }
+//         }
      }
 }
 

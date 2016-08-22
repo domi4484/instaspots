@@ -19,6 +19,7 @@ import PicturesModel 1.0
 // Project qml imports ---------------------
 import "qrc:/qml/"
 import "qrc:/qml/views"
+import "qrc:/qml/widgets/"
 import "qrc:/qml/component"
 
 Item{
@@ -76,26 +77,43 @@ Item{
             onOptionsClicked: {
                 component_ListSelectionDialog_Options.showDialog = true;
             }
-        }
-    }
 
-    // List selection dialog
-    Component_ListSelectionDialog{
-        id: component_ListSelectionDialog_Options
 
-        model: ListModel {
-            ListElement { itemText: "Like"}
-            ListElement { itemText: "Signal offensive content"}
-            ListElement { itemText: "Remove picture"}
-        }
+            // List selection dialog
+            Component_ListSelectionDialog{
+                id: component_ListSelectionDialog_Options
 
-        onItemClicked: {
+                Link
+                {
+                    text: "ola"
+                }
 
-            if(index == 0)
-            {
-                console.log("remove picture");
+//                model: ListModel {
+//                    ListElement { itemText: "Like"                     }
+//                    ListElement { itemText: "Signal offensive content" }
+//                    ListElement { itemText: "Remove picture"           }
+//                }
+
+                onItemClicked: {
+
+                    if(index == 0)
+                    {
+                        console.log("like");
+                    }
+                    if(index == 1)
+                    {
+                        console.log("signal");
+                    }
+                    if(index == 2)
+                    {
+                        console.log("remove picture", role_PictureId);
+
+//                        picturesModel.remove(role_PictureId)
+                    }
+                }
             }
         }
     }
+
 }
 
