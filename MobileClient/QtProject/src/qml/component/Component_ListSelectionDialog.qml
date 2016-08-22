@@ -55,7 +55,7 @@ Item{
          height: listView_Dialog.height + 4
          width: parent.width - 20
 
-         radius: 5
+         radius: 10
          color: "white"
 
          ListView{
@@ -80,7 +80,8 @@ Item{
                  height: listView_Dialog.itemHeight
                  radius: 10
                  anchors.horizontalCenter: parent.horizontalCenter
-                 color: "teal"
+                 color: mouseArea_Delegate.pressed ? Qt.lighter(hc_Application.color_BackgroundNavigator(), 1.2)
+                                                   : hc_Application.color_BackgroundNavigator()
 
                  Text {
                      id: listitemText
@@ -91,7 +92,7 @@ Item{
                  }
 
                  MouseArea{
-                    id: delegateMouseArea
+                    id: mouseArea_Delegate
                     anchors.fill: parent
                     onClicked: {
                         component_ListSelectionDialog.itemClicked(itemText, index)
