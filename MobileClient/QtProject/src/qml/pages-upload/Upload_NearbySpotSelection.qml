@@ -22,7 +22,7 @@ import "qrc:/qml/views"
 import "qrc:/qml/pages-spot/"
 
 Item{
-    id: nearbySpotSelection
+    id: upload_NearbySpotSelection
 
     // Navigation properties ---------------
 
@@ -62,7 +62,7 @@ Item{
         onClicked:{
             wa_PictureUploader.setNewSpot(true);
 
-            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/AddNewSpot.qml"),
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_AddNewSpot.qml"),
                                                   properties:{stackView        : stackView}});
         }
     }
@@ -79,7 +79,7 @@ Item{
             wa_PictureUploader.setName(spotName);
             wa_PictureUploader.setDescription(spotDescription);
 
-            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Page_AddToExistingSpot.qml"),
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_AddToExistingSpot.qml"),
                                                  properties:{stackView        : stackView}});
         }
     }

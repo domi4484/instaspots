@@ -21,12 +21,12 @@
         <file>qml/pages-picture/Page_PicturesList.qml</file>
         <file>qml/pages-spot/Page_Spot.qml</file>
         <file>qml/pages-spot/Page_SpotsList.qml</file>
-        <file>qml/pages-upload/AddNewSpot.qml</file>
-        <file>qml/pages-upload/LocationCheck.qml</file>
-        <file>qml/pages-upload/NearbySpotSelection.qml</file>
-        <file>qml/pages-upload/SourceSelection.qml</file>
-        <file>qml/pages-upload/Page_AddToExistingSpot.qml</file>
-        <file>qml/pages-upload/CropPicture.qml</file>
+        <file>qml/pages-upload/Upload_AddNewSpot.qml</file>
+        <file>qml/pages-upload/Upload_LocationCheck.qml</file>
+        <file>qml/pages-upload/Upload_NearbySpotSelection.qml</file>
+        <file>qml/pages-upload/Upload_SourceSelection.qml</file>
+        <file>qml/pages-upload/Upload_AddToExistingSpot.qml</file>
+        <file>qml/pages-upload/Upload_CropPicture.qml</file>
         <file>qml/pages-user/Page_Login.qml</file>
         <file>qml/pages-user/Page_Register.qml</file>
         <file>qml/pages-user/Page_Settings.qml</file>

@@ -21,14 +21,14 @@ import "qrc:/qml/"
 import "qrc:/qml/component"
 
 Item{
-    id: locationCheck
+    id: upload_LocationCheck
     visible: false
 
     // Navigation properties ---------------
 
     property string navigation_Title:                 qsTr("Spot location")
     property bool   navigation_BackButtonVisible:     true
-    property bool   navigation_ContinueButtonVisible: false
+    property bool   navigation_ContinueButtonVisible: true
     property bool   navigation_MenuButtonVisible:     false
 
     // Gui ---------------------------------
@@ -97,8 +97,16 @@ Item{
 
         onClicked: {
             wa_PictureUploader.coordinate = mapQuickItem_SpotLocation.coordinate;
-            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/NearbySpotSelection.qml"),
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_NearbySpotSelection.qml"),
                             properties:{stackView        : stackView}});
         }
+    }
+
+
+    function navigator_ContinueButtonClicked()
+    {
+        wa_PictureUploader.coordinate = mapQuickItem_SpotLocation.coordinate;
+        stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_NearbySpotSelection.qml"),
+                        properties:{stackView        : stackView}});
     }
 }

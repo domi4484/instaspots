@@ -48,7 +48,7 @@ Item {
 
                 onImageSaved: {
                     wa_PictureUploader.setCameraPictureFilePath(path);
-                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/CropPicture.qml"),
+                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_CropPicture.qml"),
                                     properties:{stackView        : stackView,
                                                 source           : path}});
                 }
@@ -127,8 +127,8 @@ Item {
                              event.accepted = true;
                          }
 
-        initialItem: SourceSelection {
-            id: page_SourceSelection
+        initialItem: Upload_SourceSelection {
+            id: page_Upload_SourceSelection
             width : parent.width
             height: parent.height
 
@@ -136,7 +136,7 @@ Item {
                 stackView.push(page_TakeCameraPicture)
             }
             onPictureSelected: {
-                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/CropPicture.qml"),
+                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_CropPicture.qml"),
                                 properties:{stackView        : stackView,
                                             source           : imageUrl}});
             }

@@ -85,35 +85,42 @@ Item{
 
                 Link
                 {
-                    text: "ola"
+                    text: "Like"
+
+                    width: parent.width
+                    height: 30 * hc_Application.dip
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    onClicked: component_ListSelectionDialog_Options.hideDialog = true
                 }
+                Link
+                {
+                    text: "Details"
 
-//                model: ListModel {
-//                    ListElement { itemText: "Like"                     }
-//                    ListElement { itemText: "Signal offensive content" }
-//                    ListElement { itemText: "Remove picture"           }
-//                }
+                    width: parent.width
+                    height: 30 * hc_Application.dip
 
-                onItemClicked: {
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
 
-                    if(index == 0)
-                    {
-                        console.log("like");
-                    }
-                    if(index == 1)
-                    {
-                        console.log("signal");
-                    }
-                    if(index == 2)
-                    {
-                        console.log("remove picture", role_PictureId);
+                    onClicked: component_ListSelectionDialog_Options.hideDialog = true
+                }
+                Link
+                {
+                    text: "Remove"
 
-//                        picturesModel.remove(role_PictureId)
-                    }
+                    width: parent.width
+                    height: 30 * hc_Application.dip
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    onClicked: component_ListSelectionDialog_Options.hideDialog = true
                 }
             }
         }
     }
-
 }
 

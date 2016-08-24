@@ -17,7 +17,7 @@ import QtQuick.Controls 1.2
 import "qrc:/qml/"
 
 Item{
-    id: cropPicture
+    id: upload_CropPicture
     visible: false
 
     // Navigation properties ---------------
@@ -215,7 +215,7 @@ Item{
                                               cropX,
                                               cropY,
                                               cropSide);
-            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_LocationCheck.qml"),
                             properties:{stackView        : stackView}});
         }
     }
@@ -227,7 +227,7 @@ Item{
                                           cropY,
                                           cropSide,
                                           image.rotation);
-        stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/LocationCheck.qml"),
+        stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_LocationCheck.qml"),
                         properties:{stackView        : stackView}});
     }
 

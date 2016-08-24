@@ -60,6 +60,8 @@ public slots:
   void setSecretSpot(bool secretSpot);
   void setExistingSpotId(int spotId);
 
+  void addTag(const QString &tagName);
+
   QString rotatePicture(const QString &source_url,
                         int angle);
 
@@ -91,6 +93,8 @@ private:
   QString m_Name;
   QString m_Description;
   bool    m_SecretSpot;
+
+  QStringList m_QStringList_Tags;
 
   WebApiCommand m_WebApiCommand_UploadNewSpot;
   WebApiCommand m_WebApiCommand_UploadPictureToSpot;

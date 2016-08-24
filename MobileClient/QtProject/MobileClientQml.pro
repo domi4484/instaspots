@@ -118,12 +118,7 @@ DISTFILES += \
     src/qml/pages-spot/Page_Spot.qml \
     src/qml/pages-spot/Page_SpotsList.qml \
     src/qml/pages-spot/Page_SpotsMap.qml \
-    src/qml/pages-upload/AddNewSpot.qml \
-    src/qml/pages-upload/LocationCheck.qml \
-    src/qml/pages-upload/NearbySpotSelection.qml \
-    src/qml/pages-upload/SourceSelection.qml \
-    src/qml/pages-upload/Page_AddToExistingSpot.qml \
-    src/qml/pages-upload/CropPicture.qml \
+    src/qml/pages-upload/Upload_AddNewSpot.qml \
     src/qml/pages-user/Page_Login.qml \
     src/qml/pages-user/Page_Register.qml \
     src/qml/pages-user/Page_Settings.qml \
@@ -168,5 +163,10 @@ DISTFILES += \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/NewsController.php \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/Response.php \
     ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ParameterSet.php \
-    ../../WebSite/Test/webserviceTest.sh
+    ../../WebSite/Test/webserviceTest.sh \
+    src/qml/pages-upload/Upload_SourceSelection.qml \
+    src/qml/pages-upload/Upload_AddToExistingSpot.qml \
+    src/qml/pages-upload/Upload_NearbySpotSelection.qml \
+    src/qml/pages-upload/Upload_LocationCheck.qml \
+    src/qml/pages-upload/Upload_CropPicture.qml
 

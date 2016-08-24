@@ -19,7 +19,7 @@ import "qrc:/qml/"
 import "qrc:/qml/component/"
 
 Item{
-    id: addNewSpot
+    id: upload_AddNewSpot
 
 
     // Navigation properties ---------------
@@ -66,7 +66,7 @@ Item{
             }
 
             // Change view to Home
-            stackView.pop(page_SourceSelection);
+            stackView.pop(page_Upload_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
             panel_Home.tabWidget_CurrentTabReclicked();
 
@@ -109,6 +109,8 @@ Item{
 
         // Skatepark
         Component_TagSwitch{
+            id: component_TagSwitch_Skatepark
+
             anchors.left:  parent.left
             anchors.right: parent.right
 
@@ -117,6 +119,8 @@ Item{
 
         // Street
         Component_TagSwitch{
+            id: component_TagSwitch_Street
+
             anchors.left:  parent.left
             anchors.right: parent.right
 
@@ -125,6 +129,8 @@ Item{
 
         // Miniramp
         Component_TagSwitch{
+            id: component_TagSwitch_Miniramp
+
             anchors.left:  parent.left
             anchors.right: parent.right
 
@@ -133,6 +139,8 @@ Item{
 
         // Bowl
         Component_TagSwitch{
+            id: component_TagSwitch_Bowl
+
             anchors.left:  parent.left
             anchors.right: parent.right
 
@@ -159,6 +167,28 @@ Item{
         onClicked: {
             wa_PictureUploader.setName(textField_SpotName.text);
             wa_PictureUploader.setDescription("");
+
+            // Tags
+            if(component_TagSwitch_Skatepark.checked)
+            {
+                wa_PictureUploader.addTag("skatepark");
+            }
+
+            if(component_TagSwitch_Street.checked)
+            {
+                wa_PictureUploader.addTag("street");
+            }
+
+            if(component_TagSwitch_Miniramp.checked)
+            {
+                wa_PictureUploader.addTag("miniramp");
+            }
+
+            if(component_TagSwitch_Bowl.checked)
+            {
+                wa_PictureUploader.addTag("bowl");
+            }
+
             if(wa_PictureUploader.execute() === false)
             {
                 messageDialog_Error.text = wa_PictureUploader.lastErrorText();

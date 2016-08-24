@@ -18,7 +18,7 @@ import QtQuick.Dialogs 1.2
 import "qrc:/qml/"
 
 Item{
-    id: addNewSpot
+    id: page_Settings_ReportProblem
 
 
     // Navigation properties ---------------

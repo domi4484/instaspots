@@ -26,13 +26,8 @@ Item{
 
      opacity: 0
 
-     signal itemClicked (string itemText, int index)
-
      property alias showDialog: showDialog.running
      property alias hideDialog: hideDialog.running
-
-
-//     property alias model: listView_Dialog.model
 
      PropertyAnimation { id: showDialog; target: component_ListSelectionDialog; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InQuad}
      PropertyAnimation { id: hideDialog; target: component_ListSelectionDialog; property: "opacity"; to: 0; duration: 500; easing.type: Easing.OutQuad}
@@ -59,60 +54,17 @@ Item{
 
          anchors.centerIn: parent
 
-         height: column_Content.children.length * 30 *hc_Application.dip + 4 * hc_Application.dip
+         height: column_Content.children.length * 30 *hc_Application.dip
          width: parent.width - 20 * hc_Application.dip
 
          radius: 10 * hc_Application.dip
          color: "white"
-
-
 
          Column {
              id: column_Content
 
              anchors.fill: parent
          }
-
-
-
-
-
-
-
-
-
-
-//         ListView{
-//             id: listView_Dialog
-
-//             width: parent.width
-//             height:model.count*(itemHeight+spacing)
-
-//             property int itemHeight: 30 * hc_Application.dip
-
-//             spacing: 4 * hc_Application.dip
-//             interactive: false
-//             anchors.top: rectangle_Dialog.top
-//             anchors.topMargin: 4 * hc_Application.dip
-//             onModelChanged: {
-//                 listView_Dialog.height = listView_Dialog.model.count*(itemHeight+spacing)
-//             }
-
-//             delegate: Link{
-//                 id: listitem
-//                 width: parent.width
-//                 height: listView_Dialog.itemHeight
-
-//                 text: itemText
-//                 horizontalAlignment: Text.AlignHCenter
-//                 verticalAlignment:   Text.AlignVCenter
-
-//                 onClicked: {
-//                     component_ListSelectionDialog.itemClicked(itemText, index)
-//                     component_ListSelectionDialog.hideDialog = true
-//                 }
-//             }
-//         }
      }
 }
 

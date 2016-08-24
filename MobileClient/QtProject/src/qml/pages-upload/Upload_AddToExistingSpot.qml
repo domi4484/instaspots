@@ -18,7 +18,7 @@ import QtQuick.Dialogs 1.2
 import "qrc:/qml/"
 
 Item{
-    id: page_addToExistingSpot
+    id: upload_AddToExistingSpot
 
 
     // Navigation properties ---------------
@@ -64,7 +64,7 @@ Item{
             }
 
             // Change view to Home
-            stackView.pop(page_SourceSelection);
+            stackView.pop(page_Upload_SourceSelection);
             tabWidget_Main.setCurrentItem(panel_Home);
             panel_Home.tabWidget_CurrentTabReclicked();
 

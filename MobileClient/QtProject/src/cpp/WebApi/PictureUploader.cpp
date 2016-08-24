@@ -33,6 +33,7 @@ PictureUploader::PictureUploader(QObject *parent) :
   m_Name                             (),
   m_Description                      (),
   m_SecretSpot                       (false),
+  m_QStringList_Tags                 (),
   m_WebApiCommand_UploadNewSpot      (this),
   m_WebApiCommand_UploadPictureToSpot(this)
 {
@@ -62,6 +63,8 @@ QGeoCoordinate PictureUploader::coordinate() const
 {
     return m_QGeoCoordinate;
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------
 
 void PictureUploader::setCoordinate(const QGeoCoordinate &coordinate)
 {
@@ -213,6 +216,13 @@ void PictureUploader::setExistingSpotId(int spotId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void PictureUploader::addTag(const QString &tagName)
+{
+  m_QStringList_Tags.append(tagName);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QString PictureUploader::rotatePicture(const QString &source_url,
                                        int angle)
 {
@@ -272,6 +282,7 @@ void PictureUploader::resetDefaults()
   m_Name        = "";
   m_Description = "";
   m_SecretSpot  = false;
+  m_QStringList_Tags.clear();
 
   emit signal_Coordinate_changed();
 }
@@ -338,6 +349,9 @@ bool PictureUploader::uploadNewSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(m_QGeoCoordinate.latitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_QGeoCoordinate.longitude())));
 
+  qui tags!!!!!!!!!!!!!!!!!!
+  // #TODO add tags
+
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
   m_Pixmap.save(buffer,
@@ -383,6 +397,9 @@ bool PictureUploader::uploadPictureToSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_SPOT_ID,   QString::number(m_SpotId)));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LATITUDE,  QString::number(m_QGeoCoordinate.latitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_QGeoCoordinate.longitude())));
+
+  qui tags!!!!!!!!!!!!!!!!!!
+  // #TODO add tags
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
