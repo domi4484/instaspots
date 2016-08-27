@@ -95,6 +95,7 @@ public:
     static const QString SPOT_LATITUDE;
     static const QString SPOT_LONGITUDE;
     static const QString SPOT_DISTANCE_KM;
+    static const QString SPOT_TAGS;
     static const QString SPOT_PICTURE_PICTURE_ID_1;
     static const QString SPOT_PICTURE_PICTURE_ID_2;
     static const QString SPOT_PICTURE_URL_1;

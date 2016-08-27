@@ -81,6 +81,7 @@ const QString WebApi::PARAMETER::SPOT_SECRET_SPOT          = "spot_secretSpot";
 const QString WebApi::PARAMETER::SPOT_LATITUDE             = "spot_latitude";
 const QString WebApi::PARAMETER::SPOT_LONGITUDE            = "spot_longitude";
 const QString WebApi::PARAMETER::SPOT_DISTANCE_KM          = "spot_DistanceKm";
+const QString WebApi::PARAMETER::SPOT_TAGS                 = "spot_Tags";
 const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 = "spot_picture_pictureId_1";
 const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 = "spot_picture_pictureId_2";
 const QString WebApi::PARAMETER::SPOT_PICTURE_URL_1        = "spot_picture_url_1";

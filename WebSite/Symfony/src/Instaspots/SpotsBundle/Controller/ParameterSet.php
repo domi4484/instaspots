@@ -25,6 +25,7 @@ class ParameterSet
   const SPOT_LATITUDE             = "spot_latitude";
   const SPOT_LONGITUDE            = "spot_longitude";
   const SPOT_DISTANCE_KM          = "spot_DistanceKm";
+  const SPOT_TAGS                 = "spot_Tags";
   const SPOT_PICTURE_PICTURE_ID_1 = "spot_picture_pictureId_1";
   const SPOT_PICTURE_PICTURE_ID_2 = "spot_picture_pictureId_2";
   const SPOT_PICTURE_URL_1        = "spot_picture_url_1";

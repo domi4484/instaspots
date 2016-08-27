@@ -348,9 +348,7 @@ bool PictureUploader::uploadNewSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SECRET_SPOT, QString::number(m_SecretSpot)));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(m_QGeoCoordinate.latitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_QGeoCoordinate.longitude())));
-
-  qui tags!!!!!!!!!!!!!!!!!!
-  // #TODO add tags
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_TAGS,        m_QStringList_Tags.join(";"));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
@@ -397,9 +395,7 @@ bool PictureUploader::uploadPictureToSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_SPOT_ID,   QString::number(m_SpotId)));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LATITUDE,  QString::number(m_QGeoCoordinate.latitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_QGeoCoordinate.longitude())));
-
-  qui tags!!!!!!!!!!!!!!!!!!
-  // #TODO add tags
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_TAGS,         m_QStringList_Tags.join(";"));
 
   QBuffer *buffer = new QBuffer();
   buffer->open(QIODevice::WriteOnly);
