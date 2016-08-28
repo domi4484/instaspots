@@ -21,5 +21,9 @@ class CommandSet
   const GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
   const GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
 
-  const REMOVE_PICTURE = "removePicture";
+  const SPOT_SIGNAL_DISAPPEARED = "spotSignalDisappeared";
+
+  const PICTURE_LIKE   = "pictureLike";
+  const PICTURE_UNLIKE = "pictureUnlike";
+  const PICTURE_REMOVE = "pictureRemove";
 }

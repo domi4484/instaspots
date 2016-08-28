@@ -271,6 +271,19 @@ class Spot
         return $this->score;
     }
 
+    public function addScore($score)
+    {
+      $this->setScore($this->score + $score);
+    }
+
+    public function removeScore($score)
+    {
+      $this->setScore($this->score - $score);
+
+      if($this->score < 0)
+        $this->setScore(0);
+    }
+
     /**
      * Set user
      *
@@ -394,57 +407,68 @@ class Spot
 
     }
 
-    //-----------------------------------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------------------------------------
 
-    public function addPicture(Picture $picture)
+  public function addPicture(Picture $picture)
+  {
+    // Append picture
+    $this->pictures[] = $picture;
+    $picture->setSpot($this);
+
+    // First picture added?
+    $picturesCount = count($this->pictures);
+    if($picturesCount == 1)
     {
-      $this->pictures[] = $picture;
-      $picture->setSpot($this);
+      $this->latitude  = $picture->getLatitude();
+      $this->longitude = $picture->getLongitude();
+      $this->picture1 = $picture;
+      $this->picture2 = $picture;
 
-      $picturesCount = count($this->pictures);
+      // Score set 0
+      $this->setScore(0);
 
-
-      if($picturesCount == 1) // First picture added
-      {
-        $this->latitude  = $picture->getLatitude();
-        $this->longitude = $picture->getLongitude();
-        $this->picture1 = $picture;
-        $this->picture2 = $picture;
-        return $this;
-      }
-
-
-      // Update location
-      $this->latitude  = ($this->latitude  * ($picturesCount - 1) + $picture->getLatitude() ) / $picturesCount;
-      $this->longitude = ($this->longitude * ($picturesCount - 1) + $picture->getLongitude()) / $picturesCount;
-
-      // Check if picture1 and 2 are still the same
-      if($this->picture1->getId() == $this->picture2->getId())
-      {
-        $this->picture1 = $picture;
-        return $this;
-      }
-
-      if($this->picture1->getLikers()->count() == 0)
-      {
-        $this->picture2 = $this->picture1;
-        $this->picture1 = $picture;
-        return $this;
-      }
-
-      if($this->picture2->getLikers()->count() == 0)
-      {
-        $this->setPicture2($picture);
-        return $this;
-      }
+      // Update user score by 10
+      $picture->getUser()->addReputation(10);
 
       return $this;
     }
 
-    public function removePicture(Picture $picture)
+    // Update location
+    $this->latitude  = ($this->latitude  * ($picturesCount - 1) + $picture->getLatitude() ) / $picturesCount;
+    $this->longitude = ($this->longitude * ($picturesCount - 1) + $picture->getLongitude()) / $picturesCount;
+
+    // Update Score by 5
+    $this->setScore($this->getScore() + 5);
+
+    // Check if picture1 and 2 are still the same
+    if($this->picture1->getId() == $this->picture2->getId())
     {
-      $this->pictures->removeElement($picture);
+      $this->picture1 = $picture;
+      return $this;
     }
+
+    if($this->picture1->getLikers()->count() == 0)
+    {
+      $this->picture2 = $this->picture1;
+      $this->picture1 = $picture;
+      return $this;
+    }
+
+    if($this->picture2->getLikers()->count() == 0)
+    {
+      $this->setPicture2($picture);
+      return $this;
+    }
+
+    return $this;
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------------------
+
+  public function removePicture(Picture $picture)
+  {
+    $this->pictures->removeElement($picture);
+  }
 
   //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -481,6 +505,7 @@ class Spot
     $jSpot[ParameterSet::SPOT_SECRET_SPOT] = $this->getSecretSpot();
     $jSpot[ParameterSet::SPOT_LATITUDE   ] = $this->getLatitude();
     $jSpot[ParameterSet::SPOT_LONGITUDE  ] = $this->getLongitude();
+    $jSpot[ParameterSet::SPOT_SCORE      ] = $this->getScore();
     $jSpot[ParameterSet::SPOT_DISTANCE_KM] = -1;
 
     $picture1 = $this->getPicture1();

@@ -38,7 +38,7 @@ use SoapFault;
 
 class WebserviceController extends Controller
 {
-  private $CONST_DEBUG = false;
+  private $CONST_DEBUG = true;
 
   public function webserviceAction(Request $request)
   {
@@ -120,8 +120,20 @@ class WebserviceController extends Controller
         $this->getSpotsByUserId($request, $response);
       break;
 
-      case CommandSet::REMOVE_PICTURE:
-        $this->removePicture($request, $response);
+      case CommandSet::SPOT_SIGNAL_DISAPPEARED:
+        $this->spotSignalDisappeared($request, $response);
+      break;
+
+      case CommandSet::PICTURE_LIKE:
+        $this->pictureLike($request, $response);
+      break;
+
+      case CommandSet::PICTURE_UNLIKE:
+        $this->pictureUnlike($request, $response);
+      break;
+
+      case CommandSet::PICTURE_REMOVE:
+        $this->pictureRemove($request, $response);
       break;
 
       default:
@@ -412,20 +424,6 @@ class WebserviceController extends Controller
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
 
-    // Add score to user
-    $user->setReputation($user->getReputation() + 10);
-
-    // Flush
-    try
-    {
-      $em->flush();
-    }
-    catch (DBALException $e)
-    {
-      $response->setError("Flush exception ".$e->getMessage());
-      return;
-    }
-
     $response->addData('successful', true);
   }
 
@@ -441,6 +439,7 @@ class WebserviceController extends Controller
     $secretSpot   = $request->get(ParameterSet::SPOT_SECRET_SPOT);
     $latitude     = $request->get(ParameterSet::SPOT_LATITUDE);
     $longitude    = $request->get(ParameterSet::SPOT_LONGITUDE);
+    $tags         = $request->get(ParameterSet::SPOT_TAGS);
     $uploadedFile = $request->files->get('image');
 
     // Get current user
@@ -526,20 +525,6 @@ class WebserviceController extends Controller
 
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
-
-    // Add score to user
-    $user->setReputation($user->getReputation() + 20);
-
-    // Flush
-    try
-    {
-      $em->flush();
-    }
-    catch (DBALException $e)
-    {
-      $response->setError("Flush exception ".$e->getMessage());
-      return;
-    }
 
     $response->addData('successful', true);
   }
@@ -732,17 +717,12 @@ class WebserviceController extends Controller
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-  private function removePicture($request, &$response)
+  private function spotSignalDisappeared($request, &$response)
   {
     $minimumClientVersion = 'V0.0.9';
 
     // Get parameters
-    $pictureId = $request->get(ParameterSet::PICTURE_PICTURE_ID);
-
-    // Get picture
-    $em = $this->getDoctrine()->getManager();
-    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
-    $picture = $pictureRepository->findOneById($pictureId);
+    $spotId = $request->get(ParameterSet::SPOT_SPOT_ID);
 
     // Get current user
     $user = $this->getUser();
@@ -751,6 +731,94 @@ class WebserviceController extends Controller
       $response->setError('Authentication required');
       return;
     }
+
+    // Get spot
+    $em = $this->getDoctrine()->getManager();
+    $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
+    $spot = $spotRepository->findOneById($spotId);
+
+    $response->addData('successful', true);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function pictureLike($request, &$response)
+  {
+    $minimumClientVersion = 'V0.0.9';
+
+    // Get parameters
+    $pictureId = $request->get(ParameterSet::PICTURE_PICTURE_ID);
+
+    // Get current user
+    $user = $this->getUser();
+    if($user == null)
+    {
+      $response->setError('Authentication required');
+      return;
+    }
+
+    // Get picture
+    $em = $this->getDoctrine()->getManager();
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $picture = $pictureRepository->findOneById($pictureId);
+
+    // Like the picture
+    $picture->addLiker($user);
+    $em->flush();
+
+    $response->addData('successful', true);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function pictureUnlike($request, $response)
+  {
+    $minimumClientVersion = 'V0.0.9';
+
+    // Get parameters
+    $pictureId = $request->get(ParameterSet::PICTURE_PICTURE_ID);
+
+    // Get current user
+    $user = $this->getUser();
+    if($user == null)
+    {
+      $response->setError('Authentication required');
+      return;
+    }
+
+    // Get picture
+    $em = $this->getDoctrine()->getManager();
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $picture = $pictureRepository->findOneById($pictureId);
+
+    // Like the picture
+    $picture->removeLiker($user);
+    $em->flush();
+
+    $response->addData('successful', true);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  private function pictureRemove($request, &$response)
+  {
+    $minimumClientVersion = 'V0.0.9';
+
+    // Get parameters
+    $pictureId = $request->get(ParameterSet::PICTURE_PICTURE_ID);
+
+    // Get current user
+    $user = $this->getUser();
+    if($user == null)
+    {
+      $response->setError('Authentication required');
+      return;
+    }
+
+    // Get picture
+    $em = $this->getDoctrine()->getManager();
+    $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
+    $picture = $pictureRepository->findOneById($pictureId);
 
     // Check if picture belong to user TODO or superuser
     if($picture->getUser() != $user)
@@ -762,6 +830,8 @@ class WebserviceController extends Controller
     // Remove the picture
     $em->remove($picture);
     $em->flush();
+
+    $response->addData('successful', true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------

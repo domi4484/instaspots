@@ -54,6 +54,7 @@ void WebApiCommand::setResult(const WebApiError &error,
 
   m_Result = result;
   m_Error = error;
+  emit signal_Finished();
   emit signal_Finished(error);
 }
 
@@ -86,6 +87,7 @@ void WebApiCommand::setRawResult(const WebApiError &error,
   m_Running = false;
 
   m_RawResult = result;
+  emit signal_Finished();
   emit signal_Finished(error);
 }
 

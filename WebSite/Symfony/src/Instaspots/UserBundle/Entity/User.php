@@ -2,7 +2,12 @@
 
 namespace Instaspots\UserBundle\Entity;
 
+// Project imports -------------------------
+use Instaspots\SpotsBundle\Controller\ParameterSet;
+
+// Doctrine imports ------------------------
 use Doctrine\ORM\Mapping as ORM;
+
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
@@ -102,4 +107,37 @@ class User extends BaseUser
     {
         return $this->reputation;
     }
+
+    public function addReputation($reputation)
+    {
+        $this->setReputation($this->reputation + $reputation);
+
+        return $this;
+    }
+
+    public function removeReputation($reputation)
+    {
+        $this->setReputation($this->reputation - $reputation);
+
+        if($this->reputation < 0)
+          $this->setReputation(0);
+
+        return $this;
+    }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+  public function toJson()
+  {
+    $jUser = array();
+    $jUser[ParameterSet::USER_USER_ID ] = $this->getId();
+    $jUser[ParameterSet::USER_USERNAME] = $this->getUsername();
+
+    return $jUser;
+  }
+
+  public function notifyLikedPicture(\Instaspots\SpotsBundle\Entity\Picture $pictureLiked)
+  {
+    $this->addReputation(1);
+  }
 }

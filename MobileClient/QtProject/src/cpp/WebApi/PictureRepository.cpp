@@ -174,6 +174,24 @@ void PictureRepository::getBy_Newest(int requestId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void PictureRepository::likePicture(int pictureId)
+{
+  QList<QueryItem> qList_QueryItems;
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));
+
+  WebApiCommand *webApiCommand = new WebApiCommand(this);
+  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setCommand(WebApi::COMMAND::PICTURE_LIKE);
+
+  connect(webApiCommand,
+          SIGNAL(signal_Finished()),
+          webApiCommand,
+          SLOT(deleteLater()));
+  webApiCommand->postRequest(qList_QueryItems);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureRepository::slot_Command_Finished(const WebApiError &error)
 {
   QList<Picture *> newPictures;

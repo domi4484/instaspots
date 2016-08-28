@@ -168,5 +168,8 @@ DISTFILES += \
     src/qml/pages-upload/Upload_AddToExistingSpot.qml \
     src/qml/pages-upload/Upload_NearbySpotSelection.qml \
     src/qml/pages-upload/Upload_LocationCheck.qml \
-    src/qml/pages-upload/Upload_CropPicture.qml
+    src/qml/pages-upload/Upload_CropPicture.qml \
+    ../../WebSite/Symfony/app/AppKernel.php \
+    ../../WebSite/Symfony/app/config/config.yml \
+    ../../WebSite/Symfony/web/app_dev.php
 

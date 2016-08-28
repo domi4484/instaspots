@@ -24,8 +24,9 @@ class ParameterSet
   const SPOT_SECRET_SPOT          = "spot_secretSpot";
   const SPOT_LATITUDE             = "spot_latitude";
   const SPOT_LONGITUDE            = "spot_longitude";
-  const SPOT_DISTANCE_KM          = "spot_DistanceKm";
   const SPOT_TAGS                 = "spot_Tags";
+  const SPOT_SCORE                = "spot_Score";
+  const SPOT_DISTANCE_KM          = "spot_DistanceKm";
   const SPOT_PICTURE_PICTURE_ID_1 = "spot_picture_pictureId_1";
   const SPOT_PICTURE_PICTURE_ID_2 = "spot_picture_pictureId_2";
   const SPOT_PICTURE_URL_1        = "spot_picture_url_1";
@@ -37,6 +38,7 @@ class ParameterSet
   const PICTURE_LONGITUDE        = "picture_longitude";
   const PICTURE_URL              = "picture_url";
   const PICTURE_CREATED          = "picture_created";
+  const PICTURE_LIKERS           = "pictrue_likers";
   const PICTURE_SPOT_ID          = "picture_spot_spotId";
   const PICTURE_SPOT_NAME        = "picture_spot_name";
   const PICTURE_SPOT_DESCRIPTION = "picture_spot_description";

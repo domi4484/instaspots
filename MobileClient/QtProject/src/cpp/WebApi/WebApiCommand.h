@@ -72,6 +72,7 @@ public:
 
 signals:
 
+  void signal_Finished();
   void signal_Finished(const WebApiError &error);
   void signal_Progress(qint64 progress,
                        qint64 total);

@@ -57,7 +57,11 @@ const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
 const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
 const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
 
-const QString WebApi::COMMAND::REMOVE_PICTURE = "removePicture";
+const QString WebApi::COMMAND::SPOT_SIGNAL_DISAPPEARED = "spotSignalDisappeared";
+
+const QString WebApi::COMMAND::PICTURE_LIKE   = "pictureLike";
+const QString WebApi::COMMAND::PICTURE_UNLIKE = "pictureUnlike";
+const QString WebApi::COMMAND::PICTURE_REMOVE = "pictureRemove";
 
 // Parameters
 const QString WebApi::PARAMETER::USER_USER_ID       = "user_userId";
@@ -80,8 +84,9 @@ const QString WebApi::PARAMETER::SPOT_DESCRIPTION          = "spot_description";
 const QString WebApi::PARAMETER::SPOT_SECRET_SPOT          = "spot_secretSpot";
 const QString WebApi::PARAMETER::SPOT_LATITUDE             = "spot_latitude";
 const QString WebApi::PARAMETER::SPOT_LONGITUDE            = "spot_longitude";
-const QString WebApi::PARAMETER::SPOT_DISTANCE_KM          = "spot_DistanceKm";
 const QString WebApi::PARAMETER::SPOT_TAGS                 = "spot_Tags";
+const QString WebApi::PARAMETER::SPOT_SCORE                = "spot_Score";
+const QString WebApi::PARAMETER::SPOT_DISTANCE_KM          = "spot_DistanceKm";
 const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 = "spot_picture_pictureId_1";
 const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 = "spot_picture_pictureId_2";
 const QString WebApi::PARAMETER::SPOT_PICTURE_URL_1        = "spot_picture_url_1";
@@ -93,6 +98,7 @@ const QString WebApi::PARAMETER::PICTURE_LATITUDE         = "picture_latitude";
 const QString WebApi::PARAMETER::PICTURE_LONGITUDE        = "picture_longitude";
 const QString WebApi::PARAMETER::PICTURE_URL              = "picture_url";
 const QString WebApi::PARAMETER::PICTURE_CREATED          = "picture_created";
+const QString WebApi::PARAMETER::PICTURE_LIKERS           = "pictrue_likers";
 const QString WebApi::PARAMETER::PICTURE_SPOT_ID          = "picture_spot_spotId";
 const QString WebApi::PARAMETER::PICTURE_SPOT_NAME        = "picture_spot_name";
 const QString WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION = "picture_spot_description";

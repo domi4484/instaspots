@@ -67,7 +67,11 @@ public:
     static const QString GET_SPOTS_BY_DISTANCE;
     static const QString GET_SPOTS_BY_USER_ID;
 
-    static const QString REMOVE_PICTURE;
+    static const QString SPOT_SIGNAL_DISAPPEARED;
+
+    static const QString PICTURE_LIKE;
+    static const QString PICTURE_UNLIKE;
+    static const QString PICTURE_REMOVE;
   }; // COMMAND
 
   // Paramters
@@ -94,8 +98,9 @@ public:
     static const QString SPOT_SECRET_SPOT;
     static const QString SPOT_LATITUDE;
     static const QString SPOT_LONGITUDE;
-    static const QString SPOT_DISTANCE_KM;
     static const QString SPOT_TAGS;
+    static const QString SPOT_SCORE;
+    static const QString SPOT_DISTANCE_KM;
     static const QString SPOT_PICTURE_PICTURE_ID_1;
     static const QString SPOT_PICTURE_PICTURE_ID_2;
     static const QString SPOT_PICTURE_URL_1;
@@ -107,6 +112,7 @@ public:
     static const QString PICTURE_LONGITUDE;
     static const QString PICTURE_URL;
     static const QString PICTURE_CREATED;
+    static const QString PICTURE_LIKERS;
     static const QString PICTURE_SPOT_ID;
     static const QString PICTURE_SPOT_NAME;
     static const QString PICTURE_SPOT_DESCRIPTION;

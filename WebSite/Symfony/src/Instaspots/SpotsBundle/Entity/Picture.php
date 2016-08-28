@@ -203,6 +203,9 @@ class Picture
     {
         $this->user = $user;
 
+        // Add score to user
+        $user->addReputation(10);
+
         return $this;
     }
 
@@ -254,9 +257,23 @@ class Picture
      */
     public function addLiker(\Instaspots\UserBundle\Entity\User $liker)
     {
-        $this->likers[] = $liker;
-
+      // Check if already liked
+      if(in_array($liker, $this->likers))
         return $this;
+
+      // Assign reputation point to liked user
+      if($this->user != $liker)
+      {
+        $this->user->notifyLikedPicture($this);
+      }
+
+      // Assign score point to spot
+      $this->spot->addScore(1);
+
+      // Append liker
+      $this->likers[] = $liker;
+
+      return $this;
     }
 
     /**
@@ -266,7 +283,21 @@ class Picture
      */
     public function removeLiker(\Instaspots\UserBundle\Entity\User $liker)
     {
-        $this->likers->removeElement($liker);
+      // Check if already unliked
+      if(in_array($liker, $this->likers) == false)
+        return $this;
+
+      // Remove reputation point to liked user
+      if($this->user != $liker)
+      {
+        $this->user->removeReputation(1);
+      }
+
+      // Remove score point from spot
+      $this->spot->removeScore(1);
+
+      // Remove liker
+      $this->likers->removeElement($liker);
     }
 
     /**
@@ -281,23 +312,31 @@ class Picture
 
     //-----------------------------------------------------------------------------------------------------------------------------
 
-   public function toJson()
+  public function toJson()
+  {
+    $jPicture = array();
+    $jPicture[ParameterSet::PICTURE_PICTURE_ID] = $this->getId();
+    $jPicture[ParameterSet::PICTURE_LATITUDE  ] = $this->getLatitude();
+    $jPicture[ParameterSet::PICTURE_LONGITUDE ] = $this->getLongitude();
+    $jPicture[ParameterSet::PICTURE_URL       ] = $this->getUrl();
+    $jPicture[ParameterSet::PICTURE_CREATED   ] = $this->getCreatedISOText();
+
+    $jLikers = array();
+    foreach($this->getLikers() as &$liker)
     {
-      $jPicture = array();
-      $jPicture[ParameterSet::PICTURE_PICTURE_ID] = $this->getId();
-      $jPicture[ParameterSet::PICTURE_LATITUDE  ] = $this->getLatitude();
-      $jPicture[ParameterSet::PICTURE_LONGITUDE ] = $this->getLongitude();
-      $jPicture[ParameterSet::PICTURE_URL       ] = $this->getUrl();
-      $jPicture[ParameterSet::PICTURE_CREATED   ] = $this->getCreatedISOText();
-
-      $jPicture[ParameterSet::PICTURE_SPOT_ID         ] = $this->getSpot()->getId();
-      $jPicture[ParameterSet::PICTURE_SPOT_NAME       ] = $this->getSpot()->getName();
-      $jPicture[ParameterSet::PICTURE_SPOT_DESCRIPTION] = $this->getSpot()->getDescription();
-      $jPicture[ParameterSet::PICTURE_SPOT_SCORE      ] = $this->getSpot()->getScore();
-
-      $jPicture[ParameterSet::PICTURE_USER_ID      ] = $this->getUser()->getId();
-      $jPicture[ParameterSet::PICTURE_USER_USERNAME] = $this->getUser()->getUsername();
-
-      return $jPicture;
+      $jLikers[] = $liker->toJson();
     }
+    $jPicture[ParameterSet::PICTURE_LIKERS   ] = $jLikers;
+
+
+    $jPicture[ParameterSet::PICTURE_SPOT_ID         ] = $this->getSpot()->getId();
+    $jPicture[ParameterSet::PICTURE_SPOT_NAME       ] = $this->getSpot()->getName();
+    $jPicture[ParameterSet::PICTURE_SPOT_DESCRIPTION] = $this->getSpot()->getDescription();
+    $jPicture[ParameterSet::PICTURE_SPOT_SCORE      ] = $this->getSpot()->getScore();
+
+    $jPicture[ParameterSet::PICTURE_USER_ID      ] = $this->getUser()->getId();
+    $jPicture[ParameterSet::PICTURE_USER_USERNAME] = $this->getUser()->getUsername();
+
+    return $jPicture;
+  }
 }

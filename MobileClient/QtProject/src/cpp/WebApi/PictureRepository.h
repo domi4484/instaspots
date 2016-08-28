@@ -48,6 +48,8 @@ public slots:
   void getBy_UserId(int requestId, int userId);
   void getBy_Newest(int requestId);
 
+  void likePicture(int pictureId);
+
 signals:
 
   void signal_DataReady(int requestId,
