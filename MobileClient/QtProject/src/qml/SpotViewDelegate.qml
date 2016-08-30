@@ -43,8 +43,8 @@ Item {
         Link{
             id: link_Username
 
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.width / 2
 
             verticalAlignment: Text.AlignTop
 
