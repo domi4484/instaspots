@@ -20,6 +20,7 @@ import PicturesModel 1.0
 import "qrc:/qml/"
 import "qrc:/qml/widgets"
 import "qrc:/qml/pages-user"
+import "qrc:/qml/pages-picture"
 
 Item{
     id: page_Picture
@@ -58,7 +59,7 @@ Item{
         anchors.fill: parent
         model: picturesModel
 
-        delegate: SpotViewDelegate{
+        delegate: PictureViewDelegate{
 
             onUserClicked: {
                 stackView.push( {

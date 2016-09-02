@@ -7,7 +7,7 @@
         <file>qml/Panel_NearbySpots.qml</file>
         <file>qml/Panel_Upload.qml</file>
         <file>qml/Panel_User.qml</file>
-        <file>qml/SpotViewDelegate.qml</file>
+        <file>qml/pages-picture/PictureViewDelegate.qml</file>
         <file>qml/declarative-camera/CameraListButton.qml</file>
         <file>qml/declarative-camera/CameraListPopup.qml</file>
         <file>qml/declarative-camera/CameraPropertyButton.qml</file>
@@ -47,6 +47,7 @@
         <file>qml/widgets/Link.qml</file>
         <file>qml/component/Component_TagSwitch.qml</file>
         <file>qml/component/Component_ListSelectionDialog.qml</file>
+        <file>qml/pages-picture/Page_Likes.qml</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon/find-location.png</file>

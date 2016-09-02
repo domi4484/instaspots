@@ -11,12 +11,14 @@ Item {
     width: parent.width
     height:   rectangle_Top.height
             + image_Picture.height
-            + 15
+            + rectangle_Bottom.height
+            + 20 * hc_Application.dip
 
 
     signal userClicked
     signal spotClicked
     signal optionsClicked
+    signal likesClicked
 
     Rectangle {
         id: rectangle_Top
@@ -73,7 +75,7 @@ Item {
 
             onClicked: optionsClicked()
         }
-    }
+    } // Rectangle
 
     // Picture
     CachedPicture {
@@ -90,4 +92,25 @@ Item {
             onClicked: spotClicked()
         }
     }
+
+    Rectangle {
+        id: rectangle_Bottom
+
+        anchors.top: image_Picture.bottom
+        width: parent.width
+
+        height: link_Likes.height * 2
+
+        // Likes
+        Link{
+            id: link_Likes
+
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: role_PictureLikersCount + " " + qsTr("Likes")
+
+            onClicked: likesClicked()
+        } // Likes
+    } // Rectangle
 }

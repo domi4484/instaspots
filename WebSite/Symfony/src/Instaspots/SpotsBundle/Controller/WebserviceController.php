@@ -38,7 +38,7 @@ use SoapFault;
 
 class WebserviceController extends Controller
 {
-  private $CONST_DEBUG = true;
+  private $CONST_DEBUG = false;
 
   public function webserviceAction(Request $request)
   {

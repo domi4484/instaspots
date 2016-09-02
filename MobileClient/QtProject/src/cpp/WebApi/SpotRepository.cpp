@@ -108,6 +108,8 @@ Spot *SpotRepository::getBy_SpotId(int spotId)
     spot = new Spot(this);
     spot->setId(spotId);
     m_QMap_Spots.insert(spotId, spot);
+
+    // #todo Get internet
   }
 
   return spot;

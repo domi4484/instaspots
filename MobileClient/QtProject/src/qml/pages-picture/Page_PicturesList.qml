@@ -21,6 +21,7 @@ import "qrc:/qml/"
 import "qrc:/qml/views"
 import "qrc:/qml/widgets/"
 import "qrc:/qml/component"
+import "qrc:/qml/pages-picture"
 
 Item{
     id: page_PicturesList
@@ -50,6 +51,7 @@ Item{
 
     signal userClicked(int userId, string username)
     signal spotClicked(int spotId, string spotName)
+    signal likesClicked(int pictureId)
 
 
     // Methods -----------------------------
@@ -66,7 +68,7 @@ Item{
         anchors.fill: parent
         model: picturesModel
 
-        delegate: SpotViewDelegate{
+        delegate: PictureViewDelegate{
 
             onUserClicked: {
                 page_PicturesList.userClicked(role_UserId, role_UserUsername);
@@ -76,6 +78,9 @@ Item{
             }
             onOptionsClicked: {
                 component_ListSelectionDialog_Options.showDialog = true;
+            }
+            onLikesClicked: {
+                page_PicturesList.likesClicked(role_PictureId);
             }
 
 

@@ -102,7 +102,6 @@ DISTFILES += \
     src/qml/Panel_NearbySpots.qml \
     src/qml/Panel_Upload.qml \
     src/qml/Panel_User.qml \
-    src/qml/SpotViewDelegate.qml \
     src/qml/TabWidgetBottom_Main.qml \
     src/qml/declarative-camera/CameraListButton.qml \
     src/qml/declarative-camera/CameraListPopup.qml \
@@ -171,5 +170,6 @@ DISTFILES += \
     src/qml/pages-upload/Upload_CropPicture.qml \
     ../../WebSite/Symfony/app/AppKernel.php \
     ../../WebSite/Symfony/app/config/config.yml \
-    ../../WebSite/Symfony/web/app_dev.php
+    ../../WebSite/Symfony/web/app_dev.php \
+    src/qml/pages-picture/PictureViewDelegate.qml
 

@@ -38,7 +38,7 @@ class ParameterSet
   const PICTURE_LONGITUDE        = "picture_longitude";
   const PICTURE_URL              = "picture_url";
   const PICTURE_CREATED          = "picture_created";
-  const PICTURE_LIKERS           = "pictrue_likers";
+  const PICTURE_LIKERS           = "picture_likers";
   const PICTURE_SPOT_ID          = "picture_spot_spotId";
   const PICTURE_SPOT_NAME        = "picture_spot_name";
   const PICTURE_SPOT_DESCRIPTION = "picture_spot_description";

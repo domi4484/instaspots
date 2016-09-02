@@ -18,14 +18,15 @@
 
 Picture::Picture(QObject *parent) :
   QObject(parent),
-  m_Id         (-1),
-  m_IdUser     (-1),
-  m_IdSpot     (-1),
+  m_Id             (-1),
+  m_IdUser         (-1),
+  m_IdSpot         (-1),
   m_Url            (""),
   m_Username       (""),
   m_SpotName       (""),
   m_SpotDescription(""),
   m_Created        (),
+  m_QMap_Likers    (),
   m_WebApiCommand  (NULL)
 {
 }
@@ -53,6 +54,7 @@ Picture &Picture::operator=(const Picture &other)
   m_SpotName        = other.m_SpotName;
   m_SpotDescription = other.m_SpotDescription;
   m_Created         = other.m_Created;
+  m_QMap_Likers     = other.m_QMap_Likers;
   return *this;
 }
 
@@ -69,22 +71,25 @@ QVariant Picture::pictureRole(PictureRoles role) const
     return m_IdUser;
   break;
   case Role_SpotId:
-  return m_IdSpot;
+    return m_IdSpot;
   break;
   case Role_UserUsername:
-  return m_Username;
+    return m_Username;
   break;
   case Role_SpotName:
-  return m_SpotName;
+    return m_SpotName;
   break;
   case Role_SpotDescription:
-  return m_SpotDescription;
+    return m_SpotDescription;
   break;
   case Role_PictureCreated:
-  return createdText();
+    return createdText();
   break;
   case Role_PictureUrl:
-  return m_Url;
+    return m_Url;
+  break;
+  case Role_PictureLikersCount:
+    return likersCount();
   break;
   }
   return "";
@@ -95,14 +100,15 @@ QVariant Picture::pictureRole(PictureRoles role) const
 QHash<int, QByteArray> Picture::roleNames()
 {
   QHash<int, QByteArray> roles;
-  roles[Role_PictureId]       = "role_PictureId";
-  roles[Role_PictureCreated]  = "role_PictureCreated";
-  roles[Role_PictureUrl]      = "role_PictureUrl";
-  roles[Role_UserId]          = "role_UserId";
-  roles[Role_UserUsername]    = "role_UserUsername";
-  roles[Role_SpotId]          = "role_SpotId";
-  roles[Role_SpotName]        = "role_SpotName";
-  roles[Role_SpotDescription] = "role_SpotDescription";
+  roles[Role_PictureId]          = "role_PictureId";
+  roles[Role_PictureCreated]     = "role_PictureCreated";
+  roles[Role_PictureUrl]         = "role_PictureUrl";
+  roles[Role_UserId]             = "role_UserId";
+  roles[Role_UserUsername]       = "role_UserUsername";
+  roles[Role_SpotId]             = "role_SpotId";
+  roles[Role_SpotName]           = "role_SpotName";
+  roles[Role_SpotDescription]    = "role_SpotDescription";
+  roles[Role_PictureLikersCount] = "role_PictureLikersCount";
 
   return roles;
 }
@@ -127,5 +133,38 @@ QString Picture::createdText() const
 
     return tr("%1w").arg(elapseTime / (60 * 60 * 24 * 7));
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int Picture::likersCount() const
+{
+  return m_QMap_Likers.size();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QStringList Picture::likersUsername() const
+{
+  return m_QMap_Likers.values();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Picture::clearLikers()
+{
+  m_QMap_Likers.clear();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Picture::addLiker(int idUser,
+                       const QString &username)
+{
+  m_QMap_Likers.insert(idUser,
+                       username);
+}
+
+
+
 
 

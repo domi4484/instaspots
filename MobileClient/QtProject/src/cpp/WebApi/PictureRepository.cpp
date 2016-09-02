@@ -93,6 +93,26 @@ QList<Picture *> PictureRepository::getPictures(int requestId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+Picture *PictureRepository::getBy_PictureId(int pictureId)
+{
+  if(pictureId < 0)
+      return NULL;
+
+  Picture *picture = m_QMap_Pictures.value(pictureId, NULL);
+  if(picture == NULL)
+  {
+    picture = new Picture(this);
+    picture->setId(pictureId);
+    m_QMap_Pictures.insert(pictureId, picture);
+
+    // #todo Get internet
+  }
+
+  return picture;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureRepository::getBy_PictureId(int requestId,
                                         int pictureId)
 {
@@ -108,7 +128,7 @@ void PictureRepository::getBy_PictureId(int requestId,
         return;
     }
 
-    // Get internet
+    // #todo Get internet
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -230,6 +250,19 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
     picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());
     picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_CREATED).toString(),
                                                        Qt::ISODate));
+
+    picture->clearLikers();
+    QJsonArray jsonArray_Likers = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_LIKERS).toArray();
+    for(int i = 0; i < jsonArray_Likers.size(); i++)
+    {
+      QJsonObject jsonObject_Liker = jsonArray_Likers.at(i).toObject();
+
+      int     liker_id       = jsonObject_Liker.value(WebApi::PARAMETER::USER_USER_ID).toInt();
+      QString liker_username = jsonObject_Liker.value(WebApi::PARAMETER::USER_USERNAME).toString();
+
+      picture->addLiker(liker_id,
+                        liker_username);
+    }
 
     // Add to current request
     newPictures.append(picture);

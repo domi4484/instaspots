@@ -97,6 +97,13 @@ Item {
                                            stackView        : stackView,
                                            spotId           : spotId }});
             }
+
+            onLikesClicked: {
+                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-picture/Page_Likes.qml"),
+                               properties:{navigation_Title : qsTr("Likes"),
+                                           stackView        : stackView,
+                                           pictureId        : pictureId }});
+            }
         }
     }
 
