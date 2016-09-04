@@ -50,7 +50,7 @@ Item{
         model: picture.likersUsername
 
         delegate: Link {
-            text: modelData
+            text: modelData.username
 
             height: 30 *hc_Application.dip
 
@@ -59,9 +59,9 @@ Item{
             onClicked: {
                 stackView.push( { item: Qt.resolvedUrl("qrc:/qml/pages-user/Page_User.qml"),
                                   properties : {
-                                                 navigation_Title : modelData,
+                                                 navigation_Title : modelData.username,
                                                  stackView        : stackView,
-                                                 userId           : userId
+                                                 userId           : modelData.id
                                                 } });
             }
         }

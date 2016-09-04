@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      05.11.2014                                        *
@@ -14,12 +14,14 @@
 
 // Project includes ------------------------
 #include "WebApiError.h"
+#include "User.h"
 
 // Qt includes -----------------------------
 #include <QObject>
 #include <QPixmap>
 #include <QDateTime>
 #include <QHash>
+#include <QQmlListProperty>
 
 // Forward declarations --------------------
 class WebApiCommand;
@@ -36,7 +38,7 @@ class Picture : public QObject
   Q_PROPERTY(QDateTime      created         READ created         WRITE setCreated         NOTIFY createdChanged         )
   Q_PROPERTY(QString        createdText     READ createdText                              NOTIFY createdChanged         )
   Q_PROPERTY(int            likersCount     READ likersCount                              NOTIFY likersCountChanged     )
-  Q_PROPERTY(QStringList    likersUsername  READ likersUsername                           NOTIFY likersUsernameChanged  )
+  Q_PROPERTY(QQmlListProperty<User>    likersUsername  READ likersUsername                           NOTIFY likersUsernameChanged  )
 
 public:
 
@@ -66,7 +68,7 @@ public:
   QDateTime   created()         const { return m_Created; }
   QString     createdText()     const;
   int         likersCount()     const;
-  QStringList likersUsername()  const;
+  QQmlListProperty<User> likersUsername();
 
   void setId              (int id)                         { m_Id              = id;       }
   void setIdUser          (int idUser)                     { m_IdUser          = idUser;   }
@@ -100,7 +102,7 @@ private:
   QString            m_SpotName;
   QString            m_SpotDescription;
   QDateTime          m_Created;
-  QMap<int, QString> m_QMap_Likers;
+  QList<User *>    m_QList_Likers;
 
   WebApiCommand *m_WebApiCommand;
 

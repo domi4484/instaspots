@@ -26,7 +26,7 @@ Picture::Picture(QObject *parent) :
   m_SpotName       (""),
   m_SpotDescription(""),
   m_Created        (),
-  m_QMap_Likers    (),
+  m_QList_Likers    (),
   m_WebApiCommand  (NULL)
 {
 }
@@ -35,6 +35,13 @@ Picture::Picture(QObject *parent) :
 
 Picture::~Picture()
 {
+  foreach (User *user, m_QList_Likers)
+  {
+    delete user;
+  }
+  m_QList_Likers.clear();
+
+
   if(m_WebApiCommand != NULL)
   {
     delete m_WebApiCommand;
@@ -54,7 +61,7 @@ Picture &Picture::operator=(const Picture &other)
   m_SpotName        = other.m_SpotName;
   m_SpotDescription = other.m_SpotDescription;
   m_Created         = other.m_Created;
-  m_QMap_Likers     = other.m_QMap_Likers;
+  m_QList_Likers     = other.m_QList_Likers;
   return *this;
 }
 
@@ -138,21 +145,27 @@ QString Picture::createdText() const
 
 int Picture::likersCount() const
 {
-  return m_QMap_Likers.size();
+  return m_QList_Likers.size();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QStringList Picture::likersUsername() const
+QQmlListProperty<User> Picture::likersUsername()
 {
-  return m_QMap_Likers.values();
+  return QQmlListProperty<User>(this,
+                                m_QList_Likers);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void Picture::clearLikers()
 {
-  m_QMap_Likers.clear();
+  foreach (User *user, m_QList_Likers)
+  {
+    delete user;
+  }
+
+  m_QList_Likers.clear();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -160,8 +173,10 @@ void Picture::clearLikers()
 void Picture::addLiker(int idUser,
                        const QString &username)
 {
-  m_QMap_Likers.insert(idUser,
-                       username);
+  User *user = new User();
+  user->setId(idUser);
+  user->setUsername(username);
+  m_QList_Likers.append(user);
 
   emit likersCountChanged();
   emit likersUsernameChanged();

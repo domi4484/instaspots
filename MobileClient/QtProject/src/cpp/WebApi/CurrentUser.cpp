@@ -19,8 +19,8 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-CurrenUser::CurrenUser(Settings *settings,
-           QObject *parent) :
+CurrentUser::CurrentUser(Settings *settings,
+                         QObject *parent) :
   QObject(parent),
   m_Settings                 (settings),
   m_Id                       (-1),
@@ -50,14 +50,14 @@ CurrenUser::CurrenUser(Settings *settings,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool CurrenUser::isConnected()
+bool CurrentUser::isConnected()
 {
     return m_Id >= 0;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool CurrenUser::login()
+bool CurrentUser::login()
 {
   m_Id = -1;
 
@@ -89,7 +89,7 @@ bool CurrenUser::login()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool CurrenUser::login(const QString &username,
+bool CurrentUser::login(const QString &username,
                  const QString &password)
 {
   m_Id = -1;
@@ -127,7 +127,7 @@ bool CurrenUser::login(const QString &username,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool CurrenUser::logout()
+bool CurrentUser::logout()
 {
   m_Id = -1;
 
@@ -159,7 +159,7 @@ bool CurrenUser::logout()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool CurrenUser::registration(const QString &username,
+bool CurrentUser::registration(const QString &username,
                         const QString &e_mail,
                         const QString &password)
 {
@@ -203,21 +203,21 @@ bool CurrenUser::registration(const QString &username,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString CurrenUser::username()
+QString CurrentUser::username()
 {
     return m_Settings->get_User_Username();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int CurrenUser::id()
+int CurrentUser::id()
 {
     return m_Id;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CurrenUser::slot_CommandLogin_Finished(const WebApiError &error)
+void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
 {
   if(error.type() != WebApiError::NONE)
   {
@@ -254,7 +254,7 @@ void CurrenUser::slot_CommandLogin_Finished(const WebApiError &error)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CurrenUser::slot_CommandLogout_Finished(const WebApiError &error)
+void CurrentUser::slot_CommandLogout_Finished(const WebApiError &error)
 {
   if(error.type() != WebApiError::NONE)
   {
@@ -270,7 +270,7 @@ void CurrenUser::slot_CommandLogout_Finished(const WebApiError &error)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CurrenUser::slot_CommandRegister_Finished(const WebApiError &error)
+void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
 {
   if(   error.type() != WebApiError::NONE
      && error.type() != WebApiError::COMMAND)
@@ -321,7 +321,7 @@ void CurrenUser::slot_CommandRegister_Finished(const WebApiError &error)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CurrenUser::slot_CommandCanRegister_Finished(const WebApiError &error)
+void CurrentUser::slot_CommandCanRegister_Finished(const WebApiError &error)
 {
   // TODO implement me
 }

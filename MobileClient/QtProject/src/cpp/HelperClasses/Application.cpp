@@ -84,8 +84,8 @@ Application::Application(int argc, char *argv[]) :
   PictureRepository::instanziate();
   SpotRepository::instanziate(m_LocationManager);
 
-  m_User = new CurrenUser(m_Settings,
-                    this);
+  m_User = new CurrentUser(m_Settings,
+                          this);
   m_PictureUploader = new PictureUploader(this);
 
   // Custom network access factory
@@ -114,6 +114,7 @@ Application::Application(int argc, char *argv[]) :
   qmlRegisterType<Picture>         ("Picture",          1, 0, "Picture");
   qmlRegisterType<SpotsModel>      ("SpotsModel",       1, 0, "SpotsModel");
   qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
+  qmlRegisterType<User>            ("User",             1, 0, "User");
 
   QObject::connect(this,
                    SIGNAL(applicationStateChanged(Qt::ApplicationState)),

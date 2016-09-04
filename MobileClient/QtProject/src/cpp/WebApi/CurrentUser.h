@@ -9,8 +9,8 @@
  *                                                                 *
 ********************************************************************/
 
-#ifndef USER_H
-#define USER_H
+#ifndef CURRENTUSER_H
+#define CURRENTUSER_H
 
 // Project includes ------------------------
 #include "WebApiError.h"
@@ -22,7 +22,7 @@
 // Forward declarations --------------------
 class Settings;
 
-class CurrenUser : public QObject
+class CurrentUser : public QObject
 {
   Q_OBJECT
 
@@ -31,8 +31,8 @@ class CurrenUser : public QObject
 
 public:
 
-  explicit CurrenUser(Settings *settings,
-                QObject *parent = 0);
+  explicit CurrentUser(Settings *settings,
+                       QObject *parent = 0);
 
 
 public slots:
@@ -84,4 +84,4 @@ private:
   WebApiCommand m_WebApiCommand_CanRegister;
 };
 
-#endif // USER_H
+#endif // CURRENTUSER_H
