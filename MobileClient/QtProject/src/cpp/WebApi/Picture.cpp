@@ -162,6 +162,9 @@ void Picture::addLiker(int idUser,
 {
   m_QMap_Likers.insert(idUser,
                        username);
+
+  emit likersCountChanged();
+  emit likersUsernameChanged();
 }
 
 

@@ -50,17 +50,20 @@ Item{
         model: picture.likersUsername
 
         delegate: Link {
-            text: "likerrrrr"
+            text: modelData
 
-//            onPictureClicked: {
-//                stackView.push( { item: Qt.resolvedUrl("qrc:/qml/pages-picture/Page_Picture.qml"),
-//                                  properties : {
-//                                                  stackView                    : stackView,
-//                                                  navigation_Title             : page_Spot.navigation_Title,
-//                                                  navigation_BackButtonVisible : true
-//                                               } });
-//                stackView.currentItem.model.getBy_PictureId(pictureId);
-//            }
+            height: 30 *hc_Application.dip
+
+            verticalAlignment: Text.AlignVCenter
+
+            onClicked: {
+                stackView.push( { item: Qt.resolvedUrl("qrc:/qml/pages-user/Page_User.qml"),
+                                  properties : {
+                                                 navigation_Title : modelData,
+                                                 stackView        : stackView,
+                                                 userId           : userId
+                                                } });
+            }
         }
     } // Listview
 

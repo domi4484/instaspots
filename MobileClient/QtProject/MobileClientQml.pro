@@ -45,7 +45,6 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/Picture.cpp \
     src/cpp/WebApi/QueryItem.cpp \
     src/cpp/WebApi/Spot.cpp \
-    src/cpp/WebApi/User.cpp \
     src/cpp/WebApi/WebApi.cpp \
     src/cpp/WebApi/WebApiCommand.cpp \
     src/cpp/WebApi/WebApiError.cpp \
@@ -64,13 +63,13 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/External/SimpleCrypt.cpp \
     src/cpp/HelperClasses/Application.cpp \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.cpp \
-    src/cpp/HelperClasses/UltraNetworkAccessManager.cpp
+    src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
+    src/cpp/WebApi/CurrentUser.cpp
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
     src/cpp/WebApi/QueryItem.h \
     src/cpp/WebApi/Spot.h \
-    src/cpp/WebApi/User.h \
     src/cpp/WebApi/WebApi.h \
     src/cpp/WebApi/WebApiCommand.h \
     src/cpp/WebApi/WebApiError.h \
@@ -90,7 +89,8 @@ HEADERS += \
     src/cpp/External/SimpleCrypt.h \
     src/cpp/HelperClasses/Application.h \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
-    src/cpp/HelperClasses/UltraNetworkAccessManager.h
+    src/cpp/HelperClasses/UltraNetworkAccessManager.h \
+    src/cpp/WebApi/CurrentUser.h
 
 RESOURCES += src/qml.qrc
 

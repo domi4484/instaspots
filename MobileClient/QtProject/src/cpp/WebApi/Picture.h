@@ -29,31 +29,27 @@ class Picture : public QObject
 
   Q_OBJECT
 
-TODO
-//  Q_PROPERTY(int            id           READ id          WRITE setId)
-//  Q_PROPERTY(QString        username     READ username    WRITE setUsername        NOTIFY nameChanged       )
-//  Q_PROPERTY(QString        description  READ description WRITE setDescription NOTIFY descriptionChanged)
-//  Q_PROPERTY(bool           secretSpot   READ secretSpot  WRITE setSecretSpot  NOTIFY secretSpotChanged )
-//  Q_PROPERTY(QGeoCoordinate coordinate   READ coordinate  WRITE setCoordinate  NOTIFY coordinateChanged )
-//  Q_PROPERTY(qreal          distance     READ distance    WRITE setDistance    NOTIFY distanceChanged   )
-//  Q_PROPERTY(QString        distanceText READ distanceText                     NOTIFY distanceChanged   )
-//  Q_PROPERTY(QString        pictureUrl1  READ pictureUrl1 WRITE setPictureUrl1 NOTIFY pictureUrl1Changed)
-//  Q_PROPERTY(QString        pictureUrl2  READ pictureUrl2 WRITE setPictureUrl2 NOTIFY pictureUrl2Changed)
-//  Q_PROPERTY(int            pictureId1   READ pictureId1  WRITE setPictureId1  NOTIFY pictureId1Changed )
-//  Q_PROPERTY(int            pictureId2   READ pictureId2  WRITE setPictureId2  NOTIFY pictureId2Changed )
+  Q_PROPERTY(int            id              READ id              WRITE setId)
+  Q_PROPERTY(QString        username        READ username        WRITE setUsername        NOTIFY usernameChanged        )
+  Q_PROPERTY(QString        spotName        READ spotName        WRITE setSpotName        NOTIFY spotNameChanged        )
+  Q_PROPERTY(QString        spotDescription READ spotDescription WRITE setSpotDescription NOTIFY spotDescriptionChanged )
+  Q_PROPERTY(QDateTime      created         READ created         WRITE setCreated         NOTIFY createdChanged         )
+  Q_PROPERTY(QString        createdText     READ createdText                              NOTIFY createdChanged         )
+  Q_PROPERTY(int            likersCount     READ likersCount                              NOTIFY likersCountChanged     )
+  Q_PROPERTY(QStringList    likersUsername  READ likersUsername                           NOTIFY likersUsernameChanged  )
 
 public:
 
   enum PictureRoles {
-    Role_PictureId       = Qt::UserRole + 1,
-    Role_UserId          = Qt::UserRole + 2,
-    Role_SpotId          = Qt::UserRole + 3,
-    Role_UserUsername    = Qt::UserRole + 4,
-    Role_SpotName        = Qt::UserRole + 5,
-    Role_SpotDescription = Qt::UserRole + 6,
-    Role_PictureCreated  = Qt::UserRole + 7,
-    Role_PictureUrl      = Qt::UserRole + 8,
-    Role_PictureLikersCount     = Qt::UserRole + 9
+    Role_PictureId          = Qt::UserRole + 1,
+    Role_UserId             = Qt::UserRole + 2,
+    Role_SpotId             = Qt::UserRole + 3,
+    Role_UserUsername       = Qt::UserRole + 4,
+    Role_SpotName           = Qt::UserRole + 5,
+    Role_SpotDescription    = Qt::UserRole + 6,
+    Role_PictureCreated     = Qt::UserRole + 7,
+    Role_PictureUrl         = Qt::UserRole + 8,
+    Role_PictureLikersCount = Qt::UserRole + 9
   };
 
   explicit Picture(QObject *parent = 0);
@@ -72,14 +68,14 @@ public:
   int         likersCount()     const;
   QStringList likersUsername()  const;
 
-  void setId              (int id)                         { m_Id              = id;              }
-  void setIdUser          (int idUser)                     { m_IdUser          = idUser;          }
-  void setIdSpot          (int idSpot)                     { m_IdSpot          = idSpot;          }
-  void setUrl             (const QString &url)             { m_Url             = url;             }
-  void setUsername        (const QString &username)        { m_Username        = username;        }
-  void setSpotName        (const QString &spotName)        { m_SpotName        = spotName;        }
-  void setSpotDescription (const QString &spotDescription) { m_SpotDescription = spotDescription; }
-  void setCreated         (const QDateTime &created)       { m_Created         = created;         }
+  void setId              (int id)                         { m_Id              = id;       }
+  void setIdUser          (int idUser)                     { m_IdUser          = idUser;   }
+  void setIdSpot          (int idSpot)                     { m_IdSpot          = idSpot;   }
+  void setUrl             (const QString &url)             { m_Url             = url;      }
+  void setUsername        (const QString &username)        { m_Username        = username;        emit usernameChanged();        }
+  void setSpotName        (const QString &spotName)        { m_SpotName        = spotName;        emit spotNameChanged();        }
+  void setSpotDescription (const QString &spotDescription) { m_SpotDescription = spotDescription; emit spotDescriptionChanged(); }
+  void setCreated         (const QDateTime &created)       { m_Created         = created;         emit createdChanged();         }
 
   void clearLikers();
   void addLiker(int idUser,
@@ -87,8 +83,12 @@ public:
 
 signals:
 
-  void signal_DownloadThumbFinished();
-  void signal_DownloadFinished();
+  void usernameChanged();
+  void spotNameChanged();
+  void spotDescriptionChanged();
+  void createdChanged();
+  void likersCountChanged();
+  void likersUsernameChanged();
 
 private:
 

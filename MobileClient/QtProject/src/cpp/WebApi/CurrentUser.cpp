@@ -10,7 +10,7 @@
 ********************************************************************/
 
 // File includes ---------------------------
-#include "User.h"
+#include "CurrentUser.h"
 
 // Project includes ------------------------
 #include "WebApi.h"
@@ -19,7 +19,7 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-User::User(Settings *settings,
+CurrenUser::CurrenUser(Settings *settings,
            QObject *parent) :
   QObject(parent),
   m_Settings                 (settings),
@@ -50,14 +50,14 @@ User::User(Settings *settings,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool User::isConnected()
+bool CurrenUser::isConnected()
 {
     return m_Id >= 0;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool User::login()
+bool CurrenUser::login()
 {
   m_Id = -1;
 
@@ -89,7 +89,7 @@ bool User::login()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool User::login(const QString &username,
+bool CurrenUser::login(const QString &username,
                  const QString &password)
 {
   m_Id = -1;
@@ -127,7 +127,7 @@ bool User::login(const QString &username,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool User::logout()
+bool CurrenUser::logout()
 {
   m_Id = -1;
 
@@ -159,7 +159,7 @@ bool User::logout()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool User::registration(const QString &username,
+bool CurrenUser::registration(const QString &username,
                         const QString &e_mail,
                         const QString &password)
 {
@@ -203,21 +203,21 @@ bool User::registration(const QString &username,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString User::username()
+QString CurrenUser::username()
 {
     return m_Settings->get_User_Username();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int User::id()
+int CurrenUser::id()
 {
     return m_Id;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void User::slot_CommandLogin_Finished(const WebApiError &error)
+void CurrenUser::slot_CommandLogin_Finished(const WebApiError &error)
 {
   if(error.type() != WebApiError::NONE)
   {
@@ -254,7 +254,7 @@ void User::slot_CommandLogin_Finished(const WebApiError &error)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void User::slot_CommandLogout_Finished(const WebApiError &error)
+void CurrenUser::slot_CommandLogout_Finished(const WebApiError &error)
 {
   if(error.type() != WebApiError::NONE)
   {
@@ -270,7 +270,7 @@ void User::slot_CommandLogout_Finished(const WebApiError &error)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void User::slot_CommandRegister_Finished(const WebApiError &error)
+void CurrenUser::slot_CommandRegister_Finished(const WebApiError &error)
 {
   if(   error.type() != WebApiError::NONE
      && error.type() != WebApiError::COMMAND)
@@ -321,7 +321,7 @@ void User::slot_CommandRegister_Finished(const WebApiError &error)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void User::slot_CommandCanRegister_Finished(const WebApiError &error)
+void CurrenUser::slot_CommandCanRegister_Finished(const WebApiError &error)
 {
   // TODO implement me
 }

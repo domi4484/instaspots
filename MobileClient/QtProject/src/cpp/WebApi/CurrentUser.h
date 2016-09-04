@@ -22,7 +22,7 @@
 // Forward declarations --------------------
 class Settings;
 
-class User : public QObject
+class CurrenUser : public QObject
 {
   Q_OBJECT
 
@@ -31,7 +31,7 @@ class User : public QObject
 
 public:
 
-  explicit User(Settings *settings,
+  explicit CurrenUser(Settings *settings,
                 QObject *parent = 0);
 
 

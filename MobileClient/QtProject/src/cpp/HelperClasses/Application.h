@@ -22,7 +22,7 @@ class PlateformDetail;
 class ApplicationHelper;
 class LocationManager;
 class PictureCacher;
-class User;
+class CurrenUser;
 class PictureUploader;
 class UltraQmlAccessManagerFactory;
 class QQmlApplicationEngine;
@@ -57,7 +57,7 @@ private:
   LocationManager              *m_LocationManager;
   PictureCacher                *m_PictureCacher;
 
-  User                         *m_User;
+  CurrenUser                         *m_User;
   PictureUploader              *m_PictureUploader;
 
   UltraQmlAccessManagerFactory *m_UltraQmlAccessManagerFactory;

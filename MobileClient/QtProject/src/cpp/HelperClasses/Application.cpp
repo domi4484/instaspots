@@ -26,7 +26,7 @@
 #include "../WebApi/PictureRepository.h"
 #include "../WebApi/PicturesModel.h"
 #include "../WebApi/Picture.h"
-#include "../WebApi/User.h"
+#include "../WebApi/CurrentUser.h"
 #include "../WebApi/PictureUploader.h"
 
 // Qt includes -----------------------------
@@ -84,7 +84,7 @@ Application::Application(int argc, char *argv[]) :
   PictureRepository::instanziate();
   SpotRepository::instanziate(m_LocationManager);
 
-  m_User = new User(m_Settings,
+  m_User = new CurrenUser(m_Settings,
                     this);
   m_PictureUploader = new PictureUploader(this);
 

@@ -53,7 +53,21 @@ public:
     QVariant spotRole(SpotRoles role) const;
     static QHash<int, QByteArray> roleNames();
 
+    int            id          () const { return m_Id;                     }
+    QString        name        () const { return m_Name;                   }
+    QString        description () const { return m_Description;            }
+    bool           secretSpot  () const { return m_SecretSpot;             }
+    qreal          latitude    () const { return m_Coordinate.latitude();  }
+    qreal          longitude   () const { return m_Coordinate.longitude(); }
+    QGeoCoordinate coordinate  () const { return m_Coordinate;             }
+    qreal          distance    () const { return m_Distance_km;            }
+    QString        pictureUrl1 () const { return m_PictureUrl1;            }
+    QString        pictureUrl2 () const { return m_PictureUrl2;            }
+    int            pictureId1  () const { return m_PictureId1;             }
+    int            pictureId2  () const { return m_PictureId2;             }
+
     QString distanceText() const;
+
 
     void setId          (int id)                           { m_Id          = id;                   }
     void setName        (const QString &name)              { m_Name        = name;                 emit nameChanged();        }
@@ -67,19 +81,6 @@ public:
     void setPictureUrl2 (const QString &pictureUrl2)       { m_PictureUrl2 = pictureUrl2;          emit pictureUrl2Changed(); }
     void setPictureId1  (int pictureId)                    { m_PictureId1  = pictureId;            emit pictureId1Changed();  }
     void setPictureId2  (int pictureId)                    { m_PictureId2  = pictureId;            emit pictureId2Changed();  }
-
-    int            id          () const { return m_Id;                     }
-    QString        name        () const { return m_Name;                   }
-    QString        description () const { return m_Description;            }
-    bool           secretSpot  () const { return m_SecretSpot;             }
-    qreal          latitude    () const { return m_Coordinate.latitude();  }
-    qreal          longitude   () const { return m_Coordinate.longitude(); }
-    QGeoCoordinate coordinate  () const { return m_Coordinate;             }
-    qreal          distance    () const { return m_Distance_km;            }
-    QString        pictureUrl1 () const { return m_PictureUrl1;            }
-    QString        pictureUrl2 () const { return m_PictureUrl2;            }
-    int            pictureId1  () const { return m_PictureId1;             }
-    int            pictureId2  () const { return m_PictureId2;             }
 
 signals:
 
