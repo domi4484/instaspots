@@ -47,7 +47,7 @@ Item{
 
         anchors.fill: parent
 
-        model: picture.likersUsername
+        model: picture.likers
 
         delegate: Link {
             text: modelData.username

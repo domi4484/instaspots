@@ -65,7 +65,8 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.cpp \
     src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
     src/cpp/WebApi/CurrentUser.cpp \
-    src/cpp/WebApi/User.cpp
+    src/cpp/WebApi/User.cpp \
+    src/cpp/WebApi/UserRepository.cpp
 
 HEADERS += \
     src/cpp/WebApi/Picture.h \
@@ -92,7 +93,8 @@ HEADERS += \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
     src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/WebApi/CurrentUser.h \
-    src/cpp/WebApi/User.h
+    src/cpp/WebApi/User.h \
+    src/cpp/WebApi/UserRepository.h
 
 RESOURCES += src/qml.qrc
 

@@ -78,6 +78,7 @@ public:
   class PARAMETER
   {
   public:
+    static const QString USER_LIST;
     static const QString USER_USER_ID;
     static const QString USER_USERNAME;
     static const QString USER_PASSWORD;

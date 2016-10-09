@@ -4,6 +4,7 @@ namespace Instaspots\SpotsBundle\Controller;
 
 class ParameterSet
 {
+  const USER_LIST          = "user_list";
   const USER_USER_ID       = "user_userId";
   const USER_USERNAME      = "user_username";
   const USER_PASSWORD      = "user_password";

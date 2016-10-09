@@ -64,6 +64,7 @@ const QString WebApi::COMMAND::PICTURE_UNLIKE = "pictureUnlike";
 const QString WebApi::COMMAND::PICTURE_REMOVE = "pictureRemove";
 
 // Parameters
+const QString WebApi::PARAMETER::USER_LIST          = "user_list";
 const QString WebApi::PARAMETER::USER_USER_ID       = "user_userId";
 const QString WebApi::PARAMETER::USER_USERNAME      = "user_username";
 const QString WebApi::PARAMETER::USER_PASSWORD      = "user_password";

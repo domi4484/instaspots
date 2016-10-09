@@ -150,36 +150,28 @@ int Picture::likersCount() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QQmlListProperty<User> Picture::likersUsername()
+QQmlListProperty<User> Picture::likers()
 {
   return QQmlListProperty<User>(this,
-                                m_QList_Likers);
+                                  m_QList_Likers);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void Picture::clearLikers()
 {
-  foreach (User *user, m_QList_Likers)
-  {
-    delete user;
-  }
-
   m_QList_Likers.clear();
+
+  emit likersCountChanged();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Picture::addLiker(int idUser,
-                       const QString &username)
+void Picture::addLiker(User *liker)
 {
-  User *user = new User();
-  user->setId(idUser);
-  user->setUsername(username);
-  m_QList_Likers.append(user);
+  m_QList_Likers.append(liker);
 
   emit likersCountChanged();
-  emit likersUsernameChanged();
 }
 
 

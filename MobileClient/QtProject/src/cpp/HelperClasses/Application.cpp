@@ -26,6 +26,8 @@
 #include "../WebApi/PictureRepository.h"
 #include "../WebApi/PicturesModel.h"
 #include "../WebApi/Picture.h"
+#include "../WebApi/UserRepository.h"
+#include "../WebApi/User.h"
 #include "../WebApi/CurrentUser.h"
 #include "../WebApi/PictureUploader.h"
 
@@ -47,7 +49,7 @@ Application::Application(int argc, char *argv[]) :
   m_ApplicationHelper     (NULL),
   m_LocationManager       (NULL),
   m_PictureCacher         (NULL),
-  m_User                  (NULL),
+  m_CurrentUser           (NULL),
   m_PictureUploader       (NULL),
   m_QQmlApplicationEngine (NULL)
 {
@@ -81,11 +83,13 @@ Application::Application(int argc, char *argv[]) :
                                           m_PlateformDetail);
   m_PictureCacher = new PictureCacher(this);
 
+  // Repositories
   PictureRepository::instanziate();
   SpotRepository::instanziate(m_LocationManager);
+  UserRepository::instanziate();
 
-  m_User = new CurrentUser(m_Settings,
-                          this);
+  m_CurrentUser = new CurrentUser(m_Settings,
+                                  this);
   m_PictureUploader = new PictureUploader(this);
 
   // Custom network access factory
@@ -104,11 +108,12 @@ Application::Application(int argc, char *argv[]) :
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Logger",            Logger::instance());
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Settings",          m_Settings);
 
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_User",              m_User           );
+  m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_User",              m_CurrentUser           );
   m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_PictureUploader",   m_PictureUploader);
 
   m_QQmlApplicationEngine->rootContext()->setContextProperty("re_PictureRepository", PictureRepository::instance());
   m_QQmlApplicationEngine->rootContext()->setContextProperty("re_SpotRepository",    SpotRepository::instance());
+  m_QQmlApplicationEngine->rootContext()->setContextProperty("re_UserRepository",    UserRepository::instance());
 
   qmlRegisterType<PicturesModel>   ("PicturesModel",    1, 0, "PicturesModel");
   qmlRegisterType<Picture>         ("Picture",          1, 0, "Picture");
@@ -140,7 +145,7 @@ Application::~Application()
   // Delete objects
   delete m_QQmlApplicationEngine;
   delete m_PictureUploader;
-  delete m_User;
+  delete m_CurrentUser;
   delete m_PictureCacher;
   delete m_LocationManager;
   delete m_ApplicationHelper;
@@ -149,8 +154,9 @@ Application::~Application()
 
   // Destroy singletons
   Logger::destroy();
-  SpotRepository::destroy();
+  UserRepository::destroy();
   PictureRepository::destroy();
+  SpotRepository::destroy();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -181,9 +187,9 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
   m_ApplicationHelper->startupTimerStop();
 
   // Try to login
-  if(m_User->login() == false)
+  if(m_CurrentUser->login() == false)
   {
-    Logger::error(m_User->lastErrorText());
+    Logger::error(m_CurrentUser->lastErrorText());
     return;
   }
 

@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "Picture.h"
+#include "UserRepository.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
 
@@ -30,11 +31,11 @@ PictureRepository *PictureRepository::s_PictureRepository = NULL;
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PictureRepository::PictureRepository(QObject *parent)
-  : QObject(parent),
-    m_RequestId(0),
-    m_QMap_Pictures(),
-    m_QMap_Results()
+PictureRepository::PictureRepository(QObject *parent) :
+  QObject(parent),
+  m_RequestId(0),
+  m_QMap_Pictures(),
+  m_QMap_Results()
 {
 
 }
@@ -260,8 +261,10 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
       int     liker_id       = jsonObject_Liker.value(WebApi::PARAMETER::USER_USER_ID).toInt();
       QString liker_username = jsonObject_Liker.value(WebApi::PARAMETER::USER_USERNAME).toString();
 
-      picture->addLiker(liker_id,
-                        liker_username);
+      User *user = UserRepository::instance()->getAdd_User(liker_id,
+                                                           liker_username);
+
+      picture->addLiker(user);
     }
 
     // Add to current request

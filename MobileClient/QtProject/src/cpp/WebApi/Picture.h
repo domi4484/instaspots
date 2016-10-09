@@ -31,14 +31,14 @@ class Picture : public QObject
 
   Q_OBJECT
 
-  Q_PROPERTY(int            id              READ id              WRITE setId)
-  Q_PROPERTY(QString        username        READ username        WRITE setUsername        NOTIFY usernameChanged        )
-  Q_PROPERTY(QString        spotName        READ spotName        WRITE setSpotName        NOTIFY spotNameChanged        )
-  Q_PROPERTY(QString        spotDescription READ spotDescription WRITE setSpotDescription NOTIFY spotDescriptionChanged )
-  Q_PROPERTY(QDateTime      created         READ created         WRITE setCreated         NOTIFY createdChanged         )
-  Q_PROPERTY(QString        createdText     READ createdText                              NOTIFY createdChanged         )
-  Q_PROPERTY(int            likersCount     READ likersCount                              NOTIFY likersCountChanged     )
-  Q_PROPERTY(QQmlListProperty<User>    likersUsername  READ likersUsername                           NOTIFY likersUsernameChanged  )
+  Q_PROPERTY(int                    id              READ id              WRITE setId)
+  Q_PROPERTY(QString                username        READ username        WRITE setUsername        NOTIFY usernameChanged        )
+  Q_PROPERTY(QString                spotName        READ spotName        WRITE setSpotName        NOTIFY spotNameChanged        )
+  Q_PROPERTY(QString                spotDescription READ spotDescription WRITE setSpotDescription NOTIFY spotDescriptionChanged )
+  Q_PROPERTY(QDateTime              created         READ created         WRITE setCreated         NOTIFY createdChanged         )
+  Q_PROPERTY(QString                createdText     READ createdText                              NOTIFY createdChanged         )
+  Q_PROPERTY(int                    likersCount     READ likersCount                              NOTIFY likersCountChanged     )
+  Q_PROPERTY(QQmlListProperty<User> likers          READ likers                                   NOTIFY likersCountChanged     )
 
 public:
 
@@ -68,7 +68,7 @@ public:
   QDateTime   created()         const { return m_Created; }
   QString     createdText()     const;
   int         likersCount()     const;
-  QQmlListProperty<User> likersUsername();
+  QQmlListProperty<User> likers();
 
   void setId              (int id)                         { m_Id              = id;       }
   void setIdUser          (int idUser)                     { m_IdUser          = idUser;   }
@@ -80,8 +80,7 @@ public:
   void setCreated         (const QDateTime &created)       { m_Created         = created;         emit createdChanged();         }
 
   void clearLikers();
-  void addLiker(int idUser,
-                const QString &username);
+  void addLiker(User *liker);
 
 signals:
 
@@ -90,7 +89,6 @@ signals:
   void spotDescriptionChanged();
   void createdChanged();
   void likersCountChanged();
-  void likersUsernameChanged();
 
 private:
 
@@ -102,7 +100,7 @@ private:
   QString            m_SpotName;
   QString            m_SpotDescription;
   QDateTime          m_Created;
-  QList<User *>    m_QList_Likers;
+  QList<User *>      m_QList_Likers;
 
   WebApiCommand *m_WebApiCommand;
 

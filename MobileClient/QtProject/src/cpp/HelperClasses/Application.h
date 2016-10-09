@@ -57,7 +57,7 @@ private:
   LocationManager              *m_LocationManager;
   PictureCacher                *m_PictureCacher;
 
-  CurrentUser                  *m_User;
+  CurrentUser                  *m_CurrentUser;
   PictureUploader              *m_PictureUploader;
 
   UltraQmlAccessManagerFactory *m_UltraQmlAccessManagerFactory;
