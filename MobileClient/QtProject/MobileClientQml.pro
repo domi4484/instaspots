@@ -41,7 +41,8 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-SOURCES += src/cpp/main.cpp \
+SOURCES += src/cpp/Main/main.cpp \
+    src/cpp/Main/Application.cpp \
     src/cpp/WebApi/Picture.cpp \
     src/cpp/WebApi/QueryItem.cpp \
     src/cpp/WebApi/Spot.cpp \
@@ -61,7 +62,6 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
     src/cpp/WebApi/SpotsModel.cpp \
     src/cpp/External/SimpleCrypt.cpp \
-    src/cpp/HelperClasses/Application.cpp \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.cpp \
     src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
     src/cpp/WebApi/CurrentUser.cpp \
@@ -69,6 +69,7 @@ SOURCES += src/cpp/main.cpp \
     src/cpp/WebApi/UserRepository.cpp
 
 HEADERS += \
+    src/cpp/Main/Application.h \
     src/cpp/WebApi/Picture.h \
     src/cpp/WebApi/QueryItem.h \
     src/cpp/WebApi/Spot.h \
@@ -89,7 +90,6 @@ HEADERS += \
     src/cpp/WebApi/PicturesModel.h \
     src/cpp/WebApi/SpotsModel.h \
     src/cpp/External/SimpleCrypt.h \
-    src/cpp/HelperClasses/Application.h \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
     src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/WebApi/CurrentUser.h \
@@ -125,6 +125,7 @@ DISTFILES += \
     src/qml/pages-user/Page_Login.qml \
     src/qml/pages-user/Page_Register.qml \
     src/qml/pages-user/Page_Settings.qml \
+    src/qml/pages-user/Page_Settings_ReportProblem.qml \
     src/qml/pages-user/Page_SignIn.qml \
     src/qml/pages-user/Page_User.qml \
     src/qml/views/SpotOverviewDelegate.qml \

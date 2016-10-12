@@ -88,7 +88,6 @@ Item{
                 anchors.verticalCenter: text_SecretSpot.verticalCenter
 
                 checked: true
-                onCheckedChanged: wa_PictureUploader.setSecretSpot(checked)
             }
     }
 

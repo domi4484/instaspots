@@ -45,6 +45,9 @@ public slots:
   void setFakePosition(double latitude,
                        double longitude);
 
+  void suspendUpdates();
+  void resumeUpdates();
+
   void startUpdates();
   void stopUdates();
 

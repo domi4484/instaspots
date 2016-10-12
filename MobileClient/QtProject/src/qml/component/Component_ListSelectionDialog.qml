@@ -25,6 +25,7 @@ Item{
      anchors.fill: parent
 
      opacity: 0
+     visible: opacity != 0
 
      property alias showDialog: showDialog.running
      property alias hideDialog: hideDialog.running

@@ -97,6 +97,39 @@ void LocationManager::setFakePosition(double latitude,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void LocationManager::suspendUpdates()
+{
+  Logger::debug(__FUNCTION__);
+  if(m_GeoPositionInfoSource == NULL)
+  {
+    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    return;
+  }
+
+  m_GeoPositionInfoSource->stopUpdates();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void LocationManager::resumeUpdates()
+{
+  Logger::debug(__FUNCTION__);
+  if(m_GeoPositionInfoSource == NULL)
+  {
+    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    return;
+  }
+
+  if(m_GeoPositionInfoSource_UpdatesCount > 0)
+  {
+      QTimer::singleShot(0,
+                         m_GeoPositionInfoSource,
+                         SLOT(startUpdates()));
+  }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void LocationManager::startUpdates()
 {
   Logger::debug(__FUNCTION__);

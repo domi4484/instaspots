@@ -35,10 +35,6 @@ Picture::Picture(QObject *parent) :
 
 Picture::~Picture()
 {
-  foreach (User *user, m_QList_Likers)
-  {
-    delete user;
-  }
   m_QList_Likers.clear();
 
 
@@ -61,7 +57,7 @@ Picture &Picture::operator=(const Picture &other)
   m_SpotName        = other.m_SpotName;
   m_SpotDescription = other.m_SpotDescription;
   m_Created         = other.m_Created;
-  m_QList_Likers     = other.m_QList_Likers;
+  m_QList_Likers    = other.m_QList_Likers;
   return *this;
 }
 
