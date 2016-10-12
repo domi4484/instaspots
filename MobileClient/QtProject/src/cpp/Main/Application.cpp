@@ -13,12 +13,12 @@
 #include "Application.h"
 
 // Projects includes -----------------------
-#include "ApplicationHelper.h"
-#include "Logger.h"
-#include "PlateformDetail.h"
-#include "LocationManager.h"
-#include "PictureCacher.h"
-#include "UltraQmlAccessManagerFactory.h"
+#include "../HelperClasses/ApplicationHelper.h"
+#include "../HelperClasses/Logger.h"
+#include "../HelperClasses/PlateformDetail.h"
+#include "../HelperClasses/LocationManager.h"
+#include "../HelperClasses/PictureCacher.h"
+#include "../HelperClasses/UltraQmlAccessManagerFactory.h"
 #include "../Settings/Settings.h"
 #include "../WebApi/SpotRepository.h"
 #include "../WebApi/SpotsModel.h"
@@ -163,11 +163,22 @@ Application::~Application()
 
 void Application::slot_QApplication_applicationStateChanged(Qt::ApplicationState applicationState)
 {
-  if(applicationState == Qt::ApplicationSuspended)
+  if(   applicationState == Qt::ApplicationSuspended
+     || applicationState == Qt::ApplicationHidden)
   {
     Logger::info("Application suspended.");
 
+    // Suspend gps updates
+    m_LocationManager->suspendUpdates();
+
     saveSettings();
+  }
+  else if(applicationState == Qt::ApplicationActive)
+  {
+    Logger::info("Application active.");
+
+    // Resume gps updates
+    m_LocationManager->resumeUpdates();
   }
 }
 
@@ -176,6 +187,9 @@ void Application::slot_QApplication_applicationStateChanged(Qt::ApplicationState
 void Application::slot_QApplication_aboutToQuit()
 {
   Logger::info("Application closing...");
+
+  // Suspend gps updates
+  m_LocationManager->suspendUpdates();
 
   saveSettings();
 }

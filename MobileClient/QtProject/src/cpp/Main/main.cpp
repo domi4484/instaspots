@@ -12,8 +12,8 @@
 // Files includes --------------------------
 
 // Project includes ------------------------
-#include "HelperClasses/Application.h"
-#include "HelperClasses/Logger.h"
+#include "Application.h"
+#include "../HelperClasses/Logger.h"
 
 // Qt includes -----------------------------
 
