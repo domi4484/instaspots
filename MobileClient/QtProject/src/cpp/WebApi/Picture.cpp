@@ -149,7 +149,7 @@ int Picture::likersCount() const
 QQmlListProperty<User> Picture::likers()
 {
   return QQmlListProperty<User>(this,
-                                  m_QList_Likers);
+                                m_QList_Likers);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

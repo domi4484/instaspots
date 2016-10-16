@@ -32,7 +32,9 @@ Item {
 
     property alias model: mapItemView.model
 
-    property alias map_center: map.center
+    property alias map_center:        map.center
+    property alias map_zoomLevel:     map.zoomLevel
+    property alias map_visibleRegion: map.visibleRegion
 
 
     // Signals -----------------------------

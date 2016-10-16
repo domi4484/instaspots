@@ -168,7 +168,7 @@ Item {
 
         // Set current location (also if outdated)
         spotsModel_NearbySpotSelection.getBy_Distance(hc_LocationManager.coordinate,
-                                                      2);
+                                                      2 * 1000); // 2km
 
         // Request location update
         hc_LocationManager.startUpdates();

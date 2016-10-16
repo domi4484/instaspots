@@ -62,13 +62,17 @@ Item{
 
         Page_Login {
             anchors.fill: parent
-            property string tabWidget_ButtonText: "Login"
+
+            // TabWidget properties
+            property string tabWidget_ButtonText: qsTr("Login")
             property string tabWidget_ButtonIconSource: ""
         }
 
         Page_Register {
             anchors.fill: parent
-            property string tabWidget_ButtonText: "Register"
+
+            // TabWidget properties
+            property string tabWidget_ButtonText: qsTr("Register")
             property string tabWidget_ButtonIconSource: ""
         }
     }

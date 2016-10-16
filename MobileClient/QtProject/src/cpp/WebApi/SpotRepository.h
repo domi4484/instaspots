@@ -50,7 +50,7 @@ public slots:
   void getBy_Distance(int requestId,
                       double latitude,
                       double longitude,
-                      double maxDistance_km);
+                      double maxDistance_m);
 
   void getBy_UserId(int requestId,
                     int userId);

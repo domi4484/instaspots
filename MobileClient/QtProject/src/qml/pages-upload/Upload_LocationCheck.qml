@@ -45,7 +45,7 @@ Item{
 
             mapQuickItem_SpotLocation.coordinate = hc_LocationManager.coordinate
 
-            spotsModel_NearbySpotSelection.updateLocation(hc_LocationManager.coordinate);
+            spotsModel_NearbySpotSelection.updateBy_Location(hc_LocationManager.coordinate);
         }
 
         onVisibleChanged: {
@@ -62,7 +62,7 @@ Item{
                 mapQuickItem_SpotLocation.coordinate = map.toCoordinate(Qt.point(mouseX, mouseY), false);
 
                 // Update the nearby spot model
-                spotsModel_NearbySpotSelection.updateLocation(mapQuickItem_SpotLocation.coordinate);
+                spotsModel_NearbySpotSelection.updateBy_Location(mapQuickItem_SpotLocation.coordinate);
             }
         }
 

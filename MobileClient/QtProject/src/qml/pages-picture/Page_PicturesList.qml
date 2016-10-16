@@ -106,18 +106,6 @@ Item{
                 }
                 Link
                 {
-                    text: "Details"
-
-                    width: parent.width
-                    height: 30 * hc_Application.dip
-
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-
-                    onClicked: component_ListSelectionDialog_Options.hideDialog = true
-                }
-                Link
-                {
                     text: "Remove"
 
                     width: parent.width

@@ -12,6 +12,7 @@
 // Qt imports ------------------------------
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtPositioning 5.3
 
 // Project c++ imports ---------------------
 import SpotsModel 1.0
@@ -19,6 +20,7 @@ import SpotsModel 1.0
 // Project qml imports ---------------------
 import "qrc:/qml/views"
 import "qrc:/qml/pages-spot"
+import "qrc:/qml/widgets"
 
 Item {
 
@@ -36,7 +38,9 @@ Item {
 
             if(   page_SpotsList.listView_Moving === false
                && page_SpotsList.listView_YPosition <= 20)
-              spotsModel.updateLocation(hc_LocationManager.coordinate);
+            {
+                page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
+            }
         }
     }
 
@@ -44,15 +48,14 @@ Item {
         target: page_SpotsList
         onSignal_listView_atYBeginning:
         {
-            spotsModel.updateLocation(hc_LocationManager.coordinate);
+            page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
         }
     }
 
     // Slots -------------------------------
     Component.onCompleted: {
         // Set current location (also if outdated)
-        spotsModel.getBy_Distance(hc_LocationManager.coordinate,
-                                  150);
+        page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
     }
 
     onVisibleChanged: {
@@ -63,7 +66,7 @@ Item {
         }
 
         // Set current location (also if outdated)
-        spotsModel.updateLocation(hc_LocationManager.coordinate);
+        page_SpotsMap.map_center = hc_LocationManager.coordinate;
 
         // Request location update
         hc_LocationManager.startUpdates();
@@ -104,7 +107,7 @@ Item {
             if(stackView.currentItem.navigator_MenuButtonClicked != null)
                 stackView.currentItem.navigator_MenuButtonClicked();
         }
-    }
+    } // Navigator
 
     StackView {
         id: stackView
@@ -117,25 +120,77 @@ Item {
         // Implements back key navigation
         focus: true
         Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
-                             stackView.pop();
-                             event.accepted = true;
-                         }
-        initialItem: Page_SpotsList {
-            id: page_SpotsList
+                                 stackView.pop();
+                                 event.accepted = true;
+                             }
+
+        initialItem: TabWidget {
+            id: tabWidget
+
+            // Navigation properties ---------------
+            property string navigation_Title:                 qsTr('Nearby spots')
+            property bool   navigation_BackButtonVisible:     false
+            property bool   navigation_ContinueButtonVisible: false
+            property bool   navigation_MenuButtonVisible:     false
 
             width : parent.width
             height: parent.height
 
-            navigation_Title: qsTr('Nearby spots')
+            Page_SpotsList {
 
-            model: spotsModel
+                id: page_SpotsList
 
-            onSpotClicked: {
-                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
-                                properties:{navigation_Title : spotName,
-                                            stackView        : stackView,
-                                            spotId           : spotId}});
-            }
-        }
+                // TabWidget properties
+                property string tabWidget_ButtonText: qsTr("List")
+                property string tabWidget_ButtonIconSource: ""
+
+                anchors.fill: parent
+
+
+                model: spotsModel
+
+                onSpotClicked: {
+                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
+                                       properties:{navigation_Title : spotName,
+                                                   stackView        : stackView,
+                                                   spotId           : spotId}});
+                }
+            } // Page_SpotsList
+
+            Page_SpotsMap {
+
+                id: page_SpotsMap
+
+                property string tabWidget_ButtonText: qsTr("Map")
+                property string tabWidget_ButtonIconSource: ""
+
+                anchors.fill: parent
+
+                model:      spotsModel
+
+                onSpotClicked: {
+                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
+                                       properties:{navigation_Title : spotName,
+                                                   stackView        : stackView,
+                                                   spotId           : spotId}});
+                }
+
+                onMap_centerChanged: {
+                    page_SpotsMap_VisibleRegion_Changed(map_visibleRegion);
+                }
+
+                onMap_zoomLevelChanged: {
+                    page_SpotsMap_VisibleRegion_Changed(map_visibleRegion);
+                }
+            } // Page_SpotsMap
+        } // Tabwidget
+    } // StackView
+
+
+    // Functions ---------------------------
+
+    function page_SpotsMap_VisibleRegion_Changed(visibleRegion)
+    {
+        spotsModel.updateBy_VisibleRegion(visibleRegion);
     }
 }

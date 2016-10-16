@@ -10,13 +10,17 @@ import "qrc:/qml/"
 Rectangle {
     id: page_Login
 
+
     // Properties --------------------------
+
     MessageDialog{
         id: messageDialog
         title: qsTr('Login error')
     }
 
+
     // Connections -------------------------
+
     Connections {
         target: wa_User
         onSignal_LoginSuccessfull:
@@ -36,6 +40,7 @@ Rectangle {
 
 
     // Gui ---------------------------------
+
     width: parent.width
     height: parent.height
 
@@ -82,7 +87,9 @@ Rectangle {
                          textField_Password.text)
     }
 
+
     // Functions ---------------------------
+
     function login(username,
                    password)
     {

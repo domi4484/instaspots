@@ -12,10 +12,11 @@
 #ifndef SPOTSMODEL_H
 #define SPOTSMODEL_H
 
-
 // Qt includes -----------------------------
 #include <QAbstractListModel>
 #include <QGeoCoordinate>
+#include <QGeoRectangle>
+#include <QTimer>
 
 // Forward declarations --------------------
 class Spot;
@@ -32,6 +33,7 @@ public:
   {
   public:
     static const double MIN_DISTANCE_BETWEEN_UPDATES_KM;
+    static const int    UPDATE_MODEL_DELAY_MS;
   }; // _CONST
 
   explicit SpotsModel(QObject *parent = 0);
@@ -48,9 +50,10 @@ public slots:
   void setUserId(int id);
 
   void getBy_Distance(const QGeoCoordinate &coordinate,
-                      double maxDistance_km);
+                      double maxDistance_m);
 
-  void updateLocation(const QGeoCoordinate &coordinate);
+  void updateBy_Location(const QGeoCoordinate &qGeoCoordinate);
+  void updateBy_VisibleRegion(const QGeoRectangle &qGeoRectangle);
 
 signals:
 
@@ -60,14 +63,16 @@ private slots:
 
   void slot_SpotRepository_DataReady(int requestId,
                                      bool success);
+  void slot_QTimer_UpdateModel_timeout();
 
 private:
 
   QList<Spot * > m_QList_Spots;
   int m_RequestId;
 
-  QGeoCoordinate m_QGeoCoordinate_Location;
-  double         m_MaxDistance_km;
+  QGeoRectangle m_QGeoRectangle_VisibleRegion;
+
+  QTimer m_QTimer_UpdateModel;
 };
 
 #endif // SPOTSMODEL_H

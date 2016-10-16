@@ -41,7 +41,7 @@ Item{
             if(visible == false)
                 return;
 
-            spotsModel_NearbySpotSelection.updateLocation(hc_LocationManager.coordinate);
+            spotsModel_NearbySpotSelection.updateBy_Location(hc_LocationManager.coordinate);
         }
     }
 

@@ -23,6 +23,7 @@
 //-----------------------------------------------------------------------------------------------------------------------------
 
 const double SpotsModel::_CONST::MIN_DISTANCE_BETWEEN_UPDATES_KM (0.005);
+const int    SpotsModel::_CONST::UPDATE_MODEL_DELAY_MS           (500);
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -30,16 +31,22 @@ SpotsModel::SpotsModel(QObject *parent) :
     QAbstractListModel(parent),
     m_QList_Spots(),
     m_RequestId(0),
-    m_QGeoCoordinate_Location(),
-    m_MaxDistance_km(0)
+    m_QGeoRectangle_VisibleRegion(),
+    m_QTimer_UpdateModel()
 {
     m_RequestId = SpotRepository::instance()->getNewRequestId();
 
+    m_QTimer_UpdateModel.setSingleShot(true);
+
+    // Signals/slots
     connect(SpotRepository::instance(),
             SIGNAL(signal_DataReady(int,
                                     bool)),
             SLOT(slot_SpotRepository_DataReady(int,
                                                bool)));
+    connect(&m_QTimer_UpdateModel,
+            SIGNAL(timeout()),
+            SLOT(slot_QTimer_UpdateModel_timeout()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -91,30 +98,46 @@ void SpotsModel::setUserId(int id)
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void SpotsModel::getBy_Distance(const QGeoCoordinate &coordinate,
-                                double maxDistance_km)
+                                double maxDistance_m)
 {
-  m_QGeoCoordinate_Location = coordinate;
-  m_MaxDistance_km          = maxDistance_km;
+  m_QGeoRectangle_VisibleRegion.setCenter(coordinate);
+  m_QGeoRectangle_VisibleRegion.setHeight(maxDistance_m / 111.111);
+  m_QGeoRectangle_VisibleRegion.setWidth(maxDistance_m / 111.111);
 
-  SpotRepository::instance()->getBy_Distance(m_RequestId,
-                                             m_QGeoCoordinate_Location.latitude(),
-                                             m_QGeoCoordinate_Location.longitude(),
-                                             maxDistance_km);
+  if(m_QTimer_UpdateModel.isActive() == false)
+  {
+    slot_QTimer_UpdateModel_timeout();
+  }
+  m_QTimer_UpdateModel.start(_CONST::UPDATE_MODEL_DELAY_MS);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void SpotsModel::updateLocation(const QGeoCoordinate &coordinate)
+void SpotsModel::updateBy_Location(const QGeoCoordinate &qGeoCoordinate)
 {
-  if(m_QGeoCoordinate_Location.distanceTo(coordinate) < _CONST::MIN_DISTANCE_BETWEEN_UPDATES_KM * 1000.0)
+  if(m_QGeoRectangle_VisibleRegion.center().distanceTo(qGeoCoordinate) < _CONST::MIN_DISTANCE_BETWEEN_UPDATES_KM * 1000.0)
     return;
 
-  m_QGeoCoordinate_Location = coordinate;
+  m_QGeoRectangle_VisibleRegion.setCenter(qGeoCoordinate);
 
-  SpotRepository::instance()->getBy_Distance(m_RequestId,
-                                             m_QGeoCoordinate_Location.latitude(),
-                                             m_QGeoCoordinate_Location.longitude(),
-                                             m_MaxDistance_km);
+  if(m_QTimer_UpdateModel.isActive() == false)
+  {
+    slot_QTimer_UpdateModel_timeout();
+  }
+  m_QTimer_UpdateModel.start(_CONST::UPDATE_MODEL_DELAY_MS);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotsModel::updateBy_VisibleRegion(const QGeoRectangle &qGeoRectangle)
+{
+  m_QGeoRectangle_VisibleRegion = qGeoRectangle;
+
+  if(m_QTimer_UpdateModel.isActive() == false)
+  {
+    slot_QTimer_UpdateModel_timeout();
+  }
+  m_QTimer_UpdateModel.start(_CONST::UPDATE_MODEL_DELAY_MS);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -146,6 +169,16 @@ void SpotsModel::slot_SpotRepository_DataReady(int requestId,
     }
     countChanged(m_QList_Spots.count());
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotsModel::slot_QTimer_UpdateModel_timeout()
+{
+  SpotRepository::instance()->getBy_Distance(m_RequestId,
+                                             m_QGeoRectangle_VisibleRegion.center().latitude(),
+                                             m_QGeoRectangle_VisibleRegion.center().longitude(),
+                                             m_QGeoRectangle_VisibleRegion.topLeft().distanceTo(m_QGeoRectangle_VisibleRegion.bottomRight()) / 2.0);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

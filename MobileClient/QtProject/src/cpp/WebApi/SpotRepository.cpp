@@ -120,12 +120,12 @@ Spot *SpotRepository::getBy_SpotId(int spotId)
 void SpotRepository::getBy_Distance(int requestId,
                                     double latitude,
                                     double longitude,
-                                    double maxDistance_km)
+                                    double maxDistance_m)
 {
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(latitude)));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(longitude)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DISTANCE_KM, QString::number(maxDistance_km)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DISTANCE_KM, QString::number(maxDistance_m/1000.0)));
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
