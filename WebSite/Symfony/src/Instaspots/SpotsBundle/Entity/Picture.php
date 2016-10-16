@@ -258,7 +258,7 @@ class Picture
     public function addLiker(\Instaspots\UserBundle\Entity\User $liker)
     {
       // Check if already liked
-      if(in_array($liker, $this->likers))
+      if($this->likers->contains($liker))
         return $this;
 
       // Assign reputation point to liked user
@@ -284,7 +284,7 @@ class Picture
     public function removeLiker(\Instaspots\UserBundle\Entity\User $liker)
     {
       // Check if already unliked
-      if(in_array($liker, $this->likers) == false)
+      if($this->likers->contains($liker) == false)
         return $this;
 
       // Remove reputation point to liked user

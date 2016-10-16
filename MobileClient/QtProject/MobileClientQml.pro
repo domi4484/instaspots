@@ -118,6 +118,9 @@ DISTFILES += \
     src/qml/declarative-camera/Popup.qml \
     src/qml/declarative-camera/VideoPreview.qml \
     src/qml/pages-picture/Page_PicturesList.qml \
+    src/qml/pages-picture/Page_Picture.qml \
+    src/qml/pages-picture/Page_Likes.qml \
+    src/qml/pages-picture/PictureViewDelegate.qml \
     src/qml/pages-spot/Page_Spot.qml \
     src/qml/pages-spot/Page_SpotsList.qml \
     src/qml/pages-spot/Page_SpotsMap.qml \
@@ -134,7 +137,6 @@ DISTFILES += \
     src/qml/widgets/TabButton.qml \
     src/qml/widgets/TabWidget.qml \
     src/qml/widgets/TabWidgetDynamicTab.qml \
-    src/qml/pages-picture/Page_Picture.qml \
     src/qml/component/Component_Dialog.qml \
     src/qml/component/Component_CurrentLocationIndicator.qml \
     src/qml/component/Component_ListSelectionDialog.qml \
@@ -175,6 +177,5 @@ DISTFILES += \
     src/qml/pages-upload/Upload_CropPicture.qml \
     ../../WebSite/Symfony/app/AppKernel.php \
     ../../WebSite/Symfony/app/config/config.yml \
-    ../../WebSite/Symfony/web/app_dev.php \
-    src/qml/pages-picture/PictureViewDelegate.qml
+    ../../WebSite/Symfony/web/app_dev.php
 
