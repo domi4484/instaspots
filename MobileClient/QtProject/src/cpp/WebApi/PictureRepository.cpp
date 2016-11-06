@@ -14,9 +14,11 @@
 
 // Project includes ------------------------
 #include "Picture.h"
+#include "SpotRepository.h"
 #include "UserRepository.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
+#include "../HelperClasses/Logger.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
@@ -213,6 +215,22 @@ void PictureRepository::likePicture(int pictureId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void PictureRepository::removePicture(int pictureId)
+{
+  Picture *picture = m_QMap_Pictures.value(pictureId,
+                                           NULL);
+
+  if(picture == NULL)
+  {
+    Logger::error(QString("Can't remove picture with id %1").arg(pictureId));
+    return;
+  }
+
+  Spot *spot = picture->spot();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureRepository::slot_Command_Finished(const WebApiError &error)
 {
   QList<Picture *> newPictures;
@@ -243,15 +261,23 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
       m_QMap_Pictures.insert(picture_id, picture);
     }
 
+    // Picture properties
     picture->setUrl             (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString());
-    picture->setIdSpot          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_ID).toInt());
-    picture->setSpotName        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_NAME).toString());
-    picture->setSpotDescription (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION).toString());
     picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
     picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());
     picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_CREATED).toString(),
                                                        Qt::ISODate));
 
+    // Spot
+    int     spot_id          = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_ID).toInt();
+    QString spot_name        = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_NAME).toString();
+    QString spot_description = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION).toString();
+    Spot *spot = SpotRepository::instance()->getAdd_Spot(spot_id,
+                                                         spot_name,
+                                                         spot_description);
+    picture->setSpot(spot);
+
+    // Likers
     picture->clearLikers();
     QJsonArray jsonArray_Likers = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_LIKERS).toArray();
     for(int i = 0; i < jsonArray_Likers.size(); i++)
@@ -269,7 +295,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
 
     // Add to current request
     newPictures.append(picture);
-  }
+  } // for
 
   webApiCommand->deleteLater();
 

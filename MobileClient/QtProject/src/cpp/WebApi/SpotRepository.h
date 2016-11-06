@@ -47,6 +47,10 @@ public slots:
 
   Spot *getBy_SpotId(int spotId);
 
+  Spot *getAdd_Spot(int spotId,
+                    const QString &spotName,
+                    const QString &spotDescription);
+
   void getBy_Distance(int requestId,
                       double latitude,
                       double longitude,

@@ -101,7 +101,7 @@ Item{
                     onClicked:
                     {
                         re_PictureRepository.likePicture(role_PictureId);
-                        component_ListSelectionDialog_Options.hideDialog = true
+                        component_ListSelectionDialog_Options.hideDialog = true;
                     }
                 }
                 Link
@@ -114,7 +114,11 @@ Item{
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
 
-                    onClicked: component_ListSelectionDialog_Options.hideDialog = true
+                    onClicked:
+                    {
+                        re_PictureRepository.removePicture(role_PictureId);
+                        component_ListSelectionDialog_Options.hideDialog = true;
+                    }
                 }
             }
         }

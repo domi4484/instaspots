@@ -52,6 +52,8 @@ public slots:
 
   void likePicture(int pictureId);
 
+  void removePicture(int pictureId);
+
 signals:
 
   void signal_DataReady(int requestId,

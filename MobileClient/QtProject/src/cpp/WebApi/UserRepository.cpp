@@ -124,9 +124,9 @@ User *UserRepository::getAdd_User(int userId,
   {
     user = new User(this);
     user->setId(userId);
-    user->setUsername(userUsername);
     m_QMap_Users.insert(userId, user);
   }
+  user->setUsername(userUsername);
 
   return user;
 }

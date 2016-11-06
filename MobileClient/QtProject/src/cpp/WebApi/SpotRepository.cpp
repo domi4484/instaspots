@@ -109,8 +109,60 @@ Spot *SpotRepository::getBy_SpotId(int spotId)
     spot->setId(spotId);
     m_QMap_Spots.insert(spotId, spot);
 
-    // #todo Get internet
+    // Get from server
+    QList<QueryItem> qList_QueryItems;
+    qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SPOT_ID,    QString::number(spotId)));
+
+    // TODO check post return type
+    WebApiCommand *webApiCommand = new WebApiCommand(this);
+    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setCommand(WebApi::COMMAND::GET_SPOT_BY_ID);
+
+    webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
+
+    connect(webApiCommand,
+            SIGNAL(signal_Finished(const WebApiError &)),
+            SLOT(slot_Command_Finished(const WebApiError &)));
+    webApiCommand->postRequest(qList_QueryItems);
   }
+
+  return spot;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Spot *SpotRepository::getAdd_Spot(int spotId,
+                                  const QString &spotName,
+                                  const QString &spotDescription)
+{
+  if(spotId < 0)
+    return NULL;
+
+  Spot *spot = m_QMap_Spots.value(spotId, NULL);
+  if(spot == NULL)
+  {
+    spot = new Spot(this);
+    spot->setId(spotId);
+    m_QMap_Spots.insert(spotId, spot);
+
+    // Get from server
+    QList<QueryItem> qList_QueryItems;
+    qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SPOT_ID,    QString::number(spotId)));
+
+    // TODO check post return type
+    WebApiCommand *webApiCommand = new WebApiCommand(this);
+    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setCommand(WebApi::COMMAND::GET_SPOT_BY_ID);
+
+    webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
+
+    connect(webApiCommand,
+            SIGNAL(signal_Finished(const WebApiError &)),
+            SLOT(slot_Command_Finished(const WebApiError &)));
+    webApiCommand->postRequest(qList_QueryItems);
+  }
+  spot->setName(spotName);
+  spot->setDescription(spotDescription);
 
   return spot;
 }

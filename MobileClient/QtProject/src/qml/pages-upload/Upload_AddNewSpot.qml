@@ -97,58 +97,59 @@ Item{
 
         // Secret spot
         Component_TagSwitch{
+            id: component_TagSwitch_SecretSpot
+
             anchors.left:  parent.left
             anchors.right: parent.right
 
             text: qsTr("Secret spot")
-            helpButtonVisible: true
 
-            onCheckedChanged:   wa_PictureUploader.setSecretSpot(checked)
+            helpButtonVisible: true
             onHelpButtonClicked: messageDialog_Help.open()
         }
 
-        // Skatepark
-        Component_TagSwitch{
-            id: component_TagSwitch_Skatepark
+//        // Skatepark
+//        Component_TagSwitch{
+//            id: component_TagSwitch_Skatepark
 
-            anchors.left:  parent.left
-            anchors.right: parent.right
+//            anchors.left:  parent.left
+//            anchors.right: parent.right
 
-            text: qsTr("Skatepark")
-        }
+//            text: qsTr("Skatepark")
+//        }
 
-        // Street
-        Component_TagSwitch{
-            id: component_TagSwitch_Street
+//        // Street
+//        Component_TagSwitch{
+//            id: component_TagSwitch_Street
 
-            anchors.left:  parent.left
-            anchors.right: parent.right
+//            anchors.left:  parent.left
+//            anchors.right: parent.right
 
-            text: qsTr("Street")
-        }
+//            text: qsTr("Street")
+//        }
 
-        // Miniramp
-        Component_TagSwitch{
-            id: component_TagSwitch_Miniramp
+//        // Miniramp
+//        Component_TagSwitch{
+//            id: component_TagSwitch_Miniramp
 
-            anchors.left:  parent.left
-            anchors.right: parent.right
+//            anchors.left:  parent.left
+//            anchors.right: parent.right
 
-            text: qsTr("Miniramp")
-        }
+//            text: qsTr("Miniramp")
+//        }
 
-        // Bowl
-        Component_TagSwitch{
-            id: component_TagSwitch_Bowl
+//        // Bowl
+//        Component_TagSwitch{
+//            id: component_TagSwitch_Bowl
 
-            anchors.left:  parent.left
-            anchors.right: parent.right
+//            anchors.left:  parent.left
+//            anchors.right: parent.right
 
-            text: qsTr("Bowl")
-        }
+//            text: qsTr("Bowl")
+//        }
 
         // Transition: Categorie Bowl, miniramp, vert, microramp, quarter, wallride
-        // Categoria rail Handrail, flatrail
+        // Categoria rail Handrail, flatrail, downrail, kinked rail...
         // Ledge curb
         // Stairs
         // Bank
@@ -167,34 +168,35 @@ Item{
         onClicked: {
             wa_PictureUploader.setName(textField_SpotName.text);
             wa_PictureUploader.setDescription("");
+            wa_PictureUploader.setSecretSpot(component_TagSwitch_SecretSpot.checked)
 
-            // Tags
-            if(component_TagSwitch_Skatepark.checked)
-            {
-                wa_PictureUploader.addTag("skatepark");
-            }
+//            // Tags
+//            if(component_TagSwitch_Skatepark.checked)
+//            {
+//                wa_PictureUploader.addTag("skatepark");
+//            }
 
-            if(component_TagSwitch_Street.checked)
-            {
-                wa_PictureUploader.addTag("street");
-            }
+//            if(component_TagSwitch_Street.checked)
+//            {
+//                wa_PictureUploader.addTag("street");
+//            }
 
-            if(component_TagSwitch_Miniramp.checked)
-            {
-                wa_PictureUploader.addTag("miniramp");
-            }
+//            if(component_TagSwitch_Miniramp.checked)
+//            {
+//                wa_PictureUploader.addTag("miniramp");
+//            }
 
-            if(component_TagSwitch_Bowl.checked)
-            {
-                wa_PictureUploader.addTag("bowl");
-            }
+//            if(component_TagSwitch_Bowl.checked)
+//            {
+//                wa_PictureUploader.addTag("bowl");
+//            }
 
-            if(wa_PictureUploader.execute() === false)
-            {
-                messageDialog_Error.text = wa_PictureUploader.lastErrorText();
-                messageDialog_Error.visible = true;
-                return;
-            }
+//            if(wa_PictureUploader.execute() === false)
+//            {
+//                messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+//                messageDialog_Error.visible = true;
+//                return;
+//            }
 
             enabled = false;
         }

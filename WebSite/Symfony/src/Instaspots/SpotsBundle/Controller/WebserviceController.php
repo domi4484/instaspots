@@ -112,6 +112,10 @@ class WebserviceController extends Controller
         $this->getPicturesByUserId($request, $response);
       break;
 
+      case CommandSet::GET_SPOT_BY_ID:
+        $this->getSpotById($request, $response);
+      break;
+
       case CommandSet::GET_SPOTS_BY_DISTANCE:
         $this->getSpotsByDistance($request, $response);
       break;
@@ -612,6 +616,28 @@ class WebserviceController extends Controller
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
+
+  private function getSpotById($request, &$response)
+  {
+    $minimumClientVersion = 'V0.0.9';
+
+    // Get parameters
+    $spotId = $request->get(ParameterSet::SPOT_SPOT_ID);
+
+    $repository = $this->getDoctrine()
+                         ->getManager()
+                         ->getRepository('InstaspotsSpotsBundle:Spot');
+
+    $spot = $repository->findOneById($spotId);
+
+    $jSpots = array();
+    $jSpots[] = $spot->toJson();
+
+    $response->addData(ParameterSet::SPOT_LIST, $jSpots);
+  }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 
   private function getSpotsByDistance($request, &$response)
   {

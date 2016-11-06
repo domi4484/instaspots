@@ -64,6 +64,8 @@ public:
     static const QString GET_PICTURES_BY_NEWEST;
     static const QString GET_PICTURES_BY_SPOT_ID;
     static const QString GET_PICTURES_BY_USER_ID;
+
+    static const QString GET_SPOT_BY_ID;
     static const QString GET_SPOTS_BY_DISTANCE;
     static const QString GET_SPOTS_BY_USER_ID;
 

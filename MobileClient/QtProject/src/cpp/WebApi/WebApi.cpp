@@ -54,6 +54,8 @@ const QString WebApi::COMMAND::UPLOAD_NEW_SPOT        = "uploadNewSpot";
 const QString WebApi::COMMAND::GET_PICTURES_BY_NEWEST  = "getPicturesByNewest";
 const QString WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID = "getPicturesBySpotId";
 const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
+
+const QString WebApi::COMMAND::GET_SPOT_BY_ID          = "getSpotById";
 const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
 const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
 

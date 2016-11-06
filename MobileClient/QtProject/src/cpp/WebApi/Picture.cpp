@@ -20,13 +20,11 @@ Picture::Picture(QObject *parent) :
   QObject(parent),
   m_Id             (-1),
   m_IdUser         (-1),
-  m_IdSpot         (-1),
   m_Url            (""),
   m_Username       (""),
-  m_SpotName       (""),
-  m_SpotDescription(""),
   m_Created        (),
-  m_QList_Likers    (),
+  m_Spot           (NULL),
+  m_QList_Likers   (),
   m_WebApiCommand  (NULL)
 {
 }
@@ -51,12 +49,10 @@ Picture &Picture::operator=(const Picture &other)
 {
   m_Id              = other.m_Id;
   m_IdUser          = other.m_IdUser;
-  m_IdSpot          = other.m_IdSpot;
   m_Url             = other.m_Url;
   m_Username        = other.m_Username;
-  m_SpotName        = other.m_SpotName;
-  m_SpotDescription = other.m_SpotDescription;
   m_Created         = other.m_Created;
+  m_Spot          = other.m_Spot;
   m_QList_Likers    = other.m_QList_Likers;
   return *this;
 }
@@ -74,16 +70,16 @@ QVariant Picture::pictureRole(PictureRoles role) const
     return m_IdUser;
   break;
   case Role_SpotId:
-    return m_IdSpot;
+    return m_Spot->id();
   break;
   case Role_UserUsername:
     return m_Username;
   break;
   case Role_SpotName:
-    return m_SpotName;
+    return m_Spot->name();
   break;
   case Role_SpotDescription:
-    return m_SpotDescription;
+    return m_Spot->description();
   break;
   case Role_PictureCreated:
     return createdText();

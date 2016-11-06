@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "WebApiError.h"
+#include "Spot.h"
 #include "User.h"
 
 // Qt includes -----------------------------
@@ -33,10 +34,11 @@ class Picture : public QObject
 
   Q_PROPERTY(int                    id              READ id              WRITE setId)
   Q_PROPERTY(QString                username        READ username        WRITE setUsername        NOTIFY usernameChanged        )
-  Q_PROPERTY(QString                spotName        READ spotName        WRITE setSpotName        NOTIFY spotNameChanged        )
-  Q_PROPERTY(QString                spotDescription READ spotDescription WRITE setSpotDescription NOTIFY spotDescriptionChanged )
   Q_PROPERTY(QDateTime              created         READ created         WRITE setCreated         NOTIFY createdChanged         )
   Q_PROPERTY(QString                createdText     READ createdText                              NOTIFY createdChanged         )
+
+  Q_PROPERTY(QString                spotName        READ spotName                                 NOTIFY spotNameChanged        )
+  Q_PROPERTY(QString                spotDescription READ spotDescription                          NOTIFY spotDescriptionChanged )
   Q_PROPERTY(int                    likersCount     READ likersCount                              NOTIFY likersCountChanged     )
   Q_PROPERTY(QQmlListProperty<User> likers          READ likers                                   NOTIFY likersCountChanged     )
 
@@ -61,23 +63,23 @@ public:
   QVariant pictureRole(PictureRoles role) const;
   static QHash<int, QByteArray> roleNames();
 
-  int         id()              const { return m_Id; }
-  QString     username()        const { return m_Username;        }
-  QString     spotName()        const { return m_SpotName;        }
-  QString     spotDescription() const { return m_SpotDescription; }
-  QDateTime   created()         const { return m_Created; }
+  int         id()              const { return m_Id;                  }
+  QString     username()        const { return m_Username;            }
+  QDateTime   created()         const { return m_Created;             }
   QString     createdText()     const;
+  Spot       *spot()            const { return m_Spot;                }
+  QString     spotName()        const { return m_Spot->name();        }
+  QString     spotDescription() const { return m_Spot->description(); }
   int         likersCount()     const;
   QQmlListProperty<User> likers();
 
   void setId              (int id)                         { m_Id              = id;       }
   void setIdUser          (int idUser)                     { m_IdUser          = idUser;   }
-  void setIdSpot          (int idSpot)                     { m_IdSpot          = idSpot;   }
   void setUrl             (const QString &url)             { m_Url             = url;      }
   void setUsername        (const QString &username)        { m_Username        = username;        emit usernameChanged();        }
-  void setSpotName        (const QString &spotName)        { m_SpotName        = spotName;        emit spotNameChanged();        }
-  void setSpotDescription (const QString &spotDescription) { m_SpotDescription = spotDescription; emit spotDescriptionChanged(); }
   void setCreated         (const QDateTime &created)       { m_Created         = created;         emit createdChanged();         }
+
+  void setSpot            (Spot *spot)                     { m_Spot            = spot;     }
 
   void clearLikers();
   void addLiker(User *liker);
@@ -94,12 +96,10 @@ private:
 
   int                m_Id;
   int                m_IdUser;
-  int                m_IdSpot;
   QString            m_Url;
   QString            m_Username;
-  QString            m_SpotName;
-  QString            m_SpotDescription;
   QDateTime          m_Created;
+  Spot              *m_Spot;
   QList<User *>      m_QList_Likers;
 
   WebApiCommand *m_WebApiCommand;
