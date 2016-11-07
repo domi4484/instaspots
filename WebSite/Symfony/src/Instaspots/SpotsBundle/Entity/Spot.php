@@ -520,9 +520,16 @@ class Spot
     }
     else
     {
-      $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_2]  = -1;
+      $jSpot[ParameterSet::SPOT_PICTURE_PICTURE_ID_2] = -1;
       $jSpot[ParameterSet::SPOT_PICTURE_URL_2       ] = '';
     }
+
+    $jPictures = array();
+    foreach($this->getPictures() as &$picture)
+    {
+      $jPictures[] = $picture->toJson();
+    }
+    $jSpot[ParameterSet::PICTURE_LIST] = $jPictures;
 
     return $jSpot;
   }

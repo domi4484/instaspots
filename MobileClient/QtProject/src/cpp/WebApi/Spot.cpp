@@ -20,16 +20,17 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Spot::Spot(QObject *parent)
-    : QObject(parent),
-      m_Id          (-1),
-      m_Name        (""),
-      m_Description (""),
-      m_SecretSpot  (false),
-      m_Coordinate  (0.0, 0.0),
-      m_Distance_km (-1),
-      m_PictureUrl1 (""),
-      m_PictureUrl2 ("")
+Spot::Spot(QObject *parent) :
+  QObject(parent),
+  m_Id           (-1),
+  m_Name          (""),
+  m_Description   (""),
+  m_SecretSpot    (false),
+  m_Coordinate    (0.0, 0.0),
+  m_Distance_km   (-1),
+  m_PictureUrl1   (""),
+  m_PictureUrl2   (""),
+  m_QList_Pictures()
 {
 
 }
@@ -38,7 +39,7 @@ Spot::Spot(QObject *parent)
 
 Spot::~Spot()
 {
-
+  m_QList_Pictures.clear();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -97,6 +98,21 @@ QHash<int, QByteArray> Spot::roleNames()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+int Spot::picturesCount() const
+{
+  return m_QList_Pictures.size();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QQmlListProperty<Picture> Spot::pictures()
+{
+  return QQmlListProperty<Picture>(this,
+                                   m_QList_Pictures);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QString Spot::distanceText() const
 {
   if(m_Distance_km < 0)
@@ -126,6 +142,24 @@ QString Spot::distanceText() const
       return "??? m";
     }
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Spot::clearPictures()
+{
+  m_QList_Pictures.clear();
+
+  emit picturesCountChanged();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Spot::addPicture(Picture *picture)
+{
+  m_QList_Pictures.append(picture);
+
+  emit picturesCountChanged();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

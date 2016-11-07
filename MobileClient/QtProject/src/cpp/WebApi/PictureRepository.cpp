@@ -116,6 +116,26 @@ Picture *PictureRepository::getBy_PictureId(int pictureId)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+Picture *PictureRepository::getAdd_Picture(int pictureId)
+{
+  if(pictureId < 0)
+      return NULL;
+
+  Picture *picture = m_QMap_Pictures.value(pictureId, NULL);
+  if(picture == NULL)
+  {
+    picture = new Picture(this);
+    picture->setId(pictureId);
+    m_QMap_Pictures.insert(pictureId, picture);
+
+    // #todo Get internet
+  }
+
+  return picture;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureRepository::getBy_PictureId(int requestId,
                                         int pictureId)
 {

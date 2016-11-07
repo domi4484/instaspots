@@ -45,6 +45,8 @@ public slots:
 
   Picture *getBy_PictureId(int pictureId);
 
+  Picture *getAdd_Picture(int pictureId);
+
   void getBy_PictureId(int requestId, int pictureId);
   void getBy_SpotId(int requestId, int spotId);
   void getBy_UserId(int requestId, int userId);

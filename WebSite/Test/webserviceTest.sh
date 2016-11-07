@@ -23,7 +23,7 @@ POST_COMMAND="http --session mySession -f POST $WEBSERVICE_URL"
 #$POST_COMMAND command=uploadNewSpot latitude=47.151319 longitude=9.505557 name="Skatepark Vaduz"  description="" spot_secretSpot=0 image@"testPicture.jpg"
 
 ### Test getSpotById
-$POST_COMMAND command=getSpotById spot_spotId=20
+$POST_COMMAND command=getSpotById spot_spotId=$1
 
 ### Test getSpotsByUserId
 #$POST_COMMAND command=getSpotsByUserId user_userId=3

@@ -14,7 +14,6 @@
 
 // Project includes ------------------------
 #include "WebApiError.h"
-#include "Spot.h"
 #include "User.h"
 
 // Qt includes -----------------------------
@@ -26,6 +25,7 @@
 
 // Forward declarations --------------------
 class WebApiCommand;
+class Spot;
 
 class Picture : public QObject
 {
@@ -36,7 +36,7 @@ class Picture : public QObject
   Q_PROPERTY(QString                username        READ username        WRITE setUsername        NOTIFY usernameChanged        )
   Q_PROPERTY(QDateTime              created         READ created         WRITE setCreated         NOTIFY createdChanged         )
   Q_PROPERTY(QString                createdText     READ createdText                              NOTIFY createdChanged         )
-
+  Q_PROPERTY(QString                url             READ url                                      NOTIFY urlChanged             )
   Q_PROPERTY(QString                spotName        READ spotName                                 NOTIFY spotNameChanged        )
   Q_PROPERTY(QString                spotDescription READ spotDescription                          NOTIFY spotDescriptionChanged )
   Q_PROPERTY(int                    likersCount     READ likersCount                              NOTIFY likersCountChanged     )
@@ -67,15 +67,17 @@ public:
   QString     username()        const { return m_Username;            }
   QDateTime   created()         const { return m_Created;             }
   QString     createdText()     const;
+  QString     url()             const { return m_Url;                 }
   Spot       *spot()            const { return m_Spot;                }
-  QString     spotName()        const { return m_Spot->name();        }
-  QString     spotDescription() const { return m_Spot->description(); }
+  QString     spotName()        const;
+  QString     spotDescription() const;
+
   int         likersCount()     const;
   QQmlListProperty<User> likers();
 
   void setId              (int id)                         { m_Id              = id;       }
   void setIdUser          (int idUser)                     { m_IdUser          = idUser;   }
-  void setUrl             (const QString &url)             { m_Url             = url;      }
+  void setUrl             (const QString &url)             { m_Url             = url;             emit urlChanged();             }
   void setUsername        (const QString &username)        { m_Username        = username;        emit usernameChanged();        }
   void setCreated         (const QDateTime &created)       { m_Created         = created;         emit createdChanged();         }
 
@@ -90,6 +92,7 @@ signals:
   void spotNameChanged();
   void spotDescriptionChanged();
   void createdChanged();
+  void urlChanged();
   void likersCountChanged();
 
 private:

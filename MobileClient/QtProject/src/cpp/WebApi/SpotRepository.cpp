@@ -17,6 +17,9 @@
 #include "Spot.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
+#include "PictureRepository.h"
+#include "User.h"
+#include "UserRepository.h"
 
 // Qt includes -----------------------------
 #include <QDebug>
@@ -264,6 +267,46 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
                                                                           spot->longitude()));
       spot->setDistance(computedDistance);
     }
+
+    // Picture list
+    spot->clearPictures();
+    QJsonArray jsonArray_Pictures = jsonObject_Spot.value(WebApi::PARAMETER::PICTURE_LIST).toArray();
+    for(int i = 0; i < jsonArray_Pictures.size(); i++)
+    {
+      QJsonObject jsonObject_Picture = jsonArray_Pictures.at(i).toObject();
+
+      int picture_id = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_PICTURE_ID).toInt();
+
+      Picture *picture = PictureRepository::instance()->getAdd_Picture(picture_id);
+
+      // Picture properties
+      picture->setUrl             (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString());
+      picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
+      picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());
+      picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_CREATED).toString(),
+                                                         Qt::ISODate));
+
+      // Spot
+      picture->setSpot(spot);
+
+      // Likers
+      picture->clearLikers();
+      QJsonArray jsonArray_Likers = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_LIKERS).toArray();
+      for(int i = 0; i < jsonArray_Likers.size(); i++)
+      {
+        QJsonObject jsonObject_Liker = jsonArray_Likers.at(i).toObject();
+
+        int     liker_id       = jsonObject_Liker.value(WebApi::PARAMETER::USER_USER_ID).toInt();
+        QString liker_username = jsonObject_Liker.value(WebApi::PARAMETER::USER_USERNAME).toString();
+
+        User *user = UserRepository::instance()->getAdd_User(liker_id,
+                                                             liker_username);
+
+        picture->addLiker(user);
+      }
+
+      spot->addPicture(picture);
+    } // for
 
     // Add to current request
     newSpots.append(m_QMap_Spots.value(spot_id));
