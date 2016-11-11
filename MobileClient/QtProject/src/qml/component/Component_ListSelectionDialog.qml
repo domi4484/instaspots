@@ -67,5 +67,15 @@ Item{
              anchors.fill: parent
          }
      }
+
+     function open()
+     {
+       component_ListSelectionDialog.showDialog = true;
+     }
+
+     function close()
+     {
+        component_ListSelectionDialog.hideDialog = true;
+     }
 }
 

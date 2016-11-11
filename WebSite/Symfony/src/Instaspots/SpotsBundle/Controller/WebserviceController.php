@@ -792,6 +792,10 @@ class WebserviceController extends Controller
     $picture->addLiker($user);
     $em->flush();
 
+    $jPictures = array();
+    $jPictures[] = $picture->toJson();
+
+    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
     $response->addData('successful', true);
   }
 
@@ -821,6 +825,10 @@ class WebserviceController extends Controller
     $picture->removeLiker($user);
     $em->flush();
 
+    $jPictures = array();
+    $jPictures[] = $picture->toJson();
+
+    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
     $response->addData('successful', true);
   }
 
@@ -855,7 +863,17 @@ class WebserviceController extends Controller
 
     // Remove the picture
     $em->remove($picture);
-    $em->flush();
+
+    // Flush
+    try
+    {
+      $em->flush();
+    }
+    catch (DBALException $e)
+    {
+      $response->setError("Flush exception ".$e->getMessage());
+      return;
+    }
 
     $response->addData('successful', true);
   }

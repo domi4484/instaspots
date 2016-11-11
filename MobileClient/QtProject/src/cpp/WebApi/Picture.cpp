@@ -183,6 +183,19 @@ void Picture::addLiker(User *liker)
   emit likersCountChanged();
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool Picture::likedByUserId(int userId)
+{
+  foreach (User *user_Liker, m_QList_Likers)
+  {
+    if(user_Liker->id() == userId)
+      return true;
+  }
+
+  return false;
+}
+
 
 
 

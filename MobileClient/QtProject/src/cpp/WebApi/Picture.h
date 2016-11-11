@@ -87,6 +87,10 @@ public:
   void clearLikers();
   void addLiker(User *liker);
 
+public slots:
+
+  bool likedByUserId(int userId);
+
 signals:
 
   void usernameChanged();

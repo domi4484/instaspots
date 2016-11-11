@@ -76,109 +76,143 @@ Item
 
     delegate: PictureViewDelegate
     {
+      id: pictureViewDelegate
+
       onUserClicked:
       {
-          page_PicturesList.userClicked(role_UserId, role_UserUsername);
+        page_PicturesList.userClicked(role_UserId, role_UserUsername);
       }
       onSpotClicked:
       {
-          page_PicturesList.spotClicked(role_SpotId, role_SpotName);
+        page_PicturesList.spotClicked(role_SpotId, role_SpotName);
       }
       onOptionsClicked:
       {
-          component_ListSelectionDialog_Options.showDialog = true;
+        var picture = picturesModel.getPicture(index);
+        var spot = picture.spot;
+        if(picture === null)
+        {
+          console.log("Null picture");
+          return;
+        }
+
+        var component_ListSelectionDialog = Qt.createComponent("qrc:/qml/component/Component_ListSelectionDialog.qml",
+                                           Component.PreferSynchronous,
+                                           pictureViewDelegate);
+        var object_ListSelectionDialog = component_ListSelectionDialog.createObject(pictureViewDelegate);
+
+        var array_Links = new Array();
+
+        // Like / Unlike
+        if(picture.likedByUserId(wa_CurrentUser.id) === false)
+        {
+          var component_Link_Like = Qt.createComponent("qrc:/qml/widgets/Link.qml",
+                                                       Component.PreferSynchronous,
+                                                       object_ListSelectionDialog);
+          var object_Link_Like = component_Link_Like.createObject(object_ListSelectionDialog,
+                                                                  {
+                                                                    "text"                : qsTr("Like"),
+                                                                    "width"               : parent.width,
+                                                                    "height"              : 30 * hc_Application.dip,
+                                                                    "horizontalAlignment" : Text.AlignHCenter,
+                                                                    "verticalAlignment"   : Text.AlignVCenter
+                                                                  });
+          object_Link_Like.clicked.connect(object_ListSelectionDialog.close)
+          object_Link_Like.clicked.connect(link_Like_Clicked)
+
+          array_Links.push(object_Link_Like);
+        }
+        else
+        {
+          // UnLike
+          var component_Link_UnLike = Qt.createComponent("qrc:/qml/widgets/Link.qml",
+                                                         Component.PreferSynchronous,
+                                                         object_ListSelectionDialog);
+          var object_Link_UnLike = component_Link_UnLike.createObject(object_ListSelectionDialog,
+                                                                      {
+                                                                        "text"                : qsTr("Unlike"),
+                                                                        "width"               : parent.width,
+                                                                        "height"              : 30 * hc_Application.dip,
+                                                                        "horizontalAlignment" : Text.AlignHCenter,
+                                                                        "verticalAlignment"   : Text.AlignVCenter
+                                                                      });
+          object_Link_UnLike.clicked.connect(object_ListSelectionDialog.close)
+          object_Link_UnLike.clicked.connect(link_UnLike_Clicked)
+
+          array_Links.push(object_Link_UnLike);
+        }
+
+        // Remove
+        if(picture.username === wa_CurrentUser.username)
+        {
+          var component_Link_Remove = Qt.createComponent("qrc:/qml/widgets/Link.qml",
+                                                         Component.PreferSynchronous,
+                                                         object_ListSelectionDialog);
+          var object_Link_Remove = component_Link_Remove.createObject(object_ListSelectionDialog,
+                                                                      {
+                                                                        "text"                : qsTr("Remove"),
+                                                                        "width"               : parent.width,
+                                                                        "height"              : 30 * hc_Application.dip,
+                                                                        "horizontalAlignment" : Text.AlignHCenter,
+                                                                        "verticalAlignment"   : Text.AlignVCenter
+                                                                      });
+          object_Link_Remove.clicked.connect(object_ListSelectionDialog.close)
+          object_Link_Remove.clicked.connect(link_Remove_Clicked)
+
+          array_Links.push(object_Link_Remove);
+      }
+
+        object_ListSelectionDialog.content = array_Links;
+        object_ListSelectionDialog.showDialog = true;
       }
       onLikesClicked:
       {
-          page_PicturesList.likesClicked(role_PictureId);
+        page_PicturesList.likesClicked(role_PictureId);
       }
 
+      function link_Like_Clicked()
+      {
+        re_PictureRepository.likePicture(picturesModel.getPicture(index).id);
+      }
 
-      // List selection dialog
-      Component_ListSelectionDialog{
-        id: component_ListSelectionDialog_Options
+      function link_UnLike_Clicked()
+      {
+        re_PictureRepository.unlikePicture(picturesModel.getPicture(index).id);
+      }
 
-        Link
+      function link_Remove_Clicked()
+      {
+        var picture = picturesModel.getPicture(index);
+        var spot = picture.spot;
+
+        // Confirmation dialog
+        var component = Qt.createComponent("qrc:/qml/component/Component_Dialog.qml",
+                                           Component.PreferSynchronous,
+                                           parent);
+        var dialog = component.createObject(parent,
+                                            {"title": qsTr("Warning"),
+                                             "standardButtons": MessageDialog.Ok | MessageDialog.Cancel
+                                            });
+        dialog.accepted.connect(link_Remove_Clicked_RemoveConfirmed);
+
+        // Check last picture
+        if(spot.picturesCount === 1)
         {
-          id: link_Like
-
-          text: "Like"
-
-          width: parent.width
-          height: 30 * hc_Application.dip
-
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-
-          onClicked:
-          {
-            re_PictureRepository.likePicture(role_PictureId);
-            component_ListSelectionDialog_Options.hideDialog = true;
-          }
+          dialog.text = qsTr("The spot \"%1\" has only one picture, if you remove it the spot will be removed to.").arg(spot.name);
         }
-        Link
+        else
         {
-          id: link_Remove
-
-          text: "Remove"
-
-          visible: wa_CurrentUser.id == role_UserId
-
-          width: parent.width
-          height: 30 * hc_Application.dip
-
-          horizontalAlignment: Text.AlignHCenter
-          verticalAlignment: Text.AlignVCenter
-
-          onClicked:
-          {
-            var picture = picturesModel.getPicture(index);
-            var spot = picture.spot;
-            if(picture === null)
-            {
-              console.log("Null picture");
-              component_ListSelectionDialog_Options.hideDialog = true;
-              return;
-            }
-
-            // Confirmation dialog
-            var component = Qt.createComponent("qrc:/qml/component/Component_Dialog.qml",
-                                               Component.PreferSynchronous,
-                                               link_Remove);
-            var dialog = component.createObject(parent,
-                                                {"title": qsTr("Warning"),
-                                                 "standardButtons": MessageDialog.Ok | MessageDialog.Cancel
-                                                });
-            dialog.accepted.connect(removePictureCofirmed);
-            dialog.rejected.connect(removePictureRejected);
-
-            // Check last picture
-            if(spot.picturesCount === 1)
-            {
-              dialog.text = qsTr("The spot \"%1\" has only one picture, if you remove it the spot will be removed to.").arg(spot.name);
-            }
-            else
-            {
-              dialog.text = qsTr("This picture will be removed from spot \"%1\".").arg(spot.name);
-            }
-
-
-            dialog.open();
-          }
-
-          function removePictureCofirmed(picture)
-          {
-              console.log(picturesModel.getPicture(index).id)
-//              re_PictureRepository.removePicture(picturesModel.getPicture(index).id);
-              component_ListSelectionDialog_Options.hideDialog = true;
-          }
-
-          function removePictureRejected()
-          {
-              component_ListSelectionDialog_Options.hideDialog = true;
-          }
+          dialog.text = qsTr("This picture will be removed from spot \"%1\".").arg(spot.name);
         }
-      } // Component_ListSelectionDialog
+
+
+        dialog.open();
+      }
+
+      function link_Remove_Clicked_RemoveConfirmed(picture)
+      {
+        re_PictureRepository.removePicture(picturesModel.getPicture(index).id);
+      }
     }
   }
 }

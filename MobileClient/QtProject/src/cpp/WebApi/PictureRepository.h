@@ -53,6 +53,7 @@ public slots:
   void getBy_Newest(int requestId);
 
   void likePicture(int pictureId);
+  void unlikePicture(int pictureId);
 
   void removePicture(int pictureId);
 

@@ -228,9 +228,25 @@ void PictureRepository::likePicture(int pictureId)
   webApiCommand->setCommand(WebApi::COMMAND::PICTURE_LIKE);
 
   connect(webApiCommand,
-          SIGNAL(signal_Finished()),
-          webApiCommand,
-          SLOT(deleteLater()));
+          SIGNAL(signal_Finished(const WebApiError &)),
+          SLOT(slot_Command_Finished(const WebApiError &)));
+  webApiCommand->postRequest(qList_QueryItems);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureRepository::unlikePicture(int pictureId)
+{
+  QList<QueryItem> qList_QueryItems;
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));
+
+  WebApiCommand *webApiCommand = new WebApiCommand(this);
+  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setCommand(WebApi::COMMAND::PICTURE_UNLIKE);
+
+  connect(webApiCommand,
+          SIGNAL(signal_Finished(const WebApiError &)),
+          SLOT(slot_Command_Finished(const WebApiError &)));
   webApiCommand->postRequest(qList_QueryItems);
 }
 
@@ -246,6 +262,8 @@ void PictureRepository::removePicture(int pictureId)
     Logger::error(QString("Can't remove picture with id %1").arg(pictureId));
     return;
   }
+
+  Logger::info(QString("Removing picture with id %1").arg(pictureId));
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));

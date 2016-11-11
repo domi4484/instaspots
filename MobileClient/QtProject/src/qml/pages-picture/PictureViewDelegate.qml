@@ -108,7 +108,7 @@ Item {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
 
-            text: role_PictureLikersCount + " " + qsTr("Likes")
+            text: picturesModel.getPicture(index).likersCount + " " + qsTr("Likes")
 
             onClicked: likesClicked()
         } // Likes
