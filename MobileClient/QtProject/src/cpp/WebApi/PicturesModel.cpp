@@ -68,12 +68,22 @@ QHash<int, QByteArray> PicturesModel::roleNames() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Picture *PicturesModel::first()
+Picture *PicturesModel::first() const
 {
   if(m_QList_Pictures.isEmpty())
     return NULL;
 
   return m_QList_Pictures.first();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+Picture *PicturesModel::getPicture(int index) const
+{
+  if(index >= m_QList_Pictures.size())
+    return NULL;
+
+  return m_QList_Pictures.at(index);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

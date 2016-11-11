@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "Picture.h"
+#include "Spot.h"
 #include "SpotRepository.h"
 #include "UserRepository.h"
 #include "WebApi.h"

@@ -35,7 +35,9 @@ public:
 
   public slots:
 
-    Picture *first();
+    Picture *first() const;
+
+    Picture *getPicture(int index) const;
 
     void getNewestSpots();
 

@@ -37,6 +37,7 @@ class Picture : public QObject
   Q_PROPERTY(QDateTime              created         READ created         WRITE setCreated         NOTIFY createdChanged         )
   Q_PROPERTY(QString                createdText     READ createdText                              NOTIFY createdChanged         )
   Q_PROPERTY(QString                url             READ url                                      NOTIFY urlChanged             )
+  Q_PROPERTY(Spot *                 spot            READ spot                                     NOTIFY spotNameChanged        )
   Q_PROPERTY(QString                spotName        READ spotName                                 NOTIFY spotNameChanged        )
   Q_PROPERTY(QString                spotDescription READ spotDescription                          NOTIFY spotDescriptionChanged )
   Q_PROPERTY(int                    likersCount     READ likersCount                              NOTIFY likersCountChanged     )

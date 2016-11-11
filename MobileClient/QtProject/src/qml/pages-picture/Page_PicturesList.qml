@@ -15,6 +15,8 @@ import QtQuick.Controls 1.3
 
 // Project c++ imports ---------------------
 import PicturesModel 1.0
+import Picture       1.0
+import Spot          1.0
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
@@ -116,7 +118,24 @@ Item{
 
                     onClicked:
                     {
-                        re_PictureRepository.removePicture(role_PictureId);
+                        var picture = picturesModel.getPicture(index);
+                        if(picture === null)
+                        {
+                            console.log("Null picture");
+                            component_ListSelectionDialog_Options.hideDialog = true;
+                            return;
+                        }
+
+                        var spot = picture.spot;
+                        if(spot.picturesCount === 1)
+                        {
+                            console.log("only one pics ;(");
+                            component_ListSelectionDialog_Options.hideDialog = true;
+                            return;
+                        }
+
+
+                        re_PictureRepository.removePicture(picture.id);
                         component_ListSelectionDialog_Options.hideDialog = true;
                     }
                 }

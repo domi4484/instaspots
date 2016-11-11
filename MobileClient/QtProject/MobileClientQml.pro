@@ -94,7 +94,8 @@ HEADERS += \
     src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/WebApi/CurrentUser.h \
     src/cpp/WebApi/User.h \
-    src/cpp/WebApi/UserRepository.h
+    src/cpp/WebApi/UserRepository.h \
+    src/cpp/Main/main.h
 
 RESOURCES += src/qml.qrc
 
