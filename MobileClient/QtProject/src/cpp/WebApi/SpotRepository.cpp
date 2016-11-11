@@ -40,7 +40,7 @@ SpotRepository::SpotRepository(LocationManager *locationManger,
                                QObject *parent)
   : QObject(parent),
     m_LocationManager(locationManger),
-    m_RequestId(0),
+    m_RequestId(1),
     m_QMap_Spots(),
     m_QMap_Results()
 {
@@ -223,7 +223,8 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
   QList<Spot *> newSpots;
   int requestId = sender()->property(PROPERTY_REQUEST_ID).toInt();
 
-  if(error.type() != WebApiError::NONE)
+  if(   error.type() != WebApiError::NONE
+     && requestId != 0)
   {
     emit signal_DataReady(requestId,
                           false);
@@ -314,10 +315,13 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
 
   webApiCommand->deleteLater();
 
-  m_QMap_Results.insert(requestId,
-                        newSpots);
-  emit signal_DataReady(requestId,
-                        true);
+  if(requestId != 0)
+  {
+    m_QMap_Results.insert(requestId,
+                          newSpots);
+    emit signal_DataReady(requestId,
+                          true);
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

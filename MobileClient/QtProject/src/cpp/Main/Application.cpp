@@ -108,7 +108,7 @@ Application::Application(int argc, char *argv[]) :
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Logger",            Logger::instance());
   m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Settings",          m_Settings);
 
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_User",              m_CurrentUser           );
+  m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_CurrentUser",       m_CurrentUser);
   m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_PictureUploader",   m_PictureUploader);
 
   m_QQmlApplicationEngine->rootContext()->setContextProperty("re_PictureRepository", PictureRepository::instance());

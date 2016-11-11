@@ -40,7 +40,7 @@ Item{
     // Connections -------------------------
 
     Connections {
-        target: wa_User
+        target: wa_CurrentUser
         onSignal_LoginSuccessfull:
         {
             // Login successfull

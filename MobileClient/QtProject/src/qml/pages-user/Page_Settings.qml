@@ -268,7 +268,7 @@ Item{
         text: qsTr("Logout")
         onClicked:
         {
-            wa_User.logout();
+            wa_CurrentUser.logout();
             stackView.pop();
             tabWidget_Main.setCurrentItem(panel_Home);
         }

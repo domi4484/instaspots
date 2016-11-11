@@ -154,7 +154,7 @@ Item {
         }
 
         // Is user logged in?
-        if(wa_User.isConnected() === false)
+        if(wa_CurrentUser.isConnected() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/qml/pages-user/Page_SignIn.qml");
             stackView.push( {

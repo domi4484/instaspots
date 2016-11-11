@@ -38,7 +38,7 @@ Item {
     // Connections -------------------------
 
     Connections {
-        target: wa_User
+        target: wa_CurrentUser
         onSignal_RegistrationSuccessfull:
         {
             button_Register.enabled = true;
@@ -46,7 +46,7 @@ Item {
             // Register successfull
             if(success === false)
             {
-                messageDialog.text = wa_User.lastErrorText();
+                messageDialog.text = wa_CurrentUser.lastErrorText();
                 messageDialog.visible = true;
                 return;
             }
@@ -93,11 +93,11 @@ Item {
 
             onClicked:
             {
-                if(wa_User.registration(textField_Username.text,
-                                        textField_EMail.text,
-                                        textField_Password.text) === false)
+                if(wa_CurrentUser.registration(textField_Username.text,
+                                               textField_EMail.text,
+                                               textField_Password.text) === false)
                 {
-                    messageDialog.text = wa_User.lastErrorText();
+                    messageDialog.text = wa_CurrentUser.lastErrorText();
                     messageDialog.visible = true;
                     return;
                 }

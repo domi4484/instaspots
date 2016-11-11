@@ -22,7 +22,7 @@ Rectangle {
     // Connections -------------------------
 
     Connections {
-        target: wa_User
+        target: wa_CurrentUser
         onSignal_LoginSuccessfull:
         {
 
@@ -31,7 +31,7 @@ Rectangle {
             // Login failed
             if(success == false)
             {
-                messageDialog.text = wa_User.lastErrorText();
+                messageDialog.text = wa_CurrentUser.lastErrorText();
                 messageDialog.visible = true;
                 return;
             }
@@ -93,10 +93,10 @@ Rectangle {
     function login(username,
                    password)
     {
-        if(wa_User.login(username,
-                         password) === false)
+        if(wa_CurrentUser.login(username,
+                                password) === false)
         {
-            messageDialog.text = wa_User.lastErrorText();
+            messageDialog.text = wa_CurrentUser.lastErrorText();
             messageDialog.visible = true;
             return;
         }

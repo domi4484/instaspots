@@ -32,10 +32,10 @@ Item {
         height: parent.height
 
         // Properties
-        userId: wa_User.id
+        userId: wa_CurrentUser.id
 
         // Navigation properties
-        navigation_Title:                 wa_User.username
+        navigation_Title:                 wa_CurrentUser.username
         navigation_BackButtonVisible:     false
         navigation_ContinueButtonVisible: false
         navigation_MenuButtonVisible:     true
@@ -102,7 +102,7 @@ Item {
         if(visible == false)
             return;
 
-        if(wa_User.isConnected() === false)
+        if(wa_CurrentUser.isConnected() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/qml/pages-user/Page_SignIn.qml");
             stackView.push( {

@@ -36,7 +36,7 @@ PictureRepository *PictureRepository::s_PictureRepository = NULL;
 
 PictureRepository::PictureRepository(QObject *parent) :
   QObject(parent),
-  m_RequestId(0),
+  m_RequestId(1),
   m_QMap_Pictures(),
   m_QMap_Results()
 {
@@ -247,7 +247,18 @@ void PictureRepository::removePicture(int pictureId)
     return;
   }
 
-  Spot *spot = picture->spot();
+  QList<QueryItem> qList_QueryItems;
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));
+
+  WebApiCommand *webApiCommand = new WebApiCommand(this);
+  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setCommand(WebApi::COMMAND::PICTURE_REMOVE);
+
+  connect(webApiCommand,
+          SIGNAL(signal_Finished()),
+          webApiCommand,
+          SLOT(deleteLater()));
+  webApiCommand->postRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -257,7 +268,8 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
   QList<Picture *> newPictures;
   int requestId = sender()->property(PROPERTY_REQUEST_ID).toInt();
 
-  if(error.type() != WebApiError::NONE)
+  if(   error.type() != WebApiError::NONE
+     && requestId != 0)
   {
     emit signal_DataReady(requestId,
                           false);
@@ -320,10 +332,13 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
 
   webApiCommand->deleteLater();
 
-  m_QMap_Results.insert(requestId,
-                        newPictures);
-  emit signal_DataReady(requestId,
-                        true);
+  if(requestId != 0)
+  {
+    m_QMap_Results.insert(requestId,
+                          newPictures);
+    emit signal_DataReady(requestId,
+                          true);
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
