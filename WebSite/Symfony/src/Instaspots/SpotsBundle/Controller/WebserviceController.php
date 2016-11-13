@@ -853,6 +853,11 @@ class WebserviceController extends Controller
     $em = $this->getDoctrine()->getManager();
     $pictureRepository = $em->getRepository('InstaspotsSpotsBundle:Picture');
     $picture = $pictureRepository->findOneById($pictureId);
+    if($picture == null)
+    {
+      $response->setError('Null picture');
+      return;
+    }
 
     // Check if picture belong to user TODO or superuser
     if($picture->getUser() != $user)
@@ -861,7 +866,15 @@ class WebserviceController extends Controller
       return;
     }
 
+    // Get spot
+    $spot = $picture->getSpot();
+
     // Remove the picture
+    $spot->removePicture($picture);
+    if(count($spot->getPictures()) == 0)
+    {
+      $em->remove($spot);
+    }
     $em->remove($picture);
 
     // Flush

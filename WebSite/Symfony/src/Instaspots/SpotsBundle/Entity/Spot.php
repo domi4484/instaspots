@@ -3,6 +3,7 @@
 namespace Instaspots\SpotsBundle\Entity;
 
 // Project imports -------------------------
+use Instaspots\SpotsBundle\Entity\Picture;
 use Instaspots\SpotsBundle\Controller\ParameterSet;
 
 // Doctrine imports ------------------------
@@ -467,7 +468,50 @@ class Spot
 
   public function removePicture(Picture $picture)
   {
+    // Remove picture
     $this->pictures->removeElement($picture);
+
+    // Last picture removed?
+    $picturesCount = count($this->pictures);
+    if($picturesCount == 0)
+    {
+      // Update user score by -10
+      $picture->getUser()->removeReputation(10);
+
+      return;
+    }
+
+    // Recalculate location
+    $latitude  = 0;
+    $longitude = 0;
+    foreach($this->pictures as &$pictureI)
+    {
+      $latitude  = $latitude  + $pictureI->getLatitude();
+      $longitude = $longitude + $pictureI->getLongitude();
+    }
+    $this->latitude  = $latitude  / $picturesCount;
+    $this->longitude = $longitude / $picturesCount;
+
+    // Update Score by 5
+    $this->setScore($this->getScore() - 5);
+
+    // Check if picture1 and 2 are still the same
+    // Picture $firstPicture;
+    // Picture $secondPicture;
+    $firstPicture  = $this->pictures[0];
+    $secondPicture = $this->pictures[0];
+    foreach($this->pictures as &$pictureI)
+    {
+      if($firstPicture->getLikers()->count() < $pictureI->getLikers()->count())
+      {
+        $secondPicture = $firstPicture;
+        $firstPicture  = $pictureI;
+      }
+    }
+    $this->picture1 = $firstPicture;
+    $this->picture2 = $secondPicture;
+
+    return $this;
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
