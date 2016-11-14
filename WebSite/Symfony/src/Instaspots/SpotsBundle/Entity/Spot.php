@@ -496,18 +496,68 @@ class Spot
     $this->setScore($this->getScore() - 5);
 
     // Check if picture1 and 2 are still the same
-    // Picture $firstPicture;
-    // Picture $secondPicture;
     $firstPicture  = $this->pictures[0];
     $secondPicture = $this->pictures[0];
-    foreach($this->pictures as &$pictureI)
+    if($picturesCount > 1)
     {
-      if($firstPicture->getLikers()->count() < $pictureI->getLikers()->count())
+      // Get best likes count
+      $bestLikesCount = 0;
+      foreach($this->pictures as &$pictureI)
       {
-        $secondPicture = $firstPicture;
-        $firstPicture  = $pictureI;
+        if($pictureI->getLikers()->count() > $bestLikesCount)
+        {
+          $bestLikesCount = $pictureI->getLikers()->count();
+        }
       }
-    }
+    
+      // Get bestLikedPictures
+      $bestLikedPictures = array()
+      foreach($this->pictures as &$pictureI)
+      {
+        if($pictureI->getLikers()->count() == $bestLikesCount)
+        {
+          $bestLikedPictures[] = $pictureI;
+        }
+      }
+      
+      if($bestLikedPictures->count() == 1)
+      {
+        $firstPicture = $bestLikedPictures[0];
+        // Get second likes count
+        $secondBestLikesCount = 0;
+        foreach($this->pictures as &$pictureI)
+        {
+          if(    $pictureI->getLikers()->count() > $secondBestLikesCount
+             and $pictureI->getLikers()->count() != $bestLikesCount)
+          {
+            $secondBestLikesCount = $pictureI->getLikers()->count();
+          }
+        } // foreach picture
+        
+        // Get secondBestLikedPictures
+        $secondBestLikedPictures = array();
+        foreach($this->pictures as &$pictureI)
+        {
+          if($pictureI->getLikers()->count() == $secondBestLikesCount)
+          {
+            $secondBestLikedPictures[] = $pictureI;
+          }
+        } // foreach picture
+        
+        if($secondBestLikedPictures->count() == 1)
+        {
+          $secondPicture = $secondBestLikedPictures[0];
+        }
+        else
+        {
+          // TODO get by newest
+        }
+      } // if $bestLikedPictures->count() == 1
+      {
+        // TODO get newest for firstPicture and seconNewest for secondPicture
+      }
+    } // if picturesCount > 1
+    
     $this->picture1 = $firstPicture;
     $this->picture2 = $secondPicture;
 
