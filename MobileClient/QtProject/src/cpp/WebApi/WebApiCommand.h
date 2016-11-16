@@ -18,6 +18,7 @@
 
 // Qt includes -----------------------------
 #include <QObject>
+#include <QMap>
 #include <QByteArray>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -39,8 +40,11 @@ public:
 
   explicit WebApiCommand(QObject *parent = 0);
 
-  void setCommand(const QString &command);
-  QString command() const;
+  void setCommandName(const QString &commandName);
+  QString commandName() const;
+
+  // Request
+  QVariant requestParameter(const QString &parameterName) const;
 
   // Result (JSON)
   void setResult(const WebApiError &error,
@@ -81,9 +85,9 @@ public slots:
 
 private:
 
-  QString          m_Command;
-  ANSWER_TYPE      m_AnswerType;
-  QList<QueryItem> m_QList_QueryItems;
+  QString                  m_CommandName;
+  ANSWER_TYPE              m_AnswerType;
+  QMap<QString, QueryItem> m_QMap_QueryItems;
 
   bool m_Running;
 

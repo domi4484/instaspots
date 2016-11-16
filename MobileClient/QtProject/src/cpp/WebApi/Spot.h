@@ -107,6 +107,10 @@ signals:
     void pictureId2Changed ();
     void picturesCountChanged();
 
+private slots:
+
+    void slot_Picture_destroyed(QObject *qObject_Picture);
+
 private:
 
     int              m_Id;

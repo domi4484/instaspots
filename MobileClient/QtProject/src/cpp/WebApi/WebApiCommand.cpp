@@ -15,14 +15,11 @@
 // Project includes ------------------------
 #include "WebApi.h"
 
-// Qt inlcudes -----------------------------
-#include <QApplication>
-
 //-----------------------------------------------------------------------------------------------------------------------------
 
 WebApiCommand::WebApiCommand(QObject *parent) :
   QObject(parent),
-  m_Command   (),
+  m_CommandName   (),
   m_AnswerType(JSON),
   m_Running   (false),
   m_Result    (),
@@ -33,16 +30,23 @@ WebApiCommand::WebApiCommand(QObject *parent) :
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void WebApiCommand::setCommand(const QString &command)
+void WebApiCommand::setCommandName(const QString &command)
 {
-  m_Command = command;
+  m_CommandName = command;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString WebApiCommand::command() const
+QString WebApiCommand::commandName() const
 {
-  return m_Command;
+  return m_CommandName;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QVariant WebApiCommand::requestParameter(const QString &parameterName) const
+{
+  return m_QMap_QueryItems.value(parameterName).second();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -124,10 +128,11 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
     return WebApiError(WebApiError::COMMAND_ALREADY_RUNNING);
   }
 
-  m_QList_QueryItems.clear();
-  m_QList_QueryItems.append(qList_QueryItems);
-  m_QList_QueryItems.append(QueryItem(WebApi::PARAMETER::APPLICATION_VERSION,
-                                      QApplication::applicationVersion()));
+  m_QMap_QueryItems.clear();
+  foreach (QueryItem queryItem, qList_QueryItems)
+  {
+    m_QMap_QueryItems.insert(queryItem.first(), queryItem);
+  }
 
   m_Running = true;
 
@@ -151,10 +156,10 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
 QString WebApiCommand::requestString() const
 {
   QStringList requestString;
-  requestString << "Command: " << m_Command << " ";
+  requestString << "Command: " << m_CommandName << " ";
   requestString << "Items: {";
 
-  foreach(QueryItem item, m_QList_QueryItems)
+  foreach(QueryItem item, m_QMap_QueryItems)
   {
       requestString << "(" << item.first() << ";" << item.second() << ")";
   }

@@ -22,8 +22,8 @@ public:
   QueryItem(const QString &first,
             const QString &second);
 
-  QString first()  { return m_first;  }
-  QString second() { return m_second; }
+  QString first()  const { return m_first;  }
+  QString second() const { return m_second; }
 
 private:
   QString m_first;

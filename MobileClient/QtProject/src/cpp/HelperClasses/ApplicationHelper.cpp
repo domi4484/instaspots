@@ -77,7 +77,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
   }
 
   m_WebApiCommand_GetCurrentClientVersion.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_GetCurrentClientVersion.setCommand(WebApi::COMMAND::GET_CURRENT_CLIENT_VERSION);
+  m_WebApiCommand_GetCurrentClientVersion.setCommandName(WebApi::COMMAND::GET_CURRENT_CLIENT_VERSION);
 
   connect(&m_WebApiCommand_GetCurrentClientVersion,
           SIGNAL(signal_Finished(const WebApiError &)),
@@ -85,7 +85,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
 
 
   m_WebApiCommand_ReportProblem.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_ReportProblem.setCommand(WebApi::COMMAND::REPORT_PROBLEM);
+  m_WebApiCommand_ReportProblem.setCommandName(WebApi::COMMAND::REPORT_PROBLEM);
 
   connect(&m_WebApiCommand_ReportProblem,
           SIGNAL(signal_Finished(const WebApiError &)),

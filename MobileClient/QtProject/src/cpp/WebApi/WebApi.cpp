@@ -18,6 +18,7 @@
 #include "WebApiError.h"
 
 // Qt includes -----------------------------
+#include <QApplication>
 #include <QDebug>
 #include <QFile>
 #include <QJsonParseError>
@@ -359,10 +360,13 @@ void WebApi::slot_QNetworkReply_finished()
 //----------------------------------------------------------------------------------------------------------------------------
 
 void WebApi::postRequest(WebApiCommand *abstractCommand,
-                         const QList<QueryItem> &qList_QueryItems)
+                         QList<QueryItem> &qList_QueryItems)
 {
   int commandId = m_CommandsIdCounter++;
   m_RunningCommands.insert(commandId, abstractCommand);
+
+  qList_QueryItems.append(QueryItem(PARAMETER::APPLICATION_VERSION,
+                                    QApplication::applicationVersion()));
 
   // Network request
   QNetworkRequest request(m_Url);
@@ -376,7 +380,7 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
                     "application/x-www-form-urlencoded");
 
   QUrlQuery params;
-  params.addQueryItem(CONST::GENERAL_PARAMS::COMMAND,    abstractCommand->command());
+  params.addQueryItem(CONST::GENERAL_PARAMS::COMMAND,    abstractCommand->commandName());
   foreach(QueryItem item, qList_QueryItems)
   {
     params.addQueryItem(item.first(), item.second());
@@ -392,11 +396,14 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void WebApi::multipartRequest(WebApiCommand *abstractCommand,
-                              const QList<QueryItem> &qList_QueryItems,
+                              QList<QueryItem> &qList_QueryItems,
                               QIODevice *device)
 {
   int commandId = m_CommandsIdCounter++;
   m_RunningCommands.insert(commandId, abstractCommand);
+
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::APPLICATION_VERSION,
+                                    QApplication::applicationVersion()));
 
   QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -405,7 +412,7 @@ void WebApi::multipartRequest(WebApiCommand *abstractCommand,
     QHttpPart textPart;
     textPart.setHeader(QNetworkRequest::ContentDispositionHeader,
                        QVariant(QString("application/x-www-form-urlencoded; name=\"%1\";").arg(CONST::GENERAL_PARAMS::COMMAND)));
-    textPart.setBody(abstractCommand->command().toUtf8());
+    textPart.setBody(abstractCommand->commandName().toUtf8());
 
     multiPart->append(textPart);
   }

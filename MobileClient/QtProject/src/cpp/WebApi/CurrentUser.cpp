@@ -31,16 +31,16 @@ CurrentUser::CurrentUser(Settings *settings,
   m_WebApiCommand_CanRegister(this)
 {
   m_WebApiCommand_Login.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_Login.setCommand(WebApi::COMMAND::LOGIN);
+  m_WebApiCommand_Login.setCommandName(WebApi::COMMAND::LOGIN);
 
   m_WebApiCommand_Logout.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_Logout.setCommand(WebApi::COMMAND::LOGOUT);
+  m_WebApiCommand_Logout.setCommandName(WebApi::COMMAND::LOGOUT);
 
   m_WebApiCommand_Register.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_Register.setCommand(WebApi::COMMAND::REGISTER);
+  m_WebApiCommand_Register.setCommandName(WebApi::COMMAND::REGISTER);
 
   m_WebApiCommand_CanRegister.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_CanRegister.setCommand(WebApi::COMMAND::CANREGISTER);
+  m_WebApiCommand_CanRegister.setCommandName(WebApi::COMMAND::CANREGISTER);
 
   connect(&m_WebApiCommand_Login,       SIGNAL(signal_Finished(const WebApiError &)), SLOT(slot_CommandLogin_Finished      (const WebApiError &)));
   connect(&m_WebApiCommand_Logout,      SIGNAL(signal_Finished(const WebApiError &)), SLOT(slot_CommandLogout_Finished     (const WebApiError &)));

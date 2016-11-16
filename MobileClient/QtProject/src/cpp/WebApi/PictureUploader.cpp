@@ -38,13 +38,13 @@ PictureUploader::PictureUploader(QObject *parent) :
   m_WebApiCommand_UploadPictureToSpot(this)
 {
   m_WebApiCommand_UploadNewSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadNewSpot.setCommand(WebApi::COMMAND::UPLOAD_NEW_SPOT);
+  m_WebApiCommand_UploadNewSpot.setCommandName(WebApi::COMMAND::UPLOAD_NEW_SPOT);
   connect(&m_WebApiCommand_UploadNewSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadNewSpot_Finished(const WebApiError &)));
 
   m_WebApiCommand_UploadPictureToSpot.setAnswerType(WebApiCommand::JSON);
-  m_WebApiCommand_UploadPictureToSpot.setCommand(WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT);
+  m_WebApiCommand_UploadPictureToSpot.setCommandName(WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT);
   connect(&m_WebApiCommand_UploadPictureToSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadPictureToSpot_Finished(const WebApiError &)));

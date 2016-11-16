@@ -65,6 +65,7 @@ signals:
 private slots:
 
   void slot_Command_Finished(const WebApiError &error);
+  void slot_Command_RemovePicture_Finished(const WebApiError &error);
 
 private:
 

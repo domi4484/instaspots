@@ -145,6 +145,7 @@ void UserRepository::slot_Command_Finished(const WebApiError &error)
                           false);
     m_QMap_Results.insert(requestId,
                           QList<User *>());
+    sender()->deleteLater();
     return;
   }
 

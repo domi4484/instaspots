@@ -132,9 +132,9 @@ public:
   void setUrl(const QString url);
 
   void postRequest(WebApiCommand *abstractCommand,
-                   const QList<QueryItem> &qList_QueryItems);
+                   QList<QueryItem> &qList_QueryItems);
   void multipartRequest(WebApiCommand *abstractCommand,
-                        const QList<QueryItem> &qList_QueryItems,
+                        QList<QueryItem> &qList_QueryItems,
                         QIODevice *device);
   void downloadRequest(WebApiCommand *abstractCommand,
                        const QString &url);

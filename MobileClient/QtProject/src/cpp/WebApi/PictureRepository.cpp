@@ -166,7 +166,7 @@ void PictureRepository::getBy_SpotId(int requestId,
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID);
+  webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -187,7 +187,7 @@ void PictureRepository::getBy_UserId(int requestId,
    // TODO check post return type
    WebApiCommand *webApiCommand = new WebApiCommand(this);
    webApiCommand->setAnswerType(WebApiCommand::JSON);
-   webApiCommand->setCommand(WebApi::COMMAND::GET_PICTURES_BY_USER_ID);
+   webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_USER_ID);
 
    webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -206,7 +206,7 @@ void PictureRepository::getBy_Newest(int requestId)
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::COMMAND::GET_PICTURES_BY_NEWEST);
+  webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_NEWEST);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -225,7 +225,7 @@ void PictureRepository::likePicture(int pictureId)
 
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::COMMAND::PICTURE_LIKE);
+  webApiCommand->setCommandName(WebApi::COMMAND::PICTURE_LIKE);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
@@ -242,7 +242,7 @@ void PictureRepository::unlikePicture(int pictureId)
 
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::COMMAND::PICTURE_UNLIKE);
+  webApiCommand->setCommandName(WebApi::COMMAND::PICTURE_UNLIKE);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
@@ -270,12 +270,11 @@ void PictureRepository::removePicture(int pictureId)
 
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::COMMAND::PICTURE_REMOVE);
+  webApiCommand->setCommandName(WebApi::COMMAND::PICTURE_REMOVE);
 
   connect(webApiCommand,
-          SIGNAL(signal_Finished()),
-          webApiCommand,
-          SLOT(deleteLater()));
+          SIGNAL(signal_Finished(const WebApiError &)),
+          SLOT(slot_Command_RemovePicture_Finished(const WebApiError &)));
   webApiCommand->postRequest(qList_QueryItems);
 }
 
@@ -293,6 +292,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
                           false);
     m_QMap_Results.insert(requestId,
                           QList<Picture *>());
+    sender()->deleteLater();
     return;
   }
 
@@ -357,6 +357,31 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
     emit signal_DataReady(requestId,
                           true);
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PictureRepository::slot_Command_RemovePicture_Finished(const WebApiError &error)
+{
+  if(error.type() != WebApiError::NONE)
+  {
+    sender()->deleteLater();
+    return;
+  }
+
+  WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
+
+  if(webApiCommand->resultParameter(WebApi::PARAMETER::PARAM_SUCCESSFUL).toBool() == false)
+  {
+    webApiCommand->deleteLater();
+    return;
+  }
+
+  int pictureId = webApiCommand->requestParameter(WebApi::PARAMETER::PICTURE_PICTURE_ID).toInt();
+  Picture *picture = m_QMap_Pictures.take(pictureId);
+
+  picture->deleteLater();
+  webApiCommand->deleteLater();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

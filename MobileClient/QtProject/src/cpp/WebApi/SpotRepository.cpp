@@ -119,7 +119,7 @@ Spot *SpotRepository::getBy_SpotId(int spotId)
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
     webApiCommand->setAnswerType(WebApiCommand::JSON);
-    webApiCommand->setCommand(WebApi::COMMAND::GET_SPOT_BY_ID);
+    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
 
@@ -155,7 +155,7 @@ Spot *SpotRepository::getAdd_Spot(int spotId,
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
     webApiCommand->setAnswerType(WebApiCommand::JSON);
-    webApiCommand->setCommand(WebApi::COMMAND::GET_SPOT_BY_ID);
+    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
 
@@ -185,7 +185,7 @@ void SpotRepository::getBy_Distance(int requestId,
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
   webApiCommand->setAnswerType(WebApiCommand::JSON);
-  webApiCommand->setCommand(WebApi::COMMAND::GET_SPOTS_BY_DISTANCE);
+  webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS_BY_DISTANCE);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -206,7 +206,7 @@ void SpotRepository::getBy_UserId(int requestId,
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
     webApiCommand->setAnswerType(WebApiCommand::JSON);
-    webApiCommand->setCommand(WebApi::COMMAND::GET_SPOTS_BY_USER_ID);
+    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS_BY_USER_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
@@ -230,6 +230,7 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
                           false);
     m_QMap_Results.insert(requestId,
                           QList<Spot *>());
+    sender()->deleteLater();
     return;
   }
 

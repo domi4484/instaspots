@@ -428,7 +428,7 @@ class WebserviceController extends Controller
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
 
-    $response->addData('successful', true);
+    $response->addData(ParameterSet::PARAM_SUCCESSFUL, true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -530,7 +530,7 @@ class WebserviceController extends Controller
     // Generate thumbnail
     $this->thumb($movedFile->getPathname(), 180);
 
-    $response->addData('successful', true);
+    $response->addData(ParameterSet::PARAM_SUCCESSFUL, true);
   }
 
   //-----------------------------------------------------------------------------------------------------------------------------
@@ -763,7 +763,7 @@ class WebserviceController extends Controller
     $spotRepository = $em->getRepository('InstaspotsSpotsBundle:Spot');
     $spot = $spotRepository->findOneById($spotId);
 
-    $response->addData('successful', true);
+    $response->addData(ParameterSet::PARAM_SUCCESSFUL, true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -795,8 +795,8 @@ class WebserviceController extends Controller
     $jPictures = array();
     $jPictures[] = $picture->toJson();
 
-    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
-    $response->addData('successful', true);
+    $response->addData(ParameterSet::PICTURE_LIST,     $jPictures);
+    $response->addData(ParameterSet::PARAM_SUCCESSFUL, true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -828,8 +828,8 @@ class WebserviceController extends Controller
     $jPictures = array();
     $jPictures[] = $picture->toJson();
 
-    $response->addData(ParameterSet::PICTURE_LIST, $jPictures);
-    $response->addData('successful', true);
+    $response->addData(ParameterSet::PICTURE_LIST,     $jPictures);
+    $response->addData(ParameterSet::PARAM_SUCCESSFUL, true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -888,7 +888,7 @@ class WebserviceController extends Controller
       return;
     }
 
-    $response->addData('successful', true);
+    $response->addData(ParameterSet::PARAM_SUCCESSFUL, true);
   }
 
 //-----------------------------------------------------------------------------------------------------------------------------
