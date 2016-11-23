@@ -380,6 +380,15 @@ void PictureRepository::slot_Command_RemovePicture_Finished(const WebApiError &e
   int pictureId = webApiCommand->requestParameter(WebApi::PARAMETER::PICTURE_PICTURE_ID).toInt();
   Picture *picture = m_QMap_Pictures.take(pictureId);
 
+  Spot *spot = picture->spot();
+
+  spot->removePicture(picture);
+
+  if(spot->picturesCount() == 0)
+  {
+    SpotRepository::instance()->removeSpot(spot);
+  }
+
   picture->deleteLater();
   webApiCommand->deleteLater();
 }

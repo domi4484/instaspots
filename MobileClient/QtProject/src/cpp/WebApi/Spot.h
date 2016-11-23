@@ -93,6 +93,7 @@ public:
 
     void clearPictures();
     void addPicture(Picture *picture);
+    void removePicture(Picture *picture);
 
 signals:
 
@@ -106,10 +107,6 @@ signals:
     void pictureId1Changed ();
     void pictureId2Changed ();
     void picturesCountChanged();
-
-private slots:
-
-    void slot_Picture_destroyed(QObject *qObject_Picture);
 
 private:
 
