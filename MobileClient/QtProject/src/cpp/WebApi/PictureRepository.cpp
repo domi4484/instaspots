@@ -382,6 +382,15 @@ void PictureRepository::slot_Command_RemovePicture_Finished(const WebApiError &e
 
   emit signal_PictureRemoved(picture);
 
+  Spot *spot = picture->spot();
+
+  spot->removePicture(picture);
+
+  if(spot->picturesCount() == 0)
+  {
+    SpotRepository::instance()->removeSpot(spot);
+  }
+
   picture->deleteLater();
   webApiCommand->deleteLater();
 }

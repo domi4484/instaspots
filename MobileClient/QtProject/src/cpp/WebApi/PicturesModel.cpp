@@ -159,7 +159,7 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
     QAbstractItemModel::endInsertRows();
   }
 
-  countChanged(m_QList_Pictures.count());
+  emit countChanged(m_QList_Pictures.count());
   }
 }
 
