@@ -34,6 +34,9 @@ PicturesModel::PicturesModel(QObject *parent)
                                     bool)),
             SLOT(slot_PictureRepository_DataReady(int,
                                                   bool)));
+    connect(PictureRepository::instance(),
+            SIGNAL(signal_PictureRemoved(Picture *)),
+            SLOT(slot_PictureRepository_PictureRemoved(Picture *)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -80,8 +83,16 @@ Picture *PicturesModel::first() const
 
 Picture *PicturesModel::getPicture(int index) const
 {
-  if(index >= m_QList_Pictures.size())
+  if(index < 0)
     return NULL;
+
+  if(index >= m_QList_Pictures.size())
+  {
+    Logger::warning(QString("PicturesModel::%1(index=%2): Index exeed list size %3.").arg(__FUNCTION__)
+                                                                                     .arg(index)
+                                                                                     .arg(m_QList_Pictures.size()));
+    return NULL;
+  }
 
   return m_QList_Pictures.at(index);
 }
@@ -141,13 +152,35 @@ void PicturesModel::slot_PictureRepository_DataReady(int requestId,
   int newCount = PictureRepository::instance()->getPictures(m_RequestId).size();
   if(newCount > 0)
   {
-    QAbstractItemModel::beginInsertRows(QModelIndex() , 0, PictureRepository::instance()->getPictures(m_RequestId).size()-1);
+    QAbstractItemModel::beginInsertRows(QModelIndex(),
+                                        0,
+                                        PictureRepository::instance()->getPictures(m_RequestId).size()-1);
     m_QList_Pictures = PictureRepository::instance()->getPictures(m_RequestId);
     QAbstractItemModel::endInsertRows();
   }
 
   countChanged(m_QList_Pictures.count());
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void PicturesModel::slot_PictureRepository_PictureRemoved(Picture *picture)
+{
+  if(m_QList_Pictures.contains(picture) == false)
+  {
+    return;
+  }
+
+  int index = m_QList_Pictures.indexOf(picture);
+
+  QAbstractItemModel::beginRemoveRows(QModelIndex(),
+                                      index,
+                                      index);
+  m_QList_Pictures.removeOne(picture);
+  QAbstractItemModel::endRemoveRows();
+
+  countChanged(m_QList_Pictures.count());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -44,6 +44,10 @@ SpotsModel::SpotsModel(QObject *parent) :
                                     bool)),
             SLOT(slot_SpotRepository_DataReady(int,
                                                bool)));
+    connect(SpotRepository::instance(),
+            SIGNAL(signal_SpotRemoved(Spot *)),
+            SLOT(slot_SpotRepository_SpotRemoved(Spot *)));
+
     connect(&m_QTimer_UpdateModel,
             SIGNAL(timeout()),
             SLOT(slot_QTimer_UpdateModel_timeout()));
@@ -169,6 +173,26 @@ void SpotsModel::slot_SpotRepository_DataReady(int requestId,
     }
     countChanged(m_QList_Spots.count());
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotsModel::slot_SpotRepository_SpotRemoved(Spot *spot)
+{
+  if(m_QList_Spots.contains(spot) == false)
+  {
+    return;
+  }
+
+  int index = m_QList_Spots.indexOf(spot);
+
+  QAbstractItemModel::beginRemoveRows(QModelIndex(),
+                                      index,
+                                      index);
+  m_QList_Spots.removeOne(spot);
+  QAbstractItemModel::endRemoveRows();
+
+  countChanged(m_QList_Spots.count());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

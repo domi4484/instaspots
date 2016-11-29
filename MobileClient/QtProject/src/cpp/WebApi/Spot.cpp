@@ -159,19 +159,16 @@ void Spot::addPicture(Picture *picture)
 {
   m_QList_Pictures.append(picture);
 
-  connect(picture,
-          SIGNAL(destroyed(QObject*)),
-          SLOT(slot_Picture_destroyed(QObject*)));
-
   emit picturesCountChanged();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Spot::slot_Picture_destroyed(QObject *qObject_Picture)
+void Spot::removePicture(Picture *picture)
 {
-  Picture *picture = qobject_cast<Picture *>(qObject_Picture);
   m_QList_Pictures.removeOne(picture);
+
+  emit picturesCountChanged();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

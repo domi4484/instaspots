@@ -61,6 +61,7 @@ signals:
 
   void signal_DataReady(int requestId,
                         bool success);
+  void signal_PictureRemoved(Picture *picture);
 
 private slots:
 

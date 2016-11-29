@@ -26,31 +26,34 @@ class PicturesModel : public QAbstractListModel
 
 public:
 
-    explicit PicturesModel(QObject *parent = 0);
-    ~PicturesModel();
+  explicit PicturesModel(QObject *parent = 0);
+  ~PicturesModel();
 
-    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    virtual QHash<int, QByteArray> roleNames() const;
+  virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+  virtual QVariant data(const QModelIndex &index, int role) const;
+  virtual QHash<int, QByteArray> roleNames() const;
 
-  public slots:
+public slots:
 
-    Picture *first() const;
+  Picture *first() const;
 
-    Picture *getPicture(int index) const;
+  Picture *getPicture(int index) const;
 
-    void getNewestSpots();
+  void getNewestSpots();
 
-    void getBy_PictureId(int id);
-    void getBy_SpotId(int id);
-    void getBy_UserId(int id);
+  void getBy_PictureId(int id);
+  void getBy_SpotId(int id);
+  void getBy_UserId(int id);
 
 signals:
-    void countChanged(int count);
+
+  void countChanged(int count);
 
 private slots:
-    void slot_PictureRepository_DataReady(int requestId,
+
+  void slot_PictureRepository_DataReady(int requestId,
                                           bool success);
+  void slot_PictureRepository_PictureRemoved(Picture *picture);
 
 private:
 

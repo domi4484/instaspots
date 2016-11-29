@@ -259,7 +259,7 @@ void PictureRepository::removePicture(int pictureId)
 
   if(picture == NULL)
   {
-    Logger::error(QString("Can't remove picture with id %1").arg(pictureId));
+    Logger::error(QString("Picture with id %1 not found.").arg(pictureId));
     return;
   }
 
@@ -379,6 +379,8 @@ void PictureRepository::slot_Command_RemovePicture_Finished(const WebApiError &e
 
   int pictureId = webApiCommand->requestParameter(WebApi::PARAMETER::PICTURE_PICTURE_ID).toInt();
   Picture *picture = m_QMap_Pictures.take(pictureId);
+
+  emit signal_PictureRemoved(picture);
 
   picture->deleteLater();
   webApiCommand->deleteLater();

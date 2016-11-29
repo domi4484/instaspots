@@ -22,6 +22,7 @@
 // Forward declarations --------------------
 class LocationManager;
 class Spot;
+class Picture;
 
 class SpotRepository : public QObject
 {
@@ -63,10 +64,13 @@ signals:
 
   void signal_DataReady(int requestId,
                         bool success);
+  void signal_SpotRemoved(Spot *spot);
 
 private slots:
 
   void slot_Command_Finished(const WebApiError &error);
+
+  void slot_PictureRepository_PictureRemoved(Picture *picture);
 
 private:
 

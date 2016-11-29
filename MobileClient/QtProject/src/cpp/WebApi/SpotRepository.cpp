@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "../HelperClasses/LocationManager.h"
+#include "../HelperClasses/Logger.h"
 #include "Spot.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
@@ -44,7 +45,9 @@ SpotRepository::SpotRepository(LocationManager *locationManger,
     m_QMap_Spots(),
     m_QMap_Results()
 {
-
+  connect(PictureRepository::instance(),
+          SIGNAL(signal_PictureRemoved(Picture *)),
+          SLOT(slot_PictureRepository_PictureRemoved(Picture *)));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -323,6 +326,48 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
     emit signal_DataReady(requestId,
                           true);
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void SpotRepository::slot_PictureRepository_PictureRemoved(Picture *picture)
+{
+  Spot *spot = picture->spot();
+  spot->removePicture(picture);
+
+  if(m_QMap_Spots.contains(spot->id()) == false)
+  {
+    Logger::error(QString("Spot with id %1 not found.").arg(spot->id()));
+    return;
+  }
+
+  // Not Last picture
+  if(spot->picturesCount() > 0)
+  {
+    // Update from server
+    QList<QueryItem> qList_QueryItems;
+    qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SPOT_ID,    QString::number(spot->id())));
+
+    // TODO check post return type
+    WebApiCommand *webApiCommand = new WebApiCommand(this);
+    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
+
+    webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
+
+    connect(webApiCommand,
+            SIGNAL(signal_Finished(const WebApiError &)),
+            SLOT(slot_Command_Finished(const WebApiError &)));
+    webApiCommand->postRequest(qList_QueryItems);
+
+    return;
+  }
+
+  m_QMap_Spots.take(spot->id());
+
+  emit signal_SpotRemoved(spot);
+
+  spot->deleteLater();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

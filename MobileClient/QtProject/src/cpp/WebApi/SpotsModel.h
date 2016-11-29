@@ -63,6 +63,7 @@ private slots:
 
   void slot_SpotRepository_DataReady(int requestId,
                                      bool success);
+  void slot_SpotRepository_SpotRemoved(Spot *spot);
   void slot_QTimer_UpdateModel_timeout();
 
 private:
