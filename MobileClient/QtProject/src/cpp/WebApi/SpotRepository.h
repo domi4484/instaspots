@@ -60,8 +60,6 @@ public slots:
   void getBy_UserId(int requestId,
                     int userId);
 
-  void removeSpot(Spot *spot);
-
 signals:
 
   void signal_DataReady(int requestId,

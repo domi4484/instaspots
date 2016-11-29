@@ -221,15 +221,6 @@ void SpotRepository::getBy_UserId(int requestId,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void SpotRepository::removeSpot(Spot *spot)
-{
-  spot = m_QMap_Spots.take(spot->id());
-
-  spot->deleteLater();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void SpotRepository::slot_Command_Finished(const WebApiError &error)
 {
   QList<Spot *> newSpots;
