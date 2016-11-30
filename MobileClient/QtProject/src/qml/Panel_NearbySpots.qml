@@ -36,10 +36,11 @@ Item {
             if(visible == false)
                 return;
 
-            if(   page_SpotsList.listView_Moving === false
+            // ListView visible
+            if(   tabWidget.currentItem == page_SpotsList
                && page_SpotsList.listView_YPosition <= 20)
             {
-                page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
+              page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
             }
         }
     }
@@ -191,6 +192,6 @@ Item {
 
     function page_SpotsMap_VisibleRegion_Changed(visibleRegion)
     {
-        spotsModel.updateBy_VisibleRegion(visibleRegion);
+      spotsModel.updateBy_VisibleRegion(visibleRegion);
     }
 }

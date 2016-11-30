@@ -19,6 +19,7 @@ Item {
     default property alias content: stack.children
 
     property int currentIndex: 0
+    property Item currentItem: stack.children[currentIndex]
 
     property bool tabWidget_TabsOnTheBottom : false
 
