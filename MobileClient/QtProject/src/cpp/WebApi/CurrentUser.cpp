@@ -323,6 +323,7 @@ void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
 
 void CurrentUser::slot_CommandCanRegister_Finished(const WebApiError &error)
 {
+  Logger::error(QString("CurrentUser::slot_CommandCanRegister_Finished(): %1").arg(error.text()));
   // TODO implement me
 }
 
