@@ -34,17 +34,18 @@ ApplicationWindow {
 
     // Slots -------------------------------
 
-    Component.onCompleted:{
-
-        // Push the application main gui
-        pushMainGui();
+    Component.onCompleted:
+    {
+      // Push the application main gui
+      pushMainGui();
     }
 
     Connections{
         target: hc_Application
         onSignal_NewClientVersionAvailable:
         {
-            messageDialog_NewClientVersionAvailable.open();
+          messageDialog_NewClientVersionAvailable.text = qsTr('There is a new Lowerspot app version available for download (%1)! Get it on lowerspot.com!').arg(hc_Application.currentAvailableClientVersion())
+          messageDialog_NewClientVersionAvailable.open();
         }
     }
 
@@ -74,7 +75,6 @@ ApplicationWindow {
     MessageDialog{
         id: messageDialog_NewClientVersionAvailable
         title: qsTr('New version out!')
-        text: qsTr('There is a new Lowerspot app version available for download! Get it on lowerspot.com!')
 
         onAccepted:
         {

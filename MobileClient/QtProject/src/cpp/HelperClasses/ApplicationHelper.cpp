@@ -33,7 +33,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
     m_Settings(settings),
     m_PlateformDetail(plateformDetail),
     m_DipScaleFactor(),
-    m_CurrentClientVersion(),
+    m_CurrentAvailableClientVersion(),
     m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false),
     m_WebApiCommand_ReportProblem(this),
@@ -215,7 +215,19 @@ int ApplicationHelper::compareVersions(const QString &version1,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool ApplicationHelper::checkCurrentClientVersion()
+QString ApplicationHelper::currentAvailableClientVersion() const
+{
+  if(m_CurrentAvailableClientVersion.isEmpty())
+  {
+    return version();
+  }
+
+  return m_CurrentAvailableClientVersion;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool ApplicationHelper::checkCurrentAvailableClientVersion()
 {
   if(m_Settings->get_Application_NewerVersionAvailableGotIt() == true)
   {
@@ -345,9 +357,9 @@ void ApplicationHelper::slot_CommandGetCurrentClientVersion_Finished(const WebAp
     return;
   }
 
-  m_CurrentClientVersion = m_WebApiCommand_GetCurrentClientVersion.resultParameter(WebApi::PARAMETER::APPLICATION_VERSION).toString();
+  m_CurrentAvailableClientVersion = m_WebApiCommand_GetCurrentClientVersion.resultParameter(WebApi::PARAMETER::APPLICATION_VERSION).toString();
 
-  if(compareVersions(version(), m_CurrentClientVersion) >= 0)
+  if(compareVersions(version(), m_CurrentAvailableClientVersion) >= 0)
   {
     return;
   }

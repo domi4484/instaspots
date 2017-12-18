@@ -208,7 +208,7 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
   }
 
   // Check newer version
-  if(m_ApplicationHelper->checkCurrentClientVersion() == false)
+  if(m_ApplicationHelper->checkCurrentAvailableClientVersion() == false)
   {
     return;
   }

@@ -59,7 +59,8 @@ public slots:
   QString version() const;
   int     compareVersions(const QString &version1,
                           const QString &version2) const;
-  bool    checkCurrentClientVersion();
+  QString currentAvailableClientVersion() const;
+  bool    checkCurrentAvailableClientVersion();
   void    newerClientVersionAvailableGotIt();
 
   QString buildTimestamp() const;
@@ -100,7 +101,7 @@ private:
   double m_DipScaleFactor;
 
   // Version
-  QString       m_CurrentClientVersion;
+  QString       m_CurrentAvailableClientVersion;
   WebApiCommand m_WebApiCommand_GetCurrentClientVersion;
 
   // Development mode
