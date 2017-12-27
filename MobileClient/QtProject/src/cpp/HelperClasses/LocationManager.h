@@ -41,17 +41,15 @@ signals:
 
 public slots:
 
-  void setFakePosition(const QGeoCoordinate &qGeoCoordinate);
-  void setFakePosition(double latitude,
-                       double longitude);
+  void setCurrentPosition(const QGeoCoordinate &qGeoCoordinate);
+  void setCurrentPosition(double latitude,
+                          double longitude);
 
   void suspendUpdates();
   void resumeUpdates();
 
   void startUpdates();
   void stopUdates();
-
-  bool isValid();
 
   double latitude();
   double longitude();
@@ -81,8 +79,6 @@ private:
 
   QGeoPositionInfoSource *m_GeoPositionInfoSource;
   int                     m_GeoPositionInfoSource_UpdatesCount;
-
-  bool m_Valid;
 
   QGeoCoordinate m_QGeoCoordinate;
 };

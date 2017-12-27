@@ -36,11 +36,11 @@ Item {
             if(visible == false)
                 return;
 
-            // ListView visible
+            // If list of spot at top or almost (20px) update map center too
             if(   tabWidget.currentItem == page_SpotsList
                && page_SpotsList.listView_YPosition <= 20)
             {
-              page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
+              page_SpotsMap.map_center = hc_LocationManager.coordinate;
             }
         }
     }
@@ -49,13 +49,14 @@ Item {
         target: page_SpotsList
         onSignal_listView_atYBeginning:
         {
-            page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
+//            TODO ???
+//            page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
         }
     }
 
     // Slots -------------------------------
     Component.onCompleted: {
-        // Set current location (also if outdated)
+        // Set current location
         page_SpotsMap.map_visibleRegion = QtPositioning.circle(hc_LocationManager.coordinate, 150*1000/2.0);
     }
 
@@ -176,22 +177,10 @@ Item {
                                                    spotId           : spotId}});
                 }
 
-                onMap_centerChanged: {
-                    page_SpotsMap_VisibleRegion_Changed(map_visibleRegion);
-                }
-
-                onMap_zoomLevelChanged: {
-                    page_SpotsMap_VisibleRegion_Changed(map_visibleRegion);
+                onMap_visibleRegionChanged: {
+                  spotsModel.updateBy_VisibleRegion(map_visibleRegion);
                 }
             } // Page_SpotsMap
         } // Tabwidget
     } // StackView
-
-
-    // Functions ---------------------------
-
-    function page_SpotsMap_VisibleRegion_Changed(visibleRegion)
-    {
-      spotsModel.updateBy_VisibleRegion(visibleRegion);
-    }
 }

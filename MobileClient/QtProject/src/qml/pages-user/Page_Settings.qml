@@ -236,8 +236,8 @@ Item{
                         return;
                     }
 
-                    hc_LocationManager.setFakePosition(comboBox_Locations_Items.get(index).latitude,
-                                                       comboBox_Locations_Items.get(index).longitude)
+                    hc_LocationManager.setCurrentPosition(comboBox_Locations_Items.get(index).latitude,
+                                                          comboBox_Locations_Items.get(index).longitude)
                 }
             }
 
@@ -282,8 +282,8 @@ Item{
         title: "Custom Location"
         standardButtons: StandardButton.Ok | StandardButton.Cancel
 
-        onAccepted: hc_LocationManager.setFakePosition(textEdit_Latitude.text,
-                                                       textEdit_Longitude.text)
+        onAccepted: hc_LocationManager.setCurrentPosition(textEdit_Latitude.text,
+                                                          textEdit_Longitude.text)
 
         Column {
             anchors.leftMargin: 5

@@ -21,6 +21,7 @@
 // Qt includes -----------------------------
 #include <QGeoCoordinate>
 #include <QDesktopServices>
+#include <QDebug>
 #include <QPointF>
 #include <QUrl>
 #include <QTimer>
@@ -35,22 +36,31 @@ LocationManager::LocationManager(Settings *settings,
     m_PlateformDetail(plateformDetail),
     m_GeoPositionInfoSource(NULL),
     m_GeoPositionInfoSource_UpdatesCount(0),
-    m_Valid(false),
     m_QGeoCoordinate()
 {
-
-  // Set position from last position
-  setFakePosition(m_Settings->get_Location_LastCoordinate());
-
   m_GeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(this);
 
   if (m_GeoPositionInfoSource == NULL)
   {
     Logger::warning(tr("Invalid GeoPositionInfoSource"));
+
+    // Set position from last position
+    setCurrentPosition(m_Settings->get_Location_LastCoordinate());
   }
   else
   {
     m_GeoPositionInfoSource->setUpdateInterval(3000);
+
+    if(m_GeoPositionInfoSource->lastKnownPosition().isValid())
+    {
+      // Set position from last known position
+      setCurrentPosition(m_GeoPositionInfoSource->lastKnownPosition().coordinate());
+    }
+    else
+    {
+      // Set position from last position settings
+      setCurrentPosition(m_Settings->get_Location_LastCoordinate());
+    }
 
     connect(m_GeoPositionInfoSource,
             SIGNAL(positionUpdated(QGeoPositionInfo)),
@@ -72,23 +82,18 @@ LocationManager::~LocationManager()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void LocationManager::setFakePosition(const QGeoCoordinate &qGeoCoordinate)
+void LocationManager::setCurrentPosition(const QGeoCoordinate &qGeoCoordinate)
 {
-  m_Valid = true;
-
   m_QGeoCoordinate = qGeoCoordinate;
 
   emit signal_Coordinate_changed();
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void LocationManager::setFakePosition(double latitude,
+void LocationManager::setCurrentPosition(double latitude,
                                       double longitude)
 {
-  m_Valid = true;
-
   m_QGeoCoordinate.setLatitude (latitude);
   m_QGeoCoordinate.setLongitude(longitude);
 
@@ -99,7 +104,8 @@ void LocationManager::setFakePosition(double latitude,
 
 void LocationManager::suspendUpdates()
 {
-  Logger::debug(__FUNCTION__);
+  Logger::info(QString("LocationManager::%1()").arg(__FUNCTION__));
+
   if(m_GeoPositionInfoSource == NULL)
   {
     Logger::warning(tr("Invalid GeoPositionInfoSource"));
@@ -113,7 +119,8 @@ void LocationManager::suspendUpdates()
 
 void LocationManager::resumeUpdates()
 {
-  Logger::debug(__FUNCTION__);
+  Logger::info(QString("LocationManager::%1()").arg(__FUNCTION__));
+
   if(m_GeoPositionInfoSource == NULL)
   {
     Logger::warning(tr("Invalid GeoPositionInfoSource"));
@@ -132,10 +139,11 @@ void LocationManager::resumeUpdates()
 
 void LocationManager::startUpdates()
 {
-  Logger::debug(__FUNCTION__);
+  Logger::info(QString("LocationManager::%1()").arg(__FUNCTION__));
+
   if(m_GeoPositionInfoSource == NULL)
   {
-    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    Logger::warning(QString("LocationManager::%1(): Invalid GeoPositionInfoSource").arg(__FUNCTION__));
     return;
   }
 
@@ -153,10 +161,10 @@ void LocationManager::startUpdates()
 
 void LocationManager::stopUdates()
 {
-  Logger::debug(__FUNCTION__);
+  Logger::info(QString("LocationManager::%1()").arg(__FUNCTION__));
   if(m_GeoPositionInfoSource == NULL)
   {
-    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    Logger::warning(QString("LocationManager::%1(): Invalid GeoPositionInfoSource").arg(__FUNCTION__));
     return;
   }
 
@@ -167,13 +175,6 @@ void LocationManager::stopUdates()
 
   if(m_GeoPositionInfoSource_UpdatesCount == 0)
       m_GeoPositionInfoSource->stopUpdates();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-bool LocationManager::isValid()
-{
-  return m_Valid;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -238,29 +239,33 @@ void LocationManager::openLocationOnNativeMapsApp(double latitude,
                                       .arg(label));
   }
 
-  Logger::trace(QString("LocationManager::openLocationOnNativeMapsApp url: %1").arg(url));
+  Logger::trace(QString("LocationManager::%1() url: %2").arg(__FUNCTION__)
+                                                        .arg(url));
 
   if(QDesktopServices::openUrl(QUrl(url)) == false)
-    Logger::error(QString("%1: Failed to open url '%2'").arg(QString(__FUNCTION__))
-                                                        .arg(url));
+    Logger::error(QString("LocationManager::%1(): Failed to open url '%2'").arg(QString(__FUNCTION__))
+                                                                           .arg(url));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void LocationManager::slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInfo geo_position_info)
 {
-  m_Valid = true;
+  if(geo_position_info.isValid() == false)
+  {
+    Logger::error(QString("LocationManager::%1(): GeoPositionInfo is not valid").arg(__FUNCTION__));
+    return;
+  }
 
-  m_QGeoCoordinate = geo_position_info.coordinate();
-
-  emit signal_Coordinate_changed();
+  // Set current position
+  setCurrentPosition(geo_position_info.coordinate());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void LocationManager::slot_GeoPositionInfoSource_UpdateTimeout()
 {
-  Logger::warning(QString("LocationManager updateTimeout"));
+  Logger::warning(QString("LocationManager::%1(): GeoPositionInfoSource update timeout").arg(__FUNCTION__));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

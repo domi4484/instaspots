@@ -57,7 +57,7 @@ Application::Application(int argc, char *argv[]) :
   QApplication::setOrganizationName   ("Lowerspot");
   QApplication::setOrganizationDomain ("lowerspot.com");
   QApplication::setApplicationName    ("Lowerspot");
-  QApplication::setApplicationVersion ("V0.0.9");
+  QApplication::setApplicationVersion ("V0.1.0");
 
   // Command line arguments
   QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();

@@ -263,15 +263,12 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
     spot->setPictureId1 (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 ).toInt());
     spot->setPictureId2 (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 ).toInt());
 
-    // Set dinstance if available, compute it or leave it empty
-    if(m_LocationManager->isValid())
-    {
-      qreal computedDistance = m_LocationManager->computeDistance(QPointF(m_LocationManager->latitude(),
-                                                                          m_LocationManager->longitude()),
-                                                                  QPointF(spot->latitude(),
-                                                                          spot->longitude()));
-      spot->setDistance(computedDistance);
-    }
+    // Compute and set distance
+    qreal computedDistance = m_LocationManager->computeDistance(QPointF(m_LocationManager->latitude(),
+                                                                        m_LocationManager->longitude()),
+                                                                QPointF(spot->latitude(),
+                                                                        spot->longitude()));
+    spot->setDistance(computedDistance);
 
     // Picture list
     spot->clearPictures();

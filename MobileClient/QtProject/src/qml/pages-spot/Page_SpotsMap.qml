@@ -28,14 +28,18 @@ Item {
     property bool   navigation_MenuButtonVisible:     false
 
 
+    // Properties
+
+    property variant map_visibleRegion: QtPositioning.rectangle(map.toCoordinate(Qt.point(0, 0), true),
+                                                                map.toCoordinate(Qt.point(width, height), true))
+
+
     // Bind properties ---------------------
 
     property alias model: mapItemView.model
 
     property alias map_center:        map.center
     property alias map_zoomLevel:     map.zoomLevel
-    property alias map_visibleRegion: map.visibleRegion
-
 
     // Signals -----------------------------
 
@@ -97,6 +101,20 @@ Item {
                     }
                 }
             }
+        }
+
+        onCenterChanged: {
+          var coordinateTopLeft           = map.toCoordinate(Qt.point(0, 0),          true);
+          var coordinateBottomRight       = map.toCoordinate(Qt.point(width, height), true);
+
+          map_visibleRegion = QtPositioning.rectangle(coordinateTopLeft, coordinateBottomRight);
+        }
+
+        onZoomLevelChanged: {
+          var coordinateTopLeft           = map.toCoordinate(Qt.point(0, 0),          true);
+          var coordinateBottomRight       = map.toCoordinate(Qt.point(width, height), true);
+
+          map_visibleRegion = QtPositioning.rectangle(coordinateTopLeft, coordinateBottomRight);
         }
     }
 }
