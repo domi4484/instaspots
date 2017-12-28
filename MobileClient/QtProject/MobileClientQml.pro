@@ -33,6 +33,8 @@ ios {
 
     ios_icon.files = $$files($$PWD/ios/icons/AppIcon*.png)
     QMAKE_BUNDLE_DATA += ios_icon
+
+    QMAKE_IOS_DEPLOYMENT_TARGET=8.0
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
