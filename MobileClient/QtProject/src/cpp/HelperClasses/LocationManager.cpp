@@ -265,7 +265,7 @@ void LocationManager::slot_GeoPositionInfoSource_positionUpdated(QGeoPositionInf
 
 void LocationManager::slot_GeoPositionInfoSource_UpdateTimeout()
 {
-  Logger::warning(QString("LocationManager::%1(): GeoPositionInfoSource update timeout").arg(__FUNCTION__));
+  Logger::warning(QString("LocationManager::%1()").arg(__FUNCTION__));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

@@ -28,6 +28,7 @@ class LocationManager : public QObject
   Q_PROPERTY(QGeoCoordinate coordinate        READ coordinate  NOTIFY signal_Coordinate_changed )
 
 public:
+
   explicit LocationManager(Settings *settings,
                            PlateformDetail *plateformDetail,
                            QObject *parent = 0);
