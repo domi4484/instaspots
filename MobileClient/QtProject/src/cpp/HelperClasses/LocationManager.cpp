@@ -28,6 +28,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+const int LocationManager::_CONST::GPS::UPDATE_ITERVAL_MS (4000);
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 LocationManager::LocationManager(Settings *settings,
                                  PlateformDetail *plateformDetail,
                                  QObject *parent)
@@ -42,14 +46,14 @@ LocationManager::LocationManager(Settings *settings,
 
   if (m_GeoPositionInfoSource == NULL)
   {
-    Logger::warning(tr("Invalid GeoPositionInfoSource"));
+    Logger::warning(QString("LocationManager::%1() Invalid GeoPositionInfoSource").arg(__FUNCTION__));
 
     // Set position from last position
     setCurrentPosition(m_Settings->get_Location_LastCoordinate());
   }
   else
   {
-    m_GeoPositionInfoSource->setUpdateInterval(3000);
+    m_GeoPositionInfoSource->setUpdateInterval(_CONST::GPS::UPDATE_ITERVAL_MS);
 
     if(m_GeoPositionInfoSource->lastKnownPosition().isValid())
     {

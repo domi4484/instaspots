@@ -224,8 +224,7 @@ Item{
 
       onClicked: {
         // Set crop image
-        if(wa_PictureUploader.setCropPicture(source,
-                                             cropX,
+        if(wa_PictureUploader.setCropPicture(cropX,
                                              cropY,
                                              cropSide)
             === false)
@@ -244,11 +243,9 @@ Item{
     function navigator_ContinueButtonClicked()
     {
       // Set crop image
-      if(wa_PictureUploader.setCropPicture(source,
-                                           cropX,
+      if(wa_PictureUploader.setCropPicture(cropX,
                                            cropY,
-                                           cropSide,
-                                           image.rotation)
+                                           cropSide)
           === false)
       {
         messageDialog_Error.text = wa_PictureUploader.lastErrorText();

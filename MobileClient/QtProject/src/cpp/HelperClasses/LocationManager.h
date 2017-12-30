@@ -29,6 +29,16 @@ class LocationManager : public QObject
 
 public:
 
+  class _CONST
+  {
+    public:
+      class GPS
+      {
+        public:
+          static const int UPDATE_ITERVAL_MS;
+      }; // GPS
+  }; // _CONST
+
   explicit LocationManager(Settings *settings,
                            PlateformDetail *plateformDetail,
                            QObject *parent = 0);
