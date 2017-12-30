@@ -2,7 +2,7 @@
 #
 # Project Lowerspot
 #
-# (C) 2014-2016 Damiano Lombardi
+# (C) 2014-2017 Damiano Lombardi
 #
 #-------------------------------------------------
 
@@ -17,7 +17,7 @@ UI_DIR             = build
 
 DESTDIR = bin
 
-QT += qml quick quickcontrols2 widgets positioning multimedia
+QT += qml quick quickcontrols2 widgets positioning location multimedia
 
 CONFIG   += console debug
 
