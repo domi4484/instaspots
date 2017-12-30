@@ -10,8 +10,9 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick 2.5
+import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 
 // Project imports -------------------------
 import "qrc:/qml/"
@@ -30,8 +31,6 @@ Item{
 
 
     // Properties --------------------------
-
-    property alias source: image.source
 
     property alias cropX:    flick.cropX
     property alias cropY:    flick.cropY
@@ -59,46 +58,59 @@ Item{
     signal cropFinished()
 
 
+    // Message boxes -----------------------
+
+    MessageDialog{
+      id: messageDialog_Error
+
+      title: qsTr('Error')
+    }
+
     // Gui ---------------------------------
 
     Flickable {
-        id: flick
+      id: flick
 
-        x: imagePortrait  ? displayUsablePositionX : 0
-        y: imageLandscape ? displayUsablePositionY : 0
+      x: imagePortrait  ? displayUsablePositionX : 0
+      y: imageLandscape ? displayUsablePositionY : 0
 
-        width:  imagePortrait  ? displayUsableSide : parent.width
-        height: imageLandscape ? displayUsableSide : parent.height
+      width:  imagePortrait  ? displayUsableSide : parent.width
+      height: imageLandscape ? displayUsableSide : parent.height
 
-        contentWidth:  imagePortrait  ? imageDisplayWidth  : imageDisplayWidth  + 2 * displayUsablePositionX
-        contentHeight: imageLandscape ? imageDisplayHeight : imageDisplayHeight + 2 * displayUsablePositionY
+      contentWidth:  imagePortrait  ? imageDisplayWidth  : imageDisplayWidth  + 2 * displayUsablePositionX
+      contentHeight: imageLandscape ? imageDisplayHeight : imageDisplayHeight + 2 * displayUsablePositionY
 
 
-        property real cropX: imagePortrait  ? 0 : contentX / displayUsableSide * sourceSize.height
-        property real cropY: imageLandscape ? 0 : contentY / displayUsableSide * sourceSize.width
+      property real cropX: imagePortrait  ? 0 : contentX / displayUsableSide * sourceSize.height
+      property real cropY: imageLandscape ? 0 : contentY / displayUsableSide * sourceSize.width
 
-        property real cropSide: imagePortrait ? sourceSize.width : sourceSize.height
+      property real cropSide: imagePortrait ? sourceSize.width : sourceSize.height
 
-        Image {
-            id:image
+      Image {
+        id:image
 
-            x: imagePortrait  ? 0 : displayUsablePositionX
-            y: imageLandscape ? 0 : displayUsablePositionY
+        x: imagePortrait  ? 0 : displayUsablePositionX
+        y: imageLandscape ? 0 : displayUsablePositionY
 
-            width:  imageDisplayWidth
-            height: imageDisplayHeight
+        width:  imageDisplayWidth
+        height: imageDisplayHeight
 
-            cache:    false
-            fillMode: Image.Stretch
+        cache:    false
+        fillMode: Image.Stretch
 
-            MouseArea {
-                anchors.fill: parent
-                onDoubleClicked: {
-                    flick.contentWidth  = flick.minimumWidth
-                    flick.contentHeight = flick.minimumHeight
-                }
-            }
+        MouseArea {
+          anchors.fill: parent
+          onDoubleClicked: {
+            flick.contentWidth  = flick.minimumWidth
+            flick.contentHeight = flick.minimumHeight
+          }
         }
+
+        Component.onCompleted:
+        {
+          image.source = wa_PictureUploader.sourcePictureFilename();
+        }
+      }
 
 //        PinchArea {
 //            id: pinchArea
@@ -153,92 +165,117 @@ Item{
 
     // Semitransparent rectangles
     Rectangle{
-        id: rectangle_Semitransparent_Top
+      id: rectangle_Semitransparent_Top
 
-        anchors.left:   parent.left
-        anchors.right:  parent.right
-        anchors.top:    parent.top
+      anchors.left:   parent.left
+      anchors.right:  parent.right
+      anchors.top:    parent.top
 
-        height: displayUsablePositionY
+      height: displayUsablePositionY
 
-        color:   "gray"
-        opacity: 0.8
+      color:   "gray"
+      opacity: 0.8
     }
     Rectangle{
-        id: rectangle_Semitransparent_Left
+      id: rectangle_Semitransparent_Left
 
-        anchors.left:   parent.left
-        anchors.top:    rectangle_Semitransparent_Top.bottom
-        anchors.bottom: parent.bottom
+      anchors.left:   parent.left
+      anchors.top:    rectangle_Semitransparent_Top.bottom
+      anchors.bottom: parent.bottom
 
-        width: displayUsablePositionX
+      width: displayUsablePositionX
 
-        color:   "gray"
-        opacity: 0.8
+      color:   "gray"
+      opacity: 0.8
     }
     Rectangle{
-        id: rectangle_Semitransparent_Right
+      id: rectangle_Semitransparent_Right
 
-        anchors.right:  parent.right
-        anchors.top:    rectangle_Semitransparent_Top.bottom
-        anchors.bottom: parent.bottom
+      anchors.right:  parent.right
+      anchors.top:    rectangle_Semitransparent_Top.bottom
+      anchors.bottom: parent.bottom
 
-        width: displayUsablePositionX
+      width: displayUsablePositionX
 
-        color:   "gray"
-        opacity: 0.8
+      color:   "gray"
+      opacity: 0.8
     }
     Rectangle{
-        id: rectangle_Semitransparent_Bottom
+      id: rectangle_Semitransparent_Bottom
 
-        anchors.left:   rectangle_Semitransparent_Left.right
-        anchors.right:  rectangle_Semitransparent_Right.left
-        anchors.bottom: parent.bottom
+      anchors.left:   rectangle_Semitransparent_Left.right
+      anchors.right:  rectangle_Semitransparent_Right.left
+      anchors.bottom: parent.bottom
 
-        height: displayUsablePositionY
+      height: displayUsablePositionY
 
-        color:   "gray"
-        opacity: 0.8
+      color:   "gray"
+      opacity: 0.8
     }
 
     Button {
-        id: button_Crop
-        width: parent.width / 1.1
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
-        anchors.horizontalCenter: parent.horizontalCenter
+      id: button_Crop
+      width: parent.width / 1.1
+      anchors.bottom: parent.bottom
+      anchors.bottomMargin: 5
+      anchors.horizontalCenter: parent.horizontalCenter
 
-        text: qsTr("Crop")
+      text: qsTr("Crop")
 
-        onClicked: {
-            wa_PictureUploader.setCropPicture(source,
-                                              cropX,
-                                              cropY,
-                                              cropSide);
-            stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_LocationCheck.qml"),
-                            properties:{stackView        : stackView}});
+      onClicked: {
+        // Set crop image
+        if(wa_PictureUploader.setCropPicture(source,
+                                             cropX,
+                                             cropY,
+                                             cropSide)
+            === false)
+        {
+          messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+          messageDialog_Error.visible = true;
+          return;
         }
+
+        // Push location check page
+        stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_LocationCheck.qml"),
+                         properties:{stackView        : stackView}});
+      }
     }
 
     function navigator_ContinueButtonClicked()
     {
-        wa_PictureUploader.setCropPicture(source,
-                                          cropX,
-                                          cropY,
-                                          cropSide,
-                                          image.rotation);
-        stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_LocationCheck.qml"),
-                        properties:{stackView        : stackView}});
+      // Set crop image
+      if(wa_PictureUploader.setCropPicture(source,
+                                           cropX,
+                                           cropY,
+                                           cropSide,
+                                           image.rotation)
+          === false)
+      {
+        messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+        messageDialog_Error.visible = true;
+        return;
+      }
+
+      // Push location check page
+      stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_LocationCheck.qml"),
+                       properties:{stackView        : stackView}});
     }
 
     function navigator_CustomButtonRightClicked()
     {
-        var newSource = wa_PictureUploader.rotatePicture(source, 90);
+      // Rotate picture
+      if(wa_PictureUploader.rotatePicture(90) == false)
+      {
+        messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+        messageDialog_Error.visible = true;
+        return;
+      }
 
-        // Workaround to make the picture reload
-        source = "qrc:/icon/icon/Wheel-29x29.png";
+      // Workaround to make the picture reload
+      image.source = "qrc:/icon/icon/Wheel-29x29.png";
 
-        source = newSource;
+      // Set new image
+      image.source = wa_PictureUploader.sourcePictureFilename();
     }
 }
 

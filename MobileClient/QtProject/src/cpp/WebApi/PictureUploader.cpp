@@ -18,24 +18,26 @@
 
 // Qt includes -----------------------------
 #include <QDebug>
+#include <QDir>
 #include <QBuffer>
 #include <QUrl>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PictureUploader::PictureUploader(QObject *parent) :
-  QObject (parent),
-  m_LastErrorText                    (),
-  m_Command                          (WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT),
-  m_Pixmap                           (),
-  m_QGeoCoordinate                   (),
-  m_SpotId                           (-1),
-  m_Name                             (),
-  m_Description                      (),
-  m_SecretSpot                       (false),
-  m_QStringList_Tags                 (),
-  m_WebApiCommand_UploadNewSpot      (this),
-  m_WebApiCommand_UploadPictureToSpot(this)
+PictureUploader::PictureUploader(QObject *parent)
+  : QObject (parent)
+  , m_LastErrorText                    ()
+  , m_Command                          (WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT)
+  , m_SourcePictureFilename            ()
+  , m_QPixmap                          ()
+  , m_QGeoCoordinate                   ()
+  , m_SpotId                           (-1)
+  , m_Name                             ()
+  , m_Description                      ()
+  , m_SecretSpot                       (false)
+  , m_QStringList_Tags                 ()
+  , m_WebApiCommand_UploadNewSpot      (this)
+  , m_WebApiCommand_UploadPictureToSpot(this)
 {
   m_WebApiCommand_UploadNewSpot.setAnswerType(WebApiCommand::JSON);
   m_WebApiCommand_UploadNewSpot.setCommandName(WebApi::COMMAND::UPLOAD_NEW_SPOT);
@@ -103,6 +105,14 @@ bool PictureUploader::secretSpot() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString PictureUploader::sourcePictureFilename() const
+{
+  return QUrl::fromLocalFile(m_SourcePictureFilename).toString();
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void PictureUploader::setNewSpot(bool newSpot)
 {
   if(newSpot)
@@ -117,73 +127,74 @@ void PictureUploader::setNewSpot(bool newSpot)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PictureUploader::setPictureFilePath(const QString &path)
+bool PictureUploader::setSourcePictureFileUrl(const QString &url)
 {
-  m_Pixmap = path;
-}
+  // Url to filename
+  m_SourcePictureFilename = QUrl(url).toLocalFile();
 
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void PictureUploader::setCameraPictureFilePath(const QString &path)
-{
-  QPixmap qPixmap(path);
+  // Open image as pixmap
+  QPixmap qPixmap(m_SourcePictureFilename);
   if(qPixmap.isNull())
   {
-    Logger::error("Invalid QPixmap");
-    m_Pixmap = QPixmap();
-    return;
+    m_LastErrorText = QString("Invalid picture '%1'").arg(m_SourcePictureFilename);
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
   }
 
-  if(qPixmap.width() > qPixmap.height())
-  {
-    double diff = (qPixmap.width() - qPixmap.height());
-    m_Pixmap = qPixmap.copy(diff/2.0, 0, qPixmap.width() - diff, qPixmap.height());
-    m_Pixmap = m_Pixmap.scaled(640, 640,
-                               Qt::IgnoreAspectRatio,
-                               Qt::SmoothTransformation);
-  }
-  else if(qPixmap.height() > qPixmap.width())
-  {
-    double diff = (qPixmap.height() - qPixmap.width());
-    m_Pixmap = qPixmap.copy(0, diff/2.0, qPixmap.width(), qPixmap.height() - diff);
-    m_Pixmap = m_Pixmap.scaled(640, 640,
-                              Qt::IgnoreAspectRatio,
-                              Qt::SmoothTransformation);
-  }
-  else
-  {
-    m_Pixmap = qPixmap.scaled(640, 640,
-                              Qt::IgnoreAspectRatio,
-                              Qt::SmoothTransformation);
-  }
+  return true;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PictureUploader::setCropPicture(const QString &source_url,
-                                     qreal crop_x,
+bool PictureUploader::setCameraPictureFilename(const QString &filename)
+{
+  m_SourcePictureFilename = filename;
+
+  // Open image as pixmap
+  QPixmap qPixmap(filename);
+  if(qPixmap.isNull())
+  {
+    m_LastErrorText = QString("Invalid picture '%1'").arg(filename);
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
+  }
+
+  return true;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool PictureUploader::setCropPicture(qreal crop_x,
                                      qreal crop_y,
                                      qreal crop_side)
-{
-  QPixmap qPixmap(QUrl(source_url).toLocalFile());
+{ 
+  QPixmap qPixmap(m_SourcePictureFilename);
   if(qPixmap.isNull())
   {
-    Logger::error("Invalid QPixmap");
-    m_Pixmap = QPixmap();
-    return;
+    m_QPixmap = QPixmap();
+
+    m_LastErrorText = tr("Invalid picture");
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
   }
 
-  Logger::trace(QString("Crop picture: x: %1, y: %2, side: %3").arg(crop_x)
-                                                               .arg(crop_y)
-                                                               .arg(crop_side));
+  Logger::trace(QString("PictureUploader::%1() Crop picture: x: %2, y: %3, side: %4").arg(__FUNCTION__)
+                                                                                     .arg(crop_x)
+                                                                                     .arg(crop_y)
+                                                                                     .arg(crop_side));
 
-  m_Pixmap = qPixmap.copy(crop_x,
+  m_QPixmap = qPixmap.copy(crop_x,
                           crop_y,
                           crop_side,
                           crop_side);
-  m_Pixmap = m_Pixmap.scaled(640, 640,
+  m_QPixmap = m_QPixmap.scaled(640, 640,
                              Qt::IgnoreAspectRatio,
                              Qt::SmoothTransformation);
+
+  return true;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -223,43 +234,60 @@ void PictureUploader::addTag(const QString &tagName)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString PictureUploader::rotatePicture(const QString &source_url,
-                                       int angle)
+bool PictureUploader::rotatePicture(int angle)
 {
-  Logger::info(source_url);
-  QString localFilename = QUrl(source_url).toLocalFile();
-  Logger::info(localFilename);
-
-  QPixmap qPixmap(localFilename);
+  // Open image as pixmap
+  QPixmap qPixmap(m_SourcePictureFilename);
   if(qPixmap.isNull())
   {
-    Logger::error("Invalid QPixmap");
-    return QString();
+    m_LastErrorText = QString("Invalid picture '%1'").arg(m_SourcePictureFilename);
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
   }
 
+  // Transform pixmap with rotation matrix
   QMatrix qMatrix_Rotation;
   qMatrix_Rotation.rotate(angle);
   qPixmap = qPixmap.transformed(qMatrix_Rotation);
 
-//  if(localFilename.endsWith("-rotated.jpg"))
+  // Temporary image file
+  QString temporaryFilename = QFileInfo(QDir::tempPath(),
+                                        "temporaryUploadPicture.jpg").filePath();
+
+  // Save rotated image
+  if(qPixmap.save(temporaryFilename) == false)
   {
-    qPixmap.save(localFilename);
-    return source_url;
+    m_LastErrorText = QString("Can't save temporary picture '%1'").arg(temporaryFilename);
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
   }
 
-  QString newFilename = localFilename;
-  newFilename = newFilename.replace(".jpg", "-rotated.jpg");
-  qPixmap.save(newFilename);
-
-  QString newUrl = source_url;
-  newUrl.replace(".jpg", "-rotated.jpg");
-  return newUrl;
+  m_SourcePictureFilename = temporaryFilename;
+  return true;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 bool PictureUploader::execute()
 {
+  if(m_QPixmap.isNull())
+  {
+    m_LastErrorText = tr("Invalid picture");
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
+  }
+
+  if(m_QPixmap.size() != QSize(640, 640))
+  {
+    m_LastErrorText = tr("Invalid picture format");
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
+    return false;
+  }
+
   if(m_Command == WebApi::COMMAND::UPLOAD_NEW_SPOT)
   {
     return uploadNewSpot();
@@ -321,26 +349,22 @@ void PictureUploader::slot_CommandUploadPictureToSpot_Finished(const WebApiError
 
 bool PictureUploader::uploadNewSpot()
 {
+  // Spot name check
   if(m_Name.isEmpty())
   {
     m_LastErrorText = tr("Spot name can't be empty");
-    Logger::error(m_LastErrorText);
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
     return false;
   }
 
-  if(m_Pixmap.isNull())
-  {
-    m_LastErrorText = tr("Invalid picture");
-    Logger::error(m_LastErrorText);
-    return false;
-  }
-
-  if(m_Pixmap.size() != QSize(640, 640))
-  {
-    m_LastErrorText = tr("Invalid picture format");
-    Logger::error(m_LastErrorText);
-    return false;
-  }
+  Logger::info(QString("PictureUploader::%1() %2=%3; %4=%5; coordinate=(%6:%7)").arg(__FUNCTION__)
+                                                                                .arg(WebApi::PARAMETER::SPOT_NAME)
+                                                                                .arg(m_Name)
+                                                                                .arg(WebApi::PARAMETER::SPOT_SECRET_SPOT)
+                                                                                .arg(m_SecretSpot)
+                                                                                .arg(m_QGeoCoordinate.latitude())
+                                                                                .arg(m_QGeoCoordinate.longitude()));
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_NAME,        m_Name));
@@ -350,19 +374,24 @@ bool PictureUploader::uploadNewSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_QGeoCoordinate.longitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_TAGS,        m_QStringList_Tags.join(";")));
 
-  QBuffer *buffer = new QBuffer();
-  buffer->open(QIODevice::WriteOnly);
-  m_Pixmap.save(buffer,
+  // Prepare image buffer
+  QBuffer *qBuffer = new QBuffer();
+  qBuffer->open(QIODevice::WriteOnly);
+  m_QPixmap.save(qBuffer,
                 "JPG",
                 90); // writes pixmap into bytes in JPG format
 
+  // Post request
   WebApiError error = m_WebApiCommand_UploadNewSpot.postRequest(qList_QueryItems,
-                                                                buffer);
+                                                                qBuffer);
   if(error.type() != WebApiError::NONE)
   {
     m_LastErrorText = error.text();
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
     return false;
   }
+
   return true;
 }
 
@@ -370,26 +399,20 @@ bool PictureUploader::uploadNewSpot()
 
 bool PictureUploader::uploadPictureToSpot()
 {
+  // Spot id check
   if(m_SpotId <= 0)
   {
     m_LastErrorText = tr("Invalid spotId (%1)").arg(m_SpotId);
-    Logger::error(m_LastErrorText);
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
     return false;
   }
 
-  if(m_Pixmap.isNull())
-  {
-    m_LastErrorText = tr("Invalid picture");
-    Logger::error(m_LastErrorText);
-    return false;
-  }
-
-  if(m_Pixmap.size() != QSize(640, 640))
-  {
-    m_LastErrorText = tr("Invalid picture format");
-    Logger::error(m_LastErrorText);
-    return false;
-  }
+  Logger::info(QString("PictureUploader::%1() %2=%3; coordinate=(%6:%7)").arg(__FUNCTION__)
+                                                                         .arg(WebApi::PARAMETER::SPOT_NAME)
+                                                                         .arg(m_Name)
+                                                                         .arg(m_QGeoCoordinate.latitude())
+                                                                         .arg(m_QGeoCoordinate.longitude()));
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_SPOT_ID,   QString::number(m_SpotId)));
@@ -397,19 +420,24 @@ bool PictureUploader::uploadPictureToSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_QGeoCoordinate.longitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_TAGS,         m_QStringList_Tags.join(";")));
 
-  QBuffer *buffer = new QBuffer();
-  buffer->open(QIODevice::WriteOnly);
-  m_Pixmap.save(buffer,
+  // Prepare image buffer
+  QBuffer *qBuffer = new QBuffer();
+  qBuffer->open(QIODevice::WriteOnly);
+  m_QPixmap.save(qBuffer,
                 "JPG",
                 90); // writes pixmap into bytes in JPG format
 
+  // Post request
   WebApiError error = m_WebApiCommand_UploadPictureToSpot.postRequest(qList_QueryItems,
-                                                                      buffer);
+                                                                      qBuffer);
   if(error.type() != WebApiError::NONE)
   {
     m_LastErrorText = error.text();
+    Logger::error(QString("PictureUploader::%1() %2").arg(__FUNCTION__)
+                                                     .arg(m_LastErrorText));
     return false;
   }
+
   return true;
 }
 

@@ -42,17 +42,17 @@ public slots:
   QString lastErrorText() const { return m_LastErrorText; }
 
   // Getters
-  bool    isNewSpot()   const;
-  QString name()        const;
-  QString description() const;
-  bool    secretSpot()  const;
+  bool    isNewSpot()       const;
+  QString name()            const;
+  QString description()     const;
+  bool    secretSpot()      const;
+  QString sourcePictureFilename() const;
 
   // Setters
   void setNewSpot(bool newSpot);
-  void setPictureFilePath(const QString &path);
-  void setCameraPictureFilePath(const QString &path);
-  void setCropPicture(const QString &source_url,
-                      qreal crop_x,
+  bool setSourcePictureFileUrl(const QString &url);
+  bool setCameraPictureFilename(const QString &filename);
+  bool setCropPicture(qreal crop_x,
                       qreal crop_y,
                       qreal crop_side);
   void setName(const QString &title);
@@ -62,8 +62,7 @@ public slots:
 
   void addTag(const QString &tagName);
 
-  QString rotatePicture(const QString &source_url,
-                        int angle);
+  bool rotatePicture(int angle);
 
   bool execute();
   void resetDefaults();
@@ -84,7 +83,9 @@ private:
   QString m_LastErrorText;
 
   QString m_Command;
-  QPixmap m_Pixmap;
+
+  QString m_SourcePictureFilename;
+  QPixmap m_QPixmap;
 
   QGeoCoordinate m_QGeoCoordinate;
 

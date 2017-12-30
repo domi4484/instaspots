@@ -60,7 +60,7 @@ Item{
 
         FileDialog {
             id: fileDialog
-            title: "Please choose a picture"
+            title: "Choose a picture to upload"
             nameFilters: [ "Image files (*.jpg *.JPG *.jpeg *.JPEG *.png *.PNG)" ]
             folder: shortcuts.pictures
 

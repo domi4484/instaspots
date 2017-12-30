@@ -124,9 +124,9 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
                                        QIODevice *device)
 {
   if(m_Running)
-  {
     return WebApiError(WebApiError::COMMAND_ALREADY_RUNNING);
-  }
+
+  m_Running = true;
 
   m_QMap_QueryItems.clear();
   foreach (QueryItem queryItem, qList_QueryItems)
@@ -134,7 +134,6 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
     m_QMap_QueryItems.insert(queryItem.first(), queryItem);
   }
 
-  m_Running = true;
 
   if(device == NULL)
   {

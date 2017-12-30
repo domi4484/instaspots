@@ -29,6 +29,15 @@ Item {
     }
 
 
+    // Message boxes -----------------------
+
+    MessageDialog{
+        id: messageDialog_Error
+
+        title: qsTr('Error')
+    }
+
+
     // Pages -------------------------------
 
     Component{
@@ -47,10 +56,18 @@ Item {
                 anchors.fill: parent
 
                 onImageSaved: {
-                    wa_PictureUploader.setCameraPictureFilePath(path);
-                    stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_CropPicture.qml"),
-                                    properties:{stackView        : stackView,
-                                                source           : path}});
+
+                  // Source image
+                  if(wa_PictureUploader.setCameraPictureFilename(path) === false)
+                  {
+                    messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+                    messageDialog_Error.visible = true;
+                    return;
+                  }
+
+                  // Push CropPicture page
+                  stackView.push({item:       Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_CropPicture.qml"),
+                                  properties: {stackView : stackView}});
                 }
             }
         }
@@ -132,13 +149,25 @@ Item {
             width : parent.width
             height: parent.height
 
-            onTakeCameraPicture: {
-                stackView.push(page_TakeCameraPicture)
+            onTakeCameraPicture:
+            {
+              // Push TakeCameraPicture page
+              stackView.push(page_TakeCameraPicture)
             }
-            onPictureSelected: {
-                stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_CropPicture.qml"),
-                                properties:{stackView        : stackView,
-                                            source           : imageUrl}});
+
+            onPictureSelected:
+            {
+              // Source image
+              if(wa_PictureUploader.setSourcePictureFileUrl(imageUrl) === false)
+              {
+                messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+                messageDialog_Error.visible = true;
+                return;
+              }
+
+              // Push CropPicture page
+              stackView.push({item:       Qt.resolvedUrl("qrc:/qml/pages-upload/Upload_CropPicture.qml"),
+                              properties: {stackView : stackView}});
             }
         }
     }

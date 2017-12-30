@@ -191,12 +191,12 @@ Item{
 //                wa_PictureUploader.addTag("bowl");
 //            }
 
-//            if(wa_PictureUploader.execute() === false)
-//            {
-//                messageDialog_Error.text = wa_PictureUploader.lastErrorText();
-//                messageDialog_Error.visible = true;
-//                return;
-//            }
+            if(wa_PictureUploader.execute() === false)
+            {
+              messageDialog_Error.text = wa_PictureUploader.lastErrorText();
+              messageDialog_Error.visible = true;
+              return;
+            }
 
             enabled = false;
         }
