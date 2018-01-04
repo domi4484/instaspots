@@ -20,60 +20,96 @@ import "qrc:/qml/"
 
 Item{
 
-    // Navigation properties ---------------
+  // Navigation properties ---------------
 
-    property string navigation_Title:                 qsTr("Upload")
-    property bool   navigation_BackButtonVisible:     false
-    property bool   navigation_ContinueButtonVisible: false
-    property bool   navigation_MenuButtonVisible:     false
+  property string navigation_Title:                 qsTr("Upload")
+  property bool   navigation_BackButtonVisible:     false
+  property bool   navigation_ContinueButtonVisible: false
+  property bool   navigation_MenuButtonVisible:     false
 
-    // Signals -----------------------------
-    signal takeCameraPicture()
-    signal pictureSelected(string imageUrl)
+  // Signals -----------------------------
+  signal takeCameraPicture()
+  signal pictureSelected(string imageUrl)
+  signal pictureDropped(string imageUrl)
 
-    Component.onCompleted: {
-        if(QtMultimedia.availableCameras.length <= 0)
+  Component.onCompleted:
+  {
+    if(QtMultimedia.availableCameras.length <= 0)
+    {
+      button_Camera.enabled = false
+    }
+  }
+
+  // Gui ---------------------------------
+  Button
+  {
+    id: button_Camera
+    anchors.top: parent.top
+    height: parent.height/3
+    width: parent.width
+    text: qsTr("Camera")
+
+    onClicked:
+    {
+      takeCameraPicture();
+    }
+  }
+
+  Button
+  {
+    id: button_Gallery
+    anchors.top: button_Camera.bottom
+    height: parent.height/3
+    width: parent.width
+    text: qsTr("Gallery")
+
+    FileDialog
+    {
+      id: fileDialog
+      title: "Choose a picture to upload"
+      nameFilters: [ "Image files (*.jpg *.JPG *.jpeg *.JPEG *.png *.PNG)" ]
+      folder: shortcuts.pictures
+
+      onAccepted:
+      {
+        hc_Logger.slot_info("You chose: " + fileDialog.fileUrl);
+
+        pictureSelected(fileDialog.fileUrl);
+      }
+    }
+
+    onClicked:
+    {
+      fileDialog.visible = true;
+    }
+  }
+
+  Text
+  {
+    id: text_DropPasteArea
+    anchors.top: button_Gallery.bottom
+    height: parent.height/3
+    width: parent.width
+    text: qsTr("Drop an image here")
+
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment:   Text.AlignVCenter
+
+    DropArea {
+      anchors.fill: parent
+      keys: ["text/uri-list"]
+
+      onDropped:
+      {
+        if (drop.hasUrls)
         {
-            button_Camera.enabled = false
+          var fileUrl = drop.urls[0]
+          hc_Logger.slot_info("Picture dropped: " + fileUrl);
+          pictureDropped(fileUrl);
+          drop.acceptProposedAction();
         }
+      }
     }
-
-    // Gui ---------------------------------
-    Button {
-        id: button_Camera
-        anchors.top: parent.top
-        height: parent.height/2
-        width: parent.width
-        text: qsTr("Camera")
-
-        onClicked: {
-            takeCameraPicture();
-        }
-    }
-
-    Button {
-        id: button_Gallery
-        anchors.top: button_Camera.bottom
-        height: parent.height/2
-        width: parent.width
-        text: qsTr("Gallery")
-
-        FileDialog {
-            id: fileDialog
-            title: "Choose a picture to upload"
-            nameFilters: [ "Image files (*.jpg *.JPG *.jpeg *.JPEG *.png *.PNG)" ]
-            folder: shortcuts.pictures
-
-            onAccepted: {
-                hc_Logger.slot_info("You chose: " + fileDialog.fileUrl);
-
-                pictureSelected(fileDialog.fileUrl);
-            }
-        }
-
-        onClicked: {
-            fileDialog.visible = true;
-        }
-    }
+  }
 }
 
