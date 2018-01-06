@@ -45,7 +45,7 @@ Item{
   {
     id: button_Camera
     anchors.top: parent.top
-    height: parent.height/3
+    height: parent.height/2
     width: parent.width
     text: qsTr("Camera")
 
@@ -53,13 +53,13 @@ Item{
     {
       takeCameraPicture();
     }
-  }
+  } // Button
 
   Button
   {
     id: button_Gallery
     anchors.top: button_Camera.bottom
-    height: parent.height/3
+    height: parent.height/2
     width: parent.width
     text: qsTr("Gallery")
 
@@ -82,34 +82,22 @@ Item{
     {
       fileDialog.visible = true;
     }
-  }
+  } // Button
 
-  Text
-  {
-    id: text_DropPasteArea
-    anchors.top: button_Gallery.bottom
-    height: parent.height/3
-    width: parent.width
-    text: qsTr("Drop an image here")
+  DropArea {
+    anchors.fill: parent
+    keys: ["text/uri-list"]
 
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment:   Text.AlignVCenter
-
-    DropArea {
-      anchors.fill: parent
-      keys: ["text/uri-list"]
-
-      onDropped:
+    onDropped:
+    {
+      if (drop.hasUrls)
       {
-        if (drop.hasUrls)
-        {
-          var fileUrl = drop.urls[0]
-          hc_Logger.slot_info("Picture dropped: " + fileUrl);
-          pictureDropped(fileUrl);
-          drop.acceptProposedAction();
-        }
+        var fileUrl = drop.urls[0]
+        hc_Logger.slot_info("Picture dropped: " + fileUrl);
+        pictureDropped(fileUrl);
+        drop.acceptProposedAction();
       }
     }
-  }
-}
+  } // DropArea
+} // Item
 
