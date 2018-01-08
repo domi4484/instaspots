@@ -1,4 +1,9 @@
 
+Ftp:
+sl107.web.hostpoint.ch
+
 Console:
 http://spots.lowerclassclothing.com/web/app_dev.php/_console/
 
+Cache:
+/www/lowerspot.com/app/cache
