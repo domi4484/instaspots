@@ -16,6 +16,9 @@
 #include <QCoreApplication>
 #include <QUrl>
 
+// Forward declarations --------------------
+class Settings;
+
 class Application : public QCoreApplication
 {
     Q_OBJECT
@@ -24,10 +27,16 @@ public:
   class _CONST
   {
   public:
+    class LOGGER
+    {
+    public:
+      static const QString DIRECTORY;
+    }; // LOGGER
     class SETTINGS
     {
     public:
       static const QString DIRECTORY;
+      static const QString FILENAME;
     }; // SETTINGS
   }; // _CONST
 
@@ -37,7 +46,11 @@ public:
 
 private:
 
+  void startupApplication_Logger();
   void startupApplication_Settings();
+
+  // Settings
+  Settings *m_Settings;
 };
 
 #endif // APPLICATION_H
