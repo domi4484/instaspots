@@ -6,7 +6,7 @@
 #include <QString>
 #include <QMap>
 
-class Material
+class Settings
 {
 public:
 
@@ -32,7 +32,7 @@ public:
     }; // JSON
   }; // _CONST
 
-  Material(const QFileInfo &qFileInfo);
+  Settings(const QFileInfo &qFileInfo);
   void Load();
 
   QString getName() const;

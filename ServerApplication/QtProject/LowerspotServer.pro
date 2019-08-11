@@ -17,7 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         src/Main/Application.cpp \
         src/Main/main.cpp \
-        src/Settings/Settings.cpp
+        src/Settings/Settings.cpp \
+    src/HelperClasses/Exception.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -26,4 +27,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
   src/Main/Application.h \
-  src/Settings/Settings.h
+  src/Settings/Settings.h \
+    src/HelperClasses/Exception.h

@@ -1,9 +1,9 @@
 
 // File includes ---------------------------
-#include "Material.h"
+#include "Settings.h"
 
 // Project includes ------------------------
-#include "Exception.h"
+#include "../HelperClasses/Exception.h"
 
 // Qt includes -----------------------------
 #include <QJsonDocument>
@@ -13,19 +13,19 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-const QString Material::_CONST::LOCATION           ("Werkstoffen");
-const QString Material::_CONST::FILENAME_EXTENSION (".material.json");
+const QString Settings::_CONST::LOCATION           ("Werkstoffen");
+const QString Settings::_CONST::FILENAME_EXTENSION (".json");
 
-const QString Material::_CONST::JSON::NAME ("Name");
+const QString Settings::_CONST::JSON::NAME ("Name");
 
-const QString Material::_CONST::JSON::VALUES::ROOT_NAME    ("Values");
-const QString Material::_CONST::JSON::VALUES::THICKNESS    ("Thickness");
-const QString Material::_CONST::JSON::VALUES::SURFACEVALUE ("SurfaceValue");
-const QString Material::_CONST::JSON::VALUES::CUTVALUE     ("CutValue");
+const QString Settings::_CONST::JSON::VALUES::ROOT_NAME    ("Values");
+const QString Settings::_CONST::JSON::VALUES::THICKNESS    ("Thickness");
+const QString Settings::_CONST::JSON::VALUES::SURFACEVALUE ("SurfaceValue");
+const QString Settings::_CONST::JSON::VALUES::CUTVALUE     ("CutValue");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Material::Material(const QFileInfo &qFileInfo) :
+Settings::Settings(const QFileInfo &qFileInfo) :
   m_QFileInfo(qFileInfo),
   m_QMap_Values()
 {
@@ -34,7 +34,7 @@ Material::Material(const QFileInfo &qFileInfo) :
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Material::Load()
+void Settings::Load()
 {
   if(m_QFileInfo.exists() == false)
     throw Exception(QString("File '%1' does not exist").arg(m_QFileInfo.filePath()));
@@ -84,35 +84,35 @@ void Material::Load()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString Material::getName() const
+QString Settings::getName() const
 {
   return m_Name;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QFileInfo Material::getFileInfo() const
+QFileInfo Settings::getFileInfo() const
 {
   return m_QFileInfo;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QList<double> Material::getThicknessList() const
+QList<double> Settings::getThicknessList() const
 {
   return m_QMap_Values.keys();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-double Material::getSurfaceValue(double thickness) const
+double Settings::getSurfaceValue(double thickness) const
 {
   return m_QMap_Values.value(thickness).m_SurfaceValue;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-double Material::getCutValue(double thickness) const
+double Settings::getCutValue(double thickness) const
 {
   return m_QMap_Values.value(thickness).m_CutValue;
 }
