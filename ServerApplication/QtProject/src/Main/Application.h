@@ -21,10 +21,23 @@ class Application : public QCoreApplication
     Q_OBJECT
 public:
 
+  class _CONST
+  {
+  public:
+    class SETTINGS
+    {
+    public:
+      static const QString DIRECTORY;
+    }; // SETTINGS
+  }; // _CONST
+
   explicit Application(int argc,
                        char *argv[]);
   ~Application();
 
+private:
+
+  void startupApplication_Settings();
 };
 
 #endif // APPLICATION_H
