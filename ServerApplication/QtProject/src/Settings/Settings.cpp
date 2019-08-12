@@ -116,10 +116,18 @@ Settings::Values::Logger::Enum_LogLevel Settings::Get_Values_Logger_LogLevel() c
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+int Settings::Get_Values_TcpIpServer_Port() const
+{
+  return m_Values.tcpIpServer.m_Port;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Settings::createDefault_Values()
 {
   createDefault_Values_General();
   createDefault_Values_Logger();
+  createDefault_Values_TcpIpServer();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -139,10 +147,18 @@ void Settings::createDefault_Values_Logger()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Settings::createDefault_Values_TcpIpServer()
+{
+  m_Values.tcpIpServer.m_Port = 281118;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Settings::load_Values(const QJsonObject &qJsonObject)
 {
   load_Values_General(qJsonObject);
   load_Values_Logger(qJsonObject);
+  load_Values_TcpIpServer(qJsonObject);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -159,9 +175,18 @@ void Settings::load_Values_General(const QJsonObject &qJsonObject)
 
 void Settings::load_Values_Logger(const QJsonObject &qJsonObject)
 {
-  QJsonObject qJsonObject_General = qJsonObject.value("Logger").toObject();
+  QJsonObject qJsonObject_Logger = qJsonObject.value("Logger").toObject();
 
-  m_Values.general.m_ApplicationName = (Values::Logger::Enum_LogLevel)qJsonObject_General.value("LogLevel").toInt();
+  m_Values.general.m_ApplicationName = (Values::Logger::Enum_LogLevel)qJsonObject_Logger.value("LogLevel").toInt();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::load_Values_TcpIpServer(const QJsonObject &qJsonObject)
+{
+  QJsonObject qJsonObject_TcpIpServer = qJsonObject.value("TcpIpServer").toObject();
+
+  m_Values.tcpIpServer.m_Port = qJsonObject_TcpIpServer.value("Port").toInt();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -170,6 +195,7 @@ void Settings::write_Values(QJsonObject &qJsonObject)
 {
   write_Values_General(qJsonObject);
   write_Values_Logger(qJsonObject);
+  write_Values_TcpIpServer(qJsonObject);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -191,6 +217,17 @@ void Settings::write_Values_Logger(QJsonObject &qJsonObject)
   qJsonObject_Logger.insert("LogLevel", m_Values.logger.m_LogLevel);
 
   qJsonObject.insert("Logger", qJsonObject_Logger);
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::write_Values_TcpIpServer(QJsonObject &qJsonObject)
+{
+  QJsonObject qJsonObject_TcpIpServer;
+  qJsonObject_TcpIpServer.insert("Port", m_Values.tcpIpServer.m_Port);
+
+  qJsonObject.insert("TcpIpServer", qJsonObject_TcpIpServer);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

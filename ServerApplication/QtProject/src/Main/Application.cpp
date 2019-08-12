@@ -16,6 +16,7 @@
 #include "../Settings/Settings.h"
 #include "../HelperClasses/Exception.h"
 #include "../HelperClasses/Logger.h"
+#include "../TcpIp/TcpIpServer.h"
 
 // Qt includes -----------------------------
 #include <QDir>
@@ -32,6 +33,7 @@ const QString Application::_CONST::SETTINGS::FILENAME("Settings");
 Application::Application(int argc, char *argv[])
   : QCoreApplication(argc, argv)
   , m_Settings(nullptr)
+  , m_TcpIpServer(nullptr)
 {
   // Application informations
   QCoreApplication::setOrganizationName   ("Lowerspot");
@@ -48,12 +50,19 @@ Application::Application(int argc, char *argv[])
 
   // startupApplication Settings
   startupApplication_Settings();
+
+  // startupApplication Tcp/Ip Server
+  startupApplication_TcpIpServer();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Application::~Application()
 {
+  delete m_TcpIpServer;
+  delete m_Settings;
+
+  Logger::destroy();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -109,13 +118,30 @@ void Application::startupApplication_Settings()
       m_Settings->Write(qFileInfo_Settings.filePath());
       m_Settings->Load(qFileInfo_Settings);
     }
-  } catch (const Exception &exception)
+  }
+  catch (const Exception &exception)
   {
     Logger::error(QString("Error loading settings: %1").arg(exception.GetText()));
   }
 
   // Set loglevel
   Logger::instance()->setLogLevel((Logger::LOG_LEVEL)m_Settings->Get_Values_Logger_LogLevel());
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::startupApplication_TcpIpServer()
+{
+  m_TcpIpServer = new TcpIpServer(this);
+
+  try
+  {
+    m_TcpIpServer->StartListening(m_Settings->Get_Values_TcpIpServer_Port());
+  }
+  catch (const Exception &exception)
+  {
+    Logger::error(QString("Error starting Tcp/Ip server: %1").arg(exception.GetText()));
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

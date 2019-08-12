@@ -1,3 +1,5 @@
+
+QT += network
 QT -= gui
 
 CONFIG += c++11 console
@@ -19,7 +21,8 @@ SOURCES += \
         src/Main/Application.cpp \
         src/Main/main.cpp \
         src/Settings/Settings.cpp \
-    src/HelperClasses/Exception.cpp
+    src/HelperClasses/Exception.cpp \
+  src/TcpIp/TcpIpServer.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -30,4 +33,5 @@ HEADERS += \
   src/HelperClasses/Logger.h \
   src/Main/Application.h \
   src/Settings/Settings.h \
-    src/HelperClasses/Exception.h
+    src/HelperClasses/Exception.h \
+  src/TcpIp/TcpIpServer.h

@@ -56,25 +56,41 @@ public:
 
     Logger logger;
 
+    class TcpIpServer
+    {
+    public:
+
+      int m_Port;
+
+    }; // TcpIpServer
+
+    TcpIpServer tcpIpServer;
+
   }; // Values
 
   QString Get_Values_General_ApplicationName() const;
   QString Get_Values_General_ApplicationVersion() const;
+
   Values::Logger::Enum_LogLevel Get_Values_Logger_LogLevel() const;
+
+  int Get_Values_TcpIpServer_Port() const;
 
 private:
 
   void createDefault_Values();
   void createDefault_Values_General();
   void createDefault_Values_Logger();
+  void createDefault_Values_TcpIpServer();
 
   void load_Values(const QJsonObject &qJsonObject);
   void load_Values_General(const QJsonObject &qJsonObject);
   void load_Values_Logger(const QJsonObject &qJsonObject);
+  void load_Values_TcpIpServer(const QJsonObject &qJsonObject);
 
   void write_Values(QJsonObject &qJsonObject);
   void write_Values_General(QJsonObject &qJsonObject);
   void write_Values_Logger(QJsonObject &qJsonObject);
+  void write_Values_TcpIpServer(QJsonObject &qJsonObject);
 
   QFileInfo m_QFileInfo;
 
