@@ -22,7 +22,8 @@ SOURCES += \
         src/Main/main.cpp \
         src/Settings/Settings.cpp \
     src/HelperClasses/Exception.cpp \
-  src/TcpIp/TcpIpServer.cpp
+  src/TcpIp/TcpIpServer.cpp \
+  src/TcpIp/TcpIpServerConnection.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,4 +35,5 @@ HEADERS += \
   src/Main/Application.h \
   src/Settings/Settings.h \
     src/HelperClasses/Exception.h \
-  src/TcpIp/TcpIpServer.h
+  src/TcpIp/TcpIpServer.h \
+  src/TcpIp/TcpIpServerConnection.h

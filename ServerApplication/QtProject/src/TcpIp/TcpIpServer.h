@@ -4,7 +4,7 @@
 // Qt includes -----------------------------
 #include <QTcpServer>
 
-class TcpIpServer : public QObject
+class TcpIpServer : public QTcpServer
 {
   Q_OBJECT
 
@@ -15,11 +15,9 @@ public:
 
   void StartListening(int port);
 
-private slots:
+protected:
 
-private:
-
-  QTcpServer m_QTcpServer;
+  void incomingConnection(qintptr socketDescriptor) override;
 
 };
 

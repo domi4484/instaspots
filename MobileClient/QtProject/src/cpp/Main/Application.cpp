@@ -30,6 +30,7 @@
 #include "../WebApi/User.h"
 #include "../WebApi/CurrentUser.h"
 #include "../WebApi/PictureUploader.h"
+#include "../TcpIp/TcpIpClientConnection.h"
 
 // Qt includes -----------------------------
 #include <QQmlApplicationEngine>
@@ -42,26 +43,26 @@ const QString Application::CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE("developmen
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Application::Application(int argc, char *argv[]) :
-  QApplication(argc, argv),
-  m_Settings              (NULL),
-  m_PlateformDetail       (NULL),
-  m_ApplicationHelper     (NULL),
-  m_LocationManager       (NULL),
-  m_PictureCacher         (NULL),
-  m_CurrentUser           (NULL),
-  m_PictureUploader       (NULL),
-  m_QQmlApplicationEngine (NULL)
+Application::Application(int argc, char *argv[])
+  : QApplication(argc, argv)
+  , m_Settings              (nullptr)
+  , m_PlateformDetail       (nullptr)
+  , m_TcpIpClientConnection (nullptr)
+  , m_ApplicationHelper     (nullptr)
+  , m_LocationManager       (nullptr)
+  , m_PictureCacher         (nullptr)
+  , m_CurrentUser           (nullptr)
+  , m_PictureUploader       (nullptr)
+  , m_QQmlApplicationEngine (nullptr)
 {
   // Application informations
   QApplication::setOrganizationName   ("Lowerspot");
   QApplication::setOrganizationDomain ("lowerspot.com");
   QApplication::setApplicationName    ("Lowerspot");
-  QApplication::setApplicationVersion ("V0.1.1");
+  QApplication::setApplicationVersion ("V0.2.0");
 
   // Command line arguments
   QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
-
 
   // Settings
   m_Settings = new Settings(this);
@@ -72,6 +73,9 @@ Application::Application(int argc, char *argv[]) :
 
   // Plateform detail
   m_PlateformDetail = new PlateformDetail(this);
+
+  // TcpIpClientConnection
+  m_TcpIpClientConnection = new TcpIpClientConnection(this);
 
   // Application helper
   m_ApplicationHelper = new ApplicationHelper(m_Settings,
@@ -149,6 +153,7 @@ Application::~Application()
   delete m_PictureCacher;
   delete m_LocationManager;
   delete m_ApplicationHelper;
+  delete m_TcpIpClientConnection;
   delete m_PlateformDetail;
   delete m_Settings;
 
@@ -199,6 +204,17 @@ void Application::slot_QApplication_aboutToQuit()
 void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
 {
   m_ApplicationHelper->startupTimerStop();
+
+  // Try to connect to server
+  try
+  {
+    m_TcpIpClientConnection->Connect("127.0.0.1",
+                                     281118);
+  }
+  catch (const QString &exception)
+  {
+    Logger::error(exception);
+  }
 
   // Try to login
   if(m_CurrentUser->login() == false)

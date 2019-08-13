@@ -48,6 +48,7 @@ include(deployment.pri)
 
 SOURCES += src/cpp/Main/main.cpp \
     src/cpp/Main/Application.cpp \
+    src/cpp/TcpIp/TcpIpClientConnection.cpp \
     src/cpp/WebApi/Picture.cpp \
     src/cpp/WebApi/QueryItem.cpp \
     src/cpp/WebApi/Spot.cpp \
@@ -75,6 +76,7 @@ SOURCES += src/cpp/Main/main.cpp \
 
 HEADERS += \
     src/cpp/Main/Application.h \
+    src/cpp/TcpIp/TcpIpClientConnection.h \
     src/cpp/WebApi/Picture.h \
     src/cpp/WebApi/QueryItem.h \
     src/cpp/WebApi/Spot.h \

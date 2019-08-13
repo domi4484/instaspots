@@ -24,6 +24,7 @@ class LocationManager;
 class PictureCacher;
 class CurrentUser;
 class PictureUploader;
+class TcpIpClientConnection;
 class UltraQmlAccessManagerFactory;
 class QQmlApplicationEngine;
 
@@ -51,6 +52,9 @@ private:
 
   // Plateform detail
   PlateformDetail              *m_PlateformDetail;
+
+  // TcpIp client connection
+  TcpIpClientConnection        *m_TcpIpClientConnection;
 
   // Application helper
   ApplicationHelper            *m_ApplicationHelper;
