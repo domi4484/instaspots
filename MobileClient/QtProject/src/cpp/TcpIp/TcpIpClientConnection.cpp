@@ -18,13 +18,11 @@ TcpIpClientConnection::TcpIpClientConnection(QObject *parent)
 void TcpIpClientConnection::Connect(const QString &addresse,
                                     int port)
 {
-  if(m_QTcpSocket.bind(QHostAddress(addresse),
-                       port)
-     == false)
-  {
-    throw QString(QString("QTcpSocket can't bind to server '%1:%2'; Error: '%3'")
-                           .arg(addresse)
-                           .arg(port)
-                           .arg(m_QTcpSocket.errorString()));
-  }
+  m_QTcpSocket.connectToHost(QHostAddress(addresse),
+                             port);
+}
+
+bool TcpIpClientConnection::WaitForConnected(int timeoutMs)
+{
+  return m_QTcpSocket.waitForConnected(timeoutMs);
 }

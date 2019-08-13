@@ -15,6 +15,7 @@ public:
 
   void Connect(const QString &addresse,
                int port);
+  bool WaitForConnected(int timeoutMs);
 
 private:
 

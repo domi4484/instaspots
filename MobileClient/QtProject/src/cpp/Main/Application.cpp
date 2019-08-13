@@ -206,14 +206,11 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
   m_ApplicationHelper->startupTimerStop();
 
   // Try to connect to server
-  try
+  m_TcpIpClientConnection->Connect("127.0.0.1",
+                                   281118);
+  if(m_TcpIpClientConnection->WaitForConnected(3000) == false)
   {
-    m_TcpIpClientConnection->Connect("127.0.0.1",
-                                     281118);
-  }
-  catch (const QString &exception)
-  {
-    Logger::error(exception);
+    Logger::error("Timeout connecting to server.");
   }
 
   // Try to login
