@@ -39,7 +39,7 @@ Application::Application(int argc, char *argv[])
   QCoreApplication::setOrganizationName   ("Lowerspot");
   QCoreApplication::setOrganizationDomain ("lowerspot.com");
   QCoreApplication::setApplicationName    ("LowerspotServer");
-  QCoreApplication::setApplicationVersion ("V0.0.1");
+  QCoreApplication::setApplicationVersion ("V0.2.0");
 
   // startupApplication Logger
   startupApplication_Logger();

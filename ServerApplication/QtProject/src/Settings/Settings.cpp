@@ -166,6 +166,8 @@ void Settings::load_Values(const QJsonObject &qJsonObject)
 void Settings::load_Values_General(const QJsonObject &qJsonObject)
 {
   QJsonObject qJsonObject_General = qJsonObject.value("General").toObject();
+  if(qJsonObject_General.isEmpty())
+    return;
 
   m_Values.general.m_ApplicationName = qJsonObject_General.value("ApplicationName").toString();
   m_Values.general.m_ApplicationVersion = qJsonObject_General.value("ApplicationVersion").toString();
@@ -176,6 +178,8 @@ void Settings::load_Values_General(const QJsonObject &qJsonObject)
 void Settings::load_Values_Logger(const QJsonObject &qJsonObject)
 {
   QJsonObject qJsonObject_Logger = qJsonObject.value("Logger").toObject();
+  if(qJsonObject_Logger.isEmpty())
+    return;
 
   m_Values.general.m_ApplicationName = (Values::Logger::Enum_LogLevel)qJsonObject_Logger.value("LogLevel").toInt();
 }
@@ -185,6 +189,8 @@ void Settings::load_Values_Logger(const QJsonObject &qJsonObject)
 void Settings::load_Values_TcpIpServer(const QJsonObject &qJsonObject)
 {
   QJsonObject qJsonObject_TcpIpServer = qJsonObject.value("TcpIpServer").toObject();
+  if(qJsonObject_TcpIpServer.isEmpty())
+    return;
 
   m_Values.tcpIpServer.m_Port = qJsonObject_TcpIpServer.value("Port").toInt();
 }
