@@ -1,5 +1,5 @@
 [submodule "ServerApplication/Externals/lowerspot-lib"]
-	path = ServerApplication/Externals/lowerspot-lib
+	path = ServerApplication/LowerspotServer/src/lowerspot-lib
 	url = https://gitlab.com/domi4484/lowerspot-lib
 [submodule "MobileClient/Externals/lowerspot-lib"]
 	path = MobileClient/Externals/lowerspot-lib
