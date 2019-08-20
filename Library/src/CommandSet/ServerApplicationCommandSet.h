@@ -13,7 +13,7 @@ class Command_GetServerApplicationVersion : public Command
 public:
 
   Command_GetServerApplicationVersion()
-    : Command()
+    : Command(QString("GetServerApplicationVersion"))
   {;}
 
 };

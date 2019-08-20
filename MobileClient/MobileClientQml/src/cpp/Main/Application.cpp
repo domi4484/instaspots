@@ -82,6 +82,9 @@ Application::Application(int argc, char *argv[])
   // TcpIpClientConnection
   startupApplication_TcpIpClientConnection();
 
+  // CommandSender
+  startupApplication_CommandSender();
+
   // Application helper
   m_ApplicationHelper = new ApplicationHelper(m_Settings,
                                               m_PlateformDetail);

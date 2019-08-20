@@ -19,6 +19,10 @@ public:
                                  QObject *parent = nullptr);
   ~TcpIpServerConnection();
 
+private slots:
+
+  void slot_ReadyRead();
+
 private:
 
   // Link to CommandReceiver

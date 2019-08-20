@@ -76,6 +76,7 @@ SOURCES += \
     src/cpp/WebApi/CurrentUser.cpp \
     src/cpp/WebApi/User.cpp \
     src/cpp/WebApi/UserRepository.cpp \
+    ../../Library/src/HelperClasses/Exception.cpp \
     ../../Library/src/HelperClasses/Logger.cpp \
     ../../Library/src/Command/Command.cpp \
     ../../Library/src/Command/CommandSet.cpp \
@@ -110,6 +111,7 @@ HEADERS += \
     src/cpp/WebApi/CurrentUser.h \
     src/cpp/WebApi/User.h \
     src/cpp/WebApi/UserRepository.h \
+    ../../Library/src/HelperClasses/Exception.h \
     ../../Library/src/HelperClasses/Logger.h \
     ../../Library/src/Command/Command.h \
     ../../Library/src/Command/CommandSet.h \

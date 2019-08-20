@@ -18,7 +18,7 @@ public:
 
   Settings();
   void Load(const QFileInfo &qFileInfo);
-  void Write(const QString &filename = QString());
+  void Write(const QString &filename = QString()) const;
   QFileInfo getFileInfo() const;
 
   class Values
@@ -87,10 +87,10 @@ private:
   void load_Values_Logger(const QJsonObject &qJsonObject);
   void load_Values_TcpIpServer(const QJsonObject &qJsonObject);
 
-  void write_Values(QJsonObject &qJsonObject);
-  void write_Values_General(QJsonObject &qJsonObject);
-  void write_Values_Logger(QJsonObject &qJsonObject);
-  void write_Values_TcpIpServer(QJsonObject &qJsonObject);
+  void write_Values(QJsonObject &qJsonObject) const;
+  void write_Values_General(QJsonObject &qJsonObject) const;
+  void write_Values_Logger(QJsonObject &qJsonObject) const;
+  void write_Values_TcpIpServer(QJsonObject &qJsonObject) const;
 
   QFileInfo m_QFileInfo;
 

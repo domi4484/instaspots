@@ -15,7 +15,10 @@ CommandSender::CommandSender(TcpIpClientConnection *tcpIpClientConnection)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Command CommandSender::Transceive(const Command &command)
+void CommandSender::Transceive(const Command &command)
 {
-
+  m_TcpIpClientConnection->SendData(command.GetSendCommandData());
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+

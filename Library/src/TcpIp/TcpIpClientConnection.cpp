@@ -1,5 +1,9 @@
 
+// Files includes --------------------------
 #include "TcpIpClientConnection.h"
+
+// Project includes ------------------------
+#include "HelperClasses/Exception.h"
 
 // Qt includes -----------------------------
 #include <QHostAddress>
@@ -34,4 +38,13 @@ bool TcpIpClientConnection::WaitForConnected(int timeoutMs)
 bool TcpIpClientConnection::IsConnected()
 {
   return m_QTcpSocket.state() == QTcpSocket::ConnectedState;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void TcpIpClientConnection::SendData(const QByteArray &data)
+{
+  if(m_QTcpSocket.write(data) < 0)
+    throw Exception(QString("QTcpSocket can't send data. Error: '%1'")
+                           .arg(m_QTcpSocket.errorString()));
 }

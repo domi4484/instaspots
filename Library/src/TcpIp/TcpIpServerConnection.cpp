@@ -18,6 +18,10 @@ TcpIpServerConnection::TcpIpServerConnection(qintptr socketDescriptor,
 {
   QTcpSocket::setSocketDescriptor(socketDescriptor);
 
+  QObject::connect(this,
+                   SIGNAL(readyRead()),
+                   SLOT(slot_ReadyRead()));
+
   Logger::debug(QString("TcpIpServerConnection new connection from '%1'").arg(QTcpSocket::peerAddress().toString()));
 }
 
@@ -26,4 +30,11 @@ TcpIpServerConnection::TcpIpServerConnection(qintptr socketDescriptor,
 TcpIpServerConnection::~TcpIpServerConnection()
 {
   Logger::debug(QString("TcpIpServerConnection closed connection from '%1'").arg(QTcpSocket::peerAddress().toString()));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void TcpIpServerConnection::slot_ReadyRead()
+{
+  Logger::info(QString("ReadAllSocket: %1").arg(QString(QTcpSocket::readAll())));
 }

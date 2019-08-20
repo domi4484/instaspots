@@ -60,7 +60,7 @@ void Settings::Load(const QFileInfo &qFileInfo)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::Write(const QString &filename)
+void Settings::Write(const QString &filename) const
 {
   // Prepare JSON data
   QByteArray qByteArray_WriteData;
@@ -197,7 +197,7 @@ void Settings::load_Values_TcpIpServer(const QJsonObject &qJsonObject)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::write_Values(QJsonObject &qJsonObject)
+void Settings::write_Values(QJsonObject &qJsonObject) const
 {
   write_Values_General(qJsonObject);
   write_Values_Logger(qJsonObject);
@@ -206,7 +206,7 @@ void Settings::write_Values(QJsonObject &qJsonObject)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::write_Values_General(QJsonObject &qJsonObject)
+void Settings::write_Values_General(QJsonObject &qJsonObject) const
 {
   QJsonObject qJsonObject_General;
   qJsonObject_General.insert("ApplicationName", m_Values.general.m_ApplicationName);
@@ -217,7 +217,7 @@ void Settings::write_Values_General(QJsonObject &qJsonObject)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::write_Values_Logger(QJsonObject &qJsonObject)
+void Settings::write_Values_Logger(QJsonObject &qJsonObject) const
 {
   QJsonObject qJsonObject_Logger;
   qJsonObject_Logger.insert("LogLevel", m_Values.logger.m_LogLevel);
@@ -228,7 +228,7 @@ void Settings::write_Values_Logger(QJsonObject &qJsonObject)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Settings::write_Values_TcpIpServer(QJsonObject &qJsonObject)
+void Settings::write_Values_TcpIpServer(QJsonObject &qJsonObject) const
 {
   QJsonObject qJsonObject_TcpIpServer;
   qJsonObject_TcpIpServer.insert("Port", m_Values.tcpIpServer.m_Port);

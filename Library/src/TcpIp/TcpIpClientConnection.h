@@ -18,6 +18,8 @@ public:
   bool WaitForConnected(int timeoutMs);
   bool IsConnected();
 
+  void SendData(const QByteArray &data);
+
 private:
 
   QTcpSocket m_QTcpSocket;
