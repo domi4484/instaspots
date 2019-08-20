@@ -1,7 +1,11 @@
 #ifndef TCPIPSERVERCONNECTION_H
 #define TCPIPSERVERCONNECTION_H
 
+// Qt includes -----------------------------
 #include <QTcpSocket>
+
+// Forward declarations --------------------
+class CommandReceiver;
 
 class TcpIpServerConnection : public QTcpSocket
 {
@@ -11,11 +15,15 @@ class TcpIpServerConnection : public QTcpSocket
 public:
 
   explicit TcpIpServerConnection(qintptr socketDescriptor,
+                                 CommandReceiver *commandReceiver,
                                  QObject *parent = nullptr);
+  ~TcpIpServerConnection();
 
-signals:
+private:
 
-public slots:
+  // Link to CommandReceiver
+  CommandReceiver *m_CommandReceiver;
+
 };
 
 #endif // TCPIPSERVERCONNECTION_H

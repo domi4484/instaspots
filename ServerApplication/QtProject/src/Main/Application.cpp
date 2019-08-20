@@ -16,6 +16,7 @@
 #include "../Settings/Settings.h"
 #include "../HelperClasses/Exception.h"
 #include "../HelperClasses/Logger.h"
+#include "../CommandSet/ServerApplicationCommandReceiver.h"
 #include "../TcpIp/TcpIpServer.h"
 
 // Qt includes -----------------------------
@@ -33,6 +34,7 @@ const QString Application::_CONST::SETTINGS::FILENAME("Settings");
 Application::Application(int argc, char *argv[])
   : QCoreApplication(argc, argv)
   , m_Settings(nullptr)
+  , m_ServerApplicationCommandReceiver(nullptr)
   , m_TcpIpServer(nullptr)
 {
   // Application informations
@@ -51,6 +53,9 @@ Application::Application(int argc, char *argv[])
   // startupApplication Settings
   startupApplication_Settings();
 
+  // startupApplication ServerApplicationCommandReceiver
+  startupApplication_CommandReceiver();
+
   // startupApplication Tcp/Ip Server
   startupApplication_TcpIpServer();
 }
@@ -60,6 +65,7 @@ Application::Application(int argc, char *argv[])
 Application::~Application()
 {
   delete m_TcpIpServer;
+  delete m_ServerApplicationCommandReceiver;
   delete m_Settings;
 
   Logger::destroy();
@@ -130,9 +136,17 @@ void Application::startupApplication_Settings()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Application::startupApplication_CommandReceiver()
+{
+  m_ServerApplicationCommandReceiver = new ServerApplicationCommandReceiver();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Application::startupApplication_TcpIpServer()
 {
-  m_TcpIpServer = new TcpIpServer(this);
+  m_TcpIpServer = new TcpIpServer(m_ServerApplicationCommandReceiver,
+                                  this);
 
   try
   {

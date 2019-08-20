@@ -4,13 +4,17 @@
 // Qt includes -----------------------------
 #include <QTcpServer>
 
+// Forward declarations --------------------
+class CommandReceiver;
+
 class TcpIpServer : public QTcpServer
 {
   Q_OBJECT
 
 public:
 
-  explicit TcpIpServer(QObject *parent = nullptr);
+  explicit TcpIpServer(CommandReceiver *commandReceiver,
+                       QObject *parent = nullptr);
   ~TcpIpServer();
 
   void StartListening(int port);
@@ -18,6 +22,11 @@ public:
 protected:
 
   void incomingConnection(qintptr socketDescriptor) override;
+
+private:
+
+  // Link to CommandReceiver
+  CommandReceiver *m_CommandReceiver;
 
 };
 

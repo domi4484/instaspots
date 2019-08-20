@@ -9,8 +9,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-TcpIpServer::TcpIpServer(QObject *parent)
+TcpIpServer::TcpIpServer(CommandReceiver *commandReceiver,
+                         QObject *parent)
   : QTcpServer(parent)
+  , m_CommandReceiver(commandReceiver)
 {
 }
 
@@ -42,6 +44,7 @@ void TcpIpServer::StartListening(int port)
 void TcpIpServer::incomingConnection(qintptr socketDescriptor)
 {
   TcpIpServerConnection *tcpIpServerConnection = new TcpIpServerConnection(socketDescriptor,
+                                                                           m_CommandReceiver,
                                                                            this);
   QObject::connect(tcpIpServerConnection,
                    SIGNAL(disconnected()),

@@ -18,6 +18,7 @@
 
 // Forward declarations --------------------
 class Settings;
+class ServerApplicationCommandReceiver;
 class TcpIpServer;
 
 class Application : public QCoreApplication
@@ -49,10 +50,14 @@ private:
 
   void startupApplication_Logger();
   void startupApplication_Settings();
+  void startupApplication_CommandReceiver();
   void startupApplication_TcpIpServer();
 
   // Settings
   Settings *m_Settings;
+
+  // CommandSet
+  ServerApplicationCommandReceiver *m_ServerApplicationCommandReceiver;
 
   // TcpIpServer
   TcpIpServer *m_TcpIpServer;
