@@ -9,4 +9,5 @@
 TEMPLATE = subdirs 
 
 SUBDIRS = \
-            MobileClientQml
+            MobileClientQml \
+            Externals/lowerspot-lib
