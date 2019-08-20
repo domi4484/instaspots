@@ -21,6 +21,10 @@ QT += qml quick quickcontrols2 widgets positioning location multimedia
 
 CONFIG   += console debug
 
+INCLUDEPATH += \
+  src/cpp \
+  ../../Library/src
+
 # Hight dpi support off
 QT_AUTO_SCREEN_SCALE_FACTOR=1
 
@@ -46,16 +50,15 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-SOURCES += src/cpp/Main/main.cpp \
+SOURCES += \
+    src/cpp/Main/main.cpp \
     src/cpp/Main/Application.cpp \
-    src/cpp/TcpIp/TcpIpClientConnection.cpp \
     src/cpp/WebApi/Picture.cpp \
     src/cpp/WebApi/QueryItem.cpp \
     src/cpp/WebApi/Spot.cpp \
     src/cpp/WebApi/WebApi.cpp \
     src/cpp/WebApi/WebApiCommand.cpp \
     src/cpp/WebApi/WebApiError.cpp \
-    src/cpp/HelperClasses/Logger.cpp \
     src/cpp/HelperClasses/StringHelper.cpp \
     src/cpp/WebApi/PictureUploader.cpp \
     src/cpp/HelperClasses/PlateformDetail.cpp \
@@ -72,18 +75,19 @@ SOURCES += src/cpp/Main/main.cpp \
     src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
     src/cpp/WebApi/CurrentUser.cpp \
     src/cpp/WebApi/User.cpp \
-    src/cpp/WebApi/UserRepository.cpp
+    src/cpp/WebApi/UserRepository.cpp \
+    ../../Library/src/HelperClasses/Logger.cpp \
+    ../../Library/src/TcpIp/TcpIpClientConnection.cpp
 
 HEADERS += \
+    src/cpp/Main/main.h \
     src/cpp/Main/Application.h \
-    src/cpp/TcpIp/TcpIpClientConnection.h \
     src/cpp/WebApi/Picture.h \
     src/cpp/WebApi/QueryItem.h \
     src/cpp/WebApi/Spot.h \
     src/cpp/WebApi/WebApi.h \
     src/cpp/WebApi/WebApiCommand.h \
     src/cpp/WebApi/WebApiError.h \
-    src/cpp/HelperClasses/Logger.h \
     src/cpp/HelperClasses/StringHelper.h \
     src/cpp/WebApi/PictureUploader.h \
     src/cpp/HelperClasses/PlateformDetail.h \
@@ -102,7 +106,8 @@ HEADERS += \
     src/cpp/WebApi/CurrentUser.h \
     src/cpp/WebApi/User.h \
     src/cpp/WebApi/UserRepository.h \
-    src/cpp/Main/main.h
+    ../../Library/src/HelperClasses/Logger.h \
+    ../../Library/src/TcpIp/TcpIpClientConnection.h
 
 RESOURCES += src/qml.qrc
 

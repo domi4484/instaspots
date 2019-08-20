@@ -19,7 +19,9 @@
 #include "UserRepository.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
-#include "../HelperClasses/Logger.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QDebug>

@@ -13,10 +13,12 @@
 #include "ApplicationHelper.h"
 
 // Project includes ------------------------
-#include "Logger.h"
 #include "PlateformDetail.h"
 #include "../Settings/Settings.h"
 #include "../WebApi/WebApi.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QApplication>

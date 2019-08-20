@@ -13,9 +13,11 @@
 #include "PicturesModel.h"
 
 // Projects includes -----------------------
-#include "../HelperClasses/Logger.h"
 #include "Picture.h"
 #include "PictureRepository.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QDebug>

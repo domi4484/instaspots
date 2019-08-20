@@ -13,8 +13,10 @@
 #include "PictureUploader.h"
 
 // Project includes ------------------------
-#include "../HelperClasses/Logger.h"
 #include "../WebApi/WebApi.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QDebug>

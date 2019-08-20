@@ -14,13 +14,15 @@
 
 // Project includes ------------------------
 #include "../HelperClasses/LocationManager.h"
-#include "../HelperClasses/Logger.h"
 #include "Spot.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
 #include "PictureRepository.h"
 #include "User.h"
 #include "UserRepository.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QDebug>

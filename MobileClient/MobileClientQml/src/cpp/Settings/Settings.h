@@ -12,8 +12,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-// Project includes ------------------------
-#include "../HelperClasses/Logger.h"
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // External includes -----------------------
 #include "../External/SimpleCrypt.h"

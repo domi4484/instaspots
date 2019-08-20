@@ -12,8 +12,8 @@
 // Files includes --------------------------
 #include "main.h"
 
-// Project includes ------------------------
-#include "../HelperClasses/Logger.h"
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

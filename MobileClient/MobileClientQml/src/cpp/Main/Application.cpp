@@ -14,7 +14,6 @@
 
 // Projects includes -----------------------
 #include "../HelperClasses/ApplicationHelper.h"
-#include "../HelperClasses/Logger.h"
 #include "../HelperClasses/PlateformDetail.h"
 #include "../HelperClasses/LocationManager.h"
 #include "../HelperClasses/PictureCacher.h"
@@ -30,7 +29,10 @@
 #include "../WebApi/User.h"
 #include "../WebApi/CurrentUser.h"
 #include "../WebApi/PictureUploader.h"
-#include "../TcpIp/TcpIpClientConnection.h"
+
+// Library includes -----------------------
+#include <HelperClasses/Logger.h>
+#include <TcpIp/TcpIpClientConnection.h>
 
 // Qt includes -----------------------------
 #include <QQmlApplicationEngine>

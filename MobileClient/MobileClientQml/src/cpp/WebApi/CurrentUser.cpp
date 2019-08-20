@@ -15,7 +15,9 @@
 // Project includes ------------------------
 #include "WebApi.h"
 #include "../Settings/Settings.h"
-#include "../HelperClasses/Logger.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

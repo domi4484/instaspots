@@ -13,9 +13,11 @@
 #include "WebApi.h"
 
 // Project includes ------------------------
-#include "../HelperClasses/Logger.h"
 #include "WebApiCommand.h"
 #include "WebApiError.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QApplication>

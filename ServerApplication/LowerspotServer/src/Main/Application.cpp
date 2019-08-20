@@ -14,12 +14,12 @@
 
 // Project includes ------------------------
 #include "../Settings/Settings.h"
-#include "../CommandSet/ServerApplicationCommandReceiver.h"
-#include "../TcpIp/TcpIpServer.h"
+#include "CommandReceiver/ServerApplicationCommandReceiver.h"
 
 // Library includes ------------------------
 #include <HelperClasses/Exception.h>
 #include <HelperClasses/Logger.h>
+#include <TcpIp/TcpIpServer.h>
 
 // Qt includes -----------------------------
 #include <QDir>

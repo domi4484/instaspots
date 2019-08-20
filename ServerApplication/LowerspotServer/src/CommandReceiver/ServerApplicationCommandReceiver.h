@@ -1,7 +1,8 @@
 #ifndef SERVERAPPLICATIONCOMMANDRECEIVER_H
 #define SERVERAPPLICATIONCOMMANDRECEIVER_H
 
-#include "../Command/CommandReceiver.h"
+// Library includes ------------------------
+#include <Command/CommandReceiver.h>
 
 class ServerApplicationCommandReceiver : public CommandReceiver
 {

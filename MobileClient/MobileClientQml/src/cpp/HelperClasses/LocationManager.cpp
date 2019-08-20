@@ -16,7 +16,9 @@
 #include "../Settings/Settings.h"
 #include "../Settings/Secret.h"
 #include "PlateformDetail.h"
-#include "Logger.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QGeoCoordinate>

@@ -13,9 +13,11 @@
 #include "SpotsModel.h"
 
 // Projects includes -----------------------
-#include "../HelperClasses/Logger.h"
 #include "Spot.h"
 #include "SpotRepository.h"
+
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QDebug>
