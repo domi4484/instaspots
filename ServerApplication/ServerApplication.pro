@@ -6,7 +6,8 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs 
+TEMPLATE = subdirs
 
 SUBDIRS = \
-            LowerspotServer
+            LowerspotServer \
+            Externals/lowerspot-lib
