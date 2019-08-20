@@ -32,7 +32,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-  ../../Library/src/Command/CommandSender.cpp \
   src/Main/main.cpp \
   src/Main/Application.cpp \
   src/CommandReceiver/ServerApplicationCommandReceiver.cpp \
@@ -52,7 +51,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-  ../../Library/src/Command/CommandSender.h \
   src/Main/Application.h \
   src/CommandReceiver/ServerApplicationCommandReceiver.h \
   src/Settings/Settings.h \
