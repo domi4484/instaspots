@@ -2,7 +2,7 @@
 #
 # Project Lowerspot
 #
-# (C) 2014-2017 Damiano Lombardi
+# (C) 2014-2019 Damiano Lombardi
 #
 #-------------------------------------------------
 
