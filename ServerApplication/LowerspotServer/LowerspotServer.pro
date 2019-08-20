@@ -5,7 +5,7 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
-INCLUDEPATH += ../Externals/lowerspot-lib
+INCLUDEPATH += ../../Library/src
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -19,16 +19,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+  ../../Library/src/HelperClasses/Exception.cpp \
+  ../../Library/src/HelperClasses/Logger.cpp \
   src/Command/Command.cpp \
   src/Command/CommandReceiver.cpp \
   src/Command/CommandSet.cpp \
   src/CommandSet/ServerApplicationCommandReceiver.cpp \
   src/CommandSet/ServerApplicationCommandSet.cpp \
-  src/HelperClasses/Logger.cpp \
         src/Main/Application.cpp \
         src/Main/main.cpp \
         src/Settings/Settings.cpp \
-    src/HelperClasses/Exception.cpp \
   src/TcpIp/TcpIpServer.cpp \
   src/TcpIp/TcpIpServerConnection.cpp
 
@@ -38,14 +38,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+  ../../Library/src/HelperClasses/Exception.h \
+  ../../Library/src/HelperClasses/Logger.h \
   src/Command/Command.h \
   src/Command/CommandReceiver.h \
   src/Command/CommandSet.h \
   src/CommandSet/ServerApplicationCommandReceiver.h \
   src/CommandSet/ServerApplicationCommandSet.h \
-  src/HelperClasses/Logger.h \
   src/Main/Application.h \
   src/Settings/Settings.h \
-    src/HelperClasses/Exception.h \
   src/TcpIp/TcpIpServer.h \
   src/TcpIp/TcpIpServerConnection.h

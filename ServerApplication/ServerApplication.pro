@@ -9,5 +9,4 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
-            LowerspotServer \
-            Externals/lowerspot-lib
+            LowerspotServer
