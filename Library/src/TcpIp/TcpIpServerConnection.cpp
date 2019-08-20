@@ -2,8 +2,8 @@
 // Files includes --------------------------
 #include "TcpIpServerConnection.h"
 
-// Project includes ------------------------
-#include "../HelperClasses/Logger.h"
+// Library includes ------------------------
+#include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
 #include <QHostAddress>

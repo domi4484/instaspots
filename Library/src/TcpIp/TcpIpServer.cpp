@@ -2,10 +2,10 @@
 // Files includes --------------------------
 #include "TcpIpServer.h"
 
-// Project includes ------------------------
+// Library includes ------------------------
 #include "TcpIpServerConnection.h"
-#include "../HelperClasses/Exception.h"
-#include "../HelperClasses/Logger.h"
+#include <HelperClasses/Exception.h>
+#include <HelperClasses/Logger.h>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 

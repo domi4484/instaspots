@@ -2,8 +2,8 @@
 // File includes ---------------------------
 #include "Settings.h"
 
-// Project includes ------------------------
-#include "../HelperClasses/Exception.h"
+// Library includes ------------------------
+#include <HelperClasses/Exception.h>
 
 // Qt includes -----------------------------
 #include <QCoreApplication>
