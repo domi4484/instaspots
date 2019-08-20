@@ -77,6 +77,10 @@ SOURCES += \
     src/cpp/WebApi/User.cpp \
     src/cpp/WebApi/UserRepository.cpp \
     ../../Library/src/HelperClasses/Logger.cpp \
+    ../../Library/src/Command/Command.cpp \
+    ../../Library/src/Command/CommandSet.cpp \
+    ../../Library/src/Command/CommandSender.cpp \
+    ../../Library/src/CommandSet/ServerApplicationCommandSet.cpp \
     ../../Library/src/TcpIp/TcpIpClientConnection.cpp
 
 HEADERS += \
@@ -107,6 +111,10 @@ HEADERS += \
     src/cpp/WebApi/User.h \
     src/cpp/WebApi/UserRepository.h \
     ../../Library/src/HelperClasses/Logger.h \
+    ../../Library/src/Command/Command.h \
+    ../../Library/src/Command/CommandSet.h \
+    ../../Library/src/Command/CommandSender.h \
+    ../../Library/src/CommandSet/ServerApplicationCommandSet.h \
     ../../Library/src/TcpIp/TcpIpClientConnection.h
 
 RESOURCES += src/qml.qrc

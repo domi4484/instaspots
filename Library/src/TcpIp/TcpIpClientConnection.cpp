@@ -22,7 +22,16 @@ void TcpIpClientConnection::Connect(const QString &addresse,
                              port);
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
 bool TcpIpClientConnection::WaitForConnected(int timeoutMs)
 {
   return m_QTcpSocket.waitForConnected(timeoutMs);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool TcpIpClientConnection::IsConnected()
+{
+  return m_QTcpSocket.state() == QTcpSocket::ConnectedState;
 }

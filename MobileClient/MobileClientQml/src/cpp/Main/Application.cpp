@@ -33,6 +33,8 @@
 // Library includes -----------------------
 #include <HelperClasses/Logger.h>
 #include <TcpIp/TcpIpClientConnection.h>
+#include <Command/CommandSender.h>
+#include <CommandSet/ServerApplicationCommandSet.h>
 
 // Qt includes -----------------------------
 #include <QQmlApplicationEngine>
@@ -50,6 +52,7 @@ Application::Application(int argc, char *argv[])
   , m_Settings              (nullptr)
   , m_PlateformDetail       (nullptr)
   , m_TcpIpClientConnection (nullptr)
+  , m_CommandSender         (nullptr)
   , m_ApplicationHelper     (nullptr)
   , m_LocationManager       (nullptr)
   , m_PictureCacher         (nullptr)
@@ -77,7 +80,7 @@ Application::Application(int argc, char *argv[])
   m_PlateformDetail = new PlateformDetail(this);
 
   // TcpIpClientConnection
-  m_TcpIpClientConnection = new TcpIpClientConnection(this);
+  startupApplication_TcpIpClientConnection();
 
   // Application helper
   m_ApplicationHelper = new ApplicationHelper(m_Settings,
@@ -156,6 +159,7 @@ Application::~Application()
   delete m_LocationManager;
   delete m_ApplicationHelper;
   delete m_TcpIpClientConnection;
+  delete m_CommandSender;
   delete m_PlateformDetail;
   delete m_Settings;
 
@@ -208,12 +212,7 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
   m_ApplicationHelper->startupTimerStop();
 
   // Try to connect to server
-  m_TcpIpClientConnection->Connect("127.0.0.1",
-                                   281118);
-  if(m_TcpIpClientConnection->WaitForConnected(3000) == false)
-  {
-    Logger::error("Timeout connecting to server.");
-  }
+  applicationStarted_TcpIpClientConnect();
 
   // Try to login
   if(m_CurrentUser->login() == false)
@@ -227,6 +226,45 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
   {
     return;
   }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::startupApplication_TcpIpClientConnection()
+{
+  m_TcpIpClientConnection = new TcpIpClientConnection(this);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::startupApplication_CommandSender()
+{
+  m_CommandSender = new CommandSender(m_TcpIpClientConnection);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Application::applicationStarted_TcpIpClientConnect()
+{
+  // Try to connect to server
+  Logger::info(QString("Connecting to server %1:%2").arg("127.0.0.1")
+                                                    .arg(281118));
+  m_TcpIpClientConnection->Connect("127.0.0.1",
+                                   281118);
+  if(m_TcpIpClientConnection->WaitForConnected(3000) == false)
+  {
+    Logger::error("Timeout connecting to server.");
+  }
+
+  // Get Server application version
+  if(m_TcpIpClientConnection->IsConnected())
+  {
+  }
+
+  Command_GetServerApplicationVersion command_GetServerApplicationVersion;
+  m_CommandSender->Transceive(command_GetServerApplicationVersion);
+
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

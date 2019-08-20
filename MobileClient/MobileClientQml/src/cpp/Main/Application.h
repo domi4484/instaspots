@@ -18,6 +18,7 @@
 
 // Forward declarations --------------------
 class Settings;
+class CommandSender;
 class PlateformDetail;
 class ApplicationHelper;
 class LocationManager;
@@ -45,6 +46,11 @@ private slots:
 
 private:
 
+  void startupApplication_TcpIpClientConnection();
+  void startupApplication_CommandSender();
+
+  void applicationStarted_TcpIpClientConnect();
+
   static const QString CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE;
 
   // Settings
@@ -55,6 +61,9 @@ private:
 
   // TcpIp client connection
   TcpIpClientConnection        *m_TcpIpClientConnection;
+
+  // CommandSender
+  CommandSender                *m_CommandSender;
 
   // Application helper
   ApplicationHelper            *m_ApplicationHelper;

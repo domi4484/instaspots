@@ -5,15 +5,20 @@
 #include "../Command/Command.h"
 #include "../Command/CommandSet.h"
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
 class Command_GetServerApplicationVersion : public Command
 {
 
 public:
 
-  Command_GetServerApplicationVersion();
+  Command_GetServerApplicationVersion()
+    : Command()
+  {;}
 
 };
 
+//-----------------------------------------------------------------------------------------------------------------------------
 
 class ServerApplicationCommandSet : public CommandSet
 {
