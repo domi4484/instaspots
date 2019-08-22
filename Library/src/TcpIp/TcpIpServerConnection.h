@@ -19,6 +19,10 @@ public:
                                  QObject *parent = nullptr);
   ~TcpIpServerConnection();
 
+signals:
+
+  void signal_ReceivedData(const QByteArray &qByteArray_Data);
+
 private slots:
 
   void slot_ReadyRead();

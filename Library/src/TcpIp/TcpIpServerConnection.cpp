@@ -4,6 +4,7 @@
 
 // Library includes ------------------------
 #include <HelperClasses/Logger.h>
+#include <Command/CommandReceiver.h>
 
 // Qt includes -----------------------------
 #include <QHostAddress>
@@ -36,5 +37,5 @@ TcpIpServerConnection::~TcpIpServerConnection()
 
 void TcpIpServerConnection::slot_ReadyRead()
 {
-  Logger::info(QString("ReadAllSocket: %1").arg(QString(QTcpSocket::readAll())));
+  emit signal_ReceivedData(QTcpSocket::readAll());
 }
