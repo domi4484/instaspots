@@ -23,6 +23,10 @@ protected:
 
   void incomingConnection(qintptr socketDescriptor) override;
 
+private slots:
+
+  void slot_TcpIpServerConnection_disconnected();
+
 private:
 
   // Link to CommandReceiver

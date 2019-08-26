@@ -4,9 +4,6 @@
 // Qt includes -----------------------------
 #include <QTcpSocket>
 
-// Forward declarations --------------------
-class CommandReceiver;
-
 class TcpIpServerConnection : public QTcpSocket
 {
 
@@ -15,7 +12,6 @@ class TcpIpServerConnection : public QTcpSocket
 public:
 
   explicit TcpIpServerConnection(qintptr socketDescriptor,
-                                 CommandReceiver *commandReceiver,
                                  QObject *parent = nullptr);
   ~TcpIpServerConnection();
 
@@ -26,11 +22,6 @@ signals:
 private slots:
 
   void slot_ReadyRead();
-
-private:
-
-  // Link to CommandReceiver
-  CommandReceiver *m_CommandReceiver;
 
 };
 

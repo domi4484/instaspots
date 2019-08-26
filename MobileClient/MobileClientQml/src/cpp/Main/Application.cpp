@@ -31,6 +31,7 @@
 #include "../WebApi/PictureUploader.h"
 
 // Library includes -----------------------
+#include <HelperClasses/Exception.h>
 #include <HelperClasses/Logger.h>
 #include <TcpIp/TcpIpClientConnection.h>
 #include <Command/CommandSender.h>
@@ -265,9 +266,14 @@ void Application::applicationStarted_TcpIpClientConnect()
   }
 
   Command_GetServerApplicationVersion command_GetServerApplicationVersion;
-  m_CommandSender->Transceive(command_GetServerApplicationVersion);
-
-
+  try
+  {
+    m_CommandSender->Transceive(command_GetServerApplicationVersion);
+  }
+  catch (const Exception &exception)
+  {
+    Logger::error(QString("Failed getting server version. Error: '%1'").arg(exception.GetText()));
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

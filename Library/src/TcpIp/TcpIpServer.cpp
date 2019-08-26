@@ -4,8 +4,9 @@
 
 // Library includes ------------------------
 #include "TcpIpServerConnection.h"
-#include <HelperClasses/Exception.h>
-#include <HelperClasses/Logger.h>
+#include "Command/CommandReceiver.h"
+#include "HelperClasses/Exception.h"
+#include "HelperClasses/Logger.h"
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -44,10 +45,24 @@ void TcpIpServer::StartListening(int port)
 void TcpIpServer::incomingConnection(qintptr socketDescriptor)
 {
   TcpIpServerConnection *tcpIpServerConnection = new TcpIpServerConnection(socketDescriptor,
-                                                                           m_CommandReceiver,
                                                                            this);
+  m_CommandReceiver->AddTcpIpServerConnection(tcpIpServerConnection);
+  QObject::connect(tcpIpServerConnection,
+                   SIGNAL(signal_ReceivedData(const QByteArray &)),
+                   m_CommandReceiver,
+                   SLOT(slot_ReceivedData(const QByteArray &)));
   QObject::connect(tcpIpServerConnection,
                    SIGNAL(disconnected()),
-                   tcpIpServerConnection,
-                   SLOT(deleteLater()));
+                   this,
+                   SLOT(slot_TcpIpServerConnection_disconnected()));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void TcpIpServer::slot_TcpIpServerConnection_disconnected()
+{
+  TcpIpServerConnection *tcpIpServerConnection = (TcpIpServerConnection *)QObject::sender();
+
+  m_CommandReceiver->RemoveTcpIpServerConnection(tcpIpServerConnection);
+  tcpIpServerConnection->deleteLater();
 }

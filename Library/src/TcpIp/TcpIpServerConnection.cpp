@@ -4,7 +4,6 @@
 
 // Library includes ------------------------
 #include <HelperClasses/Logger.h>
-#include <Command/CommandReceiver.h>
 
 // Qt includes -----------------------------
 #include <QHostAddress>
@@ -12,10 +11,8 @@
 //-----------------------------------------------------------------------------------------------------------------------------
 
 TcpIpServerConnection::TcpIpServerConnection(qintptr socketDescriptor,
-                                             CommandReceiver *commandReceiver,
                                              QObject *parent)
   : QTcpSocket(parent)
-  , m_CommandReceiver(commandReceiver)
 {
   QTcpSocket::setSocketDescriptor(socketDescriptor);
 
