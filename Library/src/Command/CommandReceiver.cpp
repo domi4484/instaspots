@@ -3,6 +3,7 @@
 #include "CommandReceiver.h"
 
 // Library includes ------------------------
+#include "Command.h"
 #include "HelperClasses/Logger.h"
 #include "TcpIp/TcpIpServerConnection.h"
 
@@ -35,4 +36,13 @@ void CommandReceiver::slot_ReceivedData(const QByteArray &data)
 {
   // new command , decode und in liste, poi delete later e via dalla lista quando viene risposto
   Logger::info(QString("CommandReceiver Message received: %1").arg(QString::fromLatin1(data)));
+
+  Command *command = new Command();
+
+  m_QMap_Command_TcpIpServerConnection.insert(command,
+                                             (TcpIpServerConnection *)QObject::sender());
+
+
+  command->SetFromReceiveCommandData(data);
+  
 }

@@ -12,6 +12,10 @@ public:
   Command(const QString &name = QString());
 
   QByteArray GetSendCommandData() const;
+  void SetFromReceiveResponseData(const QByteArray &data);
+
+  QByteArray GetSendResponseDate() const;
+  void SetFromReceiveCommandData(const QByteArray &data);
 
 private:
 
