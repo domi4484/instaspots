@@ -19,6 +19,7 @@ CONFIG -= app_bundle
 INCLUDEPATH += \
   src \
 
+# Common files
 include($$PWD/../../Library/Library.pri)
 
 

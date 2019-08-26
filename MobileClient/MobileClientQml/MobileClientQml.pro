@@ -50,6 +50,9 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
+# Common files
+include($$PWD/../../Library/Library.pri)
+
 SOURCES += \
     src/cpp/Main/main.cpp \
     src/cpp/Main/Application.cpp \
@@ -75,14 +78,7 @@ SOURCES += \
     src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
     src/cpp/WebApi/CurrentUser.cpp \
     src/cpp/WebApi/User.cpp \
-    src/cpp/WebApi/UserRepository.cpp \
-    ../../Library/src/HelperClasses/Exception.cpp \
-    ../../Library/src/HelperClasses/Logger.cpp \
-    ../../Library/src/Command/Command.cpp \
-    ../../Library/src/Command/CommandSet.cpp \
-    ../../Library/src/Command/CommandSender.cpp \
-    ../../Library/src/CommandSet/ServerApplicationCommandSet.cpp \
-    ../../Library/src/TcpIp/TcpIpClientConnection.cpp
+    src/cpp/WebApi/UserRepository.cpp
 
 HEADERS += \
     src/cpp/Main/main.h \
@@ -110,14 +106,7 @@ HEADERS += \
     src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/WebApi/CurrentUser.h \
     src/cpp/WebApi/User.h \
-    src/cpp/WebApi/UserRepository.h \
-    ../../Library/src/HelperClasses/Exception.h \
-    ../../Library/src/HelperClasses/Logger.h \
-    ../../Library/src/Command/Command.h \
-    ../../Library/src/Command/CommandSet.h \
-    ../../Library/src/Command/CommandSender.h \
-    ../../Library/src/CommandSet/ServerApplicationCommandSet.h \
-    ../../Library/src/TcpIp/TcpIpClientConnection.h
+    src/cpp/WebApi/UserRepository.h
 
 RESOURCES += src/qml.qrc
 
