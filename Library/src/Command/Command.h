@@ -11,16 +11,22 @@ public:
 
   Command(const QString &name = QString());
 
+  // Methods for client connection
   QByteArray GetSendCommandData() const;
   void SetFromReceiveResponseData(const QByteArray &data);
 
-  QByteArray GetSendResponseDate() const;
+  // Methods for server connection
+  QByteArray GetSendResponseData() const;
   void SetFromReceiveCommandData(const QByteArray &data);
 
 private:
 
+  // Methods for client connection
   void getValues_Command(QJsonObject &qJsonObject) const;
   void getValues_CommandParameters(QJsonObject &qJsonObject) const;
+
+  // Methods for server connection
+  void setValues_Command(const QJsonObject &qJsonObject);
 
   QString m_Name;
 

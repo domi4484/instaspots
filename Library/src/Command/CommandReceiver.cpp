@@ -42,7 +42,6 @@ void CommandReceiver::slot_ReceivedData(const QByteArray &data)
   m_QMap_Command_TcpIpServerConnection.insert(command,
                                              (TcpIpServerConnection *)QObject::sender());
 
-
   command->SetFromReceiveCommandData(data);
   
 }

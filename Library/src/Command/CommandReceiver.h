@@ -3,8 +3,10 @@
 
 // Qt includes -----------------------------
 #include <QObject>
+#include <QMap>
 
 // Class forward declarations --------------
+class Command;
 class TcpIpServerConnection;
 
 class CommandReceiver : public QObject
@@ -26,6 +28,8 @@ public slots:
 private:
 
   QList<TcpIpServerConnection *> m_QList_TcpIpServerConnection;
+
+  QMap<Command *, TcpIpServerConnection *> m_QMap_Command_TcpIpServerConnection;
 };
 
 #endif // COMMANDRECEIVER_H
