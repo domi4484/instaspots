@@ -46,5 +46,5 @@ void TcpIpClientConnection::SendData(const QByteArray &data)
 {
   if(m_QTcpSocket.write(data) < 0)
     throw Exception(QString("QTcpSocket can't send data. Error: '%1'")
-                           .arg(m_QTcpSocket.errorString()));
+                    .arg(m_QTcpSocket.errorString()));
 }

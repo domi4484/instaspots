@@ -16,6 +16,8 @@ public:
     : Command(QString("GetServerApplicationVersion"))
   {;}
 
+  void SetResponseParameter_ServerApplicationVersion(const QString &serverApplicationVersion);
+
 };
 
 //-----------------------------------------------------------------------------------------------------------------------------

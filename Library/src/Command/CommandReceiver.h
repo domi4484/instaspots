@@ -25,6 +25,10 @@ public slots:
 
   void slot_ReceivedData(const QByteArray &data);
 
+protected:
+
+  virtual void executeCommand(Command *command) = 0;
+
 private:
 
   QList<TcpIpServerConnection *> m_QList_TcpIpServerConnection;

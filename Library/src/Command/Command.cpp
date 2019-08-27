@@ -19,12 +19,18 @@ Command::Command(const QString &name)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString Command::GetName() const
+{
+  return m_Name;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QByteArray Command::GetSendCommandData() const
 {
   // Prepare JSON data
   QJsonObject qJsonObject;
   getValues_Command(qJsonObject);
-  getValues_CommandParameters(qJsonObject);
 
   QJsonDocument qJsonDocument(qJsonObject);
   return qJsonDocument.toJson();
@@ -34,14 +40,31 @@ QByteArray Command::GetSendCommandData() const
 
 void Command::SetFromReceiveResponseData(const QByteArray &data)
 {
+  QJsonParseError qJsonParseError;
+  QJsonDocument qJsonDocument = QJsonDocument::fromJson(data,
+                                                        &qJsonParseError);
 
+  if(qJsonParseError.error != QJsonParseError::NoError)
+  {
+    throw Exception(QString("Can't parse command response: '%1'; Error: '%2'")
+                            .arg(qJsonParseError.errorString())
+                            .arg(QString::fromUtf8(data)));
+  }
+  QJsonObject qJsonObject = qJsonDocument.object();
+
+  setValues_Response(qJsonObject);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 QByteArray Command::GetSendResponseData() const
 {
+  // Prepare JSON data
+  QJsonObject qJsonObject;
+  getValues_Response(qJsonObject);
 
+  QJsonDocument qJsonDocument(qJsonObject);
+  return qJsonDocument.toJson();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -65,22 +88,48 @@ void Command::SetFromReceiveCommandData(const QByteArray &data)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Command::setResponseParameter(const QString &responseParameterName,
+                                   const QString &responseParameterString)
+{
+  m_QJsonOject_ResponseParameter.insert(responseParameterName,
+                                        responseParameterString);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Command::getValues_Command(QJsonObject &qJsonObject) const
 {
   QJsonObject qJsonObject_Command;
   qJsonObject_Command.insert("Name", m_Name);
 
   qJsonObject.insert("Command", qJsonObject_Command);
+
+  qJsonObject.insert("CommandParameters", m_QJsonOject_CommandParameter);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Command::getValues_CommandParameters(QJsonObject &qJsonObject) const
+void Command::setValues_Response(const QJsonObject &qJsonObject)
+{
+  QJsonObject qJsonObject_Command = qJsonObject.value("Command").toObject();
+  if(qJsonObject_Command.isEmpty())
+    return;
+
+  m_Name = qJsonObject_Command.value("Name").toString();
+
+  m_QJsonOject_ResponseParameter = qJsonObject_Command.value("ResponseParameters").toObject();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Command::getValues_Response(QJsonObject &qJsonObject) const
 {
   QJsonObject qJsonObject_Command;
-//  qJsonObject_Command.insert("Name", m_Name);
+  qJsonObject_Command.insert("Name", m_Name);
 
-  qJsonObject.insert("CommandParameters", qJsonObject_Command);
+  qJsonObject.insert("Command", qJsonObject_Command);
+
+  qJsonObject.insert("ResponseParameters", m_QJsonOject_ResponseParameter);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -92,5 +141,7 @@ void Command::setValues_Command(const QJsonObject &qJsonObject)
     return;
 
   m_Name = qJsonObject_Command.value("Name").toString();
+
+  m_QJsonOject_CommandParameter = qJsonObject_Command.value("CommandParameters").toObject();
 }
 

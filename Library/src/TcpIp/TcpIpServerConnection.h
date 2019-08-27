@@ -15,6 +15,8 @@ public:
                                  QObject *parent = nullptr);
   ~TcpIpServerConnection();
 
+  void SendData(const QByteArray &data);
+
 signals:
 
   void signal_ReceivedData(const QByteArray &qByteArray_Data);

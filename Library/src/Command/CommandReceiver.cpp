@@ -43,5 +43,9 @@ void CommandReceiver::slot_ReceivedData(const QByteArray &data)
                                              (TcpIpServerConnection *)QObject::sender());
 
   command->SetFromReceiveCommandData(data);
-  
+
+  // Questo farlo asincrono un giorno
+  executeCommand(command);
+
+  m_QMap_Command_TcpIpServerConnection.value(command)->SendData(command->GetSendResponseData());
 }
