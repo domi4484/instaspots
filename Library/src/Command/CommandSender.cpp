@@ -10,16 +10,18 @@
 CommandSender::CommandSender(TcpIpClientConnection *tcpIpClientConnection)
   : m_TcpIpClientConnection(tcpIpClientConnection)
 {
-
+  connetto m_TcpIpClientConnection con un slot recevi risposta
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CommandSender::Transceive(const Command &command)
+void CommandSender::Transceive(Command *command)
 {
-  m_TcpIpClientConnection->SendData(command.GetSendCommandData());
+  qui inserisco il command in una lista
 
-  qui mettere il comando in una coda finche torna? comandi simultanei -> nuovi sender?
+  connetto command signal destroyed per ev rimuoverlo dalla lista
+
+  m_TcpIpClientConnection->SendData(command.GetSendCommandData());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

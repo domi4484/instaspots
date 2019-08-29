@@ -13,7 +13,7 @@ public:
 
   CommandSender(TcpIpClientConnection *tcpIpClientConnection);
 
-  void Transceive(const Command &command);
+  void Transceive(Command *command);
 
 private:
 
