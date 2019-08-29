@@ -20,6 +20,14 @@ public:
 
   void SendData(const QByteArray &data);
 
+signals:
+
+  void signal_ReceivedData(const QByteArray &qByteArray_Data);
+
+private slots:
+
+  void slot_QTcpSocket_ReadyRead();
+
 private:
 
   QTcpSocket m_QTcpSocket;

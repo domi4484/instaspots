@@ -11,7 +11,8 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Command::Command(const QString &name)
+Command::Command(const QString &name,
+                 QObject *parent)
   : m_Name(name)
 {
 
@@ -93,6 +94,14 @@ void Command::setResponseParameter(const QString &responseParameterName,
 {
   m_QJsonOject_ResponseParameter.insert(responseParameterName,
                                         responseParameterString);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Command::getResponseParameter(const QString &responseParameterName,
+                                   QString &responseParameterString)
+{
+  responseParameterString = m_QJsonOject_ResponseParameter.value(responseParameterName).toString();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

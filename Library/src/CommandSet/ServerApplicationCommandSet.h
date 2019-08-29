@@ -17,6 +17,7 @@ public:
   {;}
 
   void SetResponseParameter_ServerApplicationVersion(const QString &serverApplicationVersion);
+  QString GetResponseParameter_ServerApplicationVersion();
 
 };
 

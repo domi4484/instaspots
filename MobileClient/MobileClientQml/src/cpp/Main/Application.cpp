@@ -234,6 +234,15 @@ void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Application::slot_Command_GetServerApplicationVersion_ResponseReceived()
+{
+  Command_GetServerApplicationVersion *command_GetServerApplicationVersion = (Command_GetServerApplicationVersion *) QObject::sender();
+  Logger::info(QString("Lowerspot server version: %1").arg(command_GetServerApplicationVersion->GetResponseParameter_ServerApplicationVersion()));
+  command_GetServerApplicationVersion->deleteLater();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Application::startupApplication_TcpIpClientConnection()
 {
   m_TcpIpClientConnection = new TcpIpClientConnection(this);
@@ -265,10 +274,15 @@ void Application::applicationStarted_TcpIpClientConnect()
   {
   }
 
-  Command_GetServerApplicationVersion command_GetServerApplicationVersion;
+  Command_GetServerApplicationVersion *command_GetServerApplicationVersion = new Command_GetServerApplicationVersion();
   try
   {
-    m_CommandSender->Transceive(command_GetServerApplicationVersion);
+    m_CommandSender->Send(command_GetServerApplicationVersion);
+
+    QObject::connect(command_GetServerApplicationVersion,
+                     SIGNAL(signal_ResponseReceived()),
+                     this,
+                     SLOT(slot_Command_GetServerApplicationVersion_ResponseReceived()));
   }
   catch (const Exception &exception)
   {

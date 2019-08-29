@@ -14,7 +14,10 @@ TcpIpClientConnection::TcpIpClientConnection(QObject *parent)
   : QObject(parent)
   , m_QTcpSocket(this)
 {
-
+  QObject::connect(&m_QTcpSocket,
+                   SIGNAL(readyRead()),
+                   this,
+                   SLOT(slot_QTcpSocket_ReadyRead()));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -47,4 +50,11 @@ void TcpIpClientConnection::SendData(const QByteArray &data)
   if(m_QTcpSocket.write(data) < 0)
     throw Exception(QString("QTcpSocket can't send data. Error: '%1'")
                     .arg(m_QTcpSocket.errorString()));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void TcpIpClientConnection::slot_QTcpSocket_ReadyRead()
+{
+  emit signal_ReceivedData(m_QTcpSocket.readAll());
 }

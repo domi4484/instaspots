@@ -2,14 +2,19 @@
 #define COMMAND_H
 
 // Qt includes -----------------------------
+#include <QObject>
 #include <QString>
 #include <QJsonObject>
 
-class Command
+class Command : public QObject
 {
+
+  Q_OBJECT
+
 public:
 
-  Command(const QString &name = QString());
+  Command(const QString &name = QString(),
+          QObject *parent = nullptr);
 
   QString GetName() const;
 
@@ -25,6 +30,8 @@ protected:
 
   void setResponseParameter(const QString &responseParameterName,
                             const QString &responseParameterString);
+  void getResponseParameter(const QString &responseParameterName,
+                            QString &responseParameterString);
 
 private:
 
