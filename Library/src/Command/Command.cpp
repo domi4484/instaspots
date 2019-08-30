@@ -13,7 +13,8 @@
 
 Command::Command(const QString &name,
                  QObject *parent)
-  : m_Name(name)
+  : QObject(parent)
+  , m_Name(name)
 {
 
 }

@@ -41,10 +41,31 @@ void CommandSender::slot_ReceivedData(const QByteArray &data)
   // new command , decode e cerca in lista e rispondi
   Logger::info(QString("CommandSender Message received: %1").arg(QString::fromLatin1(data)));
 
-  Command command;
-  command.SetFromReceiveResponseData(data);
+  Command newCommand;
+  try
+  {
+    newCommand.SetFromReceiveResponseData(data);
+  }
+  catch(const Exception &exception)
+  {
 
+  }
 
+  Command *responseCommand(nullptr);
+  foreach (Command *listedCommand, m_QList_Commands)
+  {
+    if(listedCommand->GetName() == newCommand.GetName())
+    {
+      responseCommand = listedCommand;
+      break;
+    }
+  }
+
+  if(responseCommand == nullptr)
+      Logger::error(QString("Received command response has no correspondence in sent commands list. '%1'")
+                            .arg(QString::fromLatin1(data)));
+
+  listedCommand->SetResponseParameters(newCommand.GetResponseParameters);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
