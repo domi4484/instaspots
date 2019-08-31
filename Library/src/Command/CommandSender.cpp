@@ -68,7 +68,7 @@ void CommandSender::slot_ReceivedData(const QByteArray &data)
                             .arg(QString::fromLatin1(data)));
 
   // Set response parameters
-  responseCommand->SetResponseParameters(newCommand.GetResponseParameters);
+  responseCommand->SetResponseParameters(newCommand.GetResponseParameters());
 
   // Remove from list
 

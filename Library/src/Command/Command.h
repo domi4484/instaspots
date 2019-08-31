@@ -26,6 +26,9 @@ public:
   QByteArray GetSendResponseData() const;
   void SetFromReceiveCommandData(const QByteArray &data);
 
+  void SetResponseParameters(const QJsonObject &qJsonObject);
+  QJsonObject GetResponseParameters() const;
+
 protected:
 
   void setResponseParameter(const QString &responseParameterName,

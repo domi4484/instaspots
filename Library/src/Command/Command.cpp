@@ -90,6 +90,20 @@ void Command::SetFromReceiveCommandData(const QByteArray &data)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Command::SetResponseParameters(const QJsonObject &qJsonObject)
+{
+  m_QJsonOject_ResponseParameter = qJsonObject;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QJsonObject Command::GetResponseParameters() const
+{
+  return m_QJsonOject_ResponseParameter;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Command::setResponseParameter(const QString &responseParameterName,
                                    const QString &responseParameterString)
 {
