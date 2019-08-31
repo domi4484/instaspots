@@ -3,6 +3,7 @@
 #include "CommandSender.h"
 
 // Project includes ------------------------
+#include "HelperClasses/Exception.h"
 #include "HelperClasses/Logger.h"
 #include "TcpIp/TcpIpClientConnection.h"
 
@@ -48,7 +49,8 @@ void CommandSender::slot_ReceivedData(const QByteArray &data)
   }
   catch(const Exception &exception)
   {
-
+    Logger::error(QString("CommandSender::slot_ReceivedData '%1'")
+                          .arg(exception.GetText()));
   }
 
   Command *responseCommand(nullptr);
@@ -65,7 +67,11 @@ void CommandSender::slot_ReceivedData(const QByteArray &data)
       Logger::error(QString("Received command response has no correspondence in sent commands list. '%1'")
                             .arg(QString::fromLatin1(data)));
 
-  listedCommand->SetResponseParameters(newCommand.GetResponseParameters);
+  // Set response parameters
+  responseCommand->SetResponseParameters(newCommand.GetResponseParameters);
+
+  // Remove from list
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
