@@ -27,7 +27,7 @@ public slots:
 
 protected:
 
-  virtual void executeCommand(Command *command) = 0;
+  virtual bool executeCommand(Command *command) = 0;
 
 private:
 

@@ -26,11 +26,15 @@ include($$PWD/../../Library/Library.pri)
 SOURCES += \
   src/Main/main.cpp \
   src/Main/Application.cpp \
-  src/CommandReceiver/ServerApplicationCommandReceiver.cpp \
+  src/CommandReceiver/MainCommandReceiver.cpp \
+  src/CommandReceiver/SpotCommandReceiver.cpp \
+  src/CommandReceiver/ApplicationCommandReceiver.cpp \
   src/Settings/Settings.cpp
 
 HEADERS += \
   src/Main/Application.h \
-  src/CommandReceiver/ServerApplicationCommandReceiver.h \
+  src/CommandReceiver/MainCommandReceiver.h \
+  src/CommandReceiver/SpotCommandReceiver.h \
+  src/CommandReceiver/ApplicationCommandReceiver.h \
   src/Settings/Settings.h
 

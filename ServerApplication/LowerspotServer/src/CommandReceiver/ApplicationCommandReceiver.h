@@ -3,7 +3,7 @@
 
 // Library includes ------------------------
 #include <Command/CommandReceiver.h>
-#include <CommandSet/ServerApplicationCommandSet.h>
+#include <CommandSet/ApplicationCommandSet.h>
 
 class ServerApplicationCommandReceiver : public CommandReceiver
 {
@@ -14,7 +14,7 @@ public:
 
 protected:
 
-  virtual void executeCommand(Command *command);
+  virtual bool executeCommand(Command *command);
 
 private:
 

@@ -1,6 +1,6 @@
 
 // Files includes --------------------------
-#include "ServerApplicationCommandSet.h"
+#include "ApplicationCommandSet.h"
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -25,7 +25,6 @@ QString Command_GetServerApplicationVersion::GetResponseParameter_ServerApplicat
 
 ServerApplicationCommandSet::ServerApplicationCommandSet()
   : CommandSet()
-  , m_Command_GetServerApplicationVersion()
 {
 
 }

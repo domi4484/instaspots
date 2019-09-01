@@ -1,6 +1,6 @@
 
 // Files includes --------------------------
-#include "ServerApplicationCommandReceiver.h"
+#include "ApplicationCommandReceiver.h"
 
 // Qt includes -----------------------------
 #include <QCoreApplication>
@@ -15,7 +15,7 @@ ServerApplicationCommandReceiver::ServerApplicationCommandReceiver()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void ServerApplicationCommandReceiver::executeCommand(Command *command)
+bool ServerApplicationCommandReceiver::executeCommand(Command *command)
 {
   if(command->GetName() == Command_GetServerApplicationVersion().GetName())
     executeCommand_GetServerApplicationVersion((Command_GetServerApplicationVersion *)command);

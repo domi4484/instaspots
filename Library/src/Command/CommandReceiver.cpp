@@ -4,6 +4,7 @@
 
 // Library includes ------------------------
 #include "Command.h"
+#include "HelperClasses/Exception.h"
 #include "HelperClasses/Logger.h"
 #include "TcpIp/TcpIpServerConnection.h"
 
@@ -12,6 +13,7 @@
 CommandReceiver::CommandReceiver(QObject *parent)
   : QObject(parent)
   , m_QList_TcpIpServerConnection()
+  , m_QMap_Command_TcpIpServerConnection()
 {
 
 }
@@ -33,19 +35,31 @@ void CommandReceiver::RemoveTcpIpServerConnection(TcpIpServerConnection *tcpIpSe
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void CommandReceiver::slot_ReceivedData(const QByteArray &data)
-{
-  // new command , decode und in liste, poi delete later e via dalla lista quando viene risposto
-  Logger::info(QString("CommandReceiver Message received: %1").arg(QString::fromLatin1(data)));
-
+{ 
   Command *command = new Command();
+
+  try
+  {
+    command->SetFromReceiveCommandData(data);
+  }
+  catch (const Exception &exception)
+  {
+    Logger::info(QString("Can't decode message received: %1").arg(QString::fromLatin1(data)));
+    delete command;
+    return;
+  }
 
   m_QMap_Command_TcpIpServerConnection.insert(command,
                                              (TcpIpServerConnection *)QObject::sender());
 
-  command->SetFromReceiveCommandData(data);
-
   // Questo farlo asincrono un giorno
-  executeCommand(command);
+  if(executeCommand(command) == false)
+  {
+
+  }
 
   m_QMap_Command_TcpIpServerConnection.value(command)->SendData(command->GetSendResponseData());
+
+  m_QMap_Command_TcpIpServerConnection.remove(command);
+  delete command;
 }

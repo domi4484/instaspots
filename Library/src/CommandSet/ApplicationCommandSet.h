@@ -31,9 +31,6 @@ public:
 
   ServerApplicationCommandSet();
 
-private:
-
-  Command_GetServerApplicationVersion m_Command_GetServerApplicationVersion;
 };
 
 #endif // SERVERAPPLICATIONCOMMANDSET_H
