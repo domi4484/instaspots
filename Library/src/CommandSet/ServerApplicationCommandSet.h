@@ -2,6 +2,7 @@
 #ifndef SERVERAPPLICATIONCOMMANDSET_H
 #define SERVERAPPLICATIONCOMMANDSET_H
 
+// Project includes ------------------------
 #include "../Command/Command.h"
 #include "../Command/CommandSet.h"
 

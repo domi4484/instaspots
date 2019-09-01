@@ -5,6 +5,7 @@ INCLUDEPATH += \
   $$PWD/src
 
 SOURCES += \
+  $$PWD/src/CommandSet/SpotCommandSet.cpp \
   $$PWD/src/HelperClasses/Exception.cpp \
   $$PWD/src/HelperClasses/Logger.cpp \
   $$PWD/src/Command/Command.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
   $$PWD/src/TcpIp/TcpIpClientConnection.cpp
 
 HEADERS += \
+  $$PWD/src/CommandSet/SpotCommandSet.h \
   $$PWD/src/HelperClasses/Exception.h \
   $$PWD/src/HelperClasses/Logger.h \
   $$PWD/src/Command/Command.h \
