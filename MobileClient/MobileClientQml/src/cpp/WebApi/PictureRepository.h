@@ -21,6 +21,7 @@
 
 // Forward declarations --------------------
 class Picture;
+class CommandSender;
 
 class PictureRepository : public QObject
 {
@@ -29,10 +30,11 @@ class PictureRepository : public QObject
 
 public:
 
-  explicit PictureRepository(QObject *parent = 0);
+  explicit PictureRepository(CommandSender *commandSender,
+                             QObject *parent = 0);
   ~PictureRepository();
 
-  static void instanziate();
+  static void instanziate(CommandSender *commandSender);
   static void destroy();
 
   static PictureRepository *instance() { return s_PictureRepository; }
@@ -79,6 +81,9 @@ private:
   QMap<int, Picture *> m_QMap_Pictures;
 
   QMap<int, QList<Picture *> > m_QMap_Results;
+
+  // Link to CommandSender
+  CommandSender *m_CommandSender;
 };
 
 #endif // PICTUREREPOSITORY_H

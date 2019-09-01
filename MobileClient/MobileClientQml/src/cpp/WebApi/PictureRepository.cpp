@@ -36,11 +36,13 @@ PictureRepository *PictureRepository::s_PictureRepository = NULL;
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PictureRepository::PictureRepository(QObject *parent) :
+PictureRepository::PictureRepository(CommandSender *commandSender,
+                                     QObject *parent) :
   QObject(parent),
   m_RequestId(1),
   m_QMap_Pictures(),
-  m_QMap_Results()
+  m_QMap_Results(),
+  m_CommandSender(commandSender)
 {
 
 }
@@ -57,7 +59,7 @@ PictureRepository::~PictureRepository()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PictureRepository::instanziate()
+void PictureRepository::instanziate(CommandSender *commandSender)
 {
     if(s_PictureRepository != NULL)
     {
@@ -65,8 +67,7 @@ void PictureRepository::instanziate()
       return;
     }
 
-    s_PictureRepository = new PictureRepository();
-
+    s_PictureRepository = new PictureRepository(commandSender);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

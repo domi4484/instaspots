@@ -35,7 +35,7 @@
 #include <HelperClasses/Logger.h>
 #include <TcpIp/TcpIpClientConnection.h>
 #include <Command/CommandSender.h>
-#include <CommandSet/ServerApplicationCommandSet.h>
+#include <CommandSet/ApplicationCommandSet.h>
 
 // Qt includes -----------------------------
 #include <QQmlApplicationEngine>
@@ -97,7 +97,7 @@ Application::Application(int argc, char *argv[])
   m_PictureCacher = new PictureCacher(this);
 
   // Repositories
-  PictureRepository::instanziate();
+  PictureRepository::instanziate(m_CommandSender);
   SpotRepository::instanziate(m_LocationManager);
   UserRepository::instanziate();
 
