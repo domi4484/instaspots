@@ -14,7 +14,7 @@
 
 // Project includes ------------------------
 #include "../Settings/Settings.h"
-#include "CommandReceiver/ServerApplicationCommandReceiver.h"
+#include "CommandReceiver/ApplicationCommandReceiver.h"
 
 // Library includes ------------------------
 #include <HelperClasses/Exception.h>
