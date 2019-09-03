@@ -36,7 +36,7 @@ const QString Application::_CONST::SETTINGS::FILENAME("Settings");
 Application::Application(int argc, char *argv[])
   : QCoreApplication(argc, argv)
   , m_Settings(nullptr)
-  , m_ServerApplicationCommandReceiver(nullptr)
+  , m_ApplicationCommandReceiver(nullptr)
   , m_TcpIpServer(nullptr)
 {
   // Application informations
@@ -67,7 +67,7 @@ Application::Application(int argc, char *argv[])
 Application::~Application()
 {
   delete m_TcpIpServer;
-  delete m_ServerApplicationCommandReceiver;
+  delete m_ApplicationCommandReceiver;
   delete m_Settings;
 
   Logger::destroy();
@@ -140,14 +140,14 @@ void Application::startupApplication_Settings()
 
 void Application::startupApplication_CommandReceiver()
 {
-  m_ServerApplicationCommandReceiver = new ServerApplicationCommandReceiver();
+  m_ApplicationCommandReceiver = new ApplicationCommandReceiver();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void Application::startupApplication_TcpIpServer()
 {
-  m_TcpIpServer = new TcpIpServer(m_ServerApplicationCommandReceiver,
+  m_TcpIpServer = new TcpIpServer(m_ApplicationCommandReceiver,
                                   this);
 
   try
