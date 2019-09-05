@@ -1,14 +1,18 @@
 
 // Files includes --------------------------
 #include "ApplicationCommandReceiver.h"
+#include "Entity/EntityPicture.h"
+#include "Database/DatabaseManager.h"
+#include "Database/DatabaseTablePicture.h"
 
 // Qt includes -----------------------------
 #include <QCoreApplication>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-ApplicationCommandReceiver::ApplicationCommandReceiver()
+ApplicationCommandReceiver::ApplicationCommandReceiver(DatabaseManager *databaseManager)
   : CommandReceiver()
+  , m_DatabaseManager(databaseManager)
 {
 
 }
@@ -71,7 +75,7 @@ void ApplicationCommandReceiver::executeCommand_GetSpotsByUser(Command_GetSpotsB
 
 void ApplicationCommandReceiver::executeCommand_GetPicturesByNewest(Command_GetPicturesByNewest *command)
 {
-
+  QList<Pictures> qList_Pictures = m_DatabaseManager->GetTablePicture()->GetByNewest();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

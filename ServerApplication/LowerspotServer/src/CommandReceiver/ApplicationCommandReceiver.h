@@ -6,12 +6,15 @@
 #include <CommandSet/SpotCommandSet.h>
 #include <CommandSet/ApplicationCommandSet.h>
 
+// Forward declarations --------------------
+class DatabaseManager;
+
 class ApplicationCommandReceiver : public CommandReceiver
 {
 
 public:
 
-  ApplicationCommandReceiver();
+  ApplicationCommandReceiver(DatabaseManager *databaseManager);
 
 protected:
 
@@ -35,6 +38,9 @@ private:
 
   // Application commands
   void executeCommand_GetServerApplicationVersion(Command_GetServerApplicationVersion *command);
+
+  // Link to DatabaseManager
+  DatabaseManager *m_DatabaseManager;
 
 };
 
