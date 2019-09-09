@@ -20,6 +20,7 @@
 class Settings;
 class ApplicationCommandReceiver;
 class TcpIpServer;
+class DatabaseManager;
 
 class Application : public QCoreApplication
 {
@@ -50,11 +51,15 @@ private:
 
   void startupApplication_Logger();
   void startupApplication_Settings();
+  void startupApplication_DatabaseManager();
   void startupApplication_CommandReceiver();
   void startupApplication_TcpIpServer();
 
   // Settings
   Settings *m_Settings;
+
+  // Database manager
+  DatabaseManager *m_DatabaseManager;
 
   // CommandSet
   ApplicationCommandReceiver *m_ApplicationCommandReceiver;

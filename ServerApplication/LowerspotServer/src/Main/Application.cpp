@@ -14,6 +14,7 @@
 
 // Project includes ------------------------
 #include "../Settings/Settings.h"
+#include "Database/DatabaseManager.h"
 #include "CommandReceiver/ApplicationCommandReceiver.h"
 
 // Library includes ------------------------
@@ -36,6 +37,7 @@ const QString Application::_CONST::SETTINGS::FILENAME("Settings");
 Application::Application(int argc, char *argv[])
   : QCoreApplication(argc, argv)
   , m_Settings(nullptr)
+  , m_DatabaseManager(nullptr)
   , m_ApplicationCommandReceiver(nullptr)
   , m_TcpIpServer(nullptr)
 {
@@ -55,6 +57,9 @@ Application::Application(int argc, char *argv[])
   // startupApplication Settings
   startupApplication_Settings();
 
+  // startupApplication DatabaseManager
+  startupApplication_DatabaseManager();
+
   // startupApplication ServerApplicationCommandReceiver
   startupApplication_CommandReceiver();
 
@@ -68,6 +73,7 @@ Application::~Application()
 {
   delete m_TcpIpServer;
   delete m_ApplicationCommandReceiver;
+  delete m_DatabaseManager;
   delete m_Settings;
 
   Logger::destroy();
@@ -138,9 +144,16 @@ void Application::startupApplication_Settings()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void Application::startupApplication_DatabaseManager()
+{
+  m_DatabaseManager = new DatabaseManager(this);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void Application::startupApplication_CommandReceiver()
 {
-  m_ApplicationCommandReceiver = new ApplicationCommandReceiver();
+  m_ApplicationCommandReceiver = new ApplicationCommandReceiver(m_DatabaseManager);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

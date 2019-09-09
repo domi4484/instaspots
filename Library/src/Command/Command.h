@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QString>
 #include <QJsonObject>
+#include <QDateTime>
 
 class Command : public QObject
 {
@@ -31,10 +32,39 @@ public:
 
 protected:
 
-  void setResponseParameter(const QString &responseParameterName,
-                            const QString &responseParameterString);
-  void getResponseParameter(const QString &responseParameterName,
-                            QString &responseParameterString);
+  // Set Command Parameters
+  void setCommandParameter(const QString &parameterName,
+                           int parameterValue);
+  void setCommandParameter(const QString &parameterName,
+                           const QString &parameterValue);
+  void setCommandParameter(const QString &parameterName,
+                           const QDateTime &parameterValue);
+
+  // Get Command Parameters
+  int getCommandParameter(const QString &parameterName,
+                          int parameterValueDefault = 0) const;
+  QString getCommandParameter(const QString &parameterName,
+                              const QString &parameterValueDefault = QString()) const;
+  QDateTime getCommandParameter(const QString &parameterName,
+                                const QDateTime &parameterValueDefault = QDateTime()) const;
+
+  // Set Response Parameters
+  void setResponseParameter(const QString &parameterName,
+                            int parameterValue);
+  void setResponseParameter(const QString &parameterName,
+                            const QString &parameterValue);
+  void setResponseParameter(const QString &parameterName,
+                            const QDateTime &parameterValue);
+
+  // Get Response Parameters
+  int getResponseParameter(const QString &parameterName,
+                           int parameterValueDefault = 0) const;
+  QString getResponseParameter(const QString &parameterName,
+                               const QString &parameterValueDefault = QString()) const;
+  QDateTime getResponseParameter(const QString &parameterName,
+                                 const QDateTime &parameterValueDefault = QDateTime()) const;
+
+
 
 private:
 

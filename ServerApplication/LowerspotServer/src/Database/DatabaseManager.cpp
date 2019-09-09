@@ -23,11 +23,11 @@ const QString DatabaseManager::_CONST::TIMESTAMP_FORMAT ("yyyy-MM-dd hh:mm:ss");
 
 DatabaseManager::DatabaseManager(QObject *parent)
   : QObject(parent)
-  , m_DatabaseTableEnergia(nullptr)
+  , m_DatabaseTablePicture(nullptr)
 {
   m_QSqlDatabase = QSqlDatabase::addDatabase("QSQLITE");
 
-  m_DatabaseTableEnergia = new DatabaseTablePicture(&m_QSqlDatabase,
+  m_DatabaseTablePicture = new DatabaseTablePicture(&m_QSqlDatabase,
                                                     this);
 }
 
@@ -35,7 +35,7 @@ DatabaseManager::DatabaseManager(QObject *parent)
 
 DatabaseManager::~DatabaseManager()
 {
-  delete m_DatabaseTableEnergia;
+  delete m_DatabaseTablePicture;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void DatabaseManager::TransactionRollback()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-DatabaseTablePicture *DatabaseManager::GetTableEnergia()
+DatabaseTablePicture *DatabaseManager::GetTablePicture()
 {
-  return m_DatabaseTableEnergia;
+  return m_DatabaseTablePicture;
 }

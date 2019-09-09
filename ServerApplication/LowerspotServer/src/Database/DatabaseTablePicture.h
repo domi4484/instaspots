@@ -1,7 +1,10 @@
 #ifndef DATABASETABLE_ENERGIA_H
 #define DATABASETABLE_ENERGIA_H
 
-// Qt includes --------------------------------------------
+// Project includes ------------------------
+#include "Entity/EntityPicture.h"
+
+// Qt includes -----------------------------
 #include <QObject>
 
 class QSqlDatabase;
@@ -47,6 +50,8 @@ public:
                              const QDate &qDate_To) const;
   QVariantMap GetOldestRow() const;
   QVariantMap GetNewestRow() const;
+
+  QList<EntityPicture> GetByNewest(const QDateTime &qDateTime_Start, int count) const;
 
 private:
 

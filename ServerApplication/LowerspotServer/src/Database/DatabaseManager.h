@@ -34,13 +34,13 @@ public:
   void TransactionCommit();
   void TransactionRollback();
 
-  DatabaseTablePicture *GetTableEnergia();
+  DatabaseTablePicture *GetTablePicture();
 
 private:
 
   QSqlDatabase m_QSqlDatabase;
 
-  DatabaseTablePicture *m_DatabaseTableEnergia;
+  DatabaseTablePicture *m_DatabaseTablePicture;
 
 };
 

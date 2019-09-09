@@ -57,6 +57,15 @@ public:
     : Command(QString("GetPicturesByNewest"))
   {;}
 
+  void SetCommandParameter_StartDatetime(const QDateTime &qDateTime_Start);
+  QDateTime GetResponseParameter_StartDatetime();
+
+  void SetCommandParameter_Count(int count);
+  int GetResponseParameter_Count();
+
+  void SetResponseParameter_PictureList(const QString &serverApplicationVersion);
+  QString GetResponseParameter_EntityPictureList();
+
 };
 
 

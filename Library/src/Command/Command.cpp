@@ -104,19 +104,124 @@ QJsonObject Command::GetResponseParameters() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Command::setResponseParameter(const QString &responseParameterName,
-                                   const QString &responseParameterString)
+void Command::setCommandParameter(const QString &parameterName,
+                                  int parameterValue)
 {
-  m_QJsonOject_ResponseParameter.insert(responseParameterName,
-                                        responseParameterString);
+  m_QJsonOject_CommandParameter.insert(parameterName,
+                                       parameterValue);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void Command::getResponseParameter(const QString &responseParameterName,
-                                   QString &responseParameterString)
+void Command::setCommandParameter(const QString &parameterName,
+                                  const QString &parameterValue)
 {
-  responseParameterString = m_QJsonOject_ResponseParameter.value(responseParameterName).toString();
+  m_QJsonOject_CommandParameter.insert(parameterName,
+                                       parameterValue);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Command::setCommandParameter(const QString &parameterName,
+                                  const QDateTime &parameterValue)
+{
+  m_QJsonOject_CommandParameter.insert(parameterName,
+                                       parameterValue.toString(Qt::ISODateWithMs));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int Command::getCommandParameter(const QString &parameterName,
+                                 int parameterValueDefault) const
+{
+  if(m_QJsonOject_CommandParameter.value(parameterName).isUndefined() == true)
+    return parameterValueDefault;
+
+  return m_QJsonOject_CommandParameter.value(parameterName).toInt();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString Command::getCommandParameter(const QString &parameterName,
+                                     const QString &parameterValueDefault) const
+{
+  if(m_QJsonOject_CommandParameter.value(parameterName).isUndefined() == true)
+    return parameterValueDefault;
+
+  return m_QJsonOject_CommandParameter.value(parameterName).toString();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QDateTime Command::getCommandParameter(const QString &parameterName,
+                                       const QDateTime &parameterValueDefault) const
+{
+  if(m_QJsonOject_CommandParameter.value(parameterName).isUndefined() == true)
+    return parameterValueDefault;
+
+  return QDateTime::fromString(m_QJsonOject_CommandParameter.value(parameterName).toString(),
+                               Qt::ISODateWithMs);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Command::setResponseParameter(const QString &parameterName,
+                                   int parameterValue)
+{
+  m_QJsonOject_ResponseParameter.insert(parameterName,
+                                        parameterValue);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Command::setResponseParameter(const QString &parameterName,
+                                   const QString &parameterValue)
+{
+  m_QJsonOject_ResponseParameter.insert(parameterName,
+                                        parameterValue);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Command::setResponseParameter(const QString &parameterName,
+                                   const QDateTime &parameterValue)
+{
+  m_QJsonOject_ResponseParameter.insert(parameterName,
+                                        parameterValue.toString(Qt::ISODateWithMs));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int Command::getResponseParameter(const QString &parameterName,
+                                  int parameterValueDefault) const
+{
+  if(m_QJsonOject_ResponseParameter.value(parameterName).isUndefined() == true)
+    return parameterValueDefault;
+
+  return m_QJsonOject_ResponseParameter.value(parameterName).toInt();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString Command::getResponseParameter(const QString &parameterName,
+                                      const QString &parameterValueDefault) const
+{
+  if(m_QJsonOject_ResponseParameter.value(parameterName).isUndefined() == true)
+    return parameterValueDefault;
+
+  return m_QJsonOject_ResponseParameter.value(parameterName).toString();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QDateTime Command::getResponseParameter(const QString &parameterName,
+                                        const QDateTime &parameterValueDefault) const
+{
+  if(m_QJsonOject_ResponseParameter.value(parameterName).isUndefined() == true)
+    return parameterValueDefault;
+
+  return QDateTime::fromString(m_QJsonOject_ResponseParameter.value(parameterName).toString(),
+                               Qt::ISODateWithMs);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

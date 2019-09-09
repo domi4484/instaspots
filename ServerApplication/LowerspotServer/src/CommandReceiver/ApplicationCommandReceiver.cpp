@@ -5,6 +5,10 @@
 #include "Database/DatabaseManager.h"
 #include "Database/DatabaseTablePicture.h"
 
+// Library includes ------------------------
+#include <HelperClasses/Exception.h>
+#include <HelperClasses/Logger.h>
+
 // Qt includes -----------------------------
 #include <QCoreApplication>
 
@@ -75,7 +79,13 @@ void ApplicationCommandReceiver::executeCommand_GetSpotsByUser(Command_GetSpotsB
 
 void ApplicationCommandReceiver::executeCommand_GetPicturesByNewest(Command_GetPicturesByNewest *command)
 {
-  QList<Pictures> qList_Pictures = m_DatabaseManager->GetTablePicture()->GetByNewest();
+  QList<EntityPicture> qList_EntityPicture = m_DatabaseManager->GetTablePicture()->GetByNewest(QDateTime::currentDateTime(),
+                                                                                               20);
+
+  foreach (const EntityPicture &entityPicture, qList_EntityPicture)
+  {
+    Logger::info(QString("Pic url %1").arg(entityPicture.Get_Url()));
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -97,12 +107,18 @@ void ApplicationCommandReceiver::executeCommand_GetPicturesByUser(Command_GetPic
 void ApplicationCommandReceiver::executeCommand_UploadPictureToSpot(Command_UploadPictureToSpot *command)
 {
 
+//  // Add score to user
+//  $user->addReputation(10);
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void ApplicationCommandReceiver::executeCommand_UploadNewSpot(Command_UploadNewSpot *command)
 {
+
+//  // Add score to user
+//  $user->addReputation(10);
 
 }
 
@@ -124,14 +140,55 @@ void ApplicationCommandReceiver::executeCommand_SignalDisappearedSpot(Command_Si
 
 void ApplicationCommandReceiver::executeCommand_PictureLike(Command_PictureLike *command)
 {
+//  public function addLiker(\Instaspots\UserBundle\Entity\User $liker)
+//      {
+//        // Check if already liked
+//        if($this->likers->contains($liker))
+//          return $this;
 
+//        // Assign reputation point to liked user
+//        if($this->user != $liker)
+//        {
+//          $this->user->notifyLikedPicture($this);
+//        }
+
+//        // Assign score point to spot
+//        $this->spot->addScore(1);
+
+//        // Append liker
+//        $this->likers[] = $liker;
+
+//        return $this;
+//      }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void ApplicationCommandReceiver::executeCommand_PictureUnlike(Command_PictureUnlike *command)
 {
+//  /**
+//   * Remove likers
+//   *
+//   * @param \Instaspots\UserBundle\Entity\User $likers
+//   */
+//  public function removeLiker(\Instaspots\UserBundle\Entity\User $liker)
+//  {
+//    // Check if already unliked
+//    if($this->likers->contains($liker) == false)
+//      return $this;
 
+//    // Remove reputation point to liked user
+//    if($this->user != $liker)
+//    {
+//      $this->user->removeReputation(1);
+//    }
+
+//    // Remove score point from spot
+//    $this->spot->removeScore(1);
+
+//    // Remove liker
+//    $this->likers->removeElement($liker);
+//  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
