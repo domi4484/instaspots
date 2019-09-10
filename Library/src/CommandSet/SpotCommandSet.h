@@ -7,6 +7,17 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+class CommandParameter_PictureList
+{
+
+public:
+
+  CommandParameter_PictureList()
+  {;}
+};
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 class Command_GetSpot : public Command
 {
 
@@ -63,8 +74,8 @@ public:
   void SetCommandParameter_Count(int count);
   int GetResponseParameter_Count();
 
-  void SetResponseParameter_PictureList(const QString &serverApplicationVersion);
-  QString GetResponseParameter_EntityPictureList();
+  void SetResponseParameter_PictureList(const CommandParameter_PictureList &commandParameter_PictureList);
+  CommandParameter_PictureList GetResponseParameter_EntityPictureList();
 
 };
 
