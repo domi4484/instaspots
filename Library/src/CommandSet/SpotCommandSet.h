@@ -7,6 +7,23 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+class CommandParameter_Picture
+{
+
+public:
+
+  CommandParameter_Picture()
+  {;}
+
+  QJsonObject ToJsonObject() const;
+  void FromJsonObject(const QJsonObject &qJsonObject);
+
+private:
+
+};
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 class CommandParameter_PictureList
 {
 
@@ -14,6 +31,14 @@ public:
 
   CommandParameter_PictureList()
   {;}
+
+  QJsonObject ToJsonObject() const;
+  void FromJsonObject(const QJsonObject &qJsonObject);
+
+private:
+
+  QList<CommandParameter_Picture> m_QList_CommandParameterPicture;
+
 };
 
 //-----------------------------------------------------------------------------------------------------------------------------

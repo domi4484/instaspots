@@ -4,7 +4,30 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-SpotCommandSet::SpotCommandSet()
+
+QJsonObject CommandParameter_Picture::ToJsonObject() const
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void CommandParameter_Picture::FromJsonObject(const QJsonObject &qJsonObject)
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+
+QJsonObject CommandParameter_PictureList::ToJsonObject() const
+{
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void CommandParameter_PictureList::FromJsonObject(const QJsonObject &qJsonObject)
 {
 
 }
@@ -42,3 +65,27 @@ int Command_GetPicturesByNewest::GetResponseParameter_Count()
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
+
+void Command_GetPicturesByNewest::SetResponseParameter_PictureList(const CommandParameter_PictureList &commandParameter_PictureList)
+{
+  Command::setResponseParameter("PictureList",
+                                commandParameter_PictureList.ToJsonObject());
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+CommandParameter_PictureList Command_GetPicturesByNewest::GetResponseParameter_EntityPictureList()
+{
+  CommandParameter_PictureList commandParameter_PictureList;
+  commandParameter_PictureList.FromJsonObject(Command::getResponseParameter("PictureList",
+                                                                            QJsonObject()));
+  return commandParameter_PictureList;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+SpotCommandSet::SpotCommandSet()
+{
+
+}
+

@@ -39,6 +39,8 @@ protected:
                            const QString &parameterValue);
   void setCommandParameter(const QString &parameterName,
                            const QDateTime &parameterValue);
+  void setCommandParameter(const QString &parameterName,
+                           const QJsonObject &parameterValue);
 
   // Get Command Parameters
   int getCommandParameter(const QString &parameterName,
@@ -47,6 +49,8 @@ protected:
                               const QString &parameterValueDefault = QString()) const;
   QDateTime getCommandParameter(const QString &parameterName,
                                 const QDateTime &parameterValueDefault = QDateTime()) const;
+  QJsonObject getCommandParameter(const QString &parameterName,
+                                  const QJsonObject &parameterValueDefault = QJsonObject()) const;
 
   // Set Response Parameters
   void setResponseParameter(const QString &parameterName,
@@ -55,6 +59,8 @@ protected:
                             const QString &parameterValue);
   void setResponseParameter(const QString &parameterName,
                             const QDateTime &parameterValue);
+  void setResponseParameter(const QString &parameterName,
+                            const QJsonObject &parameterValue);
 
   // Get Response Parameters
   int getResponseParameter(const QString &parameterName,
@@ -63,6 +69,8 @@ protected:
                                const QString &parameterValueDefault = QString()) const;
   QDateTime getResponseParameter(const QString &parameterName,
                                  const QDateTime &parameterValueDefault = QDateTime()) const;
+  QJsonObject getResponseParameter(const QString &parameterName,
+                                   const QJsonObject &parameterValueDefault = QJsonObject()) const;
 
 
 
