@@ -7,7 +7,7 @@
 
 QJsonObject CommandParameter_Picture::ToJsonObject() const
 {
-
+  return QJsonObject();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ void CommandParameter_Picture::FromJsonObject(const QJsonObject &qJsonObject)
 
 QJsonObject CommandParameter_PictureList::ToJsonObject() const
 {
-
+  return QJsonObject();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

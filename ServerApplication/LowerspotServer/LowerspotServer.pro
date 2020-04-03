@@ -19,9 +19,16 @@ CONFIG -= app_bundle
 INCLUDEPATH += \
   src \
 
+# Destination directory
+DESTDIR = bin
+
+# Generated files directory
+OBJECTS_DIR = build
+MOC_DIR = build
+UI_DIR = build
+
 # Common files
 include($$PWD/../../Library/Library.pri)
-
 
 SOURCES += \
   src/Database/DatabaseManager.cpp \
