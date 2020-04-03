@@ -149,7 +149,7 @@ void Settings::createDefault_Values_Logger()
 
 void Settings::createDefault_Values_TcpIpServer()
 {
-  m_Values.tcpIpServer.m_Port = 281118;
+  m_Values.tcpIpServer.m_Port = 2811;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

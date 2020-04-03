@@ -46,6 +46,8 @@
 
 const QString Application::CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE("developmentMode");
 
+const int Application::CONST_TCPIPCLIENTCONNECTION_PORT(2811);
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Application::Application(int argc, char *argv[])
@@ -261,9 +263,9 @@ void Application::applicationStarted_TcpIpClientConnect()
 {
   // Try to connect to server
   Logger::info(QString("Connecting to server %1:%2").arg("127.0.0.1")
-                                                    .arg(281118));
+                                                    .arg(CONST_TCPIPCLIENTCONNECTION_PORT));
   m_TcpIpClientConnection->Connect("127.0.0.1",
-                                   281118);
+                                   CONST_TCPIPCLIENTCONNECTION_PORT);
   if(m_TcpIpClientConnection->WaitForConnected(3000) == false)
   {
     Logger::error("Timeout connecting to server.");
