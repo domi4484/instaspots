@@ -1,14 +1,20 @@
 
-// Project includes ---------------------------------------
+// Project includes ------------------------
 #include "Application.h"
+
+// Qt includes -----------------------------
+#include <QDir>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
 {
-    Application application(argc, argv);
+  //Set the current directory to the current program path
+  QDir::setCurrent(QFileInfo(argv[0]).absolutePath());
 
-    return application.exec();
+  Application application(argc, argv);
+
+  return application.exec();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
