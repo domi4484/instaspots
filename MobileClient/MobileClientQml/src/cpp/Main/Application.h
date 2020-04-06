@@ -55,6 +55,7 @@ private:
   void applicationStarted_TcpIpClientConnect();
 
   static const QString CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE;
+  static const QString CONST_TCPIPCLIENTCONNECTION_SERVER;
   static const int     CONST_TCPIPCLIENTCONNECTION_PORT;
 
   // Settings
