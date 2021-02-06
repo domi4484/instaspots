@@ -22,8 +22,7 @@ QT += qml quick quickcontrols2 widgets positioning location multimedia
 CONFIG   += console debug
 
 INCLUDEPATH += \
-  src/cpp \
-  ../../Library/src
+  src/cpp
 
 # Hight dpi support off
 QT_AUTO_SCREEN_SCALE_FACTOR=1
@@ -50,9 +49,6 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
-# Common files
-include($$PWD/../../Library/Library.pri)
-
 SOURCES += \
     src/cpp/Main/main.cpp \
     src/cpp/Main/Application.cpp \
@@ -62,20 +58,22 @@ SOURCES += \
     src/cpp/WebApi/WebApi.cpp \
     src/cpp/WebApi/WebApiCommand.cpp \
     src/cpp/WebApi/WebApiError.cpp \
-    src/cpp/HelperClasses/StringHelper.cpp \
     src/cpp/WebApi/PictureUploader.cpp \
+    src/cpp/HelperClasses/StringHelper.cpp \
     src/cpp/HelperClasses/PlateformDetail.cpp \
     src/cpp/HelperClasses/LocationManager.cpp \
     src/cpp/HelperClasses/PictureCacher.cpp \
     src/cpp/HelperClasses/ApplicationHelper.cpp \
+    src/cpp/HelperClasses/Exception.cpp \
+    src/cpp/HelperClasses/Logger.cpp \
+    src/cpp/HelperClasses/UltraQmlAccessManagerFactory.cpp \
+    src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
     src/cpp/Settings/Settings.cpp \
     src/cpp/WebApi/SpotRepository.cpp \
     src/cpp/WebApi/PictureRepository.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
     src/cpp/WebApi/SpotsModel.cpp \
     src/cpp/External/SimpleCrypt.cpp \
-    src/cpp/HelperClasses/UltraQmlAccessManagerFactory.cpp \
-    src/cpp/HelperClasses/UltraNetworkAccessManager.cpp \
     src/cpp/WebApi/CurrentUser.cpp \
     src/cpp/WebApi/User.cpp \
     src/cpp/WebApi/UserRepository.cpp
@@ -89,12 +87,16 @@ HEADERS += \
     src/cpp/WebApi/WebApi.h \
     src/cpp/WebApi/WebApiCommand.h \
     src/cpp/WebApi/WebApiError.h \
-    src/cpp/HelperClasses/StringHelper.h \
     src/cpp/WebApi/PictureUploader.h \
+    src/cpp/HelperClasses/StringHelper.h \
     src/cpp/HelperClasses/PlateformDetail.h \
     src/cpp/HelperClasses/LocationManager.h \
     src/cpp/HelperClasses/PictureCacher.h \
     src/cpp/HelperClasses/ApplicationHelper.h \
+    src/cpp/HelperClasses/Exception.cpp \
+    src/cpp/HelperClasses/Logger.cpp \
+    src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
+    src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/Settings/Settings.h \
     src/cpp/Settings/Secret.h \
     src/cpp/WebApi/SpotRepository.h \
@@ -102,8 +104,6 @@ HEADERS += \
     src/cpp/WebApi/PicturesModel.h \
     src/cpp/WebApi/SpotsModel.h \
     src/cpp/External/SimpleCrypt.h \
-    src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
-    src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/WebApi/CurrentUser.h \
     src/cpp/WebApi/User.h \
     src/cpp/WebApi/UserRepository.h
