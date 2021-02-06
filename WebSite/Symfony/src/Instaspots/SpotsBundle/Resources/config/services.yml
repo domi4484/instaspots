@@ -1,4 +1,0 @@
-services:
-#    instaspots_spots.example:
-#        class: Instaspots\SpotsBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
