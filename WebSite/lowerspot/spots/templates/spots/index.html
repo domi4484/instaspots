@@ -1,0 +1,33 @@
+{% load static %}
+      
+<head>
+  <title>Lowerspot - News</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+</head>
+
+<body>
+
+  <h1>News</h1>
+
+  {% if latest_picture_list %}
+    <ul>
+      {% get_static_prefix as STATIC_PREFIX %}
+      
+      {% for picture in latest_picture_list %}
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Picture of <a href="{% url 'spot' picture.spot_id %}">{{ picture.spot.name }}</a> by <a href="{% url 'user' picture.user.id %}">{{ picture.user.username }}</a>
+          </div>
+          <div class="panel-body">
+            <img src="{{ STATIC_PREFIX }}{{ picture.getPath }}" alt="{{ picture.spot.name }}">
+          </div>
+        </div>
+
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No pictures are available.</p>
+  {% endif %}
+
+</body>

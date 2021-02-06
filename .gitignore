@@ -1,3 +1,7 @@
 /build*
 *.pro.user
 build-*
+*__pycache__*
+.settings*
+WebSite/lowerspot/lowerspot/settingsProduction.py
+WebSite/lowerspot/static/pictures
