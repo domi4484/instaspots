@@ -303,7 +303,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
   {
     QJsonObject jsonObject_Picture = jsonArray_Pictures.at(i).toObject();
 
-    int picture_id = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_PICTURE_ID).toInt();
+    int picture_id = jsonObject_Picture.value("id").toInt();
 
     Picture *picture = m_QMap_Pictures.value(picture_id, NULL);
     if(picture == NULL)
@@ -316,12 +316,12 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
     // Picture properties
     picture->setUrl             (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString());
     picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
-    picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());
-    picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_CREATED).toString(),
+    picture->setUsername        (jsonObject_Picture.value("user").toString());
+    picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value("created").toString(),
                                                        Qt::ISODate));
 
     // Spot
-    int     spot_id          = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_ID).toInt();
+    int     spot_id          = jsonObject_Picture.value("spot").toInt();
     QString spot_name        = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_NAME).toString();
     QString spot_description = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION).toString();
     Spot *spot = SpotRepository::instance()->getAdd_Spot(spot_id,

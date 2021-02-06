@@ -111,6 +111,13 @@ HEADERS += \
 RESOURCES += src/qml.qrc
 
 DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
     src/qml/main.qml \
     src/qml/Navigator.qml \
     src/qml/Panel_Splash.qml \
@@ -154,40 +161,35 @@ DISTFILES += \
     src/qml/component/Component_ListSelectionDialog.qml \
     src/qml/component/Component_PicturesGrid.qml \
     src/qml/component/Component_TagSwitch.qml \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/AndroidManifest.xml \
-    android/gradlew.bat \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
-    ../../WebSite/Symfony/app/config/config_dev.yml \
-    ../../WebSite/Symfony/app/config/parameters.yml \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/WebserviceController.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/AdvertController.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/PictureRepository.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/Picture.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/Spot.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Entity/SpotRepository.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/download.html.twig \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/index.html.twig \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/views/Advert/menu.html.twig \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/routing.yml \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Resources/config/services.yml \
-    ../../WebSite/Symfony/src/Instaspots/UserBundle/Entity/User.php \
-    ../../Documentation/My_Skate_Map_stralciata.kml \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ApplicationHelper.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/CommandSet.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/NewsController.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/Response.php \
-    ../../WebSite/Symfony/src/Instaspots/SpotsBundle/Controller/ParameterSet.php \
-    ../../WebSite/Test/webserviceTest.sh \
     src/qml/pages-upload/Upload_SourceSelection.qml \
     src/qml/pages-upload/Upload_AddToExistingSpot.qml \
     src/qml/pages-upload/Upload_NearbySpotSelection.qml \
     src/qml/pages-upload/Upload_LocationCheck.qml \
     src/qml/pages-upload/Upload_CropPicture.qml \
-    ../../WebSite/Symfony/app/AppKernel.php \
-    ../../WebSite/Symfony/app/config/config.yml \
-    ../../WebSite/Symfony/web/app_dev.php
+    ../../WebSite/README.md \
+    ../../WebSite/lowerspot/lowerspot/asgi.py \
+    ../../WebSite/lowerspot/lowerspot/settings.py \
+    ../../WebSite/lowerspot/lowerspot/urls.py \
+    ../../WebSite/lowerspot/lowerspot/wsgi.py \
+    ../../WebSite/lowerspot/manage.py \
+    ../../WebSite/lowerspot/spots/admin.py \
+    ../../WebSite/lowerspot/spots/apps.py \
+    ../../WebSite/lowerspot/spots/models.py \
+    ../../WebSite/lowerspot/spots/templates/spots/download.html \
+    ../../WebSite/lowerspot/spots/templates/spots/index.html \
+    ../../WebSite/lowerspot/spots/templates/spots/spot.html \
+    ../../WebSite/lowerspot/spots/templates/spots/user.html \
+    ../../WebSite/lowerspot/spots/tests.py \
+    ../../WebSite/lowerspot/spots/urls.py \
+    ../../WebSite/lowerspot/spots/views.py \
+    ../../WebSite/lowerspot/startProductionServer.sh \
+    ../../WebSite/lowerspot/webservice/admin.py \
+    ../../WebSite/lowerspot/webservice/apps.py \
+    ../../WebSite/lowerspot/webservice/models.py \
+    ../../WebSite/lowerspot/webservice/permissions.py \
+    ../../WebSite/lowerspot/webservice/serializers.py \
+    ../../WebSite/lowerspot/webservice/tests.py \
+    ../../WebSite/lowerspot/webservice/urls.py \
+    ../../WebSite/lowerspot/webservice/views.py \
+    ../../WebSite/test/webserviceTest.sh
 
