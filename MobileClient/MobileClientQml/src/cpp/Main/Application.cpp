@@ -33,9 +33,6 @@
 // Library includes -----------------------
 #include <HelperClasses/Exception.h>
 #include <HelperClasses/Logger.h>
-#include <TcpIp/TcpIpClientConnection.h>
-#include <Command/CommandSender.h>
-#include <CommandSet/ApplicationCommandSet.h>
 
 // Qt includes -----------------------------
 #include <QQmlApplicationEngine>
@@ -44,19 +41,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-const QString Application::CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE("developmentMode");
-
-const QString Application::CONST_TCPIPCLIENTCONNECTION_SERVER("lowerspot.com");
-const int     Application::CONST_TCPIPCLIENTCONNECTION_PORT(2811);
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 Application::Application(int argc, char *argv[])
   : QApplication(argc, argv)
   , m_Settings              (nullptr)
   , m_PlateformDetail       (nullptr)
-  , m_TcpIpClientConnection (nullptr)
-  , m_CommandSender         (nullptr)
   , m_ApplicationHelper     (nullptr)
   , m_LocationManager       (nullptr)
   , m_PictureCacher         (nullptr)
@@ -70,9 +58,6 @@ Application::Application(int argc, char *argv[])
   QApplication::setApplicationName    ("Lowerspot");
   QApplication::setApplicationVersion ("V0.2.0");
 
-  // Command line arguments
-  QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
-
   // Settings
   m_Settings = new Settings(this);
 
@@ -83,16 +68,10 @@ Application::Application(int argc, char *argv[])
   // Plateform detail
   m_PlateformDetail = new PlateformDetail(this);
 
-  // TcpIpClientConnection
-  startupApplication_TcpIpClientConnection();
-
-  // CommandSender
-  startupApplication_CommandSender();
-
   // Application helper
   m_ApplicationHelper = new ApplicationHelper(m_Settings,
                                               m_PlateformDetail);
-  m_ApplicationHelper->setDevelopmentMode(qMap_Arguments.value(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE).toBool());
+  m_ApplicationHelper->setDevelopmentMode(false);
   m_ApplicationHelper->startupTimerStart();
 
   m_LocationManager = new LocationManager(m_Settings,
@@ -100,7 +79,7 @@ Application::Application(int argc, char *argv[])
   m_PictureCacher = new PictureCacher(this);
 
   // Repositories
-  PictureRepository::instanziate(m_CommandSender);
+  PictureRepository::instanziate();
   SpotRepository::instanziate(m_LocationManager);
   UserRepository::instanziate();
 
@@ -137,18 +116,14 @@ Application::Application(int argc, char *argv[])
   qmlRegisterType<Spot>            ("Spot",             1, 0, "Spot");
   qmlRegisterType<User>            ("User",             1, 0, "User");
 
-  QObject::connect(this,
-                   SIGNAL(applicationStateChanged(Qt::ApplicationState)),
-                   this,
-                   SLOT(slot_QApplication_applicationStateChanged(Qt::ApplicationState)));
-  QObject::connect(this,
-                   SIGNAL(aboutToQuit()),
-                   this,
-                   SLOT(slot_QApplication_aboutToQuit()));
-
-  QObject::connect(m_QQmlApplicationEngine,
-                   SIGNAL(objectCreated(QObject*,QUrl)),
-                   SLOT(slot_QmlApplicationEngine_objectCreated(QObject*,QUrl)));
+//  QObject::connect(this,
+//                   SIGNAL(applicationStateChanged(Qt::ApplicationState)),
+//                   this,
+//                   SLOT(slot_QApplication_applicationStateChanged(Qt::ApplicationState)));
+//  QObject::connect(this,
+//                   SIGNAL(aboutToQuit()),
+//                   this,
+//                   SLOT(slot_QApplication_aboutToQuit()));
 
   Logger::info("Load main.qml...");
   m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
@@ -165,8 +140,6 @@ Application::~Application()
   delete m_PictureCacher;
   delete m_LocationManager;
   delete m_ApplicationHelper;
-  delete m_TcpIpClientConnection;
-  delete m_CommandSender;
   delete m_PlateformDetail;
   delete m_Settings;
 
@@ -210,110 +183,6 @@ void Application::slot_QApplication_aboutToQuit()
   m_LocationManager->suspendUpdates();
 
   saveSettings();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Application::slot_QmlApplicationEngine_objectCreated(QObject *, QUrl)
-{
-  m_ApplicationHelper->startupTimerStop();
-
-  // Try to connect to server
-  applicationStarted_TcpIpClientConnect();
-
-  // Try to login
-  if(m_CurrentUser->login() == false)
-  {
-    Logger::error(m_CurrentUser->lastErrorText());
-    return;
-  }
-
-  // Check newer version
-  if(m_ApplicationHelper->checkCurrentAvailableClientVersion() == false)
-  {
-    return;
-  }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Application::slot_Command_GetServerApplicationVersion_ResponseReceived()
-{
-  Command_GetServerApplicationVersion *command_GetServerApplicationVersion = (Command_GetServerApplicationVersion *) QObject::sender();
-  Logger::info(QString("Lowerspot server version: %1").arg(command_GetServerApplicationVersion->GetResponseParameter_ServerApplicationVersion()));
-  command_GetServerApplicationVersion->deleteLater();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Application::startupApplication_TcpIpClientConnection()
-{
-  m_TcpIpClientConnection = new TcpIpClientConnection(this);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Application::startupApplication_CommandSender()
-{
-  m_CommandSender = new CommandSender(m_TcpIpClientConnection);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Application::applicationStarted_TcpIpClientConnect()
-{
-  // Try to connect to server
-  Logger::info(QString("Connecting to server %1:%2").arg(CONST_TCPIPCLIENTCONNECTION_SERVER)
-                                                    .arg(CONST_TCPIPCLIENTCONNECTION_PORT));
-  m_TcpIpClientConnection->Connect(CONST_TCPIPCLIENTCONNECTION_SERVER,
-                                   CONST_TCPIPCLIENTCONNECTION_PORT);
-  if(m_TcpIpClientConnection->WaitForConnected(3000) == false)
-  {
-    Logger::error("Timeout connecting to server.");
-  }
-
-  // Get Server application version
-  if(m_TcpIpClientConnection->IsConnected())
-  {
-  }
-
-  Command_GetServerApplicationVersion *command_GetServerApplicationVersion = new Command_GetServerApplicationVersion();
-  try
-  {
-    m_CommandSender->Send(command_GetServerApplicationVersion);
-
-    QObject::connect(command_GetServerApplicationVersion,
-                     SIGNAL(signal_ResponseReceived()),
-                     this,
-                     SLOT(slot_Command_GetServerApplicationVersion_ResponseReceived()));
-  }
-  catch (const Exception &exception)
-  {
-    Logger::error(QString("Failed getting server version. Error: '%1'").arg(exception.GetText()));
-  }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-QMap<QString, QVariant> Application::parseCommandLineArguments()
-{
-  QCommandLineParser qCommandLineParser;
-  qCommandLineParser.setApplicationDescription(QApplication::applicationName());
-  qCommandLineParser.addHelpOption();
-  qCommandLineParser.addVersionOption();
-
-  // Development mode
-  QCommandLineOption qCommandLineOption_development(QStringList() << "d" << "development",
-                                                    "Run in development mode.");
-  qCommandLineParser.addOption(qCommandLineOption_development);
-
-  qCommandLineParser.process(QApplication::arguments());
-
-  QMap<QString, QVariant> qMap_Arguments;
-
-  qMap_Arguments.insert(CONST_COMMANDLINEARGUMENT_DEVELOPMENTMODE, qCommandLineParser.isSet(qCommandLineOption_development));
-
-  return qMap_Arguments;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

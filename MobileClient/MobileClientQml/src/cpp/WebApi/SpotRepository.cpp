@@ -240,7 +240,7 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
   }
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
-  QJsonArray jsonArray_Spots = webApiCommand->resultArray(WebApi::PARAMETER::SPOT_LIST);
+  QJsonArray jsonArray_Spots = webApiCommand->resultArray();
   for(int i = 0; i < jsonArray_Spots.size(); i++)
   {
     QJsonObject jsonObject_Spot = jsonArray_Spots.at(i).toObject();

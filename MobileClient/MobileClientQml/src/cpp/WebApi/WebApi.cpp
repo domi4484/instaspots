@@ -33,8 +33,9 @@
 
 // Location of the web service
 //const QString WebApi::URL_DEVELOPMENT ("http://localhost/Symfony/web/app_dev.php/webservice");
-const QString WebApi::URL_DEVELOPMENT ("http://127.0.0.1:8000/webservice/webservice/");
-const QString WebApi::URL_PRODUCTION  ("https://lowerspot.com/web/webservice");
+const QString WebApi::URL_DEVELOPMENT ("http://127.0.0.1:8000/api/webservice/");
+//const QString WebApi::URL_PRODUCTION  ("https://lowerspot.com/api/webservice/");
+const QString WebApi::URL_PRODUCTION  ("http://127.0.0.1:8000/api/pictures/byNewest/");
 
 
 const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");
@@ -186,7 +187,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   {
     Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
-                       QJsonObject());
+                       QJsonDocument());
     return;
   }
 
@@ -217,7 +218,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   {
       Logger::error(tr("Parse Json error: %1").arg(jsonParseError.errorString()));
       command->setResult(WebApiError(WebApiError::SERVER),
-                         jsonDocument.object());
+                         jsonDocument);
       return;
   }
 
@@ -225,23 +226,12 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   {
       Logger::error(tr("Server error: received an empty answer").arg(jsonParseError.errorString()));
       command->setResult(WebApiError(WebApiError::SERVER),
-                         jsonDocument.object());
+                         jsonDocument);
       return;
   }
 
-  // Command error
-  QString errorText = jsonDocument.object().value(CONST::GENERAL_PARAMS::ERROR).toString();
-  if(errorText.isEmpty() == false)
-  {
-    Logger::error("Error: " + errorText);
-    command->setResult(WebApiError(WebApiError::COMMAND,
-                                   errorText),
-                       jsonDocument.object());
-    return;
-  }
-
   command->setResult(WebApiError(WebApiError::NONE),
-                     jsonDocument.object());
+                     jsonDocument);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -267,7 +257,7 @@ void WebApi::slot_QNetworkReply_downloadProgress(qint64 received,
   {
     Logger::error(QString("Network error %1").arg(replyNetworkError));
     command->setResult(WebApiError(WebApiError::NETWORK),
-                       QJsonObject());
+                       QJsonDocument());
     return;
   }
 
@@ -314,7 +304,7 @@ void WebApi::slot_QNetworkReply_finished()
                                                                  .arg(replyNetworkErrorString)
                                                                  .arg(command->requestString()));
     command->setResult(WebApiError(WebApiError::NETWORK),
-                       QJsonObject());
+                       QJsonDocument());
     return;
   }
 
@@ -332,15 +322,7 @@ void WebApi::slot_QNetworkReply_finished()
   {
       Logger::error(tr("Parse Json error: %1").arg(jsonParseError.errorString()));
       command->setResult(WebApiError(WebApiError::SERVER),
-                         jsonDocument.object());
-      return;
-  }
-
-  if(jsonDocument.object().isEmpty())
-  {
-      Logger::error(tr("Server error: received an empty answer").arg(jsonParseError.errorString()));
-      command->setResult(WebApiError(WebApiError::SERVER),
-                         jsonDocument.object());
+                         jsonDocument);
       return;
   }
 
@@ -351,12 +333,12 @@ void WebApi::slot_QNetworkReply_finished()
     Logger::error("Error: " + errorText);
     command->setResult(WebApiError(WebApiError::COMMAND,
                                    errorText),
-                       jsonDocument.object());
+                       jsonDocument);
     return;
   }
 
   command->setResult(WebApiError(WebApiError::NONE),
-                     jsonDocument.object());
+                     jsonDocument);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -388,7 +370,7 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
     params.addQueryItem(item.first(), item.second());
   }
 
-  QNetworkReply *reply = m_UltraNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
+  QNetworkReply *reply = m_UltraNetworkAccessManager.get(request);//, params.query(QUrl::FullyEncoded).toUtf8());
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
   connect(reply,
           SIGNAL(finished()),

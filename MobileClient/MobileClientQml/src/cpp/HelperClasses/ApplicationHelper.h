@@ -19,7 +19,7 @@
 // Qt includes -----------------------------
 #include <QColor>
 #include <QObject>
-#include <QTime>
+#include <QElapsedTimer>
 
 // Forward declarations --------------------
 class Settings;
@@ -111,8 +111,8 @@ private:
   WebApiCommand m_WebApiCommand_ReportProblem;
 
   // Startup timer
-  QTime m_QTime_Startup;
-  int   m_StartupTime_ms;
+  QElapsedTimer m_QElapsedTimer_Startup;
+  int m_StartupTime_ms;
 
   // Last error text
   QString m_LastErrorText;

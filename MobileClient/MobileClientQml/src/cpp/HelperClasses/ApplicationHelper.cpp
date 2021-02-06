@@ -39,7 +39,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
     m_WebApiCommand_GetCurrentClientVersion(this),
     m_DevelopmentMode(false),
     m_WebApiCommand_ReportProblem(this),
-    m_QTime_Startup(),
+    m_QElapsedTimer_Startup(),
     m_StartupTime_ms(0)
 {
   // Log application version
@@ -331,14 +331,14 @@ bool ApplicationHelper::reportProblem(const QString &problemDescription,
 
 void ApplicationHelper::startupTimerStart()
 {
-  m_QTime_Startup.start();
+  m_QElapsedTimer_Startup.start();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void ApplicationHelper::startupTimerStop()
 {
-  m_StartupTime_ms = m_QTime_Startup.elapsed();
+  m_StartupTime_ms = m_QElapsedTimer_Startup.elapsed();
   Logger::info(QString("Application started in %1 ms").arg(m_StartupTime_ms));
 }
 

@@ -36,13 +36,11 @@ PictureRepository *PictureRepository::s_PictureRepository = NULL;
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-PictureRepository::PictureRepository(CommandSender *commandSender,
-                                     QObject *parent) :
+PictureRepository::PictureRepository(QObject *parent) :
   QObject(parent),
   m_RequestId(1),
   m_QMap_Pictures(),
-  m_QMap_Results(),
-  m_CommandSender(commandSender)
+  m_QMap_Results()
 {
 
 }
@@ -59,7 +57,7 @@ PictureRepository::~PictureRepository()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void PictureRepository::instanziate(CommandSender *commandSender)
+void PictureRepository::instanziate()
 {
     if(s_PictureRepository != NULL)
     {
@@ -67,7 +65,7 @@ void PictureRepository::instanziate(CommandSender *commandSender)
       return;
     }
 
-    s_PictureRepository = new PictureRepository(commandSender);
+    s_PictureRepository = new PictureRepository();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -300,7 +298,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
   }
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
-  QJsonArray jsonArray_Pictures = webApiCommand->resultArray(WebApi::PARAMETER::PICTURE_LIST);
+  QJsonArray jsonArray_Pictures = webApiCommand->resultArray();
   for(int i = 0; i < jsonArray_Pictures.size(); i++)
   {
     QJsonObject jsonObject_Picture = jsonArray_Pictures.at(i).toObject();

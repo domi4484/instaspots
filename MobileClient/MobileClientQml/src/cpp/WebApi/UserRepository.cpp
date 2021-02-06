@@ -150,7 +150,7 @@ void UserRepository::slot_Command_Finished(const WebApiError &error)
   }
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
-  QJsonArray jsonArray_Users = webApiCommand->resultArray(WebApi::PARAMETER::USER_LIST);
+  QJsonArray jsonArray_Users = webApiCommand->resultArray();
   for(int i = 0; i < jsonArray_Users.size(); i++)
   {
     QJsonObject jsonObject_User = jsonArray_Users.at(i).toObject();

@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QMap>
 #include <QByteArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
@@ -48,10 +49,10 @@ public:
 
   // Result (JSON)
   void setResult(const WebApiError &error,
-                 const QJsonObject &result);
+                 const QJsonDocument &result);
   QVariant   resultParameter(const QString &parameterName);
   QJsonValue resultProperty(const QString &propertyName);
-  QJsonArray resultArray(const QString &arrayName);
+  QJsonArray resultArray();
 
   // RawResult (BINARY)
   virtual void setRawResult(const WebApiError &error,
@@ -91,7 +92,7 @@ private:
 
   bool m_Running;
 
-  QJsonObject m_Result;
+  QJsonDocument m_JsonDocumentResult;
   QByteArray m_RawResult;
 
   WebApiError m_Error;

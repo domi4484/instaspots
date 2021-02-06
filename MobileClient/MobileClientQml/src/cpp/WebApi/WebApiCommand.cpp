@@ -22,7 +22,7 @@ WebApiCommand::WebApiCommand(QObject *parent) :
   m_CommandName   (),
   m_AnswerType(JSON),
   m_Running   (false),
-  m_Result    (),
+  m_JsonDocumentResult    (),
   m_RawResult (),
   m_Error     (WebApiError::NONE, "")
 {
@@ -52,11 +52,11 @@ QVariant WebApiCommand::requestParameter(const QString &parameterName) const
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void WebApiCommand::setResult(const WebApiError &error,
-                              const QJsonObject &result)
+                              const QJsonDocument &result)
 {
   m_Running = false;
 
-  m_Result = result;
+  m_JsonDocumentResult = result;
   m_Error = error;
   emit signal_Finished();
   emit signal_Finished(error);
@@ -66,21 +66,21 @@ void WebApiCommand::setResult(const WebApiError &error,
 
 QVariant WebApiCommand::resultParameter(const QString &parameterName)
 {
-  return m_Result.value(parameterName).toVariant();
+  return m_JsonDocumentResult.object().value(parameterName).toVariant();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 QJsonValue WebApiCommand::resultProperty(const QString &propertyName)
 {
-  return m_Result.value(propertyName);
+  return m_JsonDocumentResult.object().value(propertyName);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QJsonArray WebApiCommand::resultArray(const QString &arrayName)
+QJsonArray WebApiCommand::resultArray()
 {
-  return m_Result.value(arrayName).toArray();
+  return m_JsonDocumentResult.array();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
