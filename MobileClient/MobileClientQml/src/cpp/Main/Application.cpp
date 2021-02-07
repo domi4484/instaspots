@@ -19,6 +19,7 @@
 #include "../HelperClasses/PictureCacher.h"
 #include "../HelperClasses/UltraQmlAccessManagerFactory.h"
 #include "../Settings/Settings.h"
+#include "../WebApi/WebApi.h"
 #include "../WebApi/SpotRepository.h"
 #include "../WebApi/SpotsModel.h"
 #include "../WebApi/Spot.h"
@@ -41,6 +42,12 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+const QString Application::CONST::SERVER::DEFAULT_ADDRESS("http://lowerspot.com");
+
+const QString Application::CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS("serverAddress");
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 Application::Application(int argc, char *argv[])
   : QApplication(argc, argv)
   , m_Settings              (nullptr)
@@ -56,7 +63,10 @@ Application::Application(int argc, char *argv[])
   QApplication::setOrganizationName   ("Lowerspot");
   QApplication::setOrganizationDomain ("lowerspot.com");
   QApplication::setApplicationName    ("Lowerspot");
-  QApplication::setApplicationVersion ("V0.2.0");
+  QApplication::setApplicationVersion ("V0.3.0");
+
+  // Command line arguments
+  QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
 
   // Settings
   m_Settings = new Settings(this);
@@ -71,12 +81,17 @@ Application::Application(int argc, char *argv[])
   // Application helper
   m_ApplicationHelper = new ApplicationHelper(m_Settings,
                                               m_PlateformDetail);
-  m_ApplicationHelper->setDevelopmentMode(false);
   m_ApplicationHelper->startupTimerStart();
 
   m_LocationManager = new LocationManager(m_Settings,
                                           m_PlateformDetail);
   m_PictureCacher = new PictureCacher(this);
+
+  // Server address
+  if(qMap_Arguments.contains(CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS))
+    WebApi::instance()->setUrl(qMap_Arguments.value(CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS).toString());
+  else
+    WebApi::instance()->setUrl(CONST::SERVER::DEFAULT_ADDRESS);
 
   // Repositories
   PictureRepository::instanziate();
@@ -183,6 +198,35 @@ void Application::slot_QApplication_aboutToQuit()
   m_LocationManager->suspendUpdates();
 
   saveSettings();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QMap<QString, QVariant> Application::parseCommandLineArguments()
+{
+  QCommandLineParser qCommandLineParser;
+  qCommandLineParser.setApplicationDescription(QApplication::applicationName());
+  qCommandLineParser.addHelpOption();
+  qCommandLineParser.addVersionOption();
+
+  // Development mode
+  QCommandLineOption qCommandLineOption_serverAddress(QStringList() << "s" << "server-address",
+                                                      "Server address.",
+                                                      "address",
+                                                      "");
+  qCommandLineParser.addOption(qCommandLineOption_serverAddress);
+
+  qCommandLineParser.process(QApplication::arguments());
+
+  QMap<QString, QVariant> qMap_Arguments;
+
+  if(qCommandLineParser.value(qCommandLineOption_serverAddress).isEmpty() == false)
+    qMap_Arguments.insert(CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS,
+                          qCommandLineParser.value(qCommandLineOption_serverAddress));
+
+  qDebug() << (QString("Server address: %1").arg(qCommandLineParser.value(qCommandLineOption_serverAddress)));
+
+  return qMap_Arguments;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

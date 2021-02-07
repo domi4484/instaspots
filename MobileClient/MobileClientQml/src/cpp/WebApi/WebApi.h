@@ -31,12 +31,11 @@ class WebApi : public QObject
   Q_OBJECT
 public:
 
-  static const QString URL_DEVELOPMENT;
-  static const QString URL_PRODUCTION;
-
   class CONST
   {
   public:
+
+    static const QString PATH;
 
     class GENERAL_PARAMS
     {
@@ -157,7 +156,7 @@ private:
 
   static WebApi *s_Instance;
 
-  QUrl m_Url;
+  QString m_ServerAddress;
 
   UltraNetworkAccessManager m_UltraNetworkAccessManager;
 

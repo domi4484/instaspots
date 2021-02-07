@@ -31,12 +31,7 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-// Location of the web service
-//const QString WebApi::URL_DEVELOPMENT ("http://localhost/Symfony/web/app_dev.php/webservice");
-const QString WebApi::URL_DEVELOPMENT ("http://127.0.0.1:8000/api/webservice/");
-//const QString WebApi::URL_PRODUCTION  ("https://lowerspot.com/api/webservice/");
-const QString WebApi::URL_PRODUCTION  ("http://lowerspot.com/api/pictures/byNewest/");
-
+const QString WebApi::CONST::PATH  ("api");
 
 const QString WebApi::CONST::GENERAL_PARAMS::COMMAND    ("command");
 const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
@@ -55,7 +50,7 @@ const QString WebApi::COMMAND::GET_CURRENT_CLIENT_VERSION = "getCurrentClientVer
 const QString WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT = "uploadPictureToSpot";
 const QString WebApi::COMMAND::UPLOAD_NEW_SPOT        = "uploadNewSpot";
 
-const QString WebApi::COMMAND::GET_PICTURES_BY_NEWEST  = "getPicturesByNewest";
+const QString WebApi::COMMAND::GET_PICTURES_BY_NEWEST  = "pictures/byNewest";
 const QString WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID = "getPicturesBySpotId";
 const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
 
@@ -123,7 +118,7 @@ WebApi *WebApi::s_Instance(NULL);
 
 WebApi::WebApi() :
   QObject(),
-  m_Url(URL_PRODUCTION),
+  m_ServerAddress(),
   m_UltraNetworkAccessManager(),
   m_CommandsIdCounter(0),
   m_RunningCommands()
@@ -161,7 +156,7 @@ void WebApi::destroy()
 
 void WebApi::setUrl(const QString url)
 {
-  m_Url.setUrl(url);
+  m_ServerAddress = url;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -353,7 +348,9 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
                                     QApplication::applicationVersion()));
 
   // Network request
-  QNetworkRequest request(m_Url);
+  QNetworkRequest request(QString("%1/%2/%3/").arg(m_ServerAddress)
+                                              .arg(CONST::PATH)
+                                              .arg(abstractCommand->commandName()));
 
   // Ignore ssl certificate
   QSslConfiguration conf = request.sslConfiguration();
@@ -424,7 +421,9 @@ void WebApi::multipartRequest(WebApiCommand *abstractCommand,
   multiPart->append(imagePart);
 
   // Network request
-  QNetworkRequest request(m_Url);
+  QNetworkRequest request(QString("%1/%2/%3").arg(m_ServerAddress)
+                          .arg(CONST::PATH)
+                          .arg(abstractCommand->commandName()));
 
   // Ignore ssl certificate
   QSslConfiguration conf = request.sslConfiguration();
