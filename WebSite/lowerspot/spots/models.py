@@ -36,11 +36,14 @@ class Picture(models.Model):
     def __str__(self):
         return "picture of " + self.spot.__str__()
 
-    def getPath(self):
+    def path(self):
         return 'pictures/{}/{}.jpg'.format(self.created.strftime('%Y/%m/%d'), self.id)
 
+    def url(self):
+        return 'static/{}'.format(self.path())
+
     def saveUploadedPicture(self, imageFile):
-        savePath = self.getPath()
+        savePath = self.path()
         with open(savePath, 'wb+') as destinationFile:
             for chunk in imageFile.chunks():
                 destinationFile.write(chunk)

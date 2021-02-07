@@ -314,9 +314,11 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
     }
 
     // Picture properties
-    picture->setUrl             (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString());
-    picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
-    picture->setUsername        (jsonObject_Picture.value("user").toString());
+    picture->setUrl             (QString("%1/%2").arg("http://lowerspot.com")
+                                                 .arg(jsonObject_Picture.value("url").toString()));
+    Logger::info(QString("picture url: '%1'").arg(picture->url()));
+    picture->setIdUser          (jsonObject_Picture.value("user").toInt());
+    picture->setUsername        (jsonObject_Picture.value("user_name").toString());
     picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value("created").toString(),
                                                        Qt::ISODate));
 

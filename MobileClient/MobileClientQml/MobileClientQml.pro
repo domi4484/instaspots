@@ -93,8 +93,8 @@ HEADERS += \
     src/cpp/HelperClasses/LocationManager.h \
     src/cpp/HelperClasses/PictureCacher.h \
     src/cpp/HelperClasses/ApplicationHelper.h \
-    src/cpp/HelperClasses/Exception.cpp \
-    src/cpp/HelperClasses/Logger.cpp \
+    src/cpp/HelperClasses/Exception.h \
+    src/cpp/HelperClasses/Logger.h \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
     src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/Settings/Settings.h \

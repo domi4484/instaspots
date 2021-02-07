@@ -20,7 +20,7 @@
             Picture by <a href="{% url 'user' picture.user.id %}">{{ picture.user.username }}</a>
           </div>
           <div class="panel-body">
-            <img src="{{ STATIC_PREFIX }}{{ picture.getPath }}" alt="{{ picture.spot.name }}">
+            <img src="{{ STATIC_PREFIX }}{{ picture.path }}" alt="{{ picture.spot.name }}">
           </div>
         </div>
 
