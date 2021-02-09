@@ -13,8 +13,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import QtPositioning 5.2
-import QtLocation    5.6
+import QtPositioning 5.15
+import QtLocation    5.15
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
@@ -92,10 +92,7 @@ ApplicationWindow {
 
 
     Plugin {
-        id: plugin_MapBox
-        name: "mapbox"
-     //   PluginParameter { name: "mapbox.access_token"; value: co_MapBoxAccessToken }
-        PluginParameter { name: "mapbox.access_token"; value: "pk.eyJ1IjoiZG9taTQ0ODQiLCJhIjoiY2lxbWliZWp1MDAyNGkzbWF6Z243cDVzaCJ9.7YhZjI_5rduDr_S4bn07FA" }
-        PluginParameter { name: "mapbox.map_id";       value: "mapbox.streets"     }
+        id: plugin_Osm
+        name: "osm"
     }
 }

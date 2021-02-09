@@ -67,8 +67,6 @@ public slots:
 
   QGeoCoordinate coordinate();
 
-  QByteArray mapboxAccessToken() const;
-
   qreal computeDistance(const QPointF &point1,
                         const QPointF &point2);
 

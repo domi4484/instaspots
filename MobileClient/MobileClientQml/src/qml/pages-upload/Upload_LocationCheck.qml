@@ -37,7 +37,7 @@ Item{
         id: map
         anchors.fill: parent
 
-        plugin: plugin_MapBox;
+        plugin: plugin_Osm;
         zoomLevel: 17
 
         Component.onCompleted: {

@@ -206,13 +206,6 @@ QGeoCoordinate LocationManager::coordinate()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QByteArray LocationManager::mapboxAccessToken() const
-{
-  return CONST_MAPBOX_ACCESSTOKEN.toLatin1();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 qreal LocationManager::computeDistance(const QPointF &point1,
                                        const QPointF &point2)
 {
