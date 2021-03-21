@@ -266,33 +266,6 @@ QString ApplicationHelper::buildTimestamp() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool ApplicationHelper::developmentMode() const
-{
-  return m_DevelopmentMode;
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void ApplicationHelper::setDevelopmentMode(bool developmentMode)
-{
-  m_DevelopmentMode = developmentMode;
-
-  if(developmentMode)
-  {
-    Logger::debug(tr("WebApi development url: %1").arg(WebApi::URL_DEVELOPMENT));
-    WebApi::instance()->setUrl(WebApi::URL_DEVELOPMENT);
-  }
-  else
-  {
-    Logger::debug(tr("WebApi production url: %1").arg(WebApi::URL_PRODUCTION));
-    WebApi::instance()->setUrl(WebApi::URL_PRODUCTION);
-  }
-
-  emit signal_DevelopmentMode_Changed(developmentMode);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 bool ApplicationHelper::reportProblem(const QString &problemDescription,
                                       bool attachTraces)
 {

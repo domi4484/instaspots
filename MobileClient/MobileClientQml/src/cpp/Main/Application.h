@@ -43,6 +43,21 @@ private slots:
 
 private:
 
+  class CONST
+  {
+  public:
+    class SERVER
+    {
+    public:
+      static const QString DEFAULT_ADDRESS;
+    };
+    class COMMANDLINE_ARGUMENT
+    {
+    public:
+      static const QString SERVER_ADDRESS;
+    };
+  };
+
   // Settings
   Settings                     *m_Settings;
 
@@ -60,6 +75,8 @@ private:
   UltraQmlAccessManagerFactory *m_UltraQmlAccessManagerFactory;
 
   QQmlApplicationEngine        *m_QQmlApplicationEngine;
+
+  QMap<QString, QVariant> parseCommandLineArguments();
 
   void saveSettings();
 };

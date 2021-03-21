@@ -65,10 +65,6 @@ public slots:
 
   QString buildTimestamp() const;
 
-  // Development mode
-  bool developmentMode() const;
-  void setDevelopmentMode(bool developmentMode);
-
   // Problem reporting
   bool reportProblem(const QString &problemDescription,
                      bool attachTraces);
