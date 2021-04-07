@@ -1,6 +1,6 @@
 /********************************************************************
  *                                                                 *
- * InstaSpots                                                      *
+ * Lowerspot                                                       *
  *                                                                 *
  * Author:       Damiano Lombardi                                  *
  * Created:      29.10.2014                                        *
@@ -9,8 +9,8 @@
  *                                                                 *
 ********************************************************************/
 
-#ifndef ABSTRACTCOMMAND_H
-#define ABSTRACTCOMMAND_H
+#ifndef WEBAPICOMMAND_H
+#define WEBAPICOMMAND_H
 
 // Project includes ------------------------
 #include "WebApiError.h"
@@ -33,10 +33,16 @@ class WebApiCommand : public QObject
 
 public:
 
-  enum ANSWER_TYPE
+  enum EnumRequestType
   {
-    JSON,
-    BINARY
+    RequestTypePost,
+    RequestTypeGet
+  };
+
+  enum EnumAnswerType
+  {
+    AnswerTypeJSON,
+    AnswerTypeBinary
   };
 
   explicit WebApiCommand(QObject *parent = 0);
@@ -62,13 +68,16 @@ public:
   virtual void setProgress(qint64 progress,
                            qint64 total);
 
-  void setAnswerType(ANSWER_TYPE type);
-  virtual ANSWER_TYPE answerType() const { return m_AnswerType; }
+  void setRequestType(EnumRequestType requestType);
+  EnumRequestType requestType() const;
 
-  bool isRunning() { return m_Running; }
+  void setAnswerType(EnumAnswerType type);
+  virtual EnumAnswerType answerType() const;
 
-  WebApiError postRequest(QList<QueryItem> &queryItems,
-                          QIODevice *device = NULL);
+  bool isRunning();
+
+  WebApiError sendRequest(QList<QueryItem> &queryItems,
+                   QIODevice *device = NULL);
 
   QString requestString() const;
 
@@ -82,13 +91,12 @@ signals:
   void signal_Progress(qint64 progress,
                        qint64 total);
 
-public slots:
-
 private:
 
-  QString                  m_CommandName;
-  ANSWER_TYPE              m_AnswerType;
-  QMap<QString, QueryItem> m_QMap_QueryItems;
+  QString mCommandName;
+  EnumRequestType mRequestType;
+  EnumAnswerType mAnswerType;
+  QMap<QString, QueryItem> mQMapQueryItems;
 
   bool m_Running;
 
@@ -96,7 +104,6 @@ private:
   QByteArray m_RawResult;
 
   WebApiError m_Error;
-
 };
 
-#endif // ABSTRACTCOMMAND_H
+#endif // WEBAPICOMMAND_H

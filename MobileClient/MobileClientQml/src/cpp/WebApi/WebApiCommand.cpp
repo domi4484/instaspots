@@ -17,14 +17,15 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-WebApiCommand::WebApiCommand(QObject *parent) :
-  QObject(parent),
-  m_CommandName   (),
-  m_AnswerType(JSON),
-  m_Running   (false),
-  m_JsonDocumentResult    (),
-  m_RawResult (),
-  m_Error     (WebApiError::NONE, "")
+WebApiCommand::WebApiCommand(QObject *parent)
+  : QObject(parent)
+  , mCommandName()
+  , mRequestType(RequestTypePost)
+  , mAnswerType(AnswerTypeJSON)
+  , m_Running(false)
+  , m_JsonDocumentResult()
+  , m_RawResult()
+  , m_Error(WebApiError::NONE, "")
 {
 }
 
@@ -32,21 +33,21 @@ WebApiCommand::WebApiCommand(QObject *parent) :
 
 void WebApiCommand::setCommandName(const QString &command)
 {
-  m_CommandName = command;
+  mCommandName = command;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 QString WebApiCommand::commandName() const
 {
-  return m_CommandName;
+  return mCommandName;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 QVariant WebApiCommand::requestParameter(const QString &parameterName) const
 {
-  return m_QMap_QueryItems.value(parameterName).second();
+  return mQMapQueryItems.value(parameterName).second();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -113,14 +114,42 @@ void WebApiCommand::setProgress(qint64 progress,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void WebApiCommand::setAnswerType(WebApiCommand::ANSWER_TYPE type)
+void WebApiCommand::setRequestType(EnumRequestType requestType)
 {
-  m_AnswerType = type;
+  mRequestType = requestType;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
+WebApiCommand::EnumRequestType WebApiCommand::requestType() const
+{
+  return mRequestType;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void WebApiCommand::setAnswerType(EnumAnswerType type)
+{
+  mAnswerType = type;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApiCommand::EnumAnswerType WebApiCommand::answerType() const
+{
+  return mAnswerType;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+bool WebApiCommand::isRunning()
+{
+  return m_Running;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+WebApiError WebApiCommand::sendRequest(QList<QueryItem> &qList_QueryItems,
                                        QIODevice *device)
 {
   if(m_Running)
@@ -128,23 +157,22 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
 
   m_Running = true;
 
-  m_QMap_QueryItems.clear();
+  mQMapQueryItems.clear();
   foreach (QueryItem queryItem, qList_QueryItems)
   {
-    m_QMap_QueryItems.insert(queryItem.first(), queryItem);
+    mQMapQueryItems.insert(queryItem.first(), queryItem);
   }
-
 
   if(device == NULL)
   {
-    WebApi::instance()->postRequest(this,
+    WebApi::instance()->sendRequest(this,
                                     qList_QueryItems);
   }
   else
   {
-    WebApi::instance()->multipartRequest(this,
-                                         qList_QueryItems,
-                                         device);
+    WebApi::instance()->sendMultipartRequest(this,
+                                             qList_QueryItems,
+                                             device);
   }
 
   return WebApiError(WebApiError::NONE);
@@ -155,10 +183,10 @@ WebApiError WebApiCommand::postRequest(QList<QueryItem> &qList_QueryItems,
 QString WebApiCommand::requestString() const
 {
   QStringList requestString;
-  requestString << "Command: " << m_CommandName << " ";
+  requestString << "Command: " << mCommandName << " ";
   requestString << "Items: {";
 
-  foreach(QueryItem item, m_QMap_QueryItems)
+  foreach(QueryItem item, mQMapQueryItems)
   {
       requestString << "(" << item.first() << ";" << item.second() << ")";
   }

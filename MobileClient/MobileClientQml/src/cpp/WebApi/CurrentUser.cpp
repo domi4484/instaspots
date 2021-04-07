@@ -32,16 +32,16 @@ CurrentUser::CurrentUser(Settings *settings,
   m_WebApiCommand_Register   (this),
   m_WebApiCommand_CanRegister(this)
 {
-  m_WebApiCommand_Login.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_Login.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_Login.setCommandName(WebApi::COMMAND::LOGIN);
 
-  m_WebApiCommand_Logout.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_Logout.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_Logout.setCommandName(WebApi::COMMAND::LOGOUT);
 
-  m_WebApiCommand_Register.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_Register.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_Register.setCommandName(WebApi::COMMAND::REGISTER);
 
-  m_WebApiCommand_CanRegister.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_CanRegister.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_CanRegister.setCommandName(WebApi::COMMAND::CANREGISTER);
 
   connect(&m_WebApiCommand_Login,       SIGNAL(signal_Finished(const WebApiError &)), SLOT(slot_CommandLogin_Finished      (const WebApiError &)));
@@ -79,7 +79,7 @@ bool CurrentUser::login()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_PASSWORD, password));
 
-  WebApiError error = m_WebApiCommand_Login.postRequest(qList_QueryItems);
+  WebApiError error = m_WebApiCommand_Login.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     m_LastErrorText = error.text();
@@ -116,7 +116,7 @@ bool CurrentUser::login(const QString &username,
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_PASSWORD, password));
 
-  WebApiError error = m_WebApiCommand_Login.postRequest(qList_QueryItems);
+  WebApiError error = m_WebApiCommand_Login.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     m_LastErrorText = error.text();
@@ -144,7 +144,7 @@ bool CurrentUser::logout()
   }
 
   QList<QueryItem> qList_QueryItems;
-  WebApiError error = m_WebApiCommand_Logout.postRequest(qList_QueryItems);
+  WebApiError error = m_WebApiCommand_Logout.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     Logger::warning(error.text());
@@ -187,7 +187,7 @@ bool CurrentUser::registration(const QString &username,
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_EMAIL,    e_mail));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_PASSWORD, password));
 
-  WebApiError error = m_WebApiCommand_Register.postRequest(qList_QueryItems);
+  WebApiError error = m_WebApiCommand_Register.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     m_LastErrorText = error.text();

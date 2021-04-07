@@ -56,10 +56,7 @@ SpotRepository::SpotRepository(LocationManager *locationManger,
 
 SpotRepository::~SpotRepository()
 {
-  foreach (int spotId, m_QMap_Spots.keys())
-  {
-    delete m_QMap_Spots.take(spotId);
-  }
+  qDeleteAll(m_QMap_Spots);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -123,7 +120,7 @@ Spot *SpotRepository::getBy_SpotId(int spotId)
 
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
-    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
     webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
@@ -131,7 +128,7 @@ Spot *SpotRepository::getBy_SpotId(int spotId)
     connect(webApiCommand,
             SIGNAL(signal_Finished(const WebApiError &)),
             SLOT(slot_Command_Finished(const WebApiError &)));
-    webApiCommand->postRequest(qList_QueryItems);
+    webApiCommand->sendRequest(qList_QueryItems);
   }
 
   return spot;
@@ -159,7 +156,7 @@ Spot *SpotRepository::getAdd_Spot(int spotId,
 
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
-    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
     webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
@@ -167,7 +164,7 @@ Spot *SpotRepository::getAdd_Spot(int spotId,
     connect(webApiCommand,
             SIGNAL(signal_Finished(const WebApiError &)),
             SLOT(slot_Command_Finished(const WebApiError &)));
-    webApiCommand->postRequest(qList_QueryItems);
+    webApiCommand->sendRequest(qList_QueryItems);
   }
   spot->setName(spotName);
   spot->setDescription(spotDescription);
@@ -189,7 +186,7 @@ void SpotRepository::getBy_Distance(int requestId,
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
-  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS_BY_DISTANCE);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
@@ -197,7 +194,7 @@ void SpotRepository::getBy_Distance(int requestId,
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
-  webApiCommand->postRequest(qList_QueryItems);
+  webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -210,7 +207,7 @@ void SpotRepository::getBy_UserId(int requestId,
 
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
-    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
     webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS_BY_USER_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
@@ -218,7 +215,7 @@ void SpotRepository::getBy_UserId(int requestId,
     connect(webApiCommand,
             SIGNAL(signal_Finished(const WebApiError &)),
             SLOT(slot_Command_Finished(const WebApiError &)));
-    webApiCommand->postRequest(qList_QueryItems);
+    webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -349,7 +346,7 @@ void SpotRepository::slot_PictureRepository_PictureRemoved(Picture *picture)
 
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
-    webApiCommand->setAnswerType(WebApiCommand::JSON);
+    webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
     webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
@@ -357,7 +354,7 @@ void SpotRepository::slot_PictureRepository_PictureRemoved(Picture *picture)
     connect(webApiCommand,
             SIGNAL(signal_Finished(const WebApiError &)),
             SLOT(slot_Command_Finished(const WebApiError &)));
-    webApiCommand->postRequest(qList_QueryItems);
+    webApiCommand->sendRequest(qList_QueryItems);
 
     return;
   }

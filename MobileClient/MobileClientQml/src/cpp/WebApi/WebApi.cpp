@@ -338,7 +338,7 @@ void WebApi::slot_QNetworkReply_finished()
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-void WebApi::postRequest(WebApiCommand *abstractCommand,
+void WebApi::sendRequest(WebApiCommand *abstractCommand,
                          QList<QueryItem> &qList_QueryItems)
 {
   int commandId = m_CommandsIdCounter++;
@@ -367,7 +367,17 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
     params.addQueryItem(item.first(), item.second());
   }
 
-  QNetworkReply *reply = m_UltraNetworkAccessManager.get(request);//, params.query(QUrl::FullyEncoded).toUtf8());
+  QNetworkReply *reply = nullptr;
+  switch (abstractCommand->requestType())
+  {
+    case WebApiCommand::RequestTypePost:
+      reply = m_UltraNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
+    break;
+    case WebApiCommand::RequestTypeGet:
+      reply = m_UltraNetworkAccessManager.get(request);
+    break;
+  }
+
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
   connect(reply,
           SIGNAL(finished()),
@@ -376,7 +386,7 @@ void WebApi::postRequest(WebApiCommand *abstractCommand,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void WebApi::multipartRequest(WebApiCommand *abstractCommand,
+void WebApi::sendMultipartRequest(WebApiCommand *abstractCommand,
                               QList<QueryItem> &qList_QueryItems,
                               QIODevice *device)
 {

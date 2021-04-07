@@ -103,32 +103,31 @@ Picture *PicturesModel::getPicture(int index) const
 
 void PicturesModel::getNewestSpots()
 {
-    PictureRepository::instance()->getBy_Newest(m_RequestId);
+  PictureRepository::instance()->getBy_Newest(m_RequestId);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void PicturesModel::getBy_PictureId(int id)
 {
-    PictureRepository::instance()->getBy_PictureId(m_RequestId,
-                                                   id);
+  PictureRepository::instance()->getBy_PictureId(m_RequestId,
+                                                 id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void PicturesModel::getBy_SpotId(int id)
 {
-
-    PictureRepository::instance()->getBy_SpotId(m_RequestId,
-                                                id);
+  PictureRepository::instance()->getBy_SpotId(m_RequestId,
+                                              id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void PicturesModel::getBy_UserId(int id)
 {
-    PictureRepository::instance()->getBy_UserId(m_RequestId,
-                                                id);
+  PictureRepository::instance()->getBy_UserId(m_RequestId,
+                                              id);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

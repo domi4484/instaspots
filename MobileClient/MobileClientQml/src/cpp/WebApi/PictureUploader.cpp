@@ -41,13 +41,13 @@ PictureUploader::PictureUploader(QObject *parent)
   , m_WebApiCommand_UploadNewSpot      (this)
   , m_WebApiCommand_UploadPictureToSpot(this)
 {
-  m_WebApiCommand_UploadNewSpot.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_UploadNewSpot.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_UploadNewSpot.setCommandName(WebApi::COMMAND::UPLOAD_NEW_SPOT);
   connect(&m_WebApiCommand_UploadNewSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_CommandUploadNewSpot_Finished(const WebApiError &)));
 
-  m_WebApiCommand_UploadPictureToSpot.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_UploadPictureToSpot.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_UploadPictureToSpot.setCommandName(WebApi::COMMAND::UPLOAD_PICTURE_TO_SPOT);
   connect(&m_WebApiCommand_UploadPictureToSpot,
           SIGNAL(signal_Finished(const WebApiError &)),
@@ -384,7 +384,7 @@ bool PictureUploader::uploadNewSpot()
                 90); // writes pixmap into bytes in JPG format
 
   // Post request
-  WebApiError error = m_WebApiCommand_UploadNewSpot.postRequest(qList_QueryItems,
+  WebApiError error = m_WebApiCommand_UploadNewSpot.sendRequest(qList_QueryItems,
                                                                 qBuffer);
   if(error.type() != WebApiError::NONE)
   {
@@ -430,7 +430,7 @@ bool PictureUploader::uploadPictureToSpot()
                 90); // writes pixmap into bytes in JPG format
 
   // Post request
-  WebApiError error = m_WebApiCommand_UploadPictureToSpot.postRequest(qList_QueryItems,
+  WebApiError error = m_WebApiCommand_UploadPictureToSpot.sendRequest(qList_QueryItems,
                                                                       qBuffer);
   if(error.type() != WebApiError::NONE)
   {

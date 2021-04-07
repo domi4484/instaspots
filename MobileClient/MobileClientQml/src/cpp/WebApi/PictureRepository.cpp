@@ -166,7 +166,7 @@ void PictureRepository::getBy_SpotId(int requestId,
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
-  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
@@ -174,7 +174,7 @@ void PictureRepository::getBy_SpotId(int requestId,
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
-  webApiCommand->postRequest(qList_QueryItems);
+  webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void PictureRepository::getBy_UserId(int requestId,
 
    // TODO check post return type
    WebApiCommand *webApiCommand = new WebApiCommand(this);
-   webApiCommand->setAnswerType(WebApiCommand::JSON);
+   webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
    webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_USER_ID);
 
    webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
@@ -195,7 +195,7 @@ void PictureRepository::getBy_UserId(int requestId,
    connect(webApiCommand,
            SIGNAL(signal_Finished(const WebApiError &)),
            SLOT(slot_Command_Finished(const WebApiError &)));
-   webApiCommand->postRequest(qList_QueryItems);
+   webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -206,7 +206,8 @@ void PictureRepository::getBy_Newest(int requestId)
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
-  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setRequestType(WebApiCommand::RequestTypeGet);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_NEWEST);
 
   webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
@@ -214,7 +215,7 @@ void PictureRepository::getBy_Newest(int requestId)
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
-  webApiCommand->postRequest(qList_QueryItems);
+  webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -225,13 +226,13 @@ void PictureRepository::likePicture(int pictureId)
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));
 
   WebApiCommand *webApiCommand = new WebApiCommand(this);
-  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::PICTURE_LIKE);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
-  webApiCommand->postRequest(qList_QueryItems);
+  webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -242,13 +243,13 @@ void PictureRepository::unlikePicture(int pictureId)
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));
 
   WebApiCommand *webApiCommand = new WebApiCommand(this);
-  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::PICTURE_UNLIKE);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_Finished(const WebApiError &)));
-  webApiCommand->postRequest(qList_QueryItems);
+  webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -270,13 +271,13 @@ void PictureRepository::removePicture(int pictureId)
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_PICTURE_ID,  QString::number(pictureId)));
 
   WebApiCommand *webApiCommand = new WebApiCommand(this);
-  webApiCommand->setAnswerType(WebApiCommand::JSON);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::PICTURE_REMOVE);
 
   connect(webApiCommand,
           SIGNAL(signal_Finished(const WebApiError &)),
           SLOT(slot_Command_RemovePicture_Finished(const WebApiError &)));
-  webApiCommand->postRequest(qList_QueryItems);
+  webApiCommand->sendRequest(qList_QueryItems);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

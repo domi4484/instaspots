@@ -78,7 +78,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
     m_Settings->set_Application_NewerVersionAvailableGotIt(false);
   }
 
-  m_WebApiCommand_GetCurrentClientVersion.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_GetCurrentClientVersion.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_GetCurrentClientVersion.setCommandName(WebApi::COMMAND::GET_CURRENT_CLIENT_VERSION);
 
   connect(&m_WebApiCommand_GetCurrentClientVersion,
@@ -86,7 +86,7 @@ ApplicationHelper::ApplicationHelper(Settings *settings,
           SLOT(slot_CommandGetCurrentClientVersion_Finished(const WebApiError &)));
 
 
-  m_WebApiCommand_ReportProblem.setAnswerType(WebApiCommand::JSON);
+  m_WebApiCommand_ReportProblem.setAnswerType(WebApiCommand::AnswerTypeJSON);
   m_WebApiCommand_ReportProblem.setCommandName(WebApi::COMMAND::REPORT_PROBLEM);
 
   connect(&m_WebApiCommand_ReportProblem,
@@ -237,7 +237,7 @@ bool ApplicationHelper::checkCurrentAvailableClientVersion()
   }
 
   QList<QueryItem> qList_QueryItems;
-  WebApiError error = m_WebApiCommand_GetCurrentClientVersion.postRequest(qList_QueryItems);
+  WebApiError error = m_WebApiCommand_GetCurrentClientVersion.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     Logger::error(QString("ApplicationHelper::checkForNewerVersion: %1").arg(error.text()));
@@ -288,7 +288,7 @@ bool ApplicationHelper::reportProblem(const QString &problemDescription,
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::REPORT_CONTENT, qStringList_ReportContent.join("\n")));
 
 
-  WebApiError error = m_WebApiCommand_ReportProblem.postRequest(qList_QueryItems);
+  WebApiError error = m_WebApiCommand_ReportProblem.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
   {
     setLastErrorText(QString("%1: %2").arg(__FUNCTION__)
