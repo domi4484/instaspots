@@ -5,3 +5,4 @@ build-*
 .settings*
 WebSite/lowerspot/lowerspot/settingsProduction.py
 WebSite/lowerspot/static/pictures
+*nohup.out
