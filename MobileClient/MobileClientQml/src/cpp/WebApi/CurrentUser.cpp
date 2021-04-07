@@ -66,7 +66,7 @@ bool CurrentUser::login()
   m_LastErrorText = "";
 
   QString username = m_Settings->get_User_Username();
-  QString password = m_Settings->get_User_Password();
+  QString password;
 
   if(   username.isEmpty()
      || password.isEmpty())
@@ -111,7 +111,6 @@ bool CurrentUser::login(const QString &username,
   }
 
   m_Settings->set_User_Username(username);
-  m_Settings->set_User_Password(password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
@@ -134,10 +133,6 @@ bool CurrentUser::logout()
   m_Id = -1;
 
   m_LastErrorText = "";
-
-  // Reset password in settings
-  m_Settings->set_User_Password(QString());
-  m_Settings->sync();
 
   emit signal_Username_changed();
   emit signal_Id_changed();
@@ -186,7 +181,6 @@ bool CurrentUser::registration(const QString &username,
   }
 
   m_Settings->set_User_Username(username);
-  m_Settings->set_User_Password(password);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
@@ -233,7 +227,6 @@ void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
   {
     // Reset password in settings
     m_Settings->set_User_LoggedIn(false);
-    m_Settings->set_User_Password(QString());
     m_Settings->sync();
 
     m_Id = -1;
@@ -286,7 +279,6 @@ void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Register.resultParameter(WebApi::PARAMETER::USER_REGISTERED).toBool()
      == false)
   {
-    m_Settings->set_User_Password(QString());
     m_Settings->set_User_LoggedIn(false);
     m_Settings->sync();
 
@@ -299,7 +291,6 @@ void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
   if(   m_WebApiCommand_Register.resultParameter(WebApi::PARAMETER::USER_AUTHENTICATED).toBool()
      == false)
   {
-    m_Settings->set_User_Password(QString());
     m_Settings->set_User_LoggedIn(false);
     m_Settings->sync();
 

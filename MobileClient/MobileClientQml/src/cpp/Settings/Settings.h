@@ -15,9 +15,6 @@
 // Library includes ------------------------
 #include <HelperClasses/Logger.h>
 
-// External includes -----------------------
-#include "../External/SimpleCrypt.h"
-
 // Qt includes -----------------------------
 #include <QGeoCoordinate>
 #include <QSettings>
@@ -54,21 +51,19 @@ public:
 public slots:
 
   // Application settings
-  QString get_Application_LastVersion ();
+  QString get_Application_LastVersion () const;
   void    set_Application_LastVersion (const QString &lastVersion);
-  bool    get_Application_NewerVersionAvailableGotIt ();
+  bool    get_Application_NewerVersionAvailableGotIt () const;
   void    set_Application_NewerVersionAvailableGotIt (bool newerVersionAvailableGotIt);
 
   // Logger settings
-  Logger::LOG_LEVEL get_Logger_LogLevel ();
+  Logger::LOG_LEVEL get_Logger_LogLevel () const;
   void              set_Logger_LogLevel (Logger::LOG_LEVEL logLevel);
 
   // User settings
-  QString get_User_Username ();
+  QString get_User_Username () const;
   void    set_User_Username (const QString &username);
-  QString get_User_Password ();
-  void    set_User_Password (const QString &password);
-  bool    get_User_LoggedIn ();
+  bool    get_User_LoggedIn () const;
   void    set_User_LoggedIn (bool loggedIn);
 
   // Location settings
@@ -76,15 +71,11 @@ public slots:
   void            set_Location_LastCoordinate (const QGeoCoordinate &coordinate);
 
   // One time help settings
-  bool get_HelpGotIt_UploadNewPictureSecretSpot();
+  bool get_HelpGotIt_UploadNewPictureSecretSpot() const;
   void set_HelpGotIt_UploadNewPictureSecretSpot(bool gotIt);
 
   // Special functions
   void resetGotItSettings();
-
-private:
-
-  SimpleCrypt m_SimpleCrypt;
 };
 
 #endif // SETTINGS_H

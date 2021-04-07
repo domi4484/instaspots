@@ -73,7 +73,6 @@ SOURCES += \
     src/cpp/WebApi/PictureRepository.cpp \
     src/cpp/WebApi/PicturesModel.cpp \
     src/cpp/WebApi/SpotsModel.cpp \
-    src/cpp/External/SimpleCrypt.cpp \
     src/cpp/WebApi/CurrentUser.cpp \
     src/cpp/WebApi/User.cpp \
     src/cpp/WebApi/UserRepository.cpp
@@ -103,7 +102,6 @@ HEADERS += \
     src/cpp/WebApi/PictureRepository.h \
     src/cpp/WebApi/PicturesModel.h \
     src/cpp/WebApi/SpotsModel.h \
-    src/cpp/External/SimpleCrypt.h \
     src/cpp/WebApi/CurrentUser.h \
     src/cpp/WebApi/User.h \
     src/cpp/WebApi/UserRepository.h

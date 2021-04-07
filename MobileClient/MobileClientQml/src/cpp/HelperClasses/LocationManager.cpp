@@ -14,7 +14,6 @@
 
 // Project includes ------------------------
 #include "../Settings/Settings.h"
-#include "../Settings/Secret.h"
 #include "PlateformDetail.h"
 
 // Library includes ------------------------

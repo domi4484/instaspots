@@ -12,9 +12,6 @@
 // Files includes --------------------------
 #include "Settings.h"
 
-// Project includes ------------------------
-#include "Secret.h"
-
 //-----------------------------------------------------------------------------------------------------------------------------
 
 // Application settings
@@ -38,11 +35,9 @@ const QString Settings::HELP_GOT_IT_UPLOAD_NEW_PICTURE_SECRET_SPOT ("HelpGotIt_U
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Settings::Settings(QObject *parent) :
-  QSettings(parent),
-  m_SimpleCrypt()
+Settings::Settings(QObject *parent)
+  : QSettings(parent)
 {
-  m_SimpleCrypt.setKey(CONST_SETTINGS_SECRETKEY);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -54,7 +49,7 @@ Settings::~Settings()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString Settings::get_Application_LastVersion()
+QString Settings::get_Application_LastVersion() const
 {
   return QSettings::value(APPLICATION_LAST_VERSION, "").toString();
 }
@@ -68,7 +63,7 @@ void Settings::set_Application_LastVersion(const QString &lastVersion)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool Settings::get_Application_NewerVersionAvailableGotIt()
+bool Settings::get_Application_NewerVersionAvailableGotIt() const
 {
   return QSettings::value(APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT, true).toBool();
 }
@@ -82,7 +77,7 @@ void Settings::set_Application_NewerVersionAvailableGotIt(bool newerVersionAvail
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-Logger::LOG_LEVEL Settings::get_Logger_LogLevel()
+Logger::LOG_LEVEL Settings::get_Logger_LogLevel() const
 {
   return (Logger::LOG_LEVEL) QSettings::value(LOGGER_LOG_LEVEL, Logger::LOG_DEBUG).toInt();
 }
@@ -96,7 +91,7 @@ void Settings::set_Logger_LogLevel(Logger::LOG_LEVEL logLevel)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString Settings::get_User_Username()
+QString Settings::get_User_Username() const
 {
   return QSettings::value(USER_USERNAME, "").toString();
 }
@@ -110,28 +105,7 @@ void Settings::set_User_Username(const QString &username)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QString Settings::get_User_Password()
-{
-  QString encryptedPassword = QSettings::value(USER_PASSWORD, "").toString();
-
-  if(encryptedPassword.isEmpty())
-    return QString();
-
-  return m_SimpleCrypt.decryptToString(encryptedPassword);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Settings::set_User_Password(const QString &password)
-{
-  QString encryptedPassword = m_SimpleCrypt.encryptToString(password);
-
-  QSettings::setValue(USER_PASSWORD, encryptedPassword);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-bool Settings::get_User_LoggedIn()
+bool Settings::get_User_LoggedIn() const
 {
   return QSettings::value(USER_LOGGED_IN, false).toBool();
 }
@@ -161,7 +135,7 @@ void Settings::set_Location_LastCoordinate(const QGeoCoordinate &coordinate)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool Settings::get_HelpGotIt_UploadNewPictureSecretSpot()
+bool Settings::get_HelpGotIt_UploadNewPictureSecretSpot() const
 {
   return QSettings::value(HELP_GOT_IT_UPLOAD_NEW_PICTURE_SECRET_SPOT).toBool();
 }
