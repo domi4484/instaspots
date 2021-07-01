@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'lowerspot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lowerspot',
-        'USER': 'lowerspot',
-        'PASSWORD': 'lowerspot',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'secret',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

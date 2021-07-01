@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 class Spot(models.Model):
+    id           = models.AutoField(primary_key=True)
     created      = models.DateTimeField (default = timezone.now)
     modified     = models.DateTimeField (default = timezone.now)
     user         = models.ForeignKey    (User, null=True, blank=True, on_delete=models.SET_NULL, related_name='spots')
@@ -23,8 +24,8 @@ class Spot(models.Model):
         return self.name
 
 
-
 class Picture(models.Model):
+    id          = models.AutoField(primary_key=True)
     created     = models.DateTimeField (default = timezone.now)
     user        = models.ForeignKey    (User, null=True,  blank=True,  on_delete=models.SET_NULL, related_name='pictures')
     spot        = models.ForeignKey    (Spot, null=False, blank=False, on_delete=models.CASCADE,  related_name='pictures')
@@ -47,8 +48,6 @@ class Picture(models.Model):
         with open(savePath, 'wb+') as destinationFile:
             for chunk in imageFile.chunks():
                 destinationFile.write(chunk)
-
-
 
     #     // Check for valid picture
     #     if(   $uploadedFile->isValid() == false

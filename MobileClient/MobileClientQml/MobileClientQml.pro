@@ -109,6 +109,7 @@ HEADERS += \
 RESOURCES += src/qml.qrc
 
 DISTFILES += \
+    ../../WebSite/Data/setupTestEnvironment.sh \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/gradlew.bat \
@@ -165,29 +166,29 @@ DISTFILES += \
     src/qml/pages-upload/Upload_LocationCheck.qml \
     src/qml/pages-upload/Upload_CropPicture.qml \
     ../../WebSite/README.md \
-    ../../WebSite/lowerspot/lowerspot/asgi.py \
-    ../../WebSite/lowerspot/lowerspot/settings.py \
-    ../../WebSite/lowerspot/lowerspot/urls.py \
-    ../../WebSite/lowerspot/lowerspot/wsgi.py \
-    ../../WebSite/lowerspot/manage.py \
-    ../../WebSite/lowerspot/spots/admin.py \
-    ../../WebSite/lowerspot/spots/apps.py \
-    ../../WebSite/lowerspot/spots/models.py \
-    ../../WebSite/lowerspot/spots/templates/spots/download.html \
-    ../../WebSite/lowerspot/spots/templates/spots/index.html \
-    ../../WebSite/lowerspot/spots/templates/spots/spot.html \
-    ../../WebSite/lowerspot/spots/templates/spots/user.html \
-    ../../WebSite/lowerspot/spots/tests.py \
-    ../../WebSite/lowerspot/spots/urls.py \
-    ../../WebSite/lowerspot/spots/views.py \
-    ../../WebSite/lowerspot/startProductionServer.sh \
-    ../../WebSite/lowerspot/webservice/admin.py \
-    ../../WebSite/lowerspot/webservice/apps.py \
-    ../../WebSite/lowerspot/webservice/models.py \
-    ../../WebSite/lowerspot/webservice/permissions.py \
-    ../../WebSite/lowerspot/webservice/serializers.py \
-    ../../WebSite/lowerspot/webservice/tests.py \
-    ../../WebSite/lowerspot/webservice/urls.py \
-    ../../WebSite/lowerspot/webservice/views.py \
+    ../../WebSite/DjangoProject/lowerspot/asgi.py \
+    ../../WebSite/DjangoProject/lowerspot/settings.py \
+    ../../WebSite/DjangoProject/lowerspot/urls.py \
+    ../../WebSite/DjangoProject/lowerspot/wsgi.py \
+    ../../WebSite/DjangoProject/manage.py \
+    ../../WebSite/DjangoProject/spots/admin.py \
+    ../../WebSite/DjangoProject/spots/apps.py \
+    ../../WebSite/DjangoProject/spots/models.py \
+    ../../WebSite/DjangoProject/spots/templates/spots/download.html \
+    ../../WebSite/DjangoProject/spots/templates/spots/index.html \
+    ../../WebSite/DjangoProject/spots/templates/spots/spot.html \
+    ../../WebSite/DjangoProject/spots/templates/spots/user.html \
+    ../../WebSite/DjangoProject/spots/tests.py \
+    ../../WebSite/DjangoProject/spots/urls.py \
+    ../../WebSite/DjangoProject/spots/views.py \
+    ../../WebSite/DjangoProject/startProductionServer.sh \
+    ../../WebSite/DjangoProject/webservice/admin.py \
+    ../../WebSite/DjangoProject/webservice/apps.py \
+    ../../WebSite/DjangoProject/webservice/models.py \
+    ../../WebSite/DjangoProject/webservice/permissions.py \
+    ../../WebSite/DjangoProject/webservice/serializers.py \
+    ../../WebSite/DjangoProject/webservice/tests.py \
+    ../../WebSite/DjangoProject/webservice/urls.py \
+    ../../WebSite/DjangoProject/webservice/views.py \
     ../../WebSite/test/webserviceTest.sh
 
