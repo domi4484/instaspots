@@ -44,8 +44,6 @@
 
 const QString Application::CONST::SERVER::DEFAULT_ADDRESS("http://lowerspot.com");
 
-const QString Application::CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS("serverAddress");
-
 //-----------------------------------------------------------------------------------------------------------------------------
 
 Application::Application(int argc, char *argv[])
@@ -64,6 +62,9 @@ Application::Application(int argc, char *argv[])
   QApplication::setOrganizationDomain ("lowerspot.com");
   QApplication::setApplicationName    ("Lowerspot");
   QApplication::setApplicationVersion ("V0.3.0");
+
+  // Server address
+  WebApi::instance()->setUrl(CONST::SERVER::DEFAULT_ADDRESS);
 
   // Command line arguments
   QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
@@ -86,12 +87,6 @@ Application::Application(int argc, char *argv[])
   m_LocationManager = new LocationManager(m_Settings,
                                           m_PlateformDetail);
   m_PictureCacher = new PictureCacher(this);
-
-  // Server address
-  if(qMap_Arguments.contains(CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS))
-    WebApi::instance()->setUrl(qMap_Arguments.value(CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS).toString());
-  else
-    WebApi::instance()->setUrl(CONST::SERVER::DEFAULT_ADDRESS);
 
   // Repositories
   PictureRepository::instanziate();
@@ -221,10 +216,7 @@ QMap<QString, QVariant> Application::parseCommandLineArguments()
   QMap<QString, QVariant> qMap_Arguments;
 
   if(qCommandLineParser.value(qCommandLineOption_serverAddress).isEmpty() == false)
-    qMap_Arguments.insert(CONST::COMMANDLINE_ARGUMENT::SERVER_ADDRESS,
-                          qCommandLineParser.value(qCommandLineOption_serverAddress));
-
-  qDebug() << (QString("Server address: %1").arg(qCommandLineParser.value(qCommandLineOption_serverAddress)));
+    WebApi::instance()->setUrl(qCommandLineParser.value(qCommandLineOption_serverAddress));
 
   return qMap_Arguments;
 }

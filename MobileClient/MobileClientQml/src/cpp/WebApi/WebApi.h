@@ -154,14 +154,14 @@ private:
 
   static const char *PROPERTY_COMMAND_ID;
 
-  static WebApi *s_Instance;
+  static WebApi *sInstance;
 
-  QString m_ServerAddress;
+  QString mServerAddress;
 
-  UltraNetworkAccessManager m_UltraNetworkAccessManager;
+  UltraNetworkAccessManager mUltraNetworkAccessManager;
 
-  unsigned int m_CommandsIdCounter;
-  QMap<unsigned int, WebApiCommand *> m_RunningCommands;
+  unsigned int mCommandsIdCounter;
+  QMap<unsigned int, WebApiCommand *> mRunningCommands;
 
 };
 

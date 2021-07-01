@@ -51,11 +51,6 @@ private:
     public:
       static const QString DEFAULT_ADDRESS;
     };
-    class COMMANDLINE_ARGUMENT
-    {
-    public:
-      static const QString SERVER_ADDRESS;
-    };
   };
 
   // Settings

@@ -112,16 +112,16 @@ const QString WebApi::PARAMETER::A_PARAM_SUCCESSFUL  ("successful");
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-WebApi *WebApi::s_Instance(NULL);
+WebApi *WebApi::sInstance(NULL);
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 WebApi::WebApi() :
   QObject(),
-  m_ServerAddress(),
-  m_UltraNetworkAccessManager(),
-  m_CommandsIdCounter(0),
-  m_RunningCommands()
+  mServerAddress(),
+  mUltraNetworkAccessManager(),
+  mCommandsIdCounter(0),
+  mRunningCommands()
 {
 }
 
@@ -135,28 +135,28 @@ WebApi::~WebApi()
 
 WebApi *WebApi::instance()
 {
-  if(s_Instance == NULL)
-    s_Instance = new WebApi();
+  if(sInstance == NULL)
+    sInstance = new WebApi();
 
-  return s_Instance;
+  return sInstance;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void WebApi::destroy()
 {
-  if(s_Instance == NULL)
+  if(sInstance == NULL)
     return;
 
-  delete s_Instance;
-  s_Instance = NULL;
+  delete sInstance;
+  sInstance = NULL;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
 
 void WebApi::setUrl(const QString url)
 {
-  m_ServerAddress = url;
+  mServerAddress = url;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void WebApi::slot_QNetworkReply_uploadProgress(qint64 received,
   QNetworkReply *reply = dynamic_cast<QNetworkReply *>(sender());
   QNetworkReply::NetworkError replyNetworkError = reply->error();
   unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
-  WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
+  WebApiCommand *command = mRunningCommands.value(commandId, NULL);
 
   // Command id not found
   if(command == NULL)
@@ -238,7 +238,7 @@ void WebApi::slot_QNetworkReply_downloadProgress(qint64 received,
   QNetworkReply *reply = dynamic_cast<QNetworkReply *>(sender());
   QNetworkReply::NetworkError replyNetworkError = reply->error();
   unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
-  WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
+  WebApiCommand *command = mRunningCommands.value(commandId, NULL);
 
   // Command id not found
   if(command == NULL)
@@ -282,7 +282,7 @@ void WebApi::slot_QNetworkReply_finished()
   QNetworkReply::NetworkError replyNetworkError       = reply->error();
   QString                     replyNetworkErrorString = reply->errorString();
   unsigned int commandId = reply->property(PROPERTY_COMMAND_ID).toUInt();
-  WebApiCommand *command = m_RunningCommands.value(commandId, NULL);
+  WebApiCommand *command = mRunningCommands.value(commandId, NULL);
   reply->deleteLater();
 
   // Command id not found
@@ -341,14 +341,14 @@ void WebApi::slot_QNetworkReply_finished()
 void WebApi::sendRequest(WebApiCommand *abstractCommand,
                          QList<QueryItem> &qList_QueryItems)
 {
-  int commandId = m_CommandsIdCounter++;
-  m_RunningCommands.insert(commandId, abstractCommand);
+  int commandId = mCommandsIdCounter++;
+  mRunningCommands.insert(commandId, abstractCommand);
 
   qList_QueryItems.append(QueryItem(PARAMETER::APPLICATION_VERSION,
                                     QApplication::applicationVersion()));
 
   // Network request
-  QNetworkRequest request(QString("%1/%2/%3/").arg(m_ServerAddress)
+  QNetworkRequest request(QString("%1/%2/%3/").arg(mServerAddress)
                                               .arg(CONST::PATH)
                                               .arg(abstractCommand->commandName()));
 
@@ -361,7 +361,7 @@ void WebApi::sendRequest(WebApiCommand *abstractCommand,
                     "application/x-www-form-urlencoded");
 
   QUrlQuery params;
-  params.addQueryItem(CONST::GENERAL_PARAMS::COMMAND,    abstractCommand->commandName());
+  params.addQueryItem(CONST::GENERAL_PARAMS::COMMAND, abstractCommand->commandName());
   foreach(QueryItem item, qList_QueryItems)
   {
     params.addQueryItem(item.first(), item.second());
@@ -371,10 +371,10 @@ void WebApi::sendRequest(WebApiCommand *abstractCommand,
   switch (abstractCommand->requestType())
   {
     case WebApiCommand::RequestTypePost:
-      reply = m_UltraNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
+      reply = mUltraNetworkAccessManager.post(request, params.query(QUrl::FullyEncoded).toUtf8());
     break;
     case WebApiCommand::RequestTypeGet:
-      reply = m_UltraNetworkAccessManager.get(request);
+      reply = mUltraNetworkAccessManager.get(request);
     break;
   }
 
@@ -390,8 +390,8 @@ void WebApi::sendMultipartRequest(WebApiCommand *abstractCommand,
                               QList<QueryItem> &qList_QueryItems,
                               QIODevice *device)
 {
-  int commandId = m_CommandsIdCounter++;
-  m_RunningCommands.insert(commandId, abstractCommand);
+  int commandId = mCommandsIdCounter++;
+  mRunningCommands.insert(commandId, abstractCommand);
 
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::APPLICATION_VERSION,
                                     QApplication::applicationVersion()));
@@ -431,7 +431,7 @@ void WebApi::sendMultipartRequest(WebApiCommand *abstractCommand,
   multiPart->append(imagePart);
 
   // Network request
-  QNetworkRequest request(QString("%1/%2/%3").arg(m_ServerAddress)
+  QNetworkRequest request(QString("%1/%2/%3").arg(mServerAddress)
                           .arg(CONST::PATH)
                           .arg(abstractCommand->commandName()));
 
@@ -440,7 +440,7 @@ void WebApi::sendMultipartRequest(WebApiCommand *abstractCommand,
   conf.setPeerVerifyMode(QSslSocket::VerifyNone);
   request.setSslConfiguration(conf);
 
-  QNetworkReply *reply = m_UltraNetworkAccessManager.post(request, multiPart);
+  QNetworkReply *reply = mUltraNetworkAccessManager.post(request, multiPart);
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
 
   multiPart->setParent(reply); // delete the multiPart with the reply
@@ -455,8 +455,8 @@ void WebApi::sendMultipartRequest(WebApiCommand *abstractCommand,
 void WebApi::downloadRequest(WebApiCommand *abstractCommand,
                              const QString &url)
 {
-  int commandId = m_CommandsIdCounter++;
-  m_RunningCommands.insert(commandId, abstractCommand);
+  int commandId = mCommandsIdCounter++;
+  mRunningCommands.insert(commandId, abstractCommand);
 
   // Network request
   QNetworkRequest request(url);
@@ -466,7 +466,7 @@ void WebApi::downloadRequest(WebApiCommand *abstractCommand,
   conf.setPeerVerifyMode(QSslSocket::VerifyNone);
   request.setSslConfiguration(conf);
 
-  QNetworkReply *reply = m_UltraNetworkAccessManager.get(request);
+  QNetworkReply *reply = mUltraNetworkAccessManager.get(request);
   reply->setProperty(PROPERTY_COMMAND_ID, commandId);
 
   connect(reply,
