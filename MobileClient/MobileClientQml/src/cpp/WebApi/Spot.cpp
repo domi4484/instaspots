@@ -105,10 +105,9 @@ int Spot::picturesCount() const
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QQmlListProperty<Picture> Spot::pictures()
+QList<Picture *> Spot::pictures()
 {
-  return QQmlListProperty<Picture>(this,
-                                   m_QList_Pictures);
+  return m_QList_Pictures;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

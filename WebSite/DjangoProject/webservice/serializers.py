@@ -13,10 +13,26 @@ class UserSerializer(serializers.ModelSerializer):
                   'username',
                   'spots')
 
+class PictureSerializer(serializers.ModelSerializer):
+    user = serializers.IntegerField(source='user.id', read_only=True)
+    user_name = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = Picture
+        fields = ('id',
+                  'created',
+                  'user',
+                  'user_name',
+                  'spot',
+                  'latitude',
+                  'longitude',
+                  'published',
+                  'url')
+
 
 class SpotSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.id', read_only=True)
-    pictures = serializers.PrimaryKeyRelatedField(many=True, queryset=Picture.objects.all())
+    pictures = PictureSerializer(many=True, read_only=True)
 
     class Meta:
         model = Spot
@@ -33,18 +49,3 @@ class SpotSerializer(serializers.ModelSerializer):
                   'pictures')
 
 
-class PictureSerializer(serializers.ModelSerializer):
-    user = serializers.IntegerField(source='user.id', read_only=True)
-    user_name = serializers.CharField(source='user.username', read_only=True)
-
-    class Meta:
-        model = Picture
-        fields = ('id',
-                  'created',
-                  'user',
-                  'user_name',
-                  'spot',
-                  'latitude',
-                  'longitude',
-                  'published',
-                  'url')

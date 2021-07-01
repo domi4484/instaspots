@@ -132,6 +132,6 @@ Item{
     onSpotIdChanged:
     {
         spot = re_SpotRepository.getBy_SpotId(spotId);
-        picturesModel.getBy_SpotId(spotId);
+        picturesModel.setPictures(spot.pictures);
     }
 }

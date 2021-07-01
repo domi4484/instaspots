@@ -18,7 +18,7 @@
 // Qt includes -----------------------------
 #include <QObject>
 #include <QGeoCoordinate>
-#include <QQmlListProperty>
+#include <QList>
 
 class Spot : public QObject
 {
@@ -37,7 +37,7 @@ class Spot : public QObject
     Q_PROPERTY(int                       pictureId1          READ pictureId1  WRITE setPictureId1  NOTIFY pictureId1Changed    )
     Q_PROPERTY(int                       pictureId2          READ pictureId2  WRITE setPictureId2  NOTIFY pictureId2Changed    )
     Q_PROPERTY(int                       picturesCount       READ picturesCount                    NOTIFY picturesCountChanged )
-    Q_PROPERTY(QQmlListProperty<Picture> pictures            READ pictures                         NOTIFY picturesCountChanged )
+    Q_PROPERTY(QList<Picture *>          pictures            READ pictures                         NOTIFY picturesCountChanged )
 
 public:
 
@@ -73,7 +73,7 @@ public:
     int            pictureId2  ()  const { return m_PictureId2;             }
 
     int            picturesCount() const;
-    QQmlListProperty<Picture> pictures();
+    QList<Picture *> pictures();
 
     QString distanceText() const;
 

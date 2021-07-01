@@ -59,6 +59,7 @@ public:
   QVariant   resultParameter(const QString &parameterName);
   QJsonValue resultProperty(const QString &propertyName);
   QJsonArray resultArray();
+  QJsonObject resultObject();
 
   // RawResult (BINARY)
   virtual void setRawResult(const WebApiError &error,
@@ -77,7 +78,7 @@ public:
   bool isRunning();
 
   WebApiError sendRequest(QList<QueryItem> &queryItems,
-                   QIODevice *device = NULL);
+                          QIODevice *device = NULL);
 
   QString requestString() const;
 

@@ -316,7 +316,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
 
     // Picture properties
     picture->setUrl             (QString("%1/%2").arg("http://lowerspot.com")
-                                                 .arg(jsonObject_Picture.value("url").toString()));
+                                                 .arg(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString()));
     picture->setIdUser          (jsonObject_Picture.value("user").toInt());
     picture->setUsername        (jsonObject_Picture.value("user_name").toString());
     picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value("created").toString(),
@@ -326,9 +326,7 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
     int     spot_id          = jsonObject_Picture.value("spot").toInt();
     QString spot_name        = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_NAME).toString();
     QString spot_description = jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_SPOT_DESCRIPTION).toString();
-    Spot *spot = SpotRepository::instance()->getAdd_Spot(spot_id,
-                                                         spot_name,
-                                                         spot_description);
+    Spot *spot = SpotRepository::instance()->getBy_SpotId(spot_id);
     picture->setSpot(spot);
 
     // Likers

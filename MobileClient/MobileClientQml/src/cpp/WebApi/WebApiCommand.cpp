@@ -86,6 +86,13 @@ QJsonArray WebApiCommand::resultArray()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QJsonObject WebApiCommand::resultObject()
+{
+  return m_JsonDocumentResult.object();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void WebApiCommand::setRawResult(const WebApiError &error,
                                  const QByteArray &result)
 {

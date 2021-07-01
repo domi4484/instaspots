@@ -105,31 +105,32 @@ QList<Spot *> SpotRepository::getSpots(int requestId)
 Spot *SpotRepository::getBy_SpotId(int spotId)
 {
   if(spotId < 0)
-      return NULL;
+      return nullptr;
 
   Spot *spot = m_QMap_Spots.value(spotId, NULL);
-  if(spot == NULL)
-  {
-    spot = new Spot(this);
-    spot->setId(spotId);
-    m_QMap_Spots.insert(spotId, spot);
+  if(spot != nullptr)
+    return spot;
 
-    // Get from server
-    QList<QueryItem> qList_QueryItems;
-    qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SPOT_ID,    QString::number(spotId)));
+  spot = new Spot(this);
+  spot->setId(spotId);
+  m_QMap_Spots.insert(spotId, spot);
 
-    // TODO check post return type
-    WebApiCommand *webApiCommand = new WebApiCommand(this);
-    webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
-    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
+  // Get from server
+  QList<QueryItem> qList_QueryItems;
 
-    webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
+  // TODO check post return type
+  WebApiCommand *webApiCommand = new WebApiCommand(this);
+  webApiCommand->setRequestType(WebApiCommand::RequestTypeGet);
+  webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
+  webApiCommand->setCommandName(QString("%1/%2").arg(WebApi::COMMAND::GET_SPOTS,
+                                                     QString::number(spotId)));
 
-    connect(webApiCommand,
-            SIGNAL(signal_Finished(const WebApiError &)),
-            SLOT(slot_Command_Finished(const WebApiError &)));
-    webApiCommand->sendRequest(qList_QueryItems);
-  }
+  webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
+
+  connect(webApiCommand,
+          SIGNAL(signal_Finished(const WebApiError &)),
+          SLOT(slot_Command_Finished(const WebApiError &)));
+  webApiCommand->sendRequest(qList_QueryItems);
 
   return spot;
 }
@@ -157,7 +158,7 @@ Spot *SpotRepository::getAdd_Spot(int spotId,
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
     webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
-    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
+    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
 
@@ -238,6 +239,8 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
   QJsonArray jsonArray_Spots = webApiCommand->resultArray();
+  if(jsonArray_Spots.isEmpty())
+    jsonArray_Spots.append(webApiCommand->resultObject());
   for(int i = 0; i < jsonArray_Spots.size(); i++)
   {
     QJsonObject jsonObject_Spot = jsonArray_Spots.at(i).toObject();
@@ -281,7 +284,8 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
       Picture *picture = PictureRepository::instance()->getAdd_Picture(picture_id);
 
       // Picture properties
-      picture->setUrl             (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString());
+      picture->setUrl             (QString("%1/%2").arg("http://lowerspot.com")
+                                                   .arg(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString()));
       picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
       picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());
       picture->setCreated         (QDateTime::fromString(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_CREATED).toString(),
@@ -347,7 +351,7 @@ void SpotRepository::slot_PictureRepository_PictureRemoved(Picture *picture)
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
     webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
-    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOT_BY_ID);
+    webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS);
 
     webApiCommand->setProperty(PROPERTY_REQUEST_ID, getNewRequestId());
 

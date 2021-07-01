@@ -99,6 +99,28 @@ Picture *PicturesModel::getPicture(int index) const
   return m_QList_Pictures.at(index);
 }
 
+void PicturesModel::setPictures(const QList<Picture *> pictures)
+{
+  if(m_QList_Pictures != pictures)
+  {
+    QAbstractItemModel::beginResetModel();
+    m_QList_Pictures.clear();
+    QAbstractItemModel::endResetModel();
+
+    int newCount = PictureRepository::instance()->getPictures(m_RequestId).size();
+    if(newCount > 0)
+    {
+      QAbstractItemModel::beginInsertRows(QModelIndex(),
+                                          0,
+                                          PictureRepository::instance()->getPictures(m_RequestId).size()-1);
+      m_QList_Pictures = pictures;
+      QAbstractItemModel::endInsertRows();
+    }
+
+    emit countChanged(m_QList_Pictures.count());
+  }
+}
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void PicturesModel::getNewestSpots()

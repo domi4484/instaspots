@@ -39,6 +39,8 @@ public slots:
 
   Picture *getPicture(int index) const;
 
+  void setPictures(const QList<Picture *> pictures);
+
   void getNewestSpots();
 
   void getBy_PictureId(int id);
