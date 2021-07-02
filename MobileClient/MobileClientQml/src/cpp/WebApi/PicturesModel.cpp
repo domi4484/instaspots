@@ -107,7 +107,7 @@ void PicturesModel::setPictures(const QList<Picture *> pictures)
     m_QList_Pictures.clear();
     QAbstractItemModel::endResetModel();
 
-    int newCount = PictureRepository::instance()->getPictures(m_RequestId).size();
+    int newCount = pictures.size();
     if(newCount > 0)
     {
       QAbstractItemModel::beginInsertRows(QModelIndex(),
