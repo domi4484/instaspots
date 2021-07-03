@@ -24,8 +24,7 @@ class PictureSerializer(serializers.ModelSerializer):
                   'user',
                   'user_name',
                   'spot',
-                  'latitude',
-                  'longitude',
+                  'position',
                   'published',
                   'url')
 
@@ -42,8 +41,7 @@ class SpotSerializer(serializers.ModelSerializer):
                   'description',
                   'secretspot',
                   'score',
-                  'latitude',
-                  'longitude',
+                  'position',
                   'picture1_id',
                   'picture2_id',
                   'pictures')

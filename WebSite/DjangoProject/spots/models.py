@@ -1,6 +1,7 @@
 #from __future__ import unicode_literals
 
-from django.db import models
+from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -15,24 +16,24 @@ class Spot(models.Model):
     description  = models.TextField     (default="",      blank=True)
     secretspot   = models.BooleanField  (default=False)
     score        = models.IntegerField  (default=0)
-    latitude     = models.FloatField    (default=0.0)
-    longitude    = models.FloatField    (default=0.0)
     picture1_id  = models.IntegerField  (default=0)
     picture2_id  = models.IntegerField  (default=0)
+
+    position = models.PointField(default=Point(0, 0))
 
     def __str__(self):
         return self.name
 
 
 class Picture(models.Model):
-    id          = models.AutoField(primary_key=True)
-    created     = models.DateTimeField (default = timezone.now)
-    user        = models.ForeignKey    (User, null=True,  blank=True,  on_delete=models.SET_NULL, related_name='pictures')
-    spot        = models.ForeignKey    (Spot, null=False, blank=False, on_delete=models.CASCADE,  related_name='pictures')
-    latitude    = models.FloatField    (default=0.0)
-    longitude   = models.FloatField    (default=0.0)
-    published   = models.BooleanField  (default=True)
-    #likers      = models.ForeignKey    ()
+    id        = models.AutoField(primary_key=True)
+    created   = models.DateTimeField(default = timezone.now)
+    user      = models.ForeignKey(User, null=True,  blank=True,  on_delete=models.SET_NULL, related_name='pictures')
+    spot      = models.ForeignKey(Spot, null=False, blank=False, on_delete=models.CASCADE,  related_name='pictures')
+    published = models.BooleanField(default=True)
+    # likers      = models.ForeignKey    ()
+
+    position = models.PointField(default=Point(0, 0))
 
     def __str__(self):
         return "picture of " + self.spot.__str__()

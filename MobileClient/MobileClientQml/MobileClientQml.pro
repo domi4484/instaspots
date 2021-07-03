@@ -109,7 +109,6 @@ HEADERS += \
 RESOURCES += src/qml.qrc
 
 DISTFILES += \
-    ../../WebSite/Data/setupTestEnvironment.sh \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/gradlew.bat \
@@ -165,6 +164,7 @@ DISTFILES += \
     src/qml/pages-upload/Upload_NearbySpotSelection.qml \
     src/qml/pages-upload/Upload_LocationCheck.qml \
     src/qml/pages-upload/Upload_CropPicture.qml \
+    ../../WebSite/Data/spots.sql \
     ../../WebSite/README.md \
     ../../WebSite/DjangoProject/lowerspot/asgi.py \
     ../../WebSite/DjangoProject/lowerspot/settings.py \

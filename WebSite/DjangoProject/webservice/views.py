@@ -52,6 +52,16 @@ class SpotDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SpotSerializer
 
 
+class SpotListByDistance(generics.ListCreateAPIView):
+    """
+    List all spots by distance.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                                      IsOwnerOrReadOnly)
+    queryset = Spot.objects.order_by('-created')[:20]
+    serializer_class = SpotSerializer
+
+
 class PictureList(generics.ListCreateAPIView):
     """
     List all pictures, or create a new pictures.
@@ -79,8 +89,8 @@ class PictureListByNewest(generics.ListCreateAPIView):
                                       IsOwnerOrReadOnly)
     queryset = Picture.objects.order_by('-created')[:20]
     serializer_class = PictureSerializer
-    
-    
+
+
 class Webservice(APIView):
     """
     Webservice like before
