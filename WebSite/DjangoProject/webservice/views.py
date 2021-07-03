@@ -14,9 +14,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.measure import D  # D for distance
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.http import Http404
 from django.db import transaction
+
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 class UserList(generics.ListAPIView):
@@ -58,8 +67,22 @@ class SpotListByDistance(generics.ListCreateAPIView):
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                                       IsOwnerOrReadOnly)
-    queryset = Spot.objects.order_by('-created')[:20]
+
     serializer_class = SpotSerializer
+
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            position = self.request.GET.get('position', None)
+            if position is None:
+                raise Http404("Missing parameter 'position'")
+            position = GEOSGeometry(position)
+
+            distance = self.request.GET.get('distanceKm', None)
+            if position is None:
+                raise Http404("Missing parameter 'distanceKm'")
+
+            queryset = Spot.objects.filter(position__distance_lte=(position, D(km=distance)))
+            return queryset
 
 
 class PictureList(generics.ListCreateAPIView):

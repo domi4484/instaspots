@@ -18,6 +18,7 @@
 
 // Qt includes -----------------------------
 #include <QColor>
+#include <QGeoCoordinate>
 #include <QObject>
 #include <QElapsedTimer>
 
@@ -43,6 +44,9 @@ public:
 
   QString lastErrorText() const;
   void setLastErrorText(const QString &errorText);
+
+  static QString geoCoordinateToWKT(const QGeoCoordinate &geoCoordinate);
+  static QGeoCoordinate wktToGeoCoordinate(const QString &wkt);
 
 signals:
 

@@ -19,6 +19,7 @@
 
 // Library includes ------------------------
 #include <HelperClasses/Logger.h>
+#include <HelperClasses/Exception.h>
 
 // Qt includes -----------------------------
 #include <QApplication>
@@ -131,6 +132,28 @@ void ApplicationHelper::setLastErrorText(const QString &errorText)
   m_LastErrorText = errorText;
 
   emit signal_LastErrorText_Changed();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString ApplicationHelper::geoCoordinateToWKT(const QGeoCoordinate &geoCoordinate)
+{
+  return QString("POINT (%1 %2)").arg(geoCoordinate.longitude())
+                                 .arg(geoCoordinate.latitude());
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QGeoCoordinate ApplicationHelper::wktToGeoCoordinate(const QString &wkt)
+{
+  static const QRegularExpression regularExpression("POINT \\((-*\\d*\\.*\\d*) (-*\\d*\\.*\\d*)\\)");
+
+  QRegularExpressionMatch match = regularExpression.match(wkt);
+  if(match.hasMatch() == false)
+    throw Exception(tr("Invalid or unsupported wkt '%1'").arg(wkt));
+
+  return QGeoCoordinate(match.captured(2).toDouble(),
+                        match.captured(1).toDouble());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

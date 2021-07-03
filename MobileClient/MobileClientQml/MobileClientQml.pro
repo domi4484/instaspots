@@ -97,7 +97,6 @@ HEADERS += \
     src/cpp/HelperClasses/UltraQmlAccessManagerFactory.h \
     src/cpp/HelperClasses/UltraNetworkAccessManager.h \
     src/cpp/Settings/Settings.h \
-    src/cpp/Settings/Secret.h \
     src/cpp/WebApi/SpotRepository.h \
     src/cpp/WebApi/PictureRepository.h \
     src/cpp/WebApi/PicturesModel.h \

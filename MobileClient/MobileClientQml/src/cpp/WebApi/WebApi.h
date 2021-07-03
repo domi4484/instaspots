@@ -98,8 +98,7 @@ public:
     static const QString SPOT_NAME;
     static const QString SPOT_DESCRIPTION;
     static const QString SPOT_SECRET_SPOT;
-    static const QString SPOT_LATITUDE;
-    static const QString SPOT_LONGITUDE;
+    static const QString SPOT_POSITION;
     static const QString SPOT_TAGS;
     static const QString SPOT_SCORE;
     static const QString SPOT_DISTANCE_KM;
@@ -110,8 +109,7 @@ public:
 
     static const QString PICTURE_LIST;
     static const QString PICTURE_PICTURE_ID;
-    static const QString PICTURE_LATITUDE;
-    static const QString PICTURE_LONGITUDE;
+    static const QString PICTURE_POSITION;
     static const QString PICTURE_URL;
     static const QString PICTURE_CREATED;
     static const QString PICTURE_LIKERS;

@@ -300,6 +300,8 @@ void PictureRepository::slot_Command_Finished(const WebApiError &error)
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
   QJsonArray jsonArray_Pictures = webApiCommand->resultArray();
+  if(jsonArray_Pictures.isEmpty())
+    jsonArray_Pictures.append(webApiCommand->resultObject());
   for(int i = 0; i < jsonArray_Pictures.size(); i++)
   {
     QJsonObject jsonObject_Picture = jsonArray_Pictures.at(i).toObject();

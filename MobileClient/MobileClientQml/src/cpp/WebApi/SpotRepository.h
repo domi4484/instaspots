@@ -17,6 +17,7 @@
 
 // Qt includes -----------------------------
 #include <QObject>
+#include <QGeoCoordinate>
 #include <QMap>
 
 // Forward declarations --------------------
@@ -53,8 +54,7 @@ public slots:
                     const QString &spotDescription);
 
   void getBy_Distance(int requestId,
-                      double latitude,
-                      double longitude,
+                      const QGeoCoordinate &coordinate,
                       double maxDistance_m);
 
   void getBy_UserId(int requestId,

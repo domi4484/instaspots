@@ -13,7 +13,8 @@
 #include "SpotRepository.h"
 
 // Project includes ------------------------
-#include "../HelperClasses/LocationManager.h"
+#include "HelperClasses/ApplicationHelper.h"
+#include "HelperClasses/LocationManager.h"
 #include "Spot.h"
 #include "WebApi.h"
 #include "WebApiCommand.h"
@@ -176,17 +177,16 @@ Spot *SpotRepository::getAdd_Spot(int spotId,
 //-----------------------------------------------------------------------------------------------------------------------------
 
 void SpotRepository::getBy_Distance(int requestId,
-                                    double latitude,
-                                    double longitude,
+                                    const QGeoCoordinate &coordinate,
                                     double maxDistance_m)
 {
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(latitude)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(longitude)));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_POSITION,    ApplicationHelper::geoCoordinateToWKT(coordinate)));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DISTANCE_KM, QString::number(maxDistance_m/1000.0)));
 
   // TODO check post return type
   WebApiCommand *webApiCommand = new WebApiCommand(this);
+  webApiCommand->setRequestType(WebApiCommand::RequestTypeGet);
   webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
   webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS_BY_DISTANCE);
 
@@ -258,12 +258,11 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
     spot->setName       (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_NAME                 ).toString());
     spot->setDescription(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_DESCRIPTION          ).toString());
     spot->setSecretSpot (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_SECRET_SPOT          ).toBool());
-    spot->setLatitude   (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_LATITUDE             ).toDouble());
-    spot->setLongitude  (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_LONGITUDE            ).toDouble());
     spot->setPictureUrl1(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_URL_1        ).toString());
     spot->setPictureUrl2(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_URL_2        ).toString());
     spot->setPictureId1 (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 ).toInt());
     spot->setPictureId2 (jsonObject_Spot.value(WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 ).toInt());
+    spot->setCoordinate (ApplicationHelper::wktToGeoCoordinate(jsonObject_Spot.value(WebApi::PARAMETER::SPOT_POSITION).toString()));
 
     // Compute and set distance
     qreal computedDistance = m_LocationManager->computeDistance(QPointF(m_LocationManager->latitude(),

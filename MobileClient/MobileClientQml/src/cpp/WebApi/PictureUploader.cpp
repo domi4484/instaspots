@@ -16,6 +16,7 @@
 #include "../WebApi/WebApi.h"
 
 // Library includes ------------------------
+#include <HelperClasses/ApplicationHelper.h>
 #include <HelperClasses/Logger.h>
 
 // Qt includes -----------------------------
@@ -372,8 +373,7 @@ bool PictureUploader::uploadNewSpot()
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_NAME,        m_Name));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_DESCRIPTION, m_Description));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_SECRET_SPOT, QString::number(m_SecretSpot)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LATITUDE,    QString::number(m_QGeoCoordinate.latitude())));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_LONGITUDE,   QString::number(m_QGeoCoordinate.longitude())));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_POSITION,    QString::number(m_QGeoCoordinate.latitude())));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_TAGS,        m_QStringList_Tags.join(";")));
 
   // Prepare image buffer
@@ -418,8 +418,7 @@ bool PictureUploader::uploadPictureToSpot()
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_SPOT_ID,   QString::number(m_SpotId)));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LATITUDE,  QString::number(m_QGeoCoordinate.latitude())));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_LONGITUDE, QString::number(m_QGeoCoordinate.longitude())));
+  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::PICTURE_POSITION,  ApplicationHelper::geoCoordinateToWKT(m_QGeoCoordinate)));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::SPOT_TAGS,         m_QStringList_Tags.join(";")));
 
   // Prepare image buffer

@@ -193,18 +193,15 @@ void SpotsModel::slot_SpotRepository_SpotRemoved(Spot *spot)
 
 void SpotsModel::slot_QTimer_UpdateModel_timeout()
 {
-  double latitude   = m_QGeoRectangle_VisibleRegion.center().latitude();
-  double longitude  = m_QGeoRectangle_VisibleRegion.center().longitude();
   double distance_m = m_QGeoRectangle_VisibleRegion.topLeft().distanceTo(m_QGeoRectangle_VisibleRegion.bottomRight()) / 2.0;
 
   Logger::info(QString("SpotsModel::%1() coordinate=%2;%3, distance_m=%4)").arg(__FUNCTION__)
-                                                                           .arg(latitude)
-                                                                           .arg(longitude)
+                                                                           .arg(m_QGeoRectangle_VisibleRegion.center().latitude())
+                                                                           .arg(m_QGeoRectangle_VisibleRegion.center().longitude())
                                                                            .arg(distance_m / 1000));
 
   SpotRepository::instance()->getBy_Distance(m_RequestId,
-                                             latitude,
-                                             longitude,
+                                             m_QGeoRectangle_VisibleRegion.center(),
                                              distance_m);
 }
 

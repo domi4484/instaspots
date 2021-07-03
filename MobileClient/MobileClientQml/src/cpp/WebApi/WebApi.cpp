@@ -55,7 +55,7 @@ const QString WebApi::COMMAND::GET_PICTURES_BY_SPOT_ID = "getPicturesBySpotId";
 const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
 
 const QString WebApi::COMMAND::GET_SPOTS = "spots";
-const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "getSpotsByDistance";
+const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "spots/byDistance";
 const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
 
 const QString WebApi::COMMAND::SPOT_SIGNAL_DISAPPEARED = "spotSignalDisappeared";
@@ -84,11 +84,10 @@ const QString WebApi::PARAMETER::SPOT_SPOT_ID              = "id";
 const QString WebApi::PARAMETER::SPOT_NAME                 = "name";
 const QString WebApi::PARAMETER::SPOT_DESCRIPTION          = "description";
 const QString WebApi::PARAMETER::SPOT_SECRET_SPOT          = "secretspot";
-const QString WebApi::PARAMETER::SPOT_LATITUDE             = "latitude";
-const QString WebApi::PARAMETER::SPOT_LONGITUDE            = "longitude";
+const QString WebApi::PARAMETER::SPOT_POSITION             = "position";
 const QString WebApi::PARAMETER::SPOT_TAGS                 = "tags";
 const QString WebApi::PARAMETER::SPOT_SCORE                = "score";
-const QString WebApi::PARAMETER::SPOT_DISTANCE_KM          = "DistanceKm";
+const QString WebApi::PARAMETER::SPOT_DISTANCE_KM          = "distanceKm";
 const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_1 = "picture1_id";
 const QString WebApi::PARAMETER::SPOT_PICTURE_PICTURE_ID_2 = "picture2_is";
 const QString WebApi::PARAMETER::SPOT_PICTURE_URL_1        = "spot_picture_url_1";
@@ -96,8 +95,7 @@ const QString WebApi::PARAMETER::SPOT_PICTURE_URL_2        = "spot_picture_url_2
 
 const QString WebApi::PARAMETER::PICTURE_LIST             = "pictures";
 const QString WebApi::PARAMETER::PICTURE_PICTURE_ID       = "id";
-const QString WebApi::PARAMETER::PICTURE_LATITUDE         = "latitude";
-const QString WebApi::PARAMETER::PICTURE_LONGITUDE        = "longitude";
+const QString WebApi::PARAMETER::PICTURE_POSITION         = "position";
 const QString WebApi::PARAMETER::PICTURE_URL              = "url";
 const QString WebApi::PARAMETER::PICTURE_CREATED          = "created";
 const QString WebApi::PARAMETER::PICTURE_LIKERS           = "likers";
@@ -347,10 +345,21 @@ void WebApi::sendRequest(WebApiCommand *abstractCommand,
   qList_QueryItems.append(QueryItem(PARAMETER::APPLICATION_VERSION,
                                     QApplication::applicationVersion()));
 
+  // Url
+  QUrl url(QString("%1/%2/%3/").arg(mServerAddress)
+                               .arg(CONST::PATH)
+                               .arg(abstractCommand->commandName()));
+
+  QUrlQuery params;
+  foreach(QueryItem item, qList_QueryItems)
+    params.addQueryItem(item.first(), item.second());
+
+  if(abstractCommand->requestType() == WebApiCommand::RequestTypeGet
+     && qList_QueryItems.isEmpty() == false)
+    url.setQuery(params);
+
   // Network request
-  QNetworkRequest request(QString("%1/%2/%3/").arg(mServerAddress)
-                                              .arg(CONST::PATH)
-                                              .arg(abstractCommand->commandName()));
+  QNetworkRequest request(url);
 
   // Ignore ssl certificate
   QSslConfiguration conf = request.sslConfiguration();
@@ -359,13 +368,6 @@ void WebApi::sendRequest(WebApiCommand *abstractCommand,
 
   request.setHeader(QNetworkRequest::ContentTypeHeader,
                     "application/x-www-form-urlencoded");
-
-  QUrlQuery params;
-  params.addQueryItem(CONST::GENERAL_PARAMS::COMMAND, abstractCommand->commandName());
-  foreach(QueryItem item, qList_QueryItems)
-  {
-    params.addQueryItem(item.first(), item.second());
-  }
 
   QNetworkReply *reply = nullptr;
   switch (abstractCommand->requestType())
