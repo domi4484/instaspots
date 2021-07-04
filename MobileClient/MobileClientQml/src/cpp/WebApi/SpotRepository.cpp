@@ -239,7 +239,8 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
 
   WebApiCommand *webApiCommand = dynamic_cast<WebApiCommand *>(sender());
   QJsonArray jsonArray_Spots = webApiCommand->resultArray();
-  if(jsonArray_Spots.isEmpty())
+  if(jsonArray_Spots.isEmpty()
+     && webApiCommand->resultObject().isEmpty() == false)
     jsonArray_Spots.append(webApiCommand->resultObject());
   for(int i = 0; i < jsonArray_Spots.size(); i++)
   {
