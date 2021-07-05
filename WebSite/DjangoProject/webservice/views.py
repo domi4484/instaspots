@@ -85,6 +85,16 @@ class SpotListByDistance(generics.ListCreateAPIView):
             return queryset
 
 
+class SpotListByUser(generics.ListCreateAPIView):
+    """
+    List all spots for a given user.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                                      IsOwnerOrReadOnly)
+    queryset = Spot.objects.all()
+    serializer_class = SpotSerializer
+
+
 class PictureList(generics.ListCreateAPIView):
     """
     List all pictures, or create a new pictures.

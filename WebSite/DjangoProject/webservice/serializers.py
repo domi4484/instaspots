@@ -30,7 +30,7 @@ class PictureSerializer(serializers.ModelSerializer):
 
 
 class SpotSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.id', read_only=True)
+    user = serializers.IntegerField(source='user.id', read_only=True)
     pictures = PictureSerializer(many=True, read_only=True)
 
     class Meta:

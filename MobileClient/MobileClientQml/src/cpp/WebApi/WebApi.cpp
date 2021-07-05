@@ -39,7 +39,7 @@ const QString WebApi::CONST::GENERAL_PARAMS::ERROR      ("error");
 const char *WebApi::PROPERTY_COMMAND_ID = "command_id";
 
 // Commands
-const QString WebApi::COMMAND::LOGIN       = "login";
+const QString WebApi::COMMAND::LOGIN       = "token-auth";
 const QString WebApi::COMMAND::LOGOUT      = "logout";
 const QString WebApi::COMMAND::CANREGISTER = "canregister";
 const QString WebApi::COMMAND::REGISTER    = "register";
@@ -56,7 +56,7 @@ const QString WebApi::COMMAND::GET_PICTURES_BY_USER_ID = "getPicturesByUserId";
 
 const QString WebApi::COMMAND::GET_SPOTS = "spots";
 const QString WebApi::COMMAND::GET_SPOTS_BY_DISTANCE   = "spots/byDistance";
-const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "getSpotsByUserId";
+const QString WebApi::COMMAND::GET_SPOTS_BY_USER_ID    = "spots/byUser";
 
 const QString WebApi::COMMAND::SPOT_SIGNAL_DISAPPEARED = "spotSignalDisappeared";
 
@@ -65,13 +65,13 @@ const QString WebApi::COMMAND::PICTURE_UNLIKE = "pictureUnlike";
 const QString WebApi::COMMAND::PICTURE_REMOVE = "pictureRemove";
 
 // Parameters
-const QString WebApi::PARAMETER::USER_LIST          = "user_list";
-const QString WebApi::PARAMETER::USER_USER_ID       = "user_userId";
-const QString WebApi::PARAMETER::USER_USERNAME      = "user_username";
-const QString WebApi::PARAMETER::USER_PASSWORD      = "user_password";
-const QString WebApi::PARAMETER::USER_EMAIL         = "user_email";
-const QString WebApi::PARAMETER::USER_AUTHENTICATED = "user_authenticated";
-const QString WebApi::PARAMETER::USER_REGISTERED    = "user_registered";
+const QString WebApi::PARAMETER::USER_LIST          = "list";
+const QString WebApi::PARAMETER::USER_USER_ID       = "id";
+const QString WebApi::PARAMETER::USER_USERNAME      = "username";
+const QString WebApi::PARAMETER::USER_PASSWORD      = "password";
+const QString WebApi::PARAMETER::USER_EMAIL         = "email";
+const QString WebApi::PARAMETER::USER_TOKEN         = "token";
+const QString WebApi::PARAMETER::USER_REGISTERED    = "registered";
 
 const QString WebApi::PARAMETER::REPORT_TITLE   = "reportTitle";
 const QString WebApi::PARAMETER::REPORT_CONTENT = "reportContent";

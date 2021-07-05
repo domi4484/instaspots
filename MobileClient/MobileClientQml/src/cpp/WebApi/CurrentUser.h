@@ -37,7 +37,7 @@ public:
 
 public slots:
 
-  QString lastErrorText() const { return m_LastErrorText; }
+  QString lastErrorText() const { return mLastErrorText; }
 
   bool isConnected();
 
@@ -72,16 +72,16 @@ private slots:
 private:
 
   // Link to Settings
-  Settings *m_Settings;
+  Settings *mSettings;
 
-  int m_Id;
+  int mId;
 
-  QString m_LastErrorText;
+  QString mLastErrorText;
 
-  WebApiCommand m_WebApiCommand_Login;
-  WebApiCommand m_WebApiCommand_Logout;
-  WebApiCommand m_WebApiCommand_Register;
-  WebApiCommand m_WebApiCommand_CanRegister;
+  WebApiCommand mWebApiCommand_Login;
+  WebApiCommand mWebApiCommand_Logout;
+  WebApiCommand mWebApiCommand_Register;
+  WebApiCommand mWebApiCommand_CanRegister;
 };
 
 #endif // CURRENTUSER_H

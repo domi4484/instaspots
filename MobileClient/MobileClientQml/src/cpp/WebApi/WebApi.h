@@ -84,7 +84,7 @@ public:
     static const QString USER_USERNAME;
     static const QString USER_PASSWORD;
     static const QString USER_EMAIL;
-    static const QString USER_AUTHENTICATED;
+    static const QString USER_TOKEN;
     static const QString USER_REGISTERED;
 
     static const QString REPORT_TITLE;
