@@ -182,19 +182,18 @@ void PictureRepository::getBy_SpotId(int requestId,
 void PictureRepository::getBy_UserId(int requestId,
                                      int userId)
 {
-   QList<QueryItem> qList_QueryItems;
-   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USER_ID,  QString::number(userId)));
-
    // TODO check post return type
    WebApiCommand *webApiCommand = new WebApiCommand(this);
    webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
-   webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_USER_ID);
+   webApiCommand->setCommandName(WebApi::COMMAND::GET_PICTURES_BY_USER_ID.arg(userId));
 
    webApiCommand->setProperty(PROPERTY_REQUEST_ID, requestId);
 
    connect(webApiCommand,
            SIGNAL(signal_Finished(const WebApiError &)),
            SLOT(slot_Command_Finished(const WebApiError &)));
+
+   QList<QueryItem> qList_QueryItems;
    webApiCommand->sendRequest(qList_QueryItems);
 }
 

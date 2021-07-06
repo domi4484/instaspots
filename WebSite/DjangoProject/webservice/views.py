@@ -42,6 +42,24 @@ class UserDetail(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
 
+class UserDetailSpotList(generics.ListAPIView):
+    serializer_class = SpotSerializer
+
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            userId = self.kwargs['pk']
+            return Spot.objects.filter(user=userId)
+
+
+class UserDetailPicturesList(generics.ListAPIView):
+    serializer_class = PictureSerializer
+
+    def get_queryset(self):
+        if self.request.method == 'GET':
+            userId = self.kwargs['pk']
+            return Picture.objects.filter(user=userId)
+
+
 class SpotList(generics.ListCreateAPIView):
     """
     List all spots, or create a new spot.
@@ -83,16 +101,6 @@ class SpotListByDistance(generics.ListCreateAPIView):
 
             queryset = Spot.objects.filter(position__distance_lte=(position, D(km=distance)))
             return queryset
-
-
-class SpotListByUser(generics.ListCreateAPIView):
-    """
-    List all spots for a given user.
-    """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                                      IsOwnerOrReadOnly)
-    queryset = Spot.objects.all()
-    serializer_class = SpotSerializer
 
 
 class PictureList(generics.ListCreateAPIView):
