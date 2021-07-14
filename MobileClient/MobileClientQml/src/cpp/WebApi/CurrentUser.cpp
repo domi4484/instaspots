@@ -22,15 +22,16 @@
 //-----------------------------------------------------------------------------------------------------------------------------
 
 CurrentUser::CurrentUser(Settings *settings,
-                         QObject *parent) :
-  QObject(parent),
-  mSettings                 (settings),
-  mId                       (-1),
-  mLastErrorText            (),
-  mWebApiCommand_Login      (this),
-  mWebApiCommand_Logout     (this),
-  mWebApiCommand_Register   (this),
-  mWebApiCommand_CanRegister(this)
+                         QObject *parent)
+  : QObject(parent)
+  , mSettings(settings)
+  , mId(-1)
+  , mToken()
+  , mLastErrorText()
+  , mWebApiCommand_Login(this)
+  , mWebApiCommand_Logout(this)
+  , mWebApiCommand_Register(this)
+  , mWebApiCommand_CanRegister(this)
 {
   mWebApiCommand_Login.setAnswerType(WebApiCommand::AnswerTypeJSON);
   mWebApiCommand_Login.setRequestType(WebApiCommand::RequestTypePost);
@@ -56,7 +57,7 @@ CurrentUser::CurrentUser(Settings *settings,
 
 bool CurrentUser::isConnected()
 {
-    return mId >= 0;
+  return mId >= 0;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -219,14 +220,6 @@ void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
 {
   if(error.type() != WebApiError::NONE)
   {
-    mLastErrorText = error.text();
-    emit signal_LoginSuccessfull(false);
-    return;
-  }
-
-  if(   mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_TOKEN).toBool()
-     == false)
-  {
     // Reset password in settings
     mSettings->set_User_LoggedIn(false);
     mSettings->sync();
@@ -239,8 +232,21 @@ void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
     return;
   }
 
+  if(mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_TOKEN).toString().isEmpty())
+  {
+    // Reset password in settings
+    mSettings->set_User_LoggedIn(false);
+    mSettings->sync();
 
-  mId = mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_USER_ID).toInt();
+    mId = -1;
+    mLastErrorText = tr("No token");
+    emit signal_LoginSuccessfull(false);
+    emit signal_Username_changed();
+    emit signal_Id_changed();
+    return;
+  }
+
+  mToken = mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_TOKEN).toString();
 
   mSettings->set_User_LoggedIn(true);
   mSettings->sync();

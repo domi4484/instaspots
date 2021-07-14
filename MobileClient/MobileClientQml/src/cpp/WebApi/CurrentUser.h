@@ -75,6 +75,7 @@ private:
   Settings *mSettings;
 
   int mId;
+  QString mToken;
 
   QString mLastErrorText;
 
