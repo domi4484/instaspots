@@ -7,3 +7,4 @@ WebSite/DjangoProject/lowerspot/settingsProduction.py
 WebSite/DjangoProject/static/pictures
 *nohup.out
 .kdev4
+.idea

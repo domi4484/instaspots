@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D  # D for distance
+from django.contrib.gis.db.models.functions import Distance
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import Http404
@@ -90,16 +91,20 @@ class SpotListByDistance(generics.ListCreateAPIView):
 
     def get_queryset(self):
         if self.request.method == 'GET':
-            position = self.request.GET.get('position', None)
-            if position is None:
+            currentPosition = self.request.GET.get('position', None)
+            if currentPosition is None:
                 raise Http404("Missing parameter 'position'")
-            position = GEOSGeometry(position)
+            currentPosition = GEOSGeometry(currentPosition)
 
-            distance = self.request.GET.get('distanceKm', None)
-            if position is None:
+            distanceKm = self.request.GET.get('distanceKm', None)
+            if currentPosition is None:
                 raise Http404("Missing parameter 'distanceKm'")
 
-            queryset = Spot.objects.filter(position__distance_lte=(position, D(km=distance)))
+            queryset = Spot.objects.filter(position__distance_lte=(currentPosition, D(km=distanceKm))
+                                           ).annotate(
+                distance=Distance('position', currentPosition)
+            ).order_by('distance')
+
             return queryset
 
 
