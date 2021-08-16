@@ -5,7 +5,7 @@ from rest_framework.authtoken import views
 from webservice import views as webserviceViews
 
 urlpatterns = [
-    url(r'^token-auth/$',                   views.obtain_auth_token),
+    url(r'^token-auth/$',                   webserviceViews.CustomObtainAuthToken.as_view()),
     url(r'^users/$',                        webserviceViews.UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$',         webserviceViews.UserDetail.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/spots$',    webserviceViews.UserDetailSpotList.as_view()),

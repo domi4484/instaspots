@@ -22,9 +22,9 @@ const QString Settings::APPLICATION_NEWER_VERSION_AVAILABLE_GOT_IT ("Application
 const QString Settings::LOGGER_LOG_LEVEL ("Logger_LogLevel");
 
 // User settings
+const QString Settings::USER_TOKEN  ("User_Token");
 const QString Settings::USER_USERNAME  ("User_Username");
-const QString Settings::USER_PASSWORD  ("User_Password");
-const QString Settings::USER_LOGGED_IN ("User_LoggedIn");
+const QString Settings::USER_ID ("User_Id");
 
 // Location settings
 const QString Settings::LOCATION_LAST_LATITUDE  ("Location_LastLatitude");
@@ -91,6 +91,34 @@ void Settings::set_Logger_LogLevel(Logger::LOG_LEVEL logLevel)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+QString Settings::get_User_Token() const
+{
+  return QSettings::value(USER_TOKEN, "").toString();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::set_User_Token(const QString &token)
+{
+  QSettings::setValue(USER_TOKEN, token);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+int Settings::get_User_Id() const
+{
+  return QSettings::value(USER_ID, -1).toInt();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void Settings::set_User_Id(int id)
+{
+    QSettings::setValue(USER_ID, id);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QString Settings::get_User_Username() const
 {
   return QSettings::value(USER_USERNAME, "").toString();
@@ -101,20 +129,6 @@ QString Settings::get_User_Username() const
 void Settings::set_User_Username(const QString &username)
 {
   QSettings::setValue(USER_USERNAME, username);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-bool Settings::get_User_LoggedIn() const
-{
-  return QSettings::value(USER_LOGGED_IN, false).toBool();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
-void Settings::set_User_LoggedIn(bool loggedIn)
-{
-    QSettings::setValue(USER_LOGGED_IN, loggedIn);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

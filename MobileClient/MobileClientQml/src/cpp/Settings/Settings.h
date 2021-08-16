@@ -33,9 +33,9 @@ public:
   static const QString LOGGER_LOG_LEVEL;
 
   // User settings
+  static const QString USER_TOKEN;
   static const QString USER_USERNAME;
-  static const QString USER_PASSWORD;
-  static const QString USER_LOGGED_IN;
+  static const QString USER_ID;
 
   // Location settings
   static const QString LOCATION_LAST_LATITUDE;
@@ -61,10 +61,12 @@ public slots:
   void              set_Logger_LogLevel (Logger::LOG_LEVEL logLevel);
 
   // User settings
-  QString get_User_Username () const;
-  void    set_User_Username (const QString &username);
-  bool    get_User_LoggedIn () const;
-  void    set_User_LoggedIn (bool loggedIn);
+  QString get_User_Token() const;
+  void set_User_Token(const QString &token);
+  int get_User_Id() const;
+  void set_User_Id(int id);
+  QString get_User_Username() const;
+  void set_User_Username(const QString &username);
 
   // Location settings
   QGeoCoordinate  get_Location_LastCoordinate () const;

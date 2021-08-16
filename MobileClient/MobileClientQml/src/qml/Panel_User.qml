@@ -102,7 +102,7 @@ Item {
         if(visible == false)
             return;
 
-        if(wa_CurrentUser.isConnected() === false)
+        if(wa_CurrentUser.isLoggedIn() === false)
         {
             var page_SignIn = Qt.resolvedUrl("qrc:/qml/pages-user/Page_SignIn.qml");
             stackView.push( {

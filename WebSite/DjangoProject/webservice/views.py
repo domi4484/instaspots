@@ -10,8 +10,10 @@ from webservice.serializers import UserSerializer
 from rest_framework import generics
 from rest_framework import status
 from rest_framework import permissions
-from rest_framework.views import APIView
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.gis.geos import GEOSGeometry
@@ -27,6 +29,17 @@ import logging
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
+
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+        return Response({'token': token.key, 'id': token.user_id})
+
+        # Need whole user object?
+        # user = CustomUser.objects.get(id=token.user_id)
+        # return Response({'token': token.key, 'user': CustomUserSerializer(user).data})
 
 
 class UserList(generics.ListAPIView):

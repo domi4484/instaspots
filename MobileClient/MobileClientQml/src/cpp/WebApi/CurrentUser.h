@@ -39,7 +39,7 @@ public slots:
 
   QString lastErrorText() const { return mLastErrorText; }
 
-  bool isConnected();
+  bool isLoggedIn();
 
   bool login();
   bool login(const QString &username,

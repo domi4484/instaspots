@@ -55,32 +55,29 @@ CurrentUser::CurrentUser(Settings *settings,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-bool CurrentUser::isConnected()
+bool CurrentUser::isLoggedIn()
 {
-  return mId >= 0;
+  return mToken.isEmpty() == false;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
 bool CurrentUser::login()
 {
-  mId = -1;
+  mToken.clear();
 
   mLastErrorText = "";
 
-  QString username = mSettings->get_User_Username();
-  QString password;
+  QString token = mSettings->get_User_Token();
 
-  if(   username.isEmpty()
-     || password.isEmpty())
+  if(token.isEmpty())
   {
-    mLastErrorText = tr("Empty username or password.");
+    mLastErrorText = tr("Empty token. New login with username/password needed");
     return false;
   }
 
   QList<QueryItem> qList_QueryItems;
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
-  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_PASSWORD, password));
+//  qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
 
   WebApiError error = mWebApiCommand_Login.sendRequest(qList_QueryItems);
   if(error.type() != WebApiError::NONE)
@@ -95,7 +92,7 @@ bool CurrentUser::login()
 //-----------------------------------------------------------------------------------------------------------------------------
 
 bool CurrentUser::login(const QString &username,
-                 const QString &password)
+                        const QString &password)
 {
   mId = -1;
 
@@ -112,8 +109,6 @@ bool CurrentUser::login(const QString &username,
       mLastErrorText = tr("Password is empty.");
       return false;
   }
-
-  mSettings->set_User_Username(username);
 
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
@@ -160,8 +155,8 @@ bool CurrentUser::logout()
 //-----------------------------------------------------------------------------------------------------------------------------
 
 bool CurrentUser::registration(const QString &username,
-                        const QString &e_mail,
-                        const QString &password)
+                               const QString &e_mail,
+                               const QString &password)
 {
   mLastErrorText = "";
 
@@ -183,8 +178,6 @@ bool CurrentUser::registration(const QString &username,
      return false;
   }
 
-  mSettings->set_User_Username(username);
-
   QList<QueryItem> qList_QueryItems;
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_USERNAME, username));
   qList_QueryItems.append(QueryItem(WebApi::PARAMETER::USER_EMAIL,    e_mail));
@@ -204,7 +197,7 @@ bool CurrentUser::registration(const QString &username,
 
 QString CurrentUser::username()
 {
-    return mSettings->get_User_Username();
+  return mSettings->get_User_Username();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -221,10 +214,11 @@ void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
   if(error.type() != WebApiError::NONE)
   {
     // Reset password in settings
-    mSettings->set_User_LoggedIn(false);
+    mSettings->set_User_Id(false);
     mSettings->sync();
 
     mId = -1;
+    mToken.clear();
     mLastErrorText = tr("Authentication failed");
     emit signal_LoginSuccessfull(false);
     emit signal_Username_changed();
@@ -235,10 +229,11 @@ void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
   if(mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_TOKEN).toString().isEmpty())
   {
     // Reset password in settings
-    mSettings->set_User_LoggedIn(false);
+    mSettings->set_User_Id(false);
     mSettings->sync();
 
     mId = -1;
+    mToken.clear();
     mLastErrorText = tr("No token");
     emit signal_LoginSuccessfull(false);
     emit signal_Username_changed();
@@ -247,8 +242,10 @@ void CurrentUser::slot_CommandLogin_Finished(const WebApiError &error)
   }
 
   mToken = mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_TOKEN).toString();
+  mId = mWebApiCommand_Login.resultParameter(WebApi::PARAMETER::USER_USER_ID).toInt();
 
-  mSettings->set_User_LoggedIn(true);
+  mSettings->set_User_Token(mToken);
+  mSettings->set_User_Id(mId);
   mSettings->sync();
   emit signal_LoginSuccessfull(true);
   emit signal_Username_changed();
@@ -265,7 +262,8 @@ void CurrentUser::slot_CommandLogout_Finished(const WebApiError &error)
   }
 
   mId = -1;
-  mSettings->set_User_LoggedIn(false);
+  mToken.clear();
+  mSettings->set_User_Id(false);
   mSettings->sync();
   emit signal_Logout();
   return;
@@ -287,7 +285,7 @@ void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
   if(   mWebApiCommand_Register.resultParameter(WebApi::PARAMETER::USER_REGISTERED).toBool()
      == false)
   {
-    mSettings->set_User_LoggedIn(false);
+    mSettings->set_User_Id(false);
     mSettings->sync();
 
     mLastErrorText = mWebApiCommand_Register.resultParameter(WebApi::CONST::GENERAL_PARAMS::ERROR).toString();
@@ -299,10 +297,11 @@ void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
   if(   mWebApiCommand_Register.resultParameter(WebApi::PARAMETER::USER_TOKEN).toBool()
      == false)
   {
-    mSettings->set_User_LoggedIn(false);
+    mSettings->set_User_Id(false);
     mSettings->sync();
 
     mId = -1;
+    mToken.clear();
     mLastErrorText = tr("Authentication failed");
     emit signal_RegistrationSuccessfull(false);
     return;
@@ -311,7 +310,7 @@ void CurrentUser::slot_CommandRegister_Finished(const WebApiError &error)
   // User id
   mId = mWebApiCommand_Register.resultParameter(WebApi::PARAMETER::USER_USER_ID).toInt();
 
-  mSettings->set_User_LoggedIn(true);
+  mSettings->set_User_Id(true);
   mSettings->sync();
   emit signal_RegistrationSuccessfull(true);
   emit signal_LoginSuccessfull(true);
