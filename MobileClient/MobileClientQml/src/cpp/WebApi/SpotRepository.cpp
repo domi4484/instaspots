@@ -205,6 +205,7 @@ void SpotRepository::getBy_UserId(int requestId,
 {
     // TODO check post return type
     WebApiCommand *webApiCommand = new WebApiCommand(this);
+    webApiCommand->setRequestType(WebApiCommand::RequestTypeGet);
     webApiCommand->setAnswerType(WebApiCommand::AnswerTypeJSON);
     webApiCommand->setCommandName(WebApi::COMMAND::GET_SPOTS_BY_USER_ID.arg(QString::number(userId)));
 
