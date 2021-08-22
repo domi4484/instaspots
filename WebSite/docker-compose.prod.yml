@@ -3,13 +3,13 @@ version: '3.7'
 services:
   web:
     build: ./DjangoProject
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn lowerspot.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./DjangoProject/:/usr/src/app/
     ports:
       - 2811:8000
     env_file:
-    - ./env.dev
+    - ./env.prod
   db:
     image: postgis/postgis:13-master
     volumes:

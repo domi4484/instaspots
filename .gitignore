@@ -5,6 +5,7 @@ build-*
 .settings*
 WebSite/DjangoProject/lowerspot/settingsProduction.py
 WebSite/DjangoProject/static/pictures
+WebSite/env.prod
 *nohup.out
 .kdev4
 .idea
