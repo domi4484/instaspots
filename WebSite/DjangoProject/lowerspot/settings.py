@@ -10,22 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%ch561ddw-q0=7cnwhn$(rhh@u6mx7%7gd_c#*^94wsob3rzu('
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0))
+
 
 ALLOWED_HOSTS = ['lowerspot.com', 'localhost', '127.0.0.1']
+#ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(" ")
 
 
 # Application definition
@@ -80,12 +82,12 @@ WSGI_APPLICATION = 'lowerspot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'secret',
-        'HOST': '127.0.0.1',
-        'PORT': '5433',
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
+         'NAME': os.environ.get('SQL_DATABASE', 'postgres'),
+         'USER': os.environ.get('SQL_USER', 'postgres'),
+         'PASSWORD': os.environ.get('SQL_PASSWORD', 'secret'),
+         'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
+         'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
 
