@@ -2,10 +2,14 @@ version: '3.7'
 
 services:
   web:
-    build: ./DjangoProject
+    build:
+      context: ./DjangoProject
+      dockerfile: Dockerfile.prod
     command: gunicorn lowerspot.wsgi:application --bind 0.0.0.0:8000
-    ports:
-      - 2811:8000
+    volumes:
+      - static_volume:/home/app/web/static
+    expose:
+      - 8000
     env_file:
       - ./env.prod
     depends_on:
@@ -18,6 +22,15 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=postgres
-
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/static
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+      
 volumes:
   postgres_data:
+  static_volume:
