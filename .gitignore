@@ -4,7 +4,9 @@ build-*
 *__pycache__*
 .settings*
 WebSite/DjangoProject/lowerspot/settingsProduction.py
-WebSite/DjangoProject/static/pictures
+WebSite/DjangoProject/static/admin
+WebSite/DjangoProject/static/gis
+WebSite/DjangoProject/static/rest_framework
 WebSite/env.prod
 *nohup.out
 .kdev4
