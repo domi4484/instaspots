@@ -1,5 +1,4 @@
 
-
-cat ./spots.sql | docker exec -i postgis-lowerspot psql -U postgres -d postgres
-
+cd ..
+cat Data/spots.sql | docker-compose exec -T db psql -U postgres -d postgres
 

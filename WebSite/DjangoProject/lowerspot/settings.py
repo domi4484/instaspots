@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'lowerspot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
+        'ENGINE': os.environ.get('SQL_ENGINE', 'django.contrib.gis.db.backends.postgis'),
          'NAME': os.environ.get('SQL_DATABASE', 'postgres'),
          'USER': os.environ.get('SQL_USER', 'postgres'),
          'PASSWORD': os.environ.get('SQL_PASSWORD', 'secret'),
