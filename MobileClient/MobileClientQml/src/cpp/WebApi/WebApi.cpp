@@ -114,12 +114,8 @@ WebApi *WebApi::sInstance(NULL);
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-WebApi::WebApi() :
-  QObject(),
-  mServerAddress(),
-  mUltraNetworkAccessManager(),
-  mCommandsIdCounter(0),
-  mRunningCommands()
+WebApi::WebApi()
+  : QObject()
 {
 }
 
@@ -152,9 +148,30 @@ void WebApi::destroy()
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-void WebApi::setUrl(const QString url)
+void WebApi::setServerAddress(const QString address,
+                              int port)
 {
-  mServerAddress = url;
+  mServerAddress = address;
+  mServerPort = port;
+}
+
+QString WebApi::serverUrl() const
+{
+  if(mServerPort >= 0)
+    return QString("%1:%2").arg(mServerAddress,
+                                mServerPort);
+
+  return mServerAddress;
+}
+
+QString WebApi::serverAddress() const
+{
+  return mServerAddress;
+}
+
+int WebApi::serverPort() const
+{
+  return mServerPort;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -346,7 +363,7 @@ void WebApi::sendRequest(WebApiCommand *abstractCommand,
                                     QApplication::applicationVersion()));
 
   // Url
-  QUrl url(QString("%1/%2/%3/").arg(mServerAddress)
+  QUrl url(QString("%1/%2/%3/").arg(serverUrl())
                                .arg(CONST::PATH)
                                .arg(abstractCommand->commandName()));
 
@@ -433,7 +450,7 @@ void WebApi::sendMultipartRequest(WebApiCommand *abstractCommand,
   multiPart->append(imagePart);
 
   // Network request
-  QNetworkRequest request(QString("%1/%2/%3").arg(mServerAddress)
+  QNetworkRequest request(QString("%1/%2/%3").arg(serverUrl())
                           .arg(CONST::PATH)
                           .arg(abstractCommand->commandName()));
 

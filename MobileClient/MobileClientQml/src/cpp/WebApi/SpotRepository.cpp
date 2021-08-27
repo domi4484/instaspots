@@ -284,7 +284,7 @@ void SpotRepository::slot_Command_Finished(const WebApiError &error)
       Picture *picture = PictureRepository::instance()->getAdd_Picture(picture_id);
 
       // Picture properties
-      picture->setUrl             (QString("%1/%2").arg("http://lowerspot.com")
+      picture->setUrl             (QString("%1/%2").arg(WebApi::instance()->serverUrl())
                                                    .arg(jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_URL).toString()));
       picture->setIdUser          (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_ID).toInt());
       picture->setUsername        (jsonObject_Picture.value(WebApi::PARAMETER::PICTURE_USER_USERNAME).toString());

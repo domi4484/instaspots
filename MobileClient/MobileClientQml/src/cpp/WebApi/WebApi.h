@@ -126,7 +126,11 @@ public:
   static WebApi *instance();
   static void destroy();
 
-  void setUrl(const QString url);
+  void setServerAddress(const QString address,
+                        int port = -1);
+  QString serverUrl() const;
+  QString serverAddress() const;
+  int serverPort() const;
 
   void sendRequest(WebApiCommand *abstractCommand,
                    QList<QueryItem> &qList_QueryItems);
@@ -155,10 +159,11 @@ private:
   static WebApi *sInstance;
 
   QString mServerAddress;
+  int mServerPort = -1;
 
   UltraNetworkAccessManager mUltraNetworkAccessManager;
 
-  unsigned int mCommandsIdCounter;
+  unsigned int mCommandsIdCounter = 0;
   QMap<unsigned int, WebApiCommand *> mRunningCommands;
 
 };

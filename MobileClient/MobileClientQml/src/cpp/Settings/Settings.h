@@ -32,6 +32,8 @@ public:
   // Logger settings
   static const QString LOGGER_LOG_LEVEL;
 
+  // Server settings
+
   // User settings
   static const QString USER_TOKEN;
   static const QString USER_USERNAME;

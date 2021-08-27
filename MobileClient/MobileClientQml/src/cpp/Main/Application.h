@@ -54,24 +54,24 @@ private:
   };
 
   // Settings
-  Settings                     *m_Settings;
+  Settings                     *mSettings;
 
   // Plateform detail
-  PlateformDetail              *m_PlateformDetail;
+  PlateformDetail              *mPlateformDetail;
 
   // Application helper
-  ApplicationHelper            *m_ApplicationHelper;
-  LocationManager              *m_LocationManager;
-  PictureCacher                *m_PictureCacher;
+  ApplicationHelper            *mApplicationHelper;
+  LocationManager              *mLocationManager;
+  PictureCacher                *mPictureCacher;
 
-  CurrentUser                  *m_CurrentUser;
-  PictureUploader              *m_PictureUploader;
+  CurrentUser                  *mCurrentUser;
+  PictureUploader              *mPictureUploader;
 
-  UltraQmlAccessManagerFactory *m_UltraQmlAccessManagerFactory;
+  UltraQmlAccessManagerFactory *mUltraQmlAccessManagerFactory;
 
-  QQmlApplicationEngine        *m_QQmlApplicationEngine;
+  QQmlApplicationEngine        *mQQmlApplicationEngine;
 
-  QMap<QString, QVariant> parseCommandLineArguments();
+  void parseCommandLineArguments();
 
   void saveSettings();
 };

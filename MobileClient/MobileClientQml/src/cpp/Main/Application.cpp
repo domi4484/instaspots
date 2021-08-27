@@ -48,14 +48,14 @@ const QString Application::CONST::SERVER::DEFAULT_ADDRESS("http://lowerspot.com"
 
 Application::Application(int argc, char *argv[])
   : QApplication(argc, argv)
-  , m_Settings              (nullptr)
-  , m_PlateformDetail       (nullptr)
-  , m_ApplicationHelper     (nullptr)
-  , m_LocationManager       (nullptr)
-  , m_PictureCacher         (nullptr)
-  , m_CurrentUser           (nullptr)
-  , m_PictureUploader       (nullptr)
-  , m_QQmlApplicationEngine (nullptr)
+  , mSettings              (nullptr)
+  , mPlateformDetail       (nullptr)
+  , mApplicationHelper     (nullptr)
+  , mLocationManager       (nullptr)
+  , mPictureCacher         (nullptr)
+  , mCurrentUser           (nullptr)
+  , mPictureUploader       (nullptr)
+  , mQQmlApplicationEngine (nullptr)
 {
   // Application informations
   QApplication::setOrganizationName   ("Lowerspot");
@@ -64,61 +64,61 @@ Application::Application(int argc, char *argv[])
   QApplication::setApplicationVersion ("V0.3.0");
 
   // Server address
-  WebApi::instance()->setUrl(CONST::SERVER::DEFAULT_ADDRESS);
-
-  // Command line arguments
-  QMap<QString, QVariant> qMap_Arguments = parseCommandLineArguments();
+  WebApi::instance()->setServerAddress(CONST::SERVER::DEFAULT_ADDRESS);
 
   // Settings
-  m_Settings = new Settings(this);
+  mSettings = new Settings(this);
+
+  // Command line arguments
+  parseCommandLineArguments();
 
   // Logger
   Logger::instanziate(Logger::LOG_DEBUG);
-  Logger::instance()->setLogLevel(m_Settings->get_Logger_LogLevel());
+  Logger::instance()->setLogLevel(mSettings->get_Logger_LogLevel());
 
   // Plateform detail
-  m_PlateformDetail = new PlateformDetail(this);
+  mPlateformDetail = new PlateformDetail(this);
 
   // Application helper
-  m_ApplicationHelper = new ApplicationHelper(m_Settings,
-                                              m_PlateformDetail);
-  m_ApplicationHelper->startupTimerStart();
+  mApplicationHelper = new ApplicationHelper(mSettings,
+                                             mPlateformDetail);
+  mApplicationHelper->startupTimerStart();
 
-  m_LocationManager = new LocationManager(m_Settings,
-                                          m_PlateformDetail);
-  m_PictureCacher = new PictureCacher(this);
+  mLocationManager = new LocationManager(mSettings,
+                                         mPlateformDetail);
+  mPictureCacher = new PictureCacher(this);
 
   // Repositories
   PictureRepository::instanziate();
-  SpotRepository::instanziate(m_LocationManager);
+  SpotRepository::instanziate(mLocationManager);
   UserRepository::instanziate();
 
-  m_CurrentUser = new CurrentUser(m_Settings,
+  mCurrentUser = new CurrentUser(mSettings,
                                   this);
-  m_PictureUploader = new PictureUploader(this);
+  mPictureUploader = new PictureUploader(this);
 
   // Custom network access factory
-  m_UltraQmlAccessManagerFactory  = new UltraQmlAccessManagerFactory();
+  mUltraQmlAccessManagerFactory  = new UltraQmlAccessManagerFactory();
 
   // QML Engine
-  m_QQmlApplicationEngine = new QQmlApplicationEngine();
+  mQQmlApplicationEngine = new QQmlApplicationEngine();
 
-  m_QQmlApplicationEngine->setNetworkAccessManagerFactory(m_UltraQmlAccessManagerFactory);
+  mQQmlApplicationEngine->setNetworkAccessManagerFactory(mUltraQmlAccessManagerFactory);
 
 
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Application",       m_ApplicationHelper);
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_PlateformDetail",   m_PlateformDetail);
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_LocationManager",   m_LocationManager);
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_PictureCacher",     m_PictureCacher);
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Logger",            Logger::instance());
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("hc_Settings",          m_Settings);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("hc_Application",       mApplicationHelper);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("hc_PlateformDetail",   mPlateformDetail);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("hc_LocationManager",   mLocationManager);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("hc_PictureCacher",     mPictureCacher);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("hc_Logger",            Logger::instance());
+  mQQmlApplicationEngine->rootContext()->setContextProperty("hc_Settings",          mSettings);
 
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_CurrentUser",       m_CurrentUser);
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("wa_PictureUploader",   m_PictureUploader);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("wa_CurrentUser",       mCurrentUser);
+  mQQmlApplicationEngine->rootContext()->setContextProperty("wa_PictureUploader",   mPictureUploader);
 
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("re_PictureRepository", PictureRepository::instance());
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("re_SpotRepository",    SpotRepository::instance());
-  m_QQmlApplicationEngine->rootContext()->setContextProperty("re_UserRepository",    UserRepository::instance());
+  mQQmlApplicationEngine->rootContext()->setContextProperty("re_PictureRepository", PictureRepository::instance());
+  mQQmlApplicationEngine->rootContext()->setContextProperty("re_SpotRepository",    SpotRepository::instance());
+  mQQmlApplicationEngine->rootContext()->setContextProperty("re_UserRepository",    UserRepository::instance());
 
   qmlRegisterType<PicturesModel>   ("PicturesModel",    1, 0, "PicturesModel");
   qmlRegisterType<Picture>         ("Picture",          1, 0, "Picture");
@@ -136,7 +136,7 @@ Application::Application(int argc, char *argv[])
 //                   SLOT(slot_QApplication_aboutToQuit()));
 
   Logger::info("Load main.qml...");
-  m_QQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
+  mQQmlApplicationEngine->load(QUrl(QStringLiteral("qrc:///qml/main.qml")));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -144,14 +144,14 @@ Application::Application(int argc, char *argv[])
 Application::~Application()
 {
   // Delete objects
-  delete m_QQmlApplicationEngine;
-  delete m_PictureUploader;
-  delete m_CurrentUser;
-  delete m_PictureCacher;
-  delete m_LocationManager;
-  delete m_ApplicationHelper;
-  delete m_PlateformDetail;
-  delete m_Settings;
+  delete mQQmlApplicationEngine;
+  delete mPictureUploader;
+  delete mCurrentUser;
+  delete mPictureCacher;
+  delete mLocationManager;
+  delete mApplicationHelper;
+  delete mPlateformDetail;
+  delete mSettings;
 
   // Destroy singletons
   Logger::destroy();
@@ -170,7 +170,7 @@ void Application::slot_QApplication_applicationStateChanged(Qt::ApplicationState
     Logger::info("Application suspended.");
 
     // Suspend gps updates
-    m_LocationManager->suspendUpdates();
+    mLocationManager->suspendUpdates();
 
     saveSettings();
   }
@@ -179,7 +179,7 @@ void Application::slot_QApplication_applicationStateChanged(Qt::ApplicationState
     Logger::info("Application active.");
 
     // Resume gps updates
-    m_LocationManager->resumeUpdates();
+    mLocationManager->resumeUpdates();
   }
 }
 
@@ -190,14 +190,14 @@ void Application::slot_QApplication_aboutToQuit()
   Logger::info("Application closing...");
 
   // Suspend gps updates
-  m_LocationManager->suspendUpdates();
+  mLocationManager->suspendUpdates();
 
   saveSettings();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-QMap<QString, QVariant> Application::parseCommandLineArguments()
+void Application::parseCommandLineArguments()
 {
   QCommandLineParser qCommandLineParser;
   qCommandLineParser.setApplicationDescription(QApplication::applicationName());
@@ -211,14 +211,17 @@ QMap<QString, QVariant> Application::parseCommandLineArguments()
                                                       "");
   qCommandLineParser.addOption(qCommandLineOption_serverAddress);
 
+  QCommandLineOption qCommandLineOption_serverPort(QStringList() << "p" << "server-port",
+                                                   "Server port",
+                                                   "port",
+                                                   "-1");
+  qCommandLineParser.addOption(qCommandLineOption_serverPort);
+
   qCommandLineParser.process(QApplication::arguments());
 
-  QMap<QString, QVariant> qMap_Arguments;
-
   if(qCommandLineParser.value(qCommandLineOption_serverAddress).isEmpty() == false)
-    WebApi::instance()->setUrl(qCommandLineParser.value(qCommandLineOption_serverAddress));
-
-  return qMap_Arguments;
+    WebApi::instance()->setServerAddress(qCommandLineParser.value(qCommandLineOption_serverAddress),
+                                         qCommandLineParser.value(qCommandLineOption_serverPort).toInt());
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -226,8 +229,8 @@ QMap<QString, QVariant> Application::parseCommandLineArguments()
 void Application::saveSettings()
 {
   // Set and save settings
-  m_Settings->set_Application_LastVersion(QApplication::applicationVersion());
-  m_Settings->set_Logger_LogLevel(Logger::instance()->getLogLevel());
-  m_Settings->set_Location_LastCoordinate(m_LocationManager->coordinate());
-  m_Settings->sync();
+  mSettings->set_Application_LastVersion(QApplication::applicationVersion());
+  mSettings->set_Logger_LogLevel(Logger::instance()->getLogLevel());
+  mSettings->set_Location_LastCoordinate(mLocationManager->coordinate());
+  mSettings->sync();
 }
