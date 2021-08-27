@@ -24,12 +24,12 @@ services:
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=postgres
   nginx:
-    build: ./nginx
+    build: ./NginxDocker
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
     ports:
-      - 1337:80
+      - 2811:80
     depends_on:
       - web
       

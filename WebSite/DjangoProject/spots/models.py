@@ -42,7 +42,7 @@ class Picture(models.Model):
         return 'pictures/{}/{}.jpg'.format(self.created.strftime('%Y/%m/%d'), self.id)
 
     def url(self):
-        return 'static/{}'.format(self.path())
+        return 'media/{}'.format(self.path())
 
     def saveUploadedPicture(self, imageFile):
         savePath = self.path()
