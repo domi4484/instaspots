@@ -12,7 +12,7 @@
 // Qt imports ------------------------------
 import QtQuick 2.5
 import QtQuick.Controls 1.2
-import QtPositioning 5.15
+import QtPositioning 5.12
 
 // Project c++ imports ---------------------
 import SpotsModel 1.0

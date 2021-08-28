@@ -11,8 +11,8 @@
 
 // Qt imports ------------------------------
 import QtQuick 2.5
-import QtPositioning 5.15
-import QtLocation    5.15
+import QtPositioning 5.12
+import QtLocation    5.12
 
 // Project qml imports ---------------------
 import "qrc:/qml/component"

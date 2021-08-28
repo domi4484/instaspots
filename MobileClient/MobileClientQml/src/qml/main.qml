@@ -13,8 +13,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import QtPositioning 5.15
-import QtLocation    5.15
+import QtPositioning 5.12
+import QtLocation    5.12
 
 // Project qml imports ---------------------
 import "qrc:/qml/"
