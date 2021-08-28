@@ -10,11 +10,11 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick          2.5
+import QtQuick 2.5
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs  1.2
-import QtPositioning    5.5
-import QtLocation       5.6
+import QtPositioning    5.15
+import QtLocation       5.15
 
 // Project qml imports ---------------------
 import "qrc:/qml/"

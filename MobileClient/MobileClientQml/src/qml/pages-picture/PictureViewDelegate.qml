@@ -1,6 +1,6 @@
 
 // Qt imports ------------------------------
-import QtQuick 2.1
+import QtQuick 2.5
 import QtQuick.Controls 1.0
 
 // Project qml imports ---------------------

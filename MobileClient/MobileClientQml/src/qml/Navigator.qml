@@ -1,6 +1,6 @@
 
 // Qt imports ------------------------------
-import QtQuick 2.2
+import QtQuick 2.5
 import QtQuick.Controls 1.1
 
 Rectangle {

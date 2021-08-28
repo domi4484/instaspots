@@ -10,7 +10,7 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.4
+import QtQuick 2.5
 import QtQuick.Controls 1.3
 
 // Project c++ imports ---------------------

@@ -10,7 +10,7 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.3
+import QtQuick 2.5
 import QtQuick.Controls 1.2
 
 // Project qml imports ---------------------

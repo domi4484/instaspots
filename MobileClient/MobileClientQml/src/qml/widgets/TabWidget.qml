@@ -1,6 +1,6 @@
 
 // Qt imports ------------------------------
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Window 2.0
 
 // Project qml imports ---------------------

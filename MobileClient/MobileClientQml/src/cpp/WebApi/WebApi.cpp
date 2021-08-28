@@ -153,13 +153,15 @@ void WebApi::setServerAddress(const QString address,
 {
   mServerAddress = address;
   mServerPort = port;
+
+  Logger::info(QString("Remote server set to '%1'").arg(serverUrl()));
 }
 
 QString WebApi::serverUrl() const
 {
   if(mServerPort >= 0)
-    return QString("%1:%2").arg(mServerAddress,
-                                mServerPort);
+    return QString("%1:%2").arg(mServerAddress)
+                           .arg(mServerPort);
 
   return mServerAddress;
 }

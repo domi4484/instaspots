@@ -63,18 +63,18 @@ Application::Application(int argc, char *argv[])
   QApplication::setApplicationName    ("Lowerspot");
   QApplication::setApplicationVersion ("V0.3.0");
 
-  // Server address
-  WebApi::instance()->setServerAddress(CONST::SERVER::DEFAULT_ADDRESS);
-
   // Settings
   mSettings = new Settings(this);
-
-  // Command line arguments
-  parseCommandLineArguments();
 
   // Logger
   Logger::instanziate(Logger::LOG_DEBUG);
   Logger::instance()->setLogLevel(mSettings->get_Logger_LogLevel());
+
+  // Server address
+  WebApi::instance()->setServerAddress(CONST::SERVER::DEFAULT_ADDRESS);
+
+  // Command line arguments
+  parseCommandLineArguments();
 
   // Plateform detail
   mPlateformDetail = new PlateformDetail(this);

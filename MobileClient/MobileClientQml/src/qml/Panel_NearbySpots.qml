@@ -10,9 +10,9 @@
 ********************************************************************/
 
 // Qt imports ------------------------------
-import QtQuick 2.3
+import QtQuick 2.5
 import QtQuick.Controls 1.2
-import QtPositioning 5.3
+import QtPositioning 5.15
 
 // Project c++ imports ---------------------
 import SpotsModel 1.0
@@ -168,7 +168,7 @@ Item {
 
                 anchors.fill: parent
 
-                model:      spotsModel
+//                model:      spotsModel
 
                 onSpotClicked: {
                     stackView.push({item: Qt.resolvedUrl("qrc:/qml/pages-spot/Page_Spot.qml"),
@@ -178,7 +178,8 @@ Item {
                 }
 
                 onMap_visibleRegionChanged: {
-                  spotsModel.updateBy_VisibleRegion(map_visibleRegion);
+                    console.log("onMap_visibleRegionChanged")
+//                  spotsModel.updateBy_VisibleRegion(map_visibleRegion);
                 }
             } // Page_SpotsMap
         } // Tabwidget
