@@ -1,18 +1,12 @@
-{% load static %}
-      
-<head>
-  <title>Lowerspot - News</title>
-  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-</head>
 
-<body>
+{% extends "spots/base_generic.html" %}
 
+{% block content %}
+  
   <h1>News</h1>
 
   {% if latest_picture_list %}
     <ul>
-      {% get_static_prefix as STATIC_PREFIX %}
-      
       {% for picture in latest_picture_list %}
 
         <div class="panel panel-default">
@@ -30,4 +24,4 @@
     <p>No pictures are available.</p>
   {% endif %}
 
-</body>
+{% endblock %}
