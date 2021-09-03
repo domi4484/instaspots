@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile.prod
     command: gunicorn lowerspot.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - /mnt/sdb/opt/lowerspot/volumes/static_volume:/home/app/web/static
+      - /mnt/sdb/opt/lowerspot/volumes/media_volume:/home/app/web/media
     expose:
       - 8000
     env_file:
@@ -18,7 +18,7 @@ services:
   db:
     image: postgis/postgis:13-master
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - /mnt/sdb/opt/lowerspot/volumes/postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
@@ -26,14 +26,10 @@ services:
   nginx:
     build: ./NginxDocker
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - /mnt/sdb/opt/lowerspot/volumes/static_volume:/home/app/web/static
+      - /mnt/sdb/opt/lowerspot/volumes/media_volume:/home/app/web/media
     ports:
       - 2811:80
     depends_on:
       - web
-      
-volumes:
-  postgres_data:
-  static_volume:
-  media_volume:
+
