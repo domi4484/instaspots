@@ -6,15 +6,15 @@
   <h1>News</h1>
 
   {% if latest_picture_list %}
-    <ul>
+    <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
       {% for picture in latest_picture_list %}
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="container">
+          <div class="text">
             Picture of <a href="{% url 'spot' picture.spot_id %}">{{ picture.spot.name }}</a> by <a href="{% url 'user' picture.user.id %}">{{ picture.user.username }}</a>
           </div>
-          <div class="panel-body">
-            <img src="{{ picture.url }}" alt="{{ picture.spot.name }}">
+          <div class="container">
+            <img src="{{ picture.url }}" class="rounded" alt="{{ picture.spot.name }}">
           </div>
         </div>
 
