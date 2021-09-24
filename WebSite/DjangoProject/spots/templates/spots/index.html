@@ -1,6 +1,8 @@
 
 {% extends "spots/base_generic.html" %}
 
+{% block title %}News{% endblock %}
+
 {% block content %}
   
   <h1>News</h1>
@@ -8,16 +10,14 @@
   {% if latest_picture_list %}
     <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
       {% for picture in latest_picture_list %}
-
         <div class="container">
           <div class="text">
             Picture of <a href="{% url 'spot' picture.spot_id %}">{{ picture.spot.name }}</a> by <a href="{% url 'user' picture.user.id %}">{{ picture.user.username }}</a>
           </div>
           <div class="container">
-            <img src="{{ picture.url }}" class="rounded" alt="{{ picture.spot.name }}">
+            <a href="{% url 'spot' picture.spot_id %}"><img src="{{ picture.url }}" class="rounded" alt="{{ picture.spot.name }}"></a>
           </div>
         </div>
-
       {% endfor %}
     </ul>
   {% else %}

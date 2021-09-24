@@ -1,33 +1,27 @@
-{% load static %}
 
-<head>
-  <title>Lowerspot - {{ spot.name }}</title>
-  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-</head>
+{% extends "spots/base_generic.html" %}
 
-<body>
+{% block title %}{{ spot.name }}{% endblock %}
+
+{% block content %}
 
   <h1>{{ spot.name }}</h1>
 
   {% if picture_list %}
     <ul>
-      {% get_static_prefix as STATIC_PREFIX %}
-      
       {% for picture in picture_list %}
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="container">
+          <div class="text">
             Picture by <a href="{% url 'user' picture.user.id %}">{{ picture.user.username }}</a>
           </div>
-          <div class="panel-body">
-            <img src="{{ STATIC_PREFIX }}{{ picture.path }}" alt="{{ picture.spot.name }}">
+          <div class="container">
+            <img src="{{ picture.url }}" class="rounded" alt="{{ picture.spot.name }}">
           </div>
         </div>
-
       {% endfor %}
     </ul>
   {% else %}
     <p>No pictures are available.</p>
   {% endif %}
-  
-</body>
+
+{% endblock %}
