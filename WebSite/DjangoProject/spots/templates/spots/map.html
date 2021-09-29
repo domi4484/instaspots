@@ -1,0 +1,21 @@
+
+{% extends "spots/base_generic.html" %}
+
+{% block title %}Map{% endblock %}
+
+{% block content %}
+  
+  <h1>Map</h1>
+
+  <div class="container" id="map">
+  </div>
+  <script>
+  var map = new maplibregl.Map({
+  container: 'map', // container id
+  style: 'https://demotiles.maplibre.org/style.json', // style URL
+  center: [0, 0], // starting position [lng, lat]
+  zoom: 1 // starting zoom
+  });
+  </script>
+
+{% endblock %}

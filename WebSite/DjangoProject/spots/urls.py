@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path('',                    views.index, name='index'),
-    path('<int:spot_id>/',      views.spot, name='spot'),
-    path('user/<int:user_id>/', views.user, name='user'),
+    path('map/',                views.map,   name='map'),
+    path('<int:spot_id>/',      views.spot,  name='spot'),
+    path('user/<int:user_id>/', views.user,  name='user'),
     path('upload/',             views.image_upload, name='upload'),
 ]

@@ -15,6 +15,9 @@ def index(request):
     context = {'latest_picture_list': latest_picture_list}
     return render(request, 'spots/index.html', context)
 
+def map(request):
+    return render(request, 'spots/map.html', {})
+
 def spot(request, spot_id):
     try:
         spot = Spot.objects.get(pk=spot_id)
